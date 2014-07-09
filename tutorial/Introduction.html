@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2006-2014 Rogério Liesenfeld
+  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
+  -->
+<html>
+<head>
+   <title>JMockit - Tutorial - Introduction</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <link rel="stylesheet" type="text/css" href="../prettify.css"/>
+   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+   <script type="text/javascript" src="../highlight.pack.js"></script>
+   <script type="text/javascript">hljs.initHighlightingOnLoad()</script>
+</head>
+<body>
+<h1 class="header">
+   <a href="../index.html">JMockit</a>
+   <span>The Mock <span>Anything</span> Toolkit for Java</span>
+</h1>
+
+<h1 id="top">
+   Introduction
+   <span class="navigation">
+      <a href="#isolation"><img src="go-down.png" title="Next section"></a>
+      <img src="blank.gif" width="22">
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="AnExample.html"><img src="go-next.png" title="Next chapter"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h1>
+
+<p>
+   In this tutorial we will examine the available mocking APIs, always with the help of relevant code snippets.
+   Even though the tutorial is fairly complete, it does not attempt to cover the entire published API in detail.
+   A more complete and detailed specification for all public classes, methods, etc. is provided through the
+   <a href="../javadoc/overview-summary.html">API documentation</a>, which can also be found under the
+   "jmockit/www/javadoc" folder inside the full toolkit distribution file.
+   The main library file, "jmockit.jar", contains Java source files (with Javadoc comments) for easy access to the API
+   source code and documentation from a Java IDE.
+</p>
+<p>
+   The additional tools which are provided through separate jar files are also covered, in separate chapters of the
+   tutorial.
+</p>
+
+<h2 id="isolation">
+   Developer testing and test isolation
+   <span class="navigation">
+      <a href="#mocks"><img src="go-down.png" title="Next section"></a>
+      <a href="#top"><img src="go-up.png" title="Top"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   Software tests written by the developers themselves, to test their own code, are often very important for successful
+   software development.
+   Such tests are usually written with the help of a testing framework, such as
+   <a href="http://www.junit.org">JUnit</a>.
+</p>
+<p>
+   Developer tests can be divided in two main categories:
+</p>
+<ol>
+   <li>
+      <strong>Unit tests</strong>, intended to test a class or component in isolation from the rest of the system.
+   </li>
+   <li>
+      <strong>Integration tests</strong>, intended to test system operations that encompass a unit and its dependencies
+      (other classes/components with which the unit under test interacts).
+   </li>
+</ol>
+<p>
+   Even though integration tests include the interaction between multiple units, particular tests may not be interested
+   in exercising all components, layers, or sub-systems involved.
+   The ability to isolate the code under test from irrelevant parts of the system is therefore generally useful.
+</p>
+
+<h2 id="mocks">
+   Testing with mock objects
+   <span class="navigation">
+      <a href="#tools"><img src="go-down.png" title="Next section"></a>
+      <a href="#isolation"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   A common and powerful technique for testing code in isolation is the use of "mocks".
+   Traditionally, a <em>mock object</em> is an instance of a class specifically implemented for a single test or set of
+   related tests.
+   This instance is passed to code under test to take the place of one of its dependencies.
+   Each mock object behaves in the way expected by both the code under test and the tests that use it, so that all tests
+   can pass.
+   That, however, is not the only role mock objects usually play.
+   As a complement to the assertions performed by each test, the mock itself can encode additional assertions.
+</p>
+<p>
+   The above is true for conventional mock object tools such as jMock and EasyMock (more about them in the next
+   section).
+   JMockit goes beyond conventional mock objects by allowing individual methods and constructors to be mocked directly
+   on "real" (non-mock) classes, consequently eliminating the need to instantiate mock objects in tests and pass them to
+   code under test; rather, the regular objects created by code under test will execute mock behavior defined by tests
+   whenever methods or constructors are called on the real classes.
+   In fact, with JMockit the original implementations of existing methods/constructors are replaced with mock
+   implementations, usually for the duration of a single test.
+   In addition, <code>static</code>, <code>final</code>, <code>private</code> and even <code>native</code> methods can
+   have their implementations replaced, and therefore are also "mockable".
+</p>
+<p>
+   Mocks are most useful for unit tests, but can also be used for integration tests.
+   For example, you may want to test a presentation layer class along with its interactions with other classes in the
+   same layer, without actually depending on the result of calls made to code in other application layers, such as the
+   business or infrastructure layers.
+</p>
+
+<h2 id="tools">
+   Tools for testing with mock objects
+   <span class="navigation">
+      <a href="#issues"><img src="go-down.png" title="Next section"></a>
+      <a href="#mocks"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   Existing tools for testing with mock objects include <a href="http://www.easymock.org">EasyMock</a> and
+   <a href="http://www.jmock.org">jMock</a>, both of which are based on
+   <a href="http://download.oracle.com/javase/6/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>,
+   which can create at runtime an implementation for a given Java interface.
+   It's also possible to create proxies for concrete classes through CGLIB-based subclass generation.
+   Each tool has a rich API for expressing <em>expectations</em> that are verified as methods are called on mock
+   instances, or at the end of the test.
+   It's not uncommon to see JUnit tests with most or all checks written as EasyMock/jMock expectations, instead of with
+   JUnit's own assertion methods.
+</p>
+<p>
+   JMockit has its own <strong>Expectations API</strong>, which is similar to those APIs but goes beyond them by
+   providing support for mocking all kinds of methods, constructors, and types (interfaces, abstract classes, final or
+   non-final classes, classes from the JRE, enums, etc.).
+</p>
+<p>
+   There is another group of mocking tools, which rely on <em>explicit verification</em> of expectations over
+   <em>implicit verification</em>: <a href="http://code.google.com/p/mockito">Mockito</a> and
+   <a href="http://www.unitils.org/summary.html">Unitils Mock</a>.
+   The common characteristic of all these mocking APIs is that they use direct invocations to mock objects as a way to
+   specify expectations.
+   In the case of EasyMock and jMock, such invocations can only be made <em>before</em> exercising the unit under test,
+   in the so-called <em>record phase</em> of the test.
+   In the case of Mockito and Unitils Mock, on the other hand, the invocations can also be made <em>after</em>
+   exercising the tested unit, in the <em>verify phase</em> of the test.
+   (The phase in between is the <em>replay phase</em>, during which the unit under test actually performs the
+   invocations of interest on its mocked collaborators.)
+   JMockit provides the <strong>Verifications API</strong>, a natural extension of the Expectations API, to allow the
+   explicit verification of <em>non-strict</em> expectations in the "verify" phase (<em>strict</em> expectations are
+   always verified implicitly).
+</p>
+
+<h2 id="issues">
+   Issues with conventional mock objects
+   <span class="navigation">
+      <a href="#bottom"><img src="go-down.png" title="Bottom"></a>
+      <a href="#tools"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   The conventional solutions for achieving isolation with mock objects impose certain design restrictions on the code
+   under test.
+   JMockit was created as an alternative with no such restrictions, by leveraging the facilities in the
+   <a href="http://download.oracle.com/javase/6/docs/api/java/lang/instrument/package-summary.html"
+   >java.lang.instrument</a> Java 6 package (in addition to making use of - to a lesser degree - reflection, dynamic
+   proxies, and custom class loading).
+</p>
+<p>
+   Because of certain technical limitations, the mocking tools previously mentioned impose some restrictions on the
+   classes for which a mock object may be needed.
+   Specifically, said classes must either implement a separate interface or all (instance) methods to be mocked must be
+   overridable (ie, neither the class itself nor any of those methods can be declared to be <code>final</code>).
+   Additionally, the instantiation of dependencies must be controlled from outside the dependent unit, so that a proxy
+   object (the mock) can be passed to it in place of the "real" implementation for each dependency (see
+   <a href="http://martinfowler.com/articles/injection.html">dependency injection</a>).
+   That is, proxied classes can't simply be instantiated with the <code>new</code> operator in client code, because
+   constructor invocations cannot be intercepted through conventional techniques.
+</p>
+<p>
+   To sum up, these are the design restrictions that apply when using a conventional approach to mocking:
+</p>
+<ol>
+   <li>
+      Application classes have to implement a separate interface (to enable the use of
+      <code class="type">java.lang.reflect.Proxy</code>) or at least not be declared <code>final</code> (to enable the
+      dynamic generation of a subclass with overriding methods).
+      In this second case, no instance method to be mocked can be <code>final</code> either.
+      <br/>
+      Obviously, creating Java interfaces just so a mock implementation can exist is not desirable.
+      Separate interfaces (or more generally, abstractions) should be created only when multiple implementations will
+      exist in <em>production code</em>.
+      <br/>
+      In Java, making classes and methods <code>final</code> is optional, but it can be a great way to capture certain
+      design decisions; additionally, it allows static analysis tools (such as Checkstyle, PMD, FindBugs, or your Java
+      IDE) to provide useful warnings about the code (about, for example, a final method which declares to throw a
+      specific checked exception, but doesn't actually throw it; such warning could not be given for a non-final method,
+      since an override could throw the exception).
+   </li>
+   <li>
+      No static methods for which a mock implementation might be needed can be used.
+      <br/>
+      In practice, this means that the use of a "static facade", otherwise a convenient solution to provide stateless
+      utility methods or as an abstraction to a complex subsystem, is disallowed.
+   </li>
+   <li>
+      All "mockable" methods must be public for mock classes that implement an interface, or at least non-private for
+      mock subclasses.
+      Usually private methods don't need to be mocked, but in certain situations it may be useful.
+   </li>
+   <li>
+      Classes to be tested need to provide some way for tests to give them mock instances for their
+      collaborators/dependencies.
+      This usually means that extra setter methods or constructors are created in the dependent classes.
+      <br/>
+      As a consequence, dependent classes cannot simply use the <code>new</code> operator to obtain instances of their
+      dependencies, even in situations where doing so would be appropriate.
+      (Even when we have abstractions separated from their implementation classes, not all implementations need to be
+      selected by client code or through configuration; neither do all kinds of dependencies need to be designed with
+      separated interfaces.)
+      <br/>
+      The tendency to avoid appropriate uses of <code>new</code> is particularly insidious, often leading developers to
+      over-engineer their designs by creating unnecessary abstractions and ultimately introducing complex application
+      frameworks just to deal with the configuration of such abstractions and their (often unique) implementations.
+      Also, it favors the use of stateless "objects", even when state specific to each operation is involved.
+   </li>
+</ol>
+<p>
+   With JMockit, <strong>any</strong> design can be tested in isolation without restricting the developer's freedom.
+   Design decisions which have a negative effect on testability when using only traditional mock objects are
+   inconsequential when using this new approach.
+   In effect, testability becomes much less of an issue in application design, allowing developers to avoid complexities
+   such as separate interfaces, factories, dependency injection and so on, when they aren't justified by actual system
+   requirements.
+</p>
+<div id="bottom" class="navigation">
+   <img src="blank.gif" width="22">
+   <a href="#issues"><img src="go-up.png" title="Previous section"></a>
+   <a href="AnExample.html"><img src="go-next.png" title="Next chapter"></a>
+   <a href="#top"><img src="go-top.png" title="Top"></a>
+   <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+</div>
+<br/>
+</body>
+</html>

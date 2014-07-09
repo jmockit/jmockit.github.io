@@ -1,0 +1,2908 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2006-2014 Rogério Liesenfeld
+  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
+  -->
+<html>
+<head>
+   <title>JMockit - Development history</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <link rel="stylesheet" type="text/css" href="prettify.css"/>
+   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+</head>
+<body>
+<h1 class="header">
+   <a href="index.html">JMockit</a>
+   <span>The Mock <span>Anything</span> Toolkit for Java</span>
+</h1>
+
+<h1>Development history</h1>
+
+<h2>Next release</h2>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list">1.10</a> (Jul 27, 2014):</p>
+<ul>
+   <li>
+      <strong>Removed</strong> the methods <code>Invocation#setMinInvocations(int)</code> and
+      <code>Invocation#setMaxInvocations(int)</code>, which were deprecated in release 1.9.
+   </li>
+</ul>
+
+<h2>Current release</h2>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=99&start=2808">1.9</a> (Jun 22, 2014):</p>
+<ul>
+   <li>
+      <strong>Dropped</strong> support for the JUnit 3.8 <code class="type">TestCase</code> class.
+      Existing tests using the JUnit 3.8 API should be converted to the JUnit 4 API, if they happen to use JMockit.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Improved the support for <em>Hamcrest</em> matchers by adding the method
+      <code>withArgThat(org.hamcrest.Matcher)</code> to the <code class="type">Invocations</code> base class, while
+      deprecating <code>with(Object)</code> and <code>with(T, Object)</code> (which already support Hamcrest by
+      accepting <code>Matcher</code> objects).
+   </li>
+   <li>
+      <strong>Deprecated</strong> the methods <code>Invocations#with(Object)</code> and
+      <code>Invocations#with(T, Object)</code>.
+      Existing calls to these methods should be replaced with calls to either <code>with(Delegate)</code> or
+      <code>withArgThat(Matcher)</code>.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the <code>setMinInvocations(int)</code> and <code>setMaxInvocations(int)</code>
+      methods of class <code class="type">Invocation</code>.
+      Such methods are unlikely to be useful in real tests, and will be removed from the API in the next release,
+      without any direct replacement.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong> updated to version <strong>1.9</strong>; from now on the same version number of
+      the mocking APIs will be used, for simplicity.
+      <br/>
+      Additional improvements:
+      <ul>
+         <li>
+            The output mode originally called "<code>merge</code>" is now called "<code>serial-append</code>", for
+            clarity.
+         </li>
+         <li>
+            To facilitate deactivating the tool on a given test run, the system properties <code>coverage-classes</code>
+            and <code>coverage-metrics</code> now also accept the value "<code>none</code>" (which previously was only
+            accepted by the <code>coverage-output</code> property).
+         </li>
+      </ul>
+   </li>
+   <li>
+      <strong>New feature</strong>: The Mockups API now supports AOP-style <em>advice</em>, in the form of an special
+      "<code>Object $advice(Invocation)</code>" mock method.
+   </li>
+   <li>
+      Issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=333">333</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=349">349</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=350">350</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=354">354</a>.
+   </li>
+</ul>
+
+<h2>Previous releases</h2>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=70&start=2709">1.8</a> (Apr 27, 2014):</p>
+<ul>
+   <li>
+      The <strong><a href="http://jmockit.org">jmockit.org</a></strong> domain now points to the JMockit project page.
+      <br/>
+      Also, the "<code>groupId</code>" for Maven artifacts has changed from "<code>com.googlecode.jmockit</code>" to
+      "<code>org.jmockit</code>".
+      Therefore, existing <code>pom.xml</code> files containing JMockit dependencies should be changed accordingly, for
+      JMockit 1.8+ and JMockit Coverage 0.999.27+.
+   </li>
+   <li>
+      From this version on, JMockit requires <strong>Java 6 or newer</strong> when running tests;
+      JRE 1.5 is no longer supported.
+      Note that this only applies to the JRE/JDK used for test execution; class files compiled for older versions of
+      Java are still supported.
+   </li>
+   <li>
+      <strong>Dropped support</strong> for <em>local</em> mock fields (declared inside expectation blocks), in favor of
+      mock <em>parameters</em>.
+      (Previous releases printed a warning to console output whenever a local mock field was found during a test run.)
+   </li>
+   <li>
+      <strong>Removed</strong> the <strong><code class="annotation">@UsingMocksAndStubs</code></strong> annotation,
+      which was deprecated in release 1.7.
+   </li>
+   <li>
+      <strong>Removed</strong> the package <code>mockit.integration.logging</code> and its classes.
+      They were deprecated in release 1.7.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong> updated to version <strong>0.999.27</strong>.
+      This version is compiled with Java 6 and will only run on JDK 1.6+.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: The <code class="type">MockUp&lt;T></code> class now has the ability to extend
+      mocking to the classes implementing an specified interface, or to the subclasses of a specified base class.
+      This is similar to what <code class="annotation">@Capturing</code> provides in the Expectations API.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: The <code>List&ltT> withCapture(T)</code> method was added to the
+      <code class="type">Verifications</code> class.
+      When called with a constructor invocation, it allows new instances of a mocked class that were created by code
+      under test with a matching constructor call to be captured to a list for verification.
+   </li>
+   <li>
+      JMockit now works fine with the <a href="http://jacoco.org/jacoco/index.html">JaCoCo</a> code coverage tool,
+      provided version 0.7.1 or newer of JaCoCo is used (an snapshot build of this version is currently available).
+   </li>
+   <li>
+      JMockit now works fine with the <a href="http://robolectric.org">Robolectric</a> Android testing tool
+      (tested with Robolectric 2.2 and 2.3).
+   </li>
+   <li>
+      Issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=343">343</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=346">346</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=347">347</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=348">348</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=64&start=2639">1.7</a> (Mar 9, 2014):</p>
+<ul>
+   <li>
+      <strong>Dropped support</strong> for <em>non-annotated</em> mock fields and mock parameters.
+      All such fields and test method parameters now need to use at least one of the four mocking annotations:
+      <code class="annotation">@Mocked</code>, <code class="annotation">@Injectable</code>,
+      <code class="annotation">@Cascading</code>, and/or <code class="annotation">@Capturing</code>.
+      (Recent releases were already writing a warning to console output when a non-annotated mock field or mock
+      parameter was found.)
+   </li>
+   <li>
+      <strong>Removed</strong> the <strong><code>forEachInvocation</code></strong> field, which was deprecated in
+      release 1.6.
+      Existing tests using it should instead take advantage of the <code>withCapture()</code> and
+      <code>withCapture(List)</code> methods, or convert the handler object to a <code class="type">Delegate</code>
+      object assigned to the <code>result</code> field (in the case of a recorded expectation).
+   </li>
+   <li>
+      <strong>Dropped support</strong> for importing local mock fields from expectation blocks into verification blocks,
+      since it was a little known and rarely useful feature.
+      Also, support for local mock fields is scheduled for removal in a future release (currently, the presence of local
+      mock fields inside expectation blocks causes a warning to be printed).
+   </li>
+   <li>
+      <strong>Deprecated</strong> the <code class="annotation">@UsingMocksAndStubs</code> annotation.
+      Programmatic application of mock-ups at the test class or test suite levels should be done in
+      <code class="annotation">@BeforeClass</code> methods instead (JUnit or TestNG).
+   </li>
+   <li>
+      <strong>Deprecated</strong> the mock-up classes in the <code>mockit.integration.logging</code> package
+      (<code class="type">Log4jMocks</code> and others).
+      If they happen to be used in existing test classes, consider copying them into the client project or into an
+      standalone jar file; future versions of JMockit will no longer include them.
+   </li>
+   <li>
+      <strong>Dropped support</strong> for the <strong><code>jmockit-stubs</code></strong> system property.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: JMockit Coverage (updated to version <strong>0.999.26</strong>) will consider only
+      classes loaded during the test run, if the "<code>coverage-classes</code>" system property is set to
+      "<code>loaded</code>".
+      This is useful when running a set of tests targeting only a small part of the codebase, so that the generated
+      HTML report only includes the classes of interest.
+   </li>
+   <li>
+      Issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=331">331</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=332">332</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=335">335</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=337">337</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=339">339</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=340">340</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=83&start=2575">1.6</a> (Dec 23, 2013):</p>
+<ul>
+   <li>
+      <strong>Removed</strong> the <code class="annotation">@NonStrict</code> annotation, which was deprecated in
+      release 1.5.
+      Tests still using it should instead use <code class="type">NonStrictExpectations</code> blocks.
+   </li>
+   <li>
+      <strong>Removed</strong> the "<code>methods</code>" and "<code>inverse</code>" attributes of the
+      <code class="annotation">@Mocked</code> annotation, which were deprecated in release 1.5.
+      Tests still using "<code>@Mocked(methods = {...})</code> should instead use the default "<code>value</code>"
+      attribute.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>Expectations#returns(Object)</code> method, in favor of using the
+      <code>result</code> field instead.
+      The <code class="type">Expectations</code> class still contains the <code>returns(Object, Object...)</code>
+      method, however.
+      Therefore, existing "<code>returns(&lt;a value>);</code>" calls will automatically become calls to the "varargs"
+      method, provided test classes are recompiled; if they are not, a <code class="type">NoSuchMethodError</code> will
+      occur whenever the removed <code>returns(Object)</code> method is called.
+   </li>
+   <li>
+      <strong>Removed</strong> all Reflection-based utility methods from the <code class="type">Invocations</code> class
+      (the base for <code class="type">Expectations</code> and <code class="type">Verifications</code>), in favor of
+      using the <code>static</code> methods of identical signatures in the <code class="type">Deencapsulation</code>
+      class.
+      This change in the API will not require any changes to test code, except that test classes using these methods
+      should now include the following "static import":
+      <code>import static mockit.Deencapsulation.*;</code>
+   </li>
+   <li>
+      The special fields used in <code class="type">Expectations</code> and <code class="type">Verifications</code>
+      blocks (<code>anyInt</code>, <code>result</code>, etc.) have been changed from <code>static</code> to
+      <em>instance</em> fields.
+      This change should require nothing more than a recompilation of existing test classes.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the <code>forEachInvocation</code> field.
+      Existing tests using it should instead take advantage of the new <code>withCapture()</code> and
+      <code>withCapture(List)</code> argument-capturing methods, which provide better syntax.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong> updated to version <strong>0.999.25</strong>, with some fixes and performance
+      improvements.
+   </li>
+   <li>
+      Issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=320">320</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=321">321</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=322">322</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=323">323</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=328">328</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=329">329</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=76&start=2492">1.5</a> (Oct 20, 2013):</p>
+<ul>
+   <li>
+      <strong>Removed</strong> the <code>reentrant</code> attribute of the <code class="annotation">@Mock</code>
+      annotation, which was deprecated in release 1.1.
+      Existing mock methods marked as reentrant should instead have an <code class="type">Invocation</code> parameter.
+   </li>
+   <li>
+      <strong>Dropped</strong> support for the "<code>it</code>" field.
+      Mock classes which have an <code>it</code> field should instead use the
+      <code>Invocation#getInvokedInstance()</code> method in order to obtain the invoked instance of the mocked class.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>Mockit.setUpMocks(Object...)</code> and
+      <code>Mockit.setUpMock(Object)</code> methods, which were deprecated in release 1.1.
+      These were the last methods in the <code class="type">Mockit</code> class, so it was removed as well.
+      Existing tests still using any of these methods should replace them as described in the corresponding API
+      deprecation comments.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code class="annotation">@MockClass</code> annotation, which was deprecated in
+      release 1.1.
+      Existing mock classes should instead extend the <code class="type">MockUp&lt;T></code> base class.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the <code class="annotation">@NonStrict</code> annotation.
+      Existing tests using it should instead use <code class="annotation">@Mocked</code>, while converting
+      "<code>new <strong>Expectations</strong>() { ... }</code>" blocks to
+      "<code>new <strong>NonStrictExpectations</strong>() { ... }</code>" blocks.
+      Alternatively, if strict recording is desired for some other mocked type, the expectations recorded on the
+      <code class="annotation">@NonStrict</code> mocked type can be moved to a separate non-strict expectations block.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the "<code>methods</code>" and "<code>inverse</code>" attributes of
+      <code class="annotation">@Mocked</code>.
+      Existing uses like <code class="annotation">@Mocked</code><code>(methods = {"method1", "method2"})</code> should
+      simply be rewritten as <code class="annotation">@Mocked</code><code>({"method1", "method2"})</code> (using the
+      default <code>value</code> attribute).
+      As for the <code>inverse</code> attribute, specify what <em>is</em> to be mocked instead.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong> updated to version <strong>0.999.24</strong>, with a minor fix for Unix/Linux
+      systems (see issue <a href="http://code.google.com/p/jmockit/issues/detail?id=305">305</a>), and an enhancement:
+      configuration properties such as "<code>jmockit-coverage-metrics=line"</code> can now be written without the
+      <code>"jmockit-"</code> prefix as well.
+   </li>
+   <li>
+      Other issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=307">307</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=308">308</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=309">309</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=310">310</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=311">311</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=315">315</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=316">316</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=30&start=2416">1.4</a> (Aug 21, 2013):</p>
+<ul>
+   <li>
+      <strong>Removed</strong> the <code>Mockit.stubOut(...)</code> and <code>Mockit.stubOutClass(...)</code> methods,
+      which were deprecated in release 1.1.
+      To replace existing calls, use the <code class="type">MockUp</code> class.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>classNames</code> and <code>inverse</code> attributes of the
+      <code class="annotation">@Capturing</code> annotation, which were deprecated in release 1.3.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>realClassName</code> attribute of the <code class="annotation">@Mocked</code>
+      annotation, which was deprecated in release 1.3.
+   </li>
+   <li>
+      <strong>Removed</strong> the two methods <code>Mockit.setUpMock(Class realClass, Object mock)</code> and
+      <code>Mockit.setUpMock(Class realClass, Class mockClass)</code>, which were deprecated in release 1.1.
+      The <code class="type">MockUp</code> class should be used to replace existing calls to these methods.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong> updated to version <strong>0.999.23</strong>, with small fixes and enhancements.
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=305">305</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=14&start=2386">1.3</a> (Jun 23, 2013):</p>
+<ul>
+   <li>
+      <strong>Removed</strong> the <code class="annotation">@Input</code> annotation, which had been deprecated in
+      release 1.2.
+      Existing tests with <code class="annotation">@Input</code> fields will have to record equivalent expectations
+      instead.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>Expectations#notStrict()</code> method, which had been deprecated in release
+      1.2.
+      Existing tests that call this method will have to use <code class="annotation">@NonStrict</code> or
+      <code class="type">NonStrictExpectations</code> instead, with the associated verification block.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>Mockit.setUpMock(String realClassName, Object mock)</code> and
+      <code>Mockit.setUpMock(String realClassName, Class<?> mockClass)</code> methods, which were deprecated in release
+      1.1.
+      To replace existing calls, use Reflection to load the non-accessible real class, then pass it in a call to
+      <code>MockUp(Class)</code>.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>Mockit.stubOutClass(String realClassName, String... filters)</code> and
+      <code>Mockit.stubOutClass(String realClassName, boolean inverse, String... filters)</code> methods, which were
+      deprecated in release 1.1.
+      To replace existing calls, use Reflection to load the non-accessible real class, then pass it in a call to
+      <code>MockUp(Class)</code>; methods to be stubbed out should have empty <code class="annotation">@Mock</code>
+      methods in the mock-up class.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>Mockit.setUpMocksAndStubs(Class... mockAndRealClasses)</code> method, which
+      was deprecated in release 1.1.
+      Use <code class="annotation">@UsingMocksAndStubs</code> on the test class instead.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>Mockit.setUpStartupMocks(Object... mockClassesOrInstances)</code> method, which
+      was deprecated in release 1.1.
+      Set the <code>jmockit-mocks</code> system property instead.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the <strong><code>classNames</code></strong> and <strong><code>inverse</code></strong>
+      attributes of the <code class="annotation">@Capturing</code> annotation, and the
+      <strong><code>realClassName</code></strong> attribute of the <code class="annotation">@Mocked</code> annotation.
+      These annotation attributes are rarely useful and not refactoring-friendly; they are scheduled to be removed in a
+      future release.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong> updated to version <strong>0.999.22</strong>, with an enhancement:
+      Added the <strong><code>jmockit-coverage-maxConditions</code></strong> system property, to limit the maximum
+      complexity of methods for the <em>path coverage</em> metric.
+      The default value for this property is 10 (ten).
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=300">300</a>.
+   </li>
+   <li>
+      Other issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=297">297</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=298">298</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=299">299</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=45&start=2372">1.2</a> (Apr 21, 2013):</p>
+<ul>
+   <li>
+      <strong>Removed</strong> the <code class="type">Instantiation</code> enum, which had been deprecated in release
+      1.1.<br/>
+      Existing mock classes using the
+      <code><span class="annotation">MockClass</span>#<strong>instantiation</strong></code> annotation attribute will
+      need to be converted to <code class="type">MockUp&lt;T></code> subclasses.
+      In the case of "<code>instantiation = <strong>PerMockSetup</strong></code>", simply convert the mock class to a
+      mock-up class, which always uses a single instance per setup.
+      The "<code>instantiation = <strong>PerMockedInstance</strong></code>" functionality is no longer available, since
+      it was rarely used and can be emulated with a <code>Map</code> in a single mock-up class instance, for any state
+      associated to individual mocked instances.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>Mockit.<strong>tearDownMocks()</strong></code> and
+      <code>Mockit.<strong>tearDownMocks(Class<?>...)</strong></code> methods, which were deprecated in release 1.1.
+      <br/>
+      Existing calls to these methods will need to be either removed or replaced with calls to
+      <code>MockUp#tearDown()</code>.
+      The first choice (simply removing existing calls) should be applicable in most or all cases, since JMockit
+      automatically tears down all mock classes applied on a given context, when said context (the test method/class/
+      suite or a test preceded by a "before" method) is exited.
+      If explicit tear down really is needed, then the <code class="type">MockUp</code> class and its
+      <code>tearDown()</code> method will have to be used instead.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>Mockit.<strong>newEmptyProxy(...)</strong></code> methods, deprecated in
+      release 1.1.
+      Use "<code>new MockUp&lt;E>(){}.getMockInstance()</code>" instead.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the <code class="annotation">@Input</code> annotation.
+      Few, if any, users seem to have ever used this small part of the mocking API.
+      Its use was entirely optional, since what it does can always be achieved with the
+      <code>result</code> field; it was merely meant as a more succinct alternative in simple scenarios, where a given
+      mocked type would have a single mocked method which needed to return a value of a certain type, or throw a
+      certain checked exception.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the <code>Expectations#notStrict()</code> method.
+      This is a rarely used method, which can always be replaced by recording non-strict expectations and adding
+      verification blocks.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: The "<code>result</code>" field now can perform additional type conversions,
+      including primitive <em>widening</em> conversions such as from <code>char</code> to <code>int</code>.
+      Also supported are primitive <em>narrowing</em> conversions, for example from <code>int</code> to
+      <code>byte</code>.
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=285">285</a>.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong> updated to version <strong>0.999.21</strong>, with an enhancement:
+      The code coverage tool can now be used without <code>jmockit.jar</code> or <code>jmockit-coverage.jar</code> in
+      the classpath.
+      Instead, the JVM should be launched with the "<code>-javaagent:&lt;proper path>jmockit-coverage.jar</code>"
+      initialization parameter.
+   </li>
+   <li>
+      Other issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=281">281</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=291">291</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=293">293</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=58&start=2327">1.1</a> (Feb 25, 2013):</p>
+<ul>
+   <li>
+      <strong>Deprecated</strong> parts of the Mockups API:
+      the <code class="annotation">@MockClass</code> annotation, the <code class="type">Instantiation</code> enum, the
+      <code>reentrant</code> attribute in the <code class="annotation">@Mock</code> annotation, and all methods in the
+      <code class="type">Mockit</code> class.
+      See the corresponding deprecation comments in API documentation for ways to replace existing uses of these API
+      elements.<br/>
+      As replacement for the "<code>Mockit.tearDownMocks(...)</code>" methods, the <code>tearDown()</code> method was
+      added to the <code class="type">MockUp</code> class.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong> updated to version <strong>0.999.20</strong>, with the following issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=266">266</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=268">268</a>.
+   </li>
+   <li>
+      Other issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=267">267</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=269">269</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=270">270</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=272">272</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=275">275</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=276">276</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=277">277</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=279">279</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=18&start=2269">1.0</a> (Dec 20, 2012):</p>
+<ul>
+   <li>
+      Issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=261">261</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=262">262</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=51&start=2251">0.999.19</a> (Nov 19, 2012):</p>
+<ul>
+   <li>
+      <strong>Enhancement</strong>: Added support for test execution in the presence of custom class loaders, such
+      as Maven's <code class="type">IsolatedClassLoader</code> (which gets used when certain Surefire configuration
+      parameters such as "<code>&lt;useSystemClassLoader>false&lt;/useSystemClassLoader></code>" are specified).
+      Fixes issue <a href="http://code.google.com/p/jmockit/issues/detail?id=247">247</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Added support for automatic conversions when a single value is assigned to the
+      <code>result</code> field, but the return type of the recorded method is an array, collection, or iterator.
+      In these cases, a suitable container object is created with that single value.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: When verifying expectations, "<code>aLocalVar = withCapture()</code>" expressions
+      will now consider the type of the local variable into which the argument is captured when looking for matching
+      invocations. This is useful for parameters of reference types, when the actual arguments received during replay
+      are of a subtype; such arguments can be captured by using a capturing variable of that subtype.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Added an <strong><code>unverifiedInvocations()</code></strong> method to
+      <code class="type">FullVerifications</code>, to allow a test to discard unverified invocations occurring in an
+      early preparation phase, while allowing later invocations to be verified as needed.
+      This is similar to "<code>reset(mock)</code>" methods provided in other mocking APIs.
+      Fixes issue <a href="http://code.google.com/p/jmockit/issues/detail?id=257">257</a>.
+   </li>
+   <li>
+      Other issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=248">248</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=249">249</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=252">252</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=253">253</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=254">254</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=258">258</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=57&start=2200">0.999.18</a> (Oct 18, 2012):</p>
+<ul>
+   <li>
+      <strong>Enhancement</strong>: Added support for specifying "replacement instances" through the <code>result</code>
+      field. When recording a <em>constructor</em> expectation, simply assign an instance of the mocked class to have
+      it "take the place" of any new instances that get later created with a matching constructor invocation.
+      The replacement instance can be obtained from a mock field/parameter, or be a <em>real</em> instance when applying
+      dynamic mocking through a "new <code>Expectations(AClassToBeMocked.class)</code>" or
+      "new <code>NonStrictExpectations(AClassToBeMocked.class)</code>" call.
+      This solves <a href="http://code.google.com/p/jmockit/issues/detail?id=210">issue 210</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: <code class="annotation">@Tested</code> can now be applied to <code>abstract</code>
+      classes. A subclass is created with all abstract methods automatically mocked, so that expectations can be
+      recorded and verified on them.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Added automatic conversions from arrays assigned to the <code>result</code> field,
+      when recording return values for a method whose return type is a collection, iterator, or map.
+      This provides a convenient way to specify static values for such methods, since it's easier to fill out an array
+      than a <code class="type">List</code> or <code class="type">Map</code>.
+      Additionally, automatic conversions from strings to <code class="type">StringBuilder</code>,
+      <code class="type">InputStream</code>, <code class="type">ByteArrayInputStream</code>,
+      <code class="type">Reader</code>, <code class="type">StringReader</code>, and
+      <code class="type">java.nio.CharBuffer</code> are now also supported.
+   </li>
+   <li>
+      Other issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=231">231</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=244">244</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=245">245</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=69&start=2143">0.999.17</a> (Sep 17, 2012):</p>
+<ul>
+   <li>
+      <strong>New feature</strong>: When using <code class="annotation">@Tested</code> and
+      <code class="annotation">@Injectable</code>, use of the
+      <a href="http://docs.oracle.com/javaee/6/api/javax/inject/package-summary.html">standard Java API for dependency
+      injection</a> (JSR-330) in the tested class is now explicitly supported.
+      Any fields and/or constructors annotated with <code class="type">javax.inject.Inject</code> will be the only ones
+      considered when performing injection of <code class="annotation">@Injectable</code>s into the
+      <code class="annotation">@Tested</code> object.
+      Also, the <code class="type">javax.inject.Provider&lt;T></code> interface is properly supported for
+      <code class="annotation">@Injectable</code>s of type "<code>T</code>".
+   </li>
+   <li>
+      <strong>New feature</strong>:
+      Added the <a href="javadoc/mockit/Verifications.html#withCapture()"><code>withCapture()</code></a> and
+      <a href="javadoc/mockit/Verifications.html#withCapture(java.util.List)"><code>withCapture(List)</code></a> methods
+      to the <code class="type">Verifications</code> base class (the second one also available in
+      <code class="type">Expectations</code> blocks).
+      These two new methods allow for the easy and succinct capture of invocation arguments for recorded/verified
+      expectations.
+      For details and an example, see the API documentation.
+   </li>
+   <li>
+      <strong>New feature</strong> in JMockit Coverage:
+      A new property "<code>jmockit-coverage-check</code>" is now supported, enabling checks for minimum coverage
+      percentages to be performed.
+      For details, see the <a href="tutorial/CodeCoverage.html#checking">relevant</a> section in the JMockit Tutorial.
+      This solves <a href="http://code.google.com/p/jmockit/issues/detail?id=235">issue 235</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong>:
+      Added the <a href="javadoc/mockit/Invocation.html#getInvokedArguments()"><code>getInvokedArguments()</code></a>
+      method to the <code class="type">Invocation</code> class.
+      Together with a related enhancement which allows "<code>forEachInvocation</code>" handler methods to only have the
+      <code class="type">Invocation</code> parameter, this further enables the creation of reusable delegate and handler
+      objects for use with the <code class="type">Delegate</code> interface and the <code>result</code> and
+      <code>forEachInvocation</code> fields.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Dropped the requirement for a <code class="annotation">@Tested</code> class to have
+      an accessible constructor.
+      This helps in the case where a public class is only meant to be instantiated by a DI container, allowing it to
+      have non-public constructors only.
+   </li>
+   <li>
+      Other issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=187">187</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=229">229</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=234">234</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=236">236</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=238">238</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=241">241</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=242">242</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=55&start=2074">0.999.16</a> (Jul 30, 2012):</p>
+<ul>
+   <li>
+      <strong>Enhancement</strong>: <code class="annotation">@Mock</code> methods now also apply to the super-classes of
+      the specified class to be mocked, when the latter doesn't define a matching method.
+      This avoids the need to set up two or more separate mock classes when the methods to be method are defined in
+      multiple levels of a class hierarchy.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Mock-ups for generic classes now can declare mock methods with parameters types
+      matching the generic argument types specified in the mocked type, instead of using <code>Object</code>.
+      This is still not supported when the mocked type is a generic interface, however.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=229">issue 229</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Previously, when a <code class="type">Delegate</code> method invoked another mocked
+      method/constructor, it would cause the real implementation of that method/constructor to be executed; now such an
+      invocation gets the mocked behavior, which is what a user would intuitively expect.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong>: Removed the <code>jmockit-coverage-{htmlbasic|htmlfull|serial|merge}.jar</code>
+      files from the distribution zip file, and dropped support for output selection through the addition of such files
+      to the runtime classpath.
+      This was done because few users relied on this feature, and it wasn't applicable to Maven runs; also, some users
+      add every jar file to the classpath by default.
+      Therefore, the only way now to select the desired coverage output is by setting the
+      <code>jmockit-coverage-output</code> system property.
+   </li>
+   <li>
+      Automatic JMockit initialization is now supported on <strong>Mac OS X</strong>.
+      (Previously, it was usually necessary to add the "<code>-javaagent</code>" parameter when using JDK 1.6+ on this
+      OS.)
+   </li>
+   <li>
+      Added support for the new "<code>jmockit-mockParameters=annotated</code>" system property, to be set when
+      automatic (non-annotated) mock parameters in test methods would conflict with some other JUnit/TestNG integration.
+      When set, only those test method parameters that are explicitly annotated with
+      <code class="annotation">@Mocked</code>, <code class="annotation">@NonStrict</code>,
+      <code class="annotation">@Cascading</code>, <code class="annotation">@Capturing</code>, and/or
+      <code class="annotation">@Injectable</code> are considered to be <em>mock</em> parameters.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=232">issue 232</a>.
+   </li>
+   <li>
+      Other issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=224">224</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=227">227</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=230">230</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=41&start=2019">0.999.15</a> (Apr 30, 2012):</p>
+<ul>
+   <li>
+      <strong>New feature</strong>: Added the <code>proceed()</code> method to
+      <code class="type">mockit.Invocation</code>, to be used in <code class="annotation">@Mock</code> or delegate
+      methods.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: When running JMockit Coverage in standalone mode, the classes to be measured for
+      coverage will now be those not loaded from a jar file, unless specified otherwise.
+      (In a web application running inside a Java application server, for example, these will be the classes under
+      <code>WEB-INF/classes</code>.)
+   </li>
+   <li>
+      Issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=220">220</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=221">221</a>.
+      <br/>
+      Also, applied a temporary workaround to avoid a NPE during path building (JMockit Coverage).
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=52&start=1978">0.999.14</a> (Mar 30, 2012):</p>
+<ul>
+   <li>
+      <strong>New feature</strong>:
+      The JMockit Coverage tool can now be used in "standalone" mode, outside of a test run.
+      To enable this mode in any JVM instance, simply start it with
+      "<code>-javaagent:&lt;proper path>/jmockit-coverage.jar</code>";
+      there is no need to add any jar to any classpath.
+      <br/>
+      With the Tomcat application server, for example, one can set the "<code>CATALINA_OPTS</code>" environment
+      variable with a value like
+      "<code>-javaagent:/jmockit/jmockit-coverage.jar -Djmockit-coverage-outputDir=/dir/for/coverage/report</code>"
+      (as shown here, "jmockit-coverage-" system properties can optionally be set as well).
+      <br/>
+      Standalone mode provides a JMX "MBean" for control, which can be accessed locally or remotely through a JMX
+      client such as JConsole (available in the JDK).
+   </li>
+   <li>
+      Fixed inadequacies in the errors automatically thrown when <em>unexpected</em> or <em>missing</em>
+      invocations were detected during a test; instead of throwing a <code>java.lang.AssertionError</code>, JMockit will
+      now throw a custom <code>java.lang.Error</code> subclass -
+      see <a href="http://code.google.com/p/jmockit/issues/detail?id=213">issue 213</a>.
+   </li>
+   <li>
+      Added a validation against mixing strict and non-strict expectations for the same dynamically mocked instance or
+      class (see <a href="http://code.google.com/p/jmockit/issues/detail?id=209">issue 209</a>);
+      changed the precedence when choosing whether to mock strictly or non-strictly in favor of the latter, in
+      situations where the same type is mocked twice.
+   </li>
+   <li>
+      Removed the automatic activation of asserts in test classes, since it only worked when using
+      <code>-javaagent:jmockit.jar</code>, among other reasons.
+   </li>
+   <li>
+      Other issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=211">211</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=214">214</a>.
+   </li>
+   <li>
+      The following experimental/incomplete tools are no longer included in the distribution zip file:
+      <em>Hibernate 3 Emulation</em> (<code>jmockit-hibernate3emul.jar</code>), <em>Incremental Test Runner</em>
+      (<code>jmockit-incremental.jar</code>), and <em>Multicore Test Runner</em> (<code>jmockit-multicore.jar</code>).
+      The development of these tools will be eventually completed, as part of the
+      <a href="http://jmockit.org2">JMockit 2</a> project.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=96&start=1926">0.999.13</a> (Feb 23, 2012):</p>
+<ul>
+   <li>
+      <strong>Removed</strong> the "<code>Mocked#capture</code>" and "<code>Capturing#baseType</code>" annotation
+      attributes, which were deprecated in the previous release.
+      Existing tests still using them will have to be changed as described in the deprecation comments.
+   </li>
+   <li>
+      <strong>New feature</strong>: Added the "<code>value</code>" attribute to
+      <code class="annotation">@Injectable</code>, to enable the injection of primitive values and strings into
+      "<code class="annotation">@Tested</code>" objects from mock <em>parameters</em> (previously, it was only possible
+      with mock <em>fields</em>).
+   </li>
+   <li>
+      <strong>Enhancements</strong> to the automatic instantiation and injection of
+      <code class="annotation">@Tested</code> objects:
+      a) constructor injection now selects among multiple constructors when more than one can be satisfied by the
+      available <code class="annotation">@Injectable</code>'s, by choosing the one with the most parameters;
+      b) for constructor injection, the <em>names</em> of eligible constructors are now matched against the names of
+      the injectable fields <em>and</em> test method parameters having the same type as the constructor parameter;
+      c) the names of injectable parameters, as declared in test methods, are considered when searching for matching
+      constructor parameters and instance fields in the tested class;
+      d) <em>field</em> injection is now always performed, even if constructor injection was not (ie, the tested class
+      was explicitly instantiated).
+   </li>
+   <li>
+      <strong>Enhancement</strong>: "<code>forEachInvocation</code>" validation methods can now return
+      <code>boolean</code> to indicate whether the received invocation arguments are valid (<code>true</code>) or not
+      (<code>false</code>).
+      In the last case, a descriptive error message is generated from the validation method name and the actual argument
+      values.
+      <br/>
+      This change will break existing tests which use a <em><code>forEachInvocation</code></em> class whose method
+      happens to return a value to be returned from the associated recorded expectation.
+      Instead, an identical <code class="type">Delegate</code> object should be assigned to the
+      <em><code>result</code></em> field.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong>: Several fixes and enhancements to the HTML report.
+      Fixed an issue with code compiled with Java 7.
+   </li>
+   <li>
+      <strong>Fixed</strong> an incompatibility with TestNG introduced in the previous release.
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=194">194</a>.
+   </li>
+   <li>
+      <strong>Fixed</strong> a bug affecting the recording of multi-valued (arrays, collections, etc.) return values
+      for methods whose return type is also a multi-valued type.
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=196">196</a>.
+   </li>
+   <li>
+      <strong>Other bug fixes</strong>: a) improper instance-specific matching of invocations to constructors (now the
+      new instance is never matched); b) use of <code>onInstance(mock)</code> in verification blocks didn't work when
+      multiple instances of the mocked type were involved; c) dynamically mocked constructors could not invoke private
+      methods.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=107&start=1830">0.999.12</a> (Dec 22, 2011):</p>
+<ul>
+   <li>
+      <strong>Deprecated</strong> the "<code>capture</code>" and "<code>baseType</code>" annotation attributes, used in
+      the <code class="annotation">@Mocked</code> and <code class="annotation">@Capturing</code> annotations,
+      respectively.
+      Existing uses of "<code>@Mocked(<strong>capture</strong> = <em>n</em>)</code>" should be replaced with
+      "<code>@Capturing</code>" or "<code>@Capturing(maxInstances = <em>n</em>)</code>", as needed.
+      Applications of "<code>@Capturing(<strong>baseType</strong> = <em>BaseType.class</em>)</code>" to a test class
+      should be replaced with "<code>@Capturing <em>BaseType</em> xyz;</code>" mock fields.
+   </li>
+   <li>
+      <strong>New feature</strong>: mock classes and classes to be stubbed out for a whole test suite can now be
+      specified through external configuration, by defining the "<code>jmockit-mocks</code>" and
+      "<code>jmockit-stubs</code>" system properties, respectively.
+      These properties can also be defined in custom <code>jmockit.properties</code> files, which may appear in the
+      classpath in any number; if more than one such file defines one of those properties, the values are added
+      together.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Error messages for unexpected or missing invocations will now include the actual
+      <em>parameter names</em> of mocked methods/constructors.
+      Other small improvements were also made in the failure descriptions generated by argument matchers.
+   </li>
+   <li>
+      Internal classes copied from <strong>Hamcrest 1.1</strong> (under <code>mockit.external.hamcrest</code>) were
+      replaced with new code, for reasons of simplicity and efficiency.
+      At the same time, the <code>with(Delegate&lt;T>)</code> method was improved to return a non-<code>null</code>
+      default value when <code>T</code> is a primitive wrapper type.
+   </li>
+   <li>
+      Completed the internal upgrade to <strong>ASM 4</strong> (under <code>mockit.external.asm4</code>), which began a
+      few releases ago.
+   </li>
+   <li>
+      New <strong>"Faking x Mocking" sample test suite</strong> created, based on
+      <a href="http://schuchert.wikispaces.com/JMockIt.AStoryAboutTooMuchPower">this</a> article.
+      This is the only test suite which contains both <em>unit</em> and <em>integration</em> tests.
+      Integration test classes are named as <code>"...IntegrationTest"</code> so they can be executed separately.
+      In addition to that, the integration tests can be executed in two different "modes": as pure integration tests
+      accessing an external Web site, or with <em>faked</em> network access simulating the responses from the Web site.
+   </li>
+   <li>
+      Upgraded existing comparison test suites to use <strong>Mockito 1.9.0</strong> and
+      <strong>Unitils Mock 3.2</strong>.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong> received a few fixes and improvements to the <em>path coverage</em> metric:
+      1) <em>stack map frames</em> in the bytecode generated by a Java 7 compiler are now handled correctly, avoiding
+      the <code>VerifyError</code> that could occur before;
+      2) <code>break</code> statements inside loops are now handled properly (there is still an issue with
+      <code>continue</code> statements, though);
+      3) certain simple constructs such as <code>return !b; // (b == a boolean)</code> caused an unexpected path to be
+      detected and measured, which is now disregarded.
+   </li>
+   <li>
+      <strong>Fixed</strong> a problem in tests using the Expectations API, where the same class was mocked in an outer
+      scope (as a mock field in the test class, usually) <em>and</em> in an inner scope (as a mock parameter or a
+      dynamic mock in a test method).
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=189">189</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=51&start=1723">0.999.11</a> (Oct 21, 2011):</p>
+<p>
+   From this version on, JMockit artifacts are deployed to the <a href="http://repo1.maven.org/maven2">Maven Central</a>
+   repository, under a different "<code>&lt;groupId></code>" of "<code>com.googlecode.jmockit</code>".
+   Therefore, Maven users should change JMockit dependencies in their <code>pom.xml</code> files accordingly.
+</p>
+<ul>
+   <li>
+      <strong>Changed</strong> the semantics for the <code>Expectations(Object...)</code> and
+      <code>NonStrictExpectations(Object...)</code> constructors so that the <code class="type">Class</code> literals
+      and/or instances passed in are (<em>dynamically</em>) mocked in a more intuitive way:
+      a) for a given <code class="type">Class</code>, the super-classes are now also considered for mocking, rather than
+      only the specified class;
+      b) for a given <em>object</em>, only method invocations made on the specified instance will be able to match
+      expectations (invocations on other instances will execute the real implementation).
+      <br/>
+      Most existing tests which use dynamic partial mocking should not be affected, but there is the possibility that a
+      few may break, requiring adaptation to the new behavior.
+   </li>
+   <li>
+      Added support for the new <em>automatic listener registration</em> feature of <strong>TestNG 6.2</strong>.
+      With this, it is no longer necessary to explicitly specify the
+      <code class="type">mockit.integration.testng.Initializer</code> listener.
+      When running on Java 6+ with TestNG 6.2+, the listener will be automatically registered.
+      (The use of <code>-javaagent:jmockit.jar</code> is still required with Java 5, though.)
+   </li>
+   <li>
+      <strong>Fixed</strong> a bug in the JMockit-TestNG integration which caused <em>"Invalid context for the recording
+      of expectations"</em> failures.
+   </li>
+   <li>
+      <strong>Fixed</strong> bugs affecting <code class="annotation">@Cascading</code> mock fields declared in test
+      classes, where cascaded instances created during the execution of a test would remain in effect for a different
+      test class, or would not be recreated for a second test in the same test class.
+      See issues <a href="http://code.google.com/p/jmockit/issues/detail?id=182">182</a> and
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=185">185</a>.
+   </li>
+   <li>
+      <strong>Fixed</strong> a couple of bugs of omission in the Reflection-based utility methods used for calling
+      inaccessible methods and constructors:
+      a) when there were multiple matching methods/constructors, the first one to be found was used, rather than the one
+      with the most specific parameters;
+      b) only constructors with the exact same parameters as the actual argument types were found, rather than
+      constructors with <em>compatible</em> parameters (as already done for methods).
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong>: Fixed a problem with nested classes that get loaded before the outer class.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=60&start=1672">0.999.10</a> (Jun 16, 2011):</p>
+<ul>
+   <li>
+      <strong>Renamed</strong> the "<strong>Annotations</strong>" API, since most annotations now belong to the much
+      grown Expectations API. It is now known as the "<strong>Mockups</strong>" API.
+   </li>
+   <li>
+      <strong>Enhanced</strong> the support for <strong><code class="annotation">@Tested</code></strong> fields:
+      1) <em>non-public</em> classes with a package-private constructor are now accepted as well;
+      2) <code class="annotation">@Injectable</code> fields of <em>non-mockable</em> types (primitives and arrays) are
+      now considered when injecting values into the tested object;
+      3) <em>multiple</em> parameters of the same type are now supported when doing constructor injection, by taking
+      values from matching injectable fields declared in the same relative order;
+      4) a <em>varargs</em> constructor parameter is now supported, taking the values of all injectable fields having
+      the same type.
+   </li>
+   <li>
+      <strong>Enhanced</strong> the support for <strong><code class="annotation">@Input</code></strong> fields:
+      1) <em>multiple</em> fields of the same type can be declared, allowing <em>consecutive</em> results to be
+      specified;
+      2) the new <strong><code>invocations = <em>n</em></code></strong> attribute can be used to specify a fixed number
+      of matching invocations for a given input field;
+      3) auto-instantiation of values can now be done with a <em>non-public</em> no-args constructor;
+      4) it now also works when combined with <em>dynamic</em> partial mocking.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: The <code class="type">mockit.Invocation</code> class can now be used as the type of
+      the first parameter in <code class="annotation">@Mock</code> methods (it was already supported in delegate and
+      validation methods).
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=16">16</a>.
+   </li>
+   <li>
+      Some fixes and improvements to the <strong>TestNG</strong> and <strong>JUnit 3.8</strong> integrations.
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=167">167</a> for one of the bugs fixed.
+   </li>
+   <li>
+      <strong>Fixed/improved</strong> the handling of non-strict expectations recorded for the same method, when using
+      similar or equivalent argument matchers.
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=168">168</a>.
+   </li>
+   <li>
+      Reviewed the Tutorial chapter on <a href="tutorial/BehaviorBasedTesting.html">behavior-based testing</a>,
+      with new coverage on the <code class="annotation">@Injectable</code> and <code class="annotation">@Tested</code>
+      annotations.
+   </li>
+   <li>Tested and adapted JMockit to run on <strong>JDK 7</strong>.</li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=68&start=1612">0.999.9</a> (May 17, 2011):</p>
+<ul>
+   <li>
+      <strong>New feature</strong>: expectation blocks can now specify <em>default results</em> for mocked
+      methods/constructors, without specifying anything but the return type (for default return values) or a checked
+      exception from the <code>throws</code> clause.
+      Each default result is specified through an instance field annotated with
+      <strong><code class="annotation">@Input</code></strong>.
+      See <a href="http://code.google.com/p/jmockit/source/browse/trunk/samples/tutorial/test/jmockit/tutorial/
+domain/MyBusinessService_ExpectationsAPI2_Test.java">here</a> for examples.
+   </li>
+   <li>
+      Fixes and improvements to the support for <strong>reusable expectation/verification blocks</strong> and base test
+      classes.
+      A reusable base class which extends (directly or indirectly) <code class="type">Expectations</code> or
+      <code class="type">Verifications</code> must have a name ending in "Expectations" or "Verifications",
+      respectively.
+      Any such classes in existing test suites will have to be renamed if needed to fit this new rule.
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=161">161</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong> and <em>potentially breaking change</em>:
+      A <em>duplicate</em> recording of a non-strict expectation will now override the previously recorded expectation.
+      Note that this also improves the ability to reuse expectations, since those recorded in a "before" method can now
+      be overridden by identical expectations recorded in a test method.
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=155">155</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: added the <strong><code>verifiedInvocations(Verifications)</code></strong> method to
+      the <code class="type">VerificationsInOrder</code> class.
+      With this, new scenarios involving <em>partially ordered verification</em> are now supported.
+      See issue <a href="http://code.google.com/p/jmockit/issues/detail?id=153">153</a>.
+   </li>
+   <li>
+      <strong>Removed</strong> the <strong><code>endRecording()</code></strong> method of the
+      <code class="type">Expectations</code> class.
+      This method was deprecated in the previous release. Existing tests still using it will have to be changed as
+      described in the deprecation comment.
+   </li>
+   <li>
+      <strong>TestNG integration</strong> no longer requires the <code>mockit.integration.testng.Initializer</code>
+      listener to be configured, <em>as long as</em> the "<code>-javaagent:jmockit.jar</code>" JVM parameter is
+      specified. Otherwise, the listener is still needed.
+   </li>
+   <li>
+      Other issues fixed:
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=156">156</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=157">157</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=160">160</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=163">163</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=164">164</a>.
+      Also, handled a situation where a <code>ClassFormatError</code> would occur in classes instrumented by the
+      EMMA code coverage tool, when they were mocked with <em>reentrant</em> mock methods (Annotations API).
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=41&start=1544">0.999.8</a> (March 11, 2011):</p>
+<ul>
+   <li>
+      Dropped support for <em>mock constructors</em> in the <strong>Annotations API</strong>, to avoid confusion and
+      simplify the documentation.
+      Constructors in a target class can still be mocked with mock methods named "<code>$init</code>"
+      (which already was the recommended way).
+      Therefore, any mock classes containing constructors annotated with <code>@Mock</code> must be changed to use
+      <code>void $init</code> methods instead.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the <strong><code>endRecording()</code></strong> method of the
+      <code>Expectations</code> class.
+      Normally, this method would only be used in rare situations, and with <em>local</em> mock fields.
+      Any such tests should be changed to make use of <em>mock parameters</em> or mock fields of the test class instead.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: When generating an error message for unexpected or missing invocations, custom
+      <code>toString()</code> methods on non-mocked arguments will always be called to provide a more useful/readable
+      message.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=146">issue 146</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: in tests containing two or more <em>verification blocks</em>, an expectation
+      verified in a given block won't need to be repeated in a later <em>full</em> verification block.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=137">issue 137</a>.
+   </li>
+   <li>
+      <strong>Fixed</strong> a bug where an unordered verification block specifying a fixed number of iterations would
+      fail to catch an unexpected invocation.
+   </li>
+   <li>
+      Implemented workarounds for issues caused by the lack of required debug information in classes instrumented by the
+      <strong>EMMA/EclEmma</strong> tool.
+      See issues <a href="http://code.google.com/p/jmockit/issues/detail?id=141">135</a> and
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=141">141</a>.
+   </li>
+   <li>
+      <strong>JMockit Coverage</strong>: Fixed a couple of bugs which caused failures in specific situations
+      (one only affected classes compiled without debug information; the other only affected classes containing uses of
+      nested classes defined in <em>other</em> classes).
+      See issues <a href="http://code.google.com/p/jmockit/issues/detail?id=138">138</a> and
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=142">142</a>.
+   </li>
+   <li>
+      <strong>Fixed</strong> a few other small bugs.
+      See issues <a href="http://code.google.com/p/jmockit/issues/detail?id=143">143</a>,
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=144">144</a>, and
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=147">147</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=35&start=1503">0.999.7</a> (February 13, 2011):</p>
+<ul>
+   <li>
+      <strong>New feature</strong>: Created the <strong><code>@Tested</code></strong> annotation for tested classes,
+      with support for <em>constructor</em> and <em>field</em> injection of <code>@Injectable</code> mocks.
+   </li>
+   <li>
+      <strong>Breaking API change</strong>: The default value for the
+      <strong><code>stubOutClassInitialization</code></strong> attribute of the <code>@Mocked</code> annotation is now
+      <strong><code>false</code></strong>.
+      The <code>jmockit-retainStaticInitializers</code> system property is no longer supported, given that in practice
+      it was only used to change the global default for that attribute to <code>false</code>.
+      This change can break existing tests which happened to mock a class containing static initialization code, when
+      such code performed operations that could potentially fail in the test environment (such as connecting to a remote
+      database, for example).
+      In such a case, the <code>@Mocked(stubOutClassInitialization = true)</code> annotation will have to be applied to
+      the appropriate mock field/parameter.
+   </li>
+   <li>
+      <strong>Changed</strong> the treatment for expectations recorded on overridden <code>equals</code>,
+      <code>hashCode</code> and <code>toString</code> methods so they are always considered <em>non-strict</em>, even
+      when the recording is done on an otherwise <em>strict</em> mocked instance.
+      This allows such methods to be invoked freely while still having strict verification of expected/unexpected
+      invocations on a strict mock.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: The <code>result</code> field and the <code>returns(Object)</code> method (both
+      available in expectation blocks) now also accept <em>arrays</em> and <code>Iterable</code>'s containing values to
+      be returned by consecutive invocations (<em>collections</em> and <em>iterators</em> were already supported).
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Fixed robustness issues when recording expectations in "before" methods, or when
+      verifying expectations in "after" methods.
+      If any mock classes are set up in a "before"/setUp method, they will now be torn down automatically at the end of
+      the test (previously, this required a call to <code>Mockit.tearDownMocks(...)</code> in an "after"/tearDown
+      method.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Added support for the definition of <em>system properties</em> in a custom
+      <code>jmockit.properties</code> file.
+      (The default version of this file can be found inside <code>jmockit.jar</code>.)
+      Several tools in the JMockit toolkit allow configuration through "jmockit-xyz" system properties, which previously
+      had to be defined with the "-D" JVM parameter (or the equivalent Ant/Maven XML code).
+      Now such properties can also be defined by adding a <code>[jmockit-]xyz=some value</code> line in the custom
+      properties file, which should be added to the classpath <em>before</em> <code>jmockit.jar</code> in order to
+      override it. The "jmockit-" prefix is optional when using the file, but will be added in the actual system
+      property so that tools can always look for "jmockit-xyz" properties.
+   </li>
+   <li>
+      <strong>Fixed</strong> a bug which prevented <em>non-strict</em> invocations from being properly matched during
+      replay, when <em>capturing</em> internally created instances for two or more mock fields (or two or more mock
+      parameters) of the same regular (non-injectable) mocked type.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=92&start=1468">0.999.6</a> (January 30, 2011):</p>
+<ul>
+   <li>
+      <strong>Added</strong> support for <strong>TestNG 5.14</strong> (requires listener configuration).
+      However, support for older versions of TestNG (5.9-5.11) was dropped.
+      Therefore, TestNG users upgrading to this version of JMockit (or newer) may also have to upgrade TestNG.
+   </li>
+   <li>
+      <strong>Changed</strong> the default mocking behavior for overridden <code>equals</code>, <code>hashCode</code>
+      and <code>toString</code> methods, so that they are mocked by default but still behave according to the standard
+      behavior inherited from <code>java.lang.Object</code>.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=130">issue 130</a>.
+      Although unlikely, this change <em>can</em> cause existing tests to break.
+   </li>
+   <li>
+      <strong>Fixed</strong> an issue in test classes compiled with Eclipse, when recording or verifying an invocation
+      with two or more parameters, but with argument matchers used only for some of them <em>and</em> spanning two or
+      more source lines.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=114">issue 114</a>.
+   </li>
+   <li>
+      <strong>Fixed</strong> potential for conflict between JMockit and other code which happens to reset the global
+      system properties object (with <code>System.setProperties(Properties)</code>), or that expects only
+      <code>String</code> instances to be stored in it.
+      See issues <a href="http://code.google.com/p/jmockit/issues/detail?id=123">123</a> and
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=129">129</a>.
+   </li>
+   <li>
+      <strong>Fixed</strong> a bug which caused the occurrence of an <code>ArrayIndexOutOfBoundsException</code> when
+      mocking an interface containing static initializers.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=127">issue 127</a>.
+   </li>
+   <li>
+      <strong>Fixed</strong> a bug which caused two mock fields for the same mocked interface to receive the same
+      instance instead of two different instances.
+   </li>
+   <li>
+      <strong>Optimized</strong> the handling of mock fields declared at the test class level.
+      The performance gain should be small but noticeable in a test suite with several test classes containing mock
+      fields.
+   </li>
+   <li>
+      Added initial (and still experimental) version of a <strong>new tool</strong>
+      (<a href="http://code.google.com/p/jmockit/issues/detail?id=134">issue 134</a>):
+      the <em><strong>multi-core</strong> test runner</em>. For now, only JUnit is supported.
+      The tool transparently assigns test classes to run in different CPU cores (when available), so that they are
+      executed in parallel. Code under test does <em>not</em> need to be thread-safe.
+      In a dual-core CPU, this reduces the total time of a test run in half.
+      In a Core i7 processor with hyper-threading the reduction is proportional, ie, it falls to <em>1/8</em> of the
+      regular sequential execution time.
+      To use it, simply add <code>jmockit-multicore.jar</code> to the test execution classpath, <em>before</em> the
+      jar for JUnit. (The presence of <code>jmockit.jar</code> is not required.)
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=79&start=1376">0.999.5</a> (December 28, 2010):</p>
+<p>
+   From this version on, the <strong>Java.net</strong> Maven 2 repository is no longer used.
+   Project artifacts are now deployed <a href="http://jmockit.googlecode.com/svn/maven-repo/">here</a>.
+   Therefore, Maven users should configure the new repository in their <code>pom.xml</code> files.
+</p>
+<ul>
+   <li>
+      <strong>Fixed</strong> conflict with the <strong>EMMA</strong> and <strong>EclEmma</strong> code coverage tools,
+      where a <code>ClassFormatError</code> would occur when dynamic mocking was used.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=30">issue 30</a>.
+   </li>
+   <li>
+      <strong>Fixed</strong> a bug which prevented classes compiled to Java 1.4 or older from being dynamically mocked
+      (regular mocking was not affected).
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=117">issue 117</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: added support for the use of <code>@Injectable</code> with <strong>captured</strong>
+      mocked instances that are created inside tested code.
+      (Capturing of internal instances is enabled by annotating the mock field/parameter with
+      <code>@Mocked(capture = n)</code> or <code>@Capturing(maxInstances = n)</code>.)
+      This new behavior allows captured instances to "take the place" of the original injectable mock instance.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=119">issue 119</a>.
+   </li>
+   <li>
+      <strong>Fixed</strong> a couple of bugs related to the use of the <code>minTimes</code> and <code>maxTimes</code>
+      fields. See <a href="http://code.google.com/p/jmockit/issues/detail?id=121">issue 121</a>.
+   </li>
+   <li>
+      <strong>Changed</strong> the declaration of <code>mockit.Expectations</code>, <code>mockit.Verifications</code>,
+      etc. to make them <code>abstract</code> base classes, in order to avoid a content assist issue with Eclipse JDT.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=122">issue 122</a>.
+   </li>
+   <li>
+      <strong>Fixed/added</strong> support for <code>final</code> mock fields annotated as <code>@NonStrict</code> or
+      <code>@Injectable</code>, in particular the <strong>local</strong> ones (declared inside an expectation block).
+   </li>
+   <li>
+      Improved the <strong>Ant</strong> and <strong>Maven</strong> build configurations.
+      The Ant "build.properties" file was eliminated.
+      All occurrences of the "system" scope for Maven dependencies were eliminated.
+      Third-party jar files were removed from the SVN repository and from the main toolkit distribution zip file;
+      a separate zip file containing these jars ("jmockit-libs.zip") is now provided for download, for users that want
+      to build the project with Ant.
+      A full Maven build (with tests) of the top-level module ("jmockit/pom.xml") can be successfully performed, without
+      any locally available third-party libraries; the four main modules ("main", "coverage", "hibernate3emul", and
+      "incremental") will be built.
+      The sample test suites can be executed by running the "test" goal on the top-level samples module
+      ("jmockit/samples/pom.xml").
+   </li>
+   <li>
+      Fixed the reporting of tests not (re-)executed when using the incremental testing tool for JUnit 4, so that they
+      are listed as ignored (in a particular test run).
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=38&start=1297">0.999.4</a> (December 5, 2010):</p>
+<ul>
+   <li>
+      <strong>New feature</strong>: improved support for instance-specific mocking, in the form of a new
+      <strong><code>@Injectable</code></strong> annotation. It can be used together with <code>@Mocked</code> or by
+      itself.
+      Previously, it was necessary to use dynamic partial mocking, often combined with calls to
+      <code>onInstance(mock)</code>, in order to restrict mock/stub behavior to a single mocked instance.
+      This is important in cases where the behavior of other instances of the same mocked type could be inadvertently
+      affected. (For example, when mocking standard JRE classes which might be used internally by other JRE classes.)
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=113">issue 113</a>.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>constructorArgsMethod</code> attribute from the <code>@Mocked</code>
+      annotation. This attribute was only rarely, if ever, actually useful. Existing tests that use it (hopefully no
+      more than a few, if any at all) can be modified to directly instantiate the mocked class with the desired
+      constructor.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: mocked instances automatically created to supply mock fields and parameters are
+      now instantiated without going through any constructor. This avoids certain complications when partial mocking is
+      used, and generally makes the Expectations API more robust. It relates to the previous change item, which allowed
+      the selection of constructors when instantiating mocked classes.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: <em>cascaded</em> mock instances created from a <code>@Cascading</code> mocked type
+      will now behave like <code>@Injectable</code> ones, so that other instances of the same type are not inadvertently
+      affected. This also allows a regular (non-mocked) instance of the cascaded type to take the place of the default
+      mocked instance; simply assign the regular object to the <code>result</code> field, after a call to the
+      appropriate non-void method.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: added support for the mocking of the <code>java.lang.Object</code> class through the
+      Expectations API (the <code>wait</code> and <code>notify</code> methods, in particular, can now be mocked by
+      declaring a mock field/parameter of type <code>Object</code>).
+   </li>
+   <li>
+      <strong>Enhancement</strong>: when matching invocations to expectations, parameters of array type are now compared
+      by value rather than by reference. This applies to arrays having any number of dimensions.
+      Previously, a call to <code>withEqual(arrayValue)</code> was required for this.
+   </li>
+   <li>
+      Fixed a bug where an <code>UnsatisfiedLinkError</code> could occur when mocking native methods from the JRE.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=106">issue 106</a>.
+   </li>
+   <li>
+      Fixed a bug in the matching of expectations for methods containing a "varargs" parameter.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=107">issue 107</a>.
+   </li>
+   <li>
+      General review of API documentation, Tutorial, and other documentation pages.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=33&start=1259">0.999.3</a> (October 3, 2010):</p>
+<ul>
+   <li>
+      <strong>Enhancement</strong>: new attribute <code>stubOutClassInitialization</code> added to the
+      <code>@Mocked</code> annotation, with support for a new <code>jmockit-retainStaticInitializers</code> system
+      property which allows global configuration of the default behavior.
+      See issues <a href="http://code.google.com/p/jmockit/issues/detail?id=96">96</a> and
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=103">103</a>.
+   </li>
+   <li>
+      Fixed a bug in the JUnit 3.8 integration.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=101">issue 101</a>.
+   </li>
+   <li>
+      Replaced use of <a href="http://code.google.com/p/google-code-prettify">prettify.js</a> with
+      <a href="http://softwaremaniacs.org/soft/highlight/en">highlight.js</a>, to fix issues with IE.
+   </li>
+   <li>
+      A few other small fixes and enhancements.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=45&start=1226">0.999.2</a> (August 22, 2010):</p>
+<ul>
+   <li>
+      <strong>Removed deprecated classes</strong>: <code>JMockit</code>, <code>JMockitTest</code>,
+      <code>JMockitTestCase</code>, and <code>JMockitTestNG</code>.
+      Note that instructions to replace these classes in existing tests are included as deprecation
+      comments in the corresponding API documentation of previous releases.
+   </li>
+   <li>
+      <strong>High-performance mocking of interfaces</strong> (Expectations API):
+      the support for mocking Java interfaces was re-implemented to significantly reduce the
+      overhead in execution time for tests which use one or more mocked interfaces.
+   </li>
+   <li>
+      <strong>Optimized</strong> the mocking of classes by caching modified bytecode.
+      This provides a significant performance gain when the same class is mocked by many tests in
+      the same test run.
+   </li>
+   <li>
+      Eliminated the validation for duplicate expectations.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=82">issue 82</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: added a new constructor to the <code>MockUp&lt;T></code> class,
+      which takes the class to be mocked as an argument, instead of obtaining it from the type
+      variable <code>T</code>. Useful when the class to mock is unknown or non-accessible.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=95">issue 95</a>.
+   </li>
+   <li>
+      Fixed a few bugs in <strong>JMockit Coverage</strong>.
+      See issues <a href="http://code.google.com/p/jmockit/issues/detail?id=88">88</a> and
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=89">89</a>.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=14&start=1181">0.999.1</a> (July 25, 2010):</p>
+<ul>
+   <li>
+      <strong>Fixed bug</strong>: the special <code>Object</code> methods
+      (<code>equals</code>, <code>hashCode</code>, <code>toString</code>, <code>finalize</code>),
+      when they happened to have an abstract override in a subclass, would get mocked by default
+      when the concrete mock subclass was created; now, they get empty implementations unless
+      explicitly selected for mocking through mock filters.
+   </li>
+   <li>
+      <strong>Fixed bug</strong>: in the event that a non-strict invocation, while being handled
+      internally by JMockit, would trigger another non-strict invocation during replay (typically,
+      during the execution of a <em>delegate</em> method), a
+      <code>ConcurrentModificationException</code> could occur.
+   </li>
+   <li>
+      <strong>Fixed bug</strong>: the utility methods for <em>constructor invocation</em> through
+      Reflection (see <code>Deencapsulation</code> or <code>Expectations</code>) were not correctly
+      finding constructors with parameters for which a subtype argument could be passed (for
+      example, when passing an <code>ArrayList</code> instance to a <code>List</code> parameter).
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=77">issue 77</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: improved the error message for situations were an attempt is
+      made to record or verify an expectation on a type which is not mocked at the point the
+      invocation appears (it previously was <code>"No current invocation available"</code>).
+   </li>
+   <li>
+      <strong>Robustness issue solved</strong>: when mocking certain JRE classes such as
+      <code>java.net.URL</code> and <code>java.io.FileInputStream</code>, unexpected test failures
+      could occur.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=59&start=1167">0.999</a> (July 15, 2010):</p>
+<ul>
+   <li>
+      <strong>Removed</strong> the following <em>deprecated methods</em> from the
+      <code>Mockit</code> class: <code>redefineMethods(...)</code> (all four variations),
+      <code>restoreOriginalDefinition(...)</code>, and <code>restoreAllOriginalDefinitions()</code>.
+      If tests using these methods still exist, they will have to be changed according to the
+      instructions provided in the API documentation (from release 0.997, in which the methods were
+      deprecated).
+   </li>
+   <li>
+      <strong>Deprecated</strong> the following JUnit/TestNG integration support classes:
+      <code>JMockitTestCase</code>, <code>JMockitTest</code>, <code>JMockit</code> (custom runner
+      for JUnit 4.5+ tests), and <code>JMockitTestNG</code>. All they ever did was make sure that
+      JMockit got initialized at start-up. This is best done through other means, which have been
+      available for some time.
+   </li>
+   <li>
+      <strong>New validation</strong> implemented to detect uses of the Expectations API from an
+      invalid context, such as an static <code>@BeforeClass</code> JUnit method.
+   </li>
+   <li>
+      <strong>Bug fixes</strong> in the "Java agent" auto-initialization under JDK 1.6, when not
+      using the "-javaagent" JVM parameter:
+      1) When using JUnit, the agent would not get loaded if another jar file named like
+      "jmockit-xyz.jar" (such as "jmockit-coverage.jar", for example) was present in the classpath
+      <em>before</em> the actual "jmockit.jar".
+      2) When using only JMockit Coverage, without "jmockit.jar" directly added to the classpath,
+      that jar file wasn't found and consequently JMockit never got initialized.
+   </li>
+   <li>
+      <strong>Fixed a bug</strong> in the validation for duplicate non-strict expectations, which
+      was rejecting expectations recorded for the same method but with different argument matching
+      constraints, when the actual argument values passed to the method had the same values in each
+      recorded invocation.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=62">issue 62</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong> to the use of <code>Delegate</code> objects: when there is only
+      one delegate method, it is allowed to have no parameters even if the corresponding mocked
+      method has them.
+   </li>
+   <li>
+      <strong>Enhancements</strong> in the support for testing multi-threaded code with the
+      Expectations API:
+      a) a delegate method is now allowed to execute code in a different thread, even if such code
+      invokes other mocked methods (previously, this situation would cause a dead-lock).
+      b) if an unexpected invocation occurs in a thread other than the test thread, the test will
+      now fail just as if it had occurred in the regular test thread.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=105&start=1108">0.998</a> (April 21, 2010):</p>
+<ul>
+   <li>
+      <strong>Removed</strong> the following <em>deprecated methods</em>:
+      <code>Mockit.assertExpectations()</code>;
+      <code>throwsException(Exception)</code> and <code>throwsError(Error)</code> from the
+      <code>Expectations</code> class;
+      <code>repeats(int)</code>, <code>repeatsAtLeast(int)</code>, <code>repeatsAtMost(int)</code>,
+      and <code>repeats(int, int)</code> from the <code>Invocations</code> base class;
+      and <code>withAny()</code> also from the <code>Invocations</code> class.
+      The <code>Invocations#withAny(T)</code> method is no longer deprecated, as it is useful in
+      certain situations where a non-null argument value is needed.
+   </li>
+   <li>
+      Enhancements to the
+      <code>Expectations#returns(Object firstValue, Object... remainingValues)</code> method:
+      when used for methods of return type <code>Set</code>, <code>SortedSet</code>,
+      <code>Iterator</code>, or array, the individual elements contained in the collection,
+      iterator or array will be the ones directly specified as arguments.
+   </li>
+   <li>
+      <strong>New validation</strong> implemented for uses of the Expectations API, applicable when
+      recording non-strict expectations: previously, duplicate expectations were simply ignored;
+      now, such occurrences cause an <code>IllegalArgumentException</code> to be thrown.
+      Note that this change can cause existing tests to break, if they inadvertently recorded
+      duplicate non-strict expectations; to fix such tests, the duplicate expectations will have to be removed.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=42">issue 42</a>.
+   </li>
+   <li>
+      Fixes and enhancements to the support for mocking <strong>Java enums</strong> with the
+      Expectations API: the first enum value will now be used as the default for mock fields and
+      parameters of enum type; cascading will now work as expected for methods that return an enum value.
+   </li>
+   <li>
+      Fixed an issue in the JUnit 3.8 integration, where <code>TestCase</code> subclasses overriding the
+      <code>runTest()</code> method (such as <code>GWTTestCase</code>) would not work properly with JMockit in the
+      classpath. See <a href="http://code.google.com/p/jmockit/issues/detail?id=37">issue 37</a>.
+   </li>
+   <li>
+      Fixed a bug of omission in the use of <code>@Cascading</code>, when expectations are recorded on a cascaded mock
+      through a separate mock field/parameter, and there are two or more mocks of the same cascaded type.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=38">issue 38</a>.
+   </li>
+   <li>
+      Fixed a bug of omission in tests with two or more mocks of the same type, where one of them is declared as
+      <code>@NonStrict</code>. The issue was that all other mocks were also considered non-strict, when they should be
+      strict. See <a href="http://code.google.com/p/jmockit/issues/detail?id=39">issue 39</a>.
+   </li>
+   <li>
+      Fixed a bug in the <em>dynamic partial mocking</em> feature: when a method with no recorded expectation was called
+      more than once during the replay phase, only the first invocation was executing the real implementation.
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=40">issue 40</a>.
+   </li>
+   <li>
+      Fixed a bug that prevented consecutive values to be returned from a cascaded mock, when recording a sequence of
+      return values through the <code>result</code> field or the <code>returns(...)</code> varargs method.
+   </li>
+   <li>
+      <strong>New feature</strong> for JMockit Coverage: the <code>jmockit-coverage-metrics</code>
+      system property can now be used to select the desired combination of the three available code
+      coverage metrics. Its value should be a comma-separated list containing one or more of the
+      following words: "line", "path", "data", and "all".
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=103&start=1003">0.997</a> (March 3, 2010):</p>
+<ul>
+   <li>
+      The <strong>dynamic partial mocking</strong> feature (Expectations API) was re-implemented,
+      with richer semantics (the API itself was not changed).
+      Now only the invocations to dynamically mocked types that occur during the replay phase and
+      that actually match a recorded expectation will be mocked; all other invocations will cause
+      the real method/constructor implementation to be executed.
+      Additionally, invocations to such mocked types can also be verified inside verification blocks.
+      (Invocations to mocked types will never execute the real implementation when they occur
+      <em>inside</em> an expectation or verification block.)
+   </li>
+   <li>
+      <strong>Deprecated</strong> the "<strong><code>withAny</code></strong>" methods defined in
+      the base <code>Invocations</code> class.
+      The newer "<strong><code>any</code></strong>" fields should be used instead.
+   </li>
+   <li>
+      <strong>Deprecated</strong> old methods in the <code>Mockit</code> class which belong to the Core API:
+      <code>redefineMethods(...)</code>, <code>restoreOriginalDefinition(...)</code>, and
+      <code>restoreAllOriginalDefinitions()</code>.
+      Equivalent methods to be used are indicated in the API documentation for the deprecated methods.
+      Usually, however, it's best to use the <code>MockUp&lt;T></code> generic base class
+      when a state-oriented mock class is needed. The deprecated methods will eventually be removed.
+   </li>
+   <li>
+      Enhancements to the support of <strong><em>varargs</em> parameters</strong> in the Expectations & Verifications
+      API:
+      <ul>
+         <li>
+            Any number of variable argument values can be matched by passing an
+            "<strong><code>(Object[]) <em>any</em></code></strong>" argument matching constraint to
+            a recorded/verified expectation ("<strong><code>(Object[]) null</code></strong>" can
+            also be used when another argument matcher is specified for the same invocation).
+         </li>
+         <li>
+            Now it's possible to use matchers only on the regular parameters of a varargs method or constructor, without
+            any matchers specified for the varargs values (before, a matcher was needed for each varargs value).
+            Matchers for <em>some</em> varargs values only is <em>not</em> supported, though.
+            In addition, unless no matchers at all are used, the last regular parameter preceding the varargs parameter
+            (if any) must use a matcher.
+         </li>
+      </ul>
+   </li>
+   <li>
+      A few fixes and enhancements to JMockit's internal auto-initialization mechanisms:
+      <code>jmockit.jar</code> (or a versioned jar name) can now be loaded from a remote file system without triggering
+      a security-related exception; when running under JDK 1.5, the presence of <code>jmockit.jar</code> in the
+      classpath when <code>-javaagent:jmockit.jar</code> was not used will no longer cause a JMockit-specific exception
+      to be thrown, unless the mocking API is actually used in a test.
+   </li>
+   <li>
+      Enhancements to <strong>JMockit Coverage</strong>:
+      <ul>
+         <li>
+            <strong>New feature</strong>: an aggregate XHTML report can now be generated by executing the Java
+            <code>main</code> method added to the <code>mockit.coverage.CodeCoverage</code> class (in the main coverage
+            jar).
+            The first argument (<code>args[0]</code>) to the program must be a comma-separated list of paths to
+            directories containing "coverage.ser" data files.
+            These data files are merged together and an aggregate report is immediately generated.
+         </li>
+         <li>
+            <strong>Enhancement</strong>: to avoid the need for managing "coverage.ser" files
+            generated in the same directory, the <code>jmockit-coverage-serial.jar</code> file and
+            the <code>serial</code> output specifier were created as an alternative to "merge".
+            The difference is that "merge" reads in an existing data file, while "serial" only writes it out at the end.
+         </li>
+         <li>
+            The summary page of the XHTML report now provides extra information, in addition to
+            coverage percentages for each metric:
+            1) the number of <em>covered</em> and <em>total</em> items from which coverage
+            percentages were calculated are now shown in tooltips over the percentage values;
+            2) the list of packages and the list of source files of each package can now be
+            <em>sorted by size</em>, where "size" has a different meaning for each metric (total
+            number of executable <em>line segments</em> for line coverage, total number of
+            <em>paths</em> for path coverage, and total number of <em>fields</em> for data coverage).
+         </li>
+      </ul>
+   </li>
+   <li>
+      Fixed an issue introduced in the previous release, when <em>static initializers</em> became stubbed out by default
+      (Expectations API): mock filters (where <code>"&lt;clinit>"</code> specifies static initializers) were not
+      considering the inclusion/exclusion of static initializers.
+      In particular, the empty filter <code>@Mocked("")</code> previously excluded all methods and constructors from
+      being mocked, but still caused static initializers to be stubbed out; now they are also ignored.
+   </li>
+   <li>
+      Bugs fixed in JMockit Coverage: certain source code constructs could cause a NPE to be thrown during generation of
+      the XHTML report; see also <a href="http://code.google.com/p/jmockit/issues/detail?id=33">issue 33</a>.
+   </li>
+   <li>
+      Fixed a bug in the JMockit-TestNG integration: invocation count constraints specified on mock methods annotated
+      with <code>@Mock(...)</code> were not being verified after the execution of a test method.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=186&start=900">0.996</a> (January 24, 2010):</p>
+<ul>
+   <li>
+      <strong>Deprecated</strong> the following methods of the <em>Expectations & Verifications</em> API:
+      <code>throwsException(e)</code>, <code>throwsError(e)</code>, <code>repeats(n)</code>,
+      <code>repeats(m, n)</code>, <code>repeatsAtLeast(n)</code>, <code>repeatsAtMost(n)</code>.
+      Calls to these methods in existing tests should be replaced with <em>assignments</em> to the corresponding
+      <em>fields</em> <code>result</code>, <code>times</code>, <code>minTimes</code>, and <code>maxTimes</code>.
+   </li>
+   <li>
+      <strong>New feature</strong>: the <code>forEachInvocation</code> field was created, for use both in expectation
+      and verification blocks. It's similar to <code>Delegate</code> objects, but more convenient and capable (since
+      delegates can only be used in expectation blocks).
+      The focus is on <em>invocation argument validation</em> rather than on making invocations produce expected
+      results.
+   </li>
+   <li>
+      Enhancements to the <strong>Verifications API</strong>:
+      <ul>
+         <li>
+            Verification blocks now can "import" mocks from local fields declared in expectation
+            blocks used in the same test, by declaring local fields of their own with the same mocked type.
+            (See <a href="http://code.google.com/p/jmockit/issues/detail?id=4">issue 4</a>.)
+         </li>
+         <li>
+            <em>Full</em> verification blocks, used to force explicit verification of <em>all</em>
+            invocations, now can be restricted to a subset of the mock objects or mocked types used in the test.
+            (See <a href="http://code.google.com/p/jmockit/issues/detail?id=5">issue 5</a>.)
+         </li>
+         <li>
+            The <code>onInstance(mock)</code> method, previously only available in expectation blocks, now can also be
+            used in verification blocks.
+         </li>
+      </ul>
+   </li>
+   <li>
+      <strong>Enhancement</strong> and <em>potentially breaking change</em>:
+      to make it easier to match invocations on the invoked instance, the semantics obtained from a
+      call to <code>onInstance(mock)</code> are now <em>implied</em> whenever a test method has in
+      its scope two or more mock fields/parameters of the exact same mocked type.
+      This change greatly reduces the cases where explicit calls to <code>onInstance(mock)</code> were needed, but it
+      may break existing tests.
+   </li>
+   <li>
+      Enhancement: the <code>mockit.Invocation</code> class (optionally used as the first parameter in <em>delegate</em>
+      or <code>forEachInvocation</code>-<em>handler</em> methods) now has a new read-only property,
+      <strong><code>invokedInstance</code></strong>.
+      The getter will return the mock or real object on which the corresponding method/constructor invocation occurred
+      (except, naturally, for <code>static</code> methods).
+   </li>
+   <li>
+      <strong>Enhancement</strong>: the <code>with(matcher)</code> and <code>with(T, matcher)</code> methods of the base
+      <code>Invocations</code> class now accept arbitrary <em>invocation handler</em> objects in addition to
+      <code>org.hamcrest.Matcher</code> implementations.
+      Such objects are easier to create (they do not require the implementation of a method that generates failure
+      messages, nor the addition of Hamcrest classes to the classpath) and allow the use of <code>assert</code>
+      statements or <code>assertXyz(...)</code> calls instead of returning a <code>boolean</code> value.
+   </li>
+   <li>
+      Enhancement: static initializers in classes mocked with the Expectations API now are stubbed out by default (they
+      were left unchanged before, requiring the user to explicitly stub them out when needed).
+   </li>
+   <li>
+      Enhancement: the <code>returns(Object, Object...)</code> method of the <code>Expectations</code> class can now be
+      used to easily specify a list of values to be returned from a method whose return type is <code>List</code>,
+      <code>Collection</code>, or <code>Iterable</code>.
+   </li>
+   <li>
+      Enhancement: four new utility methods created in the <code>Deencapsulation</code> class, all of them overloading
+      existing methods (see issues <a href="http://code.google.com/p/jmockit/issues/detail?id=23">23</a> and
+      <a href="http://code.google.com/p/jmockit/issues/detail?id=26">26</a>).
+   </li>
+   <li>
+      Enhancements to <strong>JMockit Coverage</strong>:
+      <ul>
+         <li>
+            In the XHTML report, information on source files can now be interactively hidden and re-displayed, both for
+            the whole list of files and for each package.
+            This makes it easy to focus only on package results, for example, in particular when there is a large number
+            of source files.
+            (Requires a JavaScript-enabled browser, though.)
+         </li>
+         <li>
+            Blocks of commented lines in source files are now collapsed by default.
+            They can be un-collapsed by clicking on the block.
+         </li>
+         <li>
+            A <strong>new metric</strong> was introduced: <em>data coverage</em>.
+            In this release, it accounts for static and instance non-<code>final</code> fields only.
+            A field is considered to be covered (shown in green in the formatted source file) if at least one test left
+            no unread values from previous assignments to the field; otherwise, the field is considered not covered
+            (shown in red).
+            Newer releases will expand and improve this metric, with the goal of using it to discover missing assertions
+            in tests.
+         </li>
+      </ul>
+   </li>
+   <li>
+      Fixed a bug in the capture of fields whose mocked type is an interface (a NPE would occur when the constructor of
+      a captured implementation class was transformed).
+   </li>
+   <li>
+      New "Tour de Mock" sample test suite created, based on code published in a
+      <a href="http://coffeaelectronica.com/blog/2009/07/tour-de-mock-spring">series of articles</a>.
+      There is a test class written with each of the usual mocking APIs (EasyMock CE, jMock, Mockito, Unitils Mock,
+      JMockit), plus another one which uses Spring Test.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=214&start=714">0.995</a> (December 20, 2009):</p>
+<ul>
+   <li>
+      <strong>Hamcrest 1.2</strong> classes are no longer included in <code>jmockit.jar</code>.
+      The "<code>withXyz(...)</code>" argument matching methods are unaffected, except for the two of them which
+      accepted a custom matcher as an implementation of <code>org.hamcrest.Matcher</code>: they still exist and work the
+      same, but the parameter type has been changed to <code>Object</code>.
+      Tests using any of these two methods will need to be recompiled.
+      Note also that to use one of these two methods the proper Hamcrest classes will have to be available in the
+      classpath (for example, from <code>junit-4.8.jar</code>).
+      (See <a href="http://code.google.com/p/jmockit/issues/detail?id=13">issue 13</a>.)
+   </li>
+   <li>
+      <strong>New feature</strong>: the <strong><code>@Cascading</code></strong> annotation was created to enable
+      automatic <em>cascading</em> of invocations to mocked types.
+      The cascade effect continues indefinitely for the return types of methods invoked on a cascading mocked type;
+      cascade return values will be mock instances created on demand.
+   </li>
+   <li>
+      <strong>New feature</strong>: code inside test classes now can safely use the <code>assert</code> keyword,
+      independently of assertions being enabled or not through the "-ea"/"-enableassertions" JVM initialization
+      parameter.
+      (This doesn't affect assertions in production code, though, which still should be enabled manually if needed.)
+   </li>
+   <li>
+      <strong>New feature</strong>: the <strong><code>result</code></strong> field was added to the
+      <code>Expectations</code> base class, as an alternative to the <code>returns</code> and
+      <code>throwsException/throwsError</code> methods.
+      Note that this new field will cause compilation errors in tests that already use a field of the same name inside
+      an expectation block; such tests will need to be changed to use a different field name.
+   </li>
+   <li>
+      <strong>New feature</strong>: the <strong><code>times</code></strong>, <strong><code>minTimes</code></strong> and
+      <strong><code>maxTimes</code></strong> fields were added to the <code>Invocations</code> base class, as an
+      alternative to the <code>repeats/repeatsAtLeast/repeatsAtMost</code> methods.
+      The same warning in the previous item about potential conflicts with existing fields applies here.
+   </li>
+   <li>
+      <strong>New feature</strong>: the <strong><code>$</code></strong> special field, of type
+      <code>java.lang.CharSequence</code>, was added to the <code>Invocations</code> base class to allow the
+      specification of custom error messages for specific expectations.
+   </li>
+   <li>
+      <strong>New feature</strong>: the <strong><code>jmockit-tools</code></strong> system property can now be used to
+      specify which external tools JMockit should load at startup.
+      More than one tool can be specified, by separating the tool names with commas.
+      A tool name must be the fully qualified name of a mock class, or a "startup tool" mnemonic configured in the
+      <code>jmockit.properties</code> file.
+      For example, "coverage" stands for JMockit Coverage. (See issue 22.)
+   </li>
+   <li>
+      More fixes and enhancements to <strong>JMockit Coverage</strong>:
+      <ul>
+         <li>
+            Nested/inner classes which never get loaded during a test run are now properly handled.
+            Before, the code in them simply wasn't considered at all in the line and path metrics.
+         </li>
+         <li>
+            For packages containing at least one class exercised by the test run, the XHTML report
+            will now also show the source files not exercised.
+         </li>
+         <li>
+            <strong>New feature</strong>: individual <em>line segments</em> are now shown in the report, with the
+            execution count for each segment displayed in a tooltip.
+            This significantly improves the display of both line and path coverage inside a source file.
+            In this release, however, the implementation is still incomplete, with certain cases not properly handled.
+            (See <a href="http://code.google.com/p/jmockit/issues/detail?id=8">issue 8</a>.)
+         </li>
+         <li>
+            Data file generation in XML format is no longer supported.
+            If post-processing of coverage results is needed, then the serialized "merge" file can be used instead.
+         </li>
+         <li>Several other small improvements.</li>
+      </ul>
+   </li>
+   <li>
+      Fixed an issue in JUnit 3.8 integration, where a <code>TestCase</code> subclass overriding the
+      <code>getName()</code> method could cause JMockit to not find the test method
+      (<a href="http://code.google.com/p/jmockit/issues/detail?id=21">issue 21</a>).
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=235&start=500">0.994</a> (December 6, 2009):</p>
+<ul>
+   <li>
+      Multiple enhancements to <strong>JMockit Coverage</strong>:
+      <ul>
+         <li>
+            The <code>jmockit-coverage.jar</code> file now also refers to <code>jmockit.jar</code>
+            through the <code>Class-Path</code> property in <code>META-INF/MANIFEST.MF</code>.
+            This makes it possible to generate coverage reports by adding a single jar to the
+            classpath when running a test suite which makes no use of the JMockit mocking APIs.
+            All jar files of the JMockit toolkit must still be present in the same directory,
+            though.
+         </li>
+         <li>
+            The desired output formats can now be specified through the
+            <strong><code>jmockit-coverage-output</code></strong> system property.
+            (When not specified, the basic XHTML report will be generated.)
+            Note that the property can be defined by a
+            "-Djmockit-coverage-output=fmt1,fmt2,..." JVM command line argument, or by a
+            <code>&lt;property></code> element in a Maven <code>pom.xml</code> or Ant
+            <code>build.xml</code> file.
+         </li>
+         <li>
+            The output directory for "coverage.xml" and "coverage.ser" files, as well as for the 
+            files of an XHTML report, can now be specified through the
+            <strong><code>jmockit-coverage-outputDir</code></strong> system property.
+            (When not specified, the current working dir is used.)
+         </li>
+         <li>
+            The list of directories containing Java source files, needed for the XHTML report, can
+            now be specified through the <strong><code>jmockit-coverage-srcDirs</code></strong>
+            system property.
+            (When not specified, all "src" directories under the current working dir are searched.)
+            If the property is specified but with an empty value, then no source directories will be
+            searched and the report will only contain the index page.
+         </li>
+         <li>
+            A regular expression for selecting the Java classes which should be considered for
+            coverage can now be specified through the
+            <strong><code>jmockit-coverage-classes</code></strong> system property.
+            (When not specified, all classes from production code which are loaded during the test
+            run and are not inside jar files will be considered.)
+         </li>
+         <li>
+            Independently of <code>jmockit-coverage-classes</code> being specified or not, the
+            <strong><code>jmockit-coverage-excludes</code></strong> system property can be used to
+            specify a regular expression for class names which should be excluded from
+            consideration.
+         </li>
+         <li>
+            The automatic class selection mechanism, used when no classes to consider for coverage
+            are explicitly specified, will now also ignore class files from any directory whose name
+            ends in "<code>/test-classes</code>" (note that this is the default output directory for
+            test classes used by Maven 2).
+         </li>
+         <li>
+            The total coverage percentage is now calculated and shown in the XHTML report
+            (<a href="http://code.google.com/p/jmockit/issues/detail?id=7">issue 7</a>).
+         </li>
+         <li>
+            A <strong><em>path coverage</em></strong> metric has been implemented
+            (<a href="http://code.google.com/p/jmockit/issues/detail?id=12">issue 12</a>), which is
+            completely separate from the current <em>code coverage</em> metric.
+            In this release, the implementation is still incomplete, lacking support for
+            "<code>try</code>" blocks.
+         </li>
+         <li>
+            The XHTML report now uses <strong><code>prettify.js</code></strong> (from the
+            <a href="http://code.google.com/p/google-code-prettify">Google Code Prettify project</a>)
+            for syntax coloring in Java source files.
+            This makes report generation faster and smaller, but requires a JavaScript-enabled
+            browser for the proper viewing of source file pages.
+            (JavaScript is also used for other features in such pages.)
+            The "index.html" page, on the other hand, makes no use of JavaScript so any XHTML+CSS
+            browser (such as the one embedded in Eclipse) can be used without any loss.
+         </li>
+      </ul>
+   </li>
+   <li>
+      <strong>New feature</strong>: the <code>mockit.Invocation</code> class was created for
+      optional use in <code>Delegate</code> methods.
+      (<a href="http://code.google.com/p/jmockit/issues/detail?id=6">issue 6</a>).
+   </li>
+   <li>
+      <strong>Deprecated</strong> the method <code>Mockit.assertExpectations()</code>, which will be
+      removed in a later release.
+      Existing tests which happen to use it should simply remove any calls, since verification of
+      invocation count constraints specified on <code>@Mock</code> methods is done automatically by
+      JMockit.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>mockit.RealMethodNotFoundForMockException</code> class.
+      This runtime exception was thrown when an attempt was made to apply a mock class (using either
+      the Core or Annotations API) to a production class, but there was at least one mock method in
+      the mock class for which no matching real method could be found in the production class.
+      Now an <code>IllegalArgumentException</code> will be thrown instead for the same situation,
+      with no loss of information (which is fully captured in the exception message).
+   </li>
+   <li>
+      <strong>New validation for the Expectations API</strong>: new users often make the mistake of
+      not declaring any mocked types for a test.
+      To provide a helpful error message in such situations, the creation of an
+      <code>Expectations</code> block will now throw an <code>IllegalStateException</code> if there
+      are no mocked types in scope.
+      Note that this change may break existing tests, although it should be rare to have expectation
+      blocks for which no mocked type is available.
+   </li>
+   <li>
+      Fixed an issue in JUnit 3.8 integration: if a base test class did override the
+      <code>junit.framework.TestCase#runBare()</code> method, a duplicate execution of this overridden method would
+      occur. The integration was changed so that <code>runBare()</code> can now safely be overridden.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=54&start=265">0.993</a> (November 15, 2009):</p>
+<ul>
+   <li>
+      <strong>Enhancement</strong>: to make JMockit easier to use when running under JDK 1.6+
+      without the <code>-javaagent</code> JVM parameter, two simplifications were introduced:
+      <ol>
+         <li>
+            The <code>&lt;jdkDir>/lib/tools.jar</code> file no longer needs to be added to
+            classpath.
+         </li>
+         <li>
+            Test classes no longer need to be annotated with <code>@RunWith(JMockit.class)</code>
+            (for JUnit 4 tests), nor extend a JUnit/TestNG integration base class
+            (<code>JMockitTest</code>, <code>JMockitTestCase</code>, <code>JMockitTestNG</code>).
+         </li>
+      </ol>
+      There is a requirement for the second item when using JUnit, though: <code>jmockit.jar</code>
+      needs to come <em>before</em> <code>junit-4.x.jar</code> in the classpath.
+   </li>
+   <li>
+      <strong>Removed</strong> several API elements which were deprecated in releases 0.980 and
+      0.989.
+      Existing tests still using them will require the changes indicated below (all trivial,
+      though):
+      <ol>
+         <li>The <code>@MockField</code> annotation: simply replace with <code>@Mocked</code>.</li>
+         <li>
+            The <code>Verifications#neverHappens()</code> method: replace with a
+            <code>repeats(0);</code> call right after the invocation to be verified.
+         </li>
+         <li>
+            The <code>Expectations#invokeReturning</code> generic method: use the
+            <code>returns</code> method instead.
+         </li>
+         <li>The <code>Expectations#endReplay()</code> method: simply remove any calls to it.</li>
+         <li>
+            The <code>Expectations.assertSatisfied()</code> static method: this method was
+            deprecated in the previous release, and is also being removed now because it does the 
+            same as <code>endReplay()</code>.
+         </li>
+         <li>
+            The <code>Expectations.restoreFieldTypeDefinitions()</code> static method: either remove
+            any calls to it, or replace them with calls to
+            <code>Mockit.restoreAllOriginalDefinitions()</code>, which has the same effect.
+         </li>
+      </ol>
+   </li>
+   <li>
+      <strong>New feature in JMockit Coverage</strong>: the ability to merge coverage data from
+      consecutive test runs was implemented. This allows the generation of a single aggregate report
+      from multiple test runs (for the same test suite or not).
+      See <a href="http://code.google.com/p/jmockit/issues/detail?id=3">issue 3</a>.
+   </li>
+   <li>
+      Fixed an issue in the mocking of certain JRE classes (notably <code>java.io.File</code>) that
+      are used during the class loading process triggered by the JVM.
+      This avoids the occurrence of a <code>ClassCircularityError</code> under certain situations
+      (in particular, when classes used in a test are loaded on demand by the JVM and a critical
+      JRE class is mocked at the same time).
+   </li>
+   <li>
+      Published <code>jmockit-coverage.jar</code> in the Java.net Maven 2 repository.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=86&start=211">0.992</a> (November 8, 2009):</p>
+<ul>
+   <li>
+      <strong>New features</strong> that improve the use of
+      <a href="tutorial/BehaviorBasedTesting.html#argumentMatching">argument matching constraints</a> with the
+      Expectations/Verifications API:
+      <ol>
+         <li>
+            It is no longer necessary to specify matchers for <em>all</em> arguments in an invocation.
+            Regular arguments will be matched on equality, as they would if no explicit matchers at all were used.
+         </li>
+         <li>
+            Argument matching <em>fields</em> were added to the <code>mockit.Invocations</code> base
+            class; they are equivalent to the <code>T withAny()</code>/<code>T withAny(T)</code> methods:
+            <code>any</code>, <code>anyInt</code>, <code>anyBoolean</code>, etc.
+         </li>
+         <li>
+            The <code>null</code> reference can now be used to match any object reference, instead
+            of <code>withAny()</code> (or instead of the new <code>any</code> field), as long as
+            there is at least one explicit matcher specified for the invocation.
+         </li>
+      </ol>
+   </li>
+   <li>
+      <strong>Enhancement</strong>: when using the Expectations API to mock JRE classes (for
+      example, <code>java.lang.System</code> or <code>java.io.InputStreamReader</code>), all methods
+      can safely be mocked even if JMockit itself or other parts of the JRE need to execute the
+      original code (see <a href="http://code.google.com/p/jmockit/issues/detail?id=2">issue 2</a>).
+   </li>
+   <li>
+      Enhancement: <code>Delegate</code> implementation classes can now define a method named differently from the
+      recorded method to which the delegation applies, provided it's the only method in the delegate class.
+   </li>
+   <li>
+      Enhancement: in the Annotations API, the method <code>Mockit.setUpMock(Object)</code> now also
+      accepts a <code>Class</code> object for the mock class, instead of only an instance of the
+      mock class. This should avoid confusion with the <code>Mockit.setUpMocks(Object...)</code>
+      method, which always accepted both ways of passing the mock class.
+   </li>
+   <li>
+      Enhancement: better support for <em>covariant return types</em>, so that an expectation
+      recorded for a method with a more specific return type can be matched to an invocation with a
+      less specific but compatible return type.
+   </li>
+   <li>
+      For better robustness, when an object to be partially mocked is passed to the
+      <code>Expectations</code> or <code>NonStrictExpectations</code> constructor which has a
+      "varargs" parameter, only <em>methods</em> are now considered for mocking, not the
+      <em>constructors</em> of the classes to which the given object belongs.
+      This change can break existing tests, but is not likely to do so because in such cases the
+      test should not be recording expectations on constructors which were used to create the
+      partially mocked object in the first place.
+   </li>
+   <li>
+      Fixed a couple of bugs with the <em>capturing</em> of new instances through mock fields.
+   </li>
+   <li>
+      Fixed an issue which prevented the use of verification blocks inside "after" methods (ie,
+      <code>tearDown</code>, <code>@After</code>, or <code>@AfterMethod</code>).
+   </li>
+   <li>
+      The old method <code>Expectations.assertSatisfied()</code> (which has been unnecessary for a
+      long time already), was deprecated in this release and will be removed for version 1.0.
+   </li>
+   <li>
+      Fixed an issue in the Maven 2 project file (<code>pom.xml</code>) for
+      <code>jmockit.jar</code>: internal dependencies (on JUnit, TestNG, etc.) were made
+      <em>optional</em> so they won't be transitively added as dependencies in client Maven
+      projects.
+   </li>
+   <li>
+      JMockit x Unitils comparison test suite upgraded to Unitils 3.0, with some new tests added.
+   </li>
+</ul>
+
+<p>Version <a href="http://code.google.com/p/jmockit/source/list?num=125&start=125">0.991</a> (October 25, 2009):</p>
+<ul>
+   <li>
+      The chapter on <a href="tutorial/StateBasedTesting.html">state-based testing</a>
+      (Annotations API) in the <strong>JMockit Tutorial</strong> is now complete.
+   </li>
+   <li>
+      Created two new overloads for the <code>Mockit#stubOutClass</code> method which take a class
+      name instead of a <code>Class</code> object, for cases where the real class is not accessible
+      from the test class.
+   </li>
+   <li>
+      Enhancement: the <code>@Mock</code> annotation can now be applied to methods in reusable mock
+      classes that are extended by more specific ones. The mock methods in the base mock class will
+      be inherited by the mock subclass.
+   </li>
+   <li>
+      Enhancement: mock method overrides are now supported, to further enable the reuse of base mock
+      classes with the Annotations and Core APIs.
+   </li>
+   <li>
+      Enhancement: a mocked field or parameter can now rely on the
+      <code>@Mocked(realClassName = "...")</code> annotation attribute to specify the class of the
+      mock object to be instantiated. The actual field/parameter type will not be considered for
+      mocking. This can be used to mock non-accessible classes (for example, private nested
+      classes), by declaring the field/parameter as being of type <code>Object</code>.
+   </li>
+   <li>
+      Enhancement: implemented support for mock filters in captured implementation classes (when
+      <code>@Capturing</code> or <code>@Mocked(capture = n)</code> is used with
+      <code>@Mocked(methods = "...")</code> for the same field or parameter).
+   </li>
+   <li>
+      Fixed a bug with mocked types in the Expectations API: when different types (usually classes)
+      were mocked for a test which records invocations to methods of same signature but belonging to
+      different classes, then the corresponding expectations got wrongly matched, causing the test
+      to fail (issue 37).
+   </li>
+   <li>
+      Fixed a bug in the handling of invocation count constraints specified through the
+      <code>@Mock</code> annotation: when the same test applied two different mock classes which
+      both specify such constraints for the <em>same</em> real class, only one set of constraints
+      was discarded at the end of the test; this could then cause other tests to fail later.
+   </li>
+</ul>
+
+<p>Version 0.990 (October 4/6, 2009):</p>
+<ul>
+   <li>
+      Enhancement: previously, when an anonymous inner class was used as the mock class with the
+      Core/Annotations API, and the mocked class was defined in a different package, an
+      <code>IllegalAccessError</code> would occur.
+      The mocking bridge is now used internally to delegate such mock invocations, in order to avoid
+      the JVM error.
+      Therefore, anonymous inner classes can now be safely used as mock classes, thereby avoiding
+      the need to define them as separate named classes.
+   </li>
+   <li>
+      New feature: added the parameterized <strong><code>mockit.MockUp&lt;T></code></strong>
+      class to the Annotations API, in order to facilitate the definition of state-based mock
+      classes. This class will be most useful inside individual test methods.
+   </li>
+   <li>
+      New feature: added support for mocking annotation types with the Expectations API.
+      It's just like mocking interfaces, where read access to annotation attributes can be recorded
+      and/or verified through regular method invocations on the annotation instance created by
+      JMockit.
+   </li>
+   <li>
+      Enhancement: added a validation in the <code>returns(...)</code> methods that will throw an
+      <code>IllegalArgumentException</code> whenever a non-null return value is specified for a
+      mocked constructor or void method.
+      Specifying null values to be returned from constructor or void methods <em>is</em> valid
+      though, in order to allow multiple consecutive results to be recorded when one or more of the
+      invocations should do nothing.
+      Notice that this change will break any existing tests that happen to violate this validation
+      rule.
+   </li>
+   <li>
+      Added support for mock parameters in JUnit 3.8 test methods (for JUnit 4 and TestNG they were
+      already supported).<br/>
+      <span style="color: red">October 6</span>: release 0.990 updated with a small fix so that
+      <code>static</code> methods which otherwise qualify as test methods are ignored.
+   </li>
+   <li>
+      Fixed an issue in the JUnit 3.8 integration, where mocks applied by a test method remained in
+      effect inside a <code>tearDown()</code> method, and mocks applied by a <code>setUp()</code>
+      method were restored automatically after each test method execution (when they should need to
+      be restored manually, for consistency).
+   </li>
+   <li>
+      For the Expectations API, added synchronization to the main entry point to JMockit internals
+      from modified code under test, to avoid race conditions when such code runs in multiple
+      threads.
+   </li>
+   <li>
+      For the Annotations API, added synchronization to the incrementing of mock invocation counts,
+      to avoid race conditions when code under test creates and runs in additional threads.
+   </li>
+   <li>
+      Improved the error message generated for failed mock expectations (specified through the
+      <code>@Mock</code> annotation), so that the real class/interface name is also included.
+   </li>
+   <li>
+      Fixed a bug which caused an <code>IndexOutOfBoundsException</code> in a test method containing
+      two expectation blocks, where the first one records strict expectations which are fully
+      replayed before the second block starts (issue 35).
+      This actually amounts to a test with two <em>replay</em> phases, which isn't proper use of the
+      API, even though it <em>is</em> allowed.
+   </li>
+</ul>
+
+<p>Version 0.989 (September 20, 2009):</p>
+<ul>
+   <li>
+      The chapter on <a href="tutorial/BehaviorBasedTesting.html">behavior-based testing</a> in the
+      <strong>JMockit Tutorial</strong> is complete for the first time with this release.
+   </li>
+   <li>
+      All classes from <strong>Hamcrest 1.2</strong> previously embedded in <code>jmockit.jar</code>
+      have been removed, except for those that JMockit itself needs for the
+      <code>withXyz(...)</code> argument matching methods available in the
+      <code>Expectations & Verifications</code> API.
+      This means that existing test suites that make use of Hamcrest matchers no longer available in
+      <code>jmockit.jar</code> will now need to find those extra classes somewhere else (usually in
+      <code>hamcrest-library-1.x.jar</code>).
+      This change was made to avoid conflicts with potentially different versions of Hamcrest that
+      may happen to be in the classpath used for running tests.
+   </li>
+   <li>
+      Added support for the delegation of mocked constructor invocations when using the
+      <code>Delegate</code> interface. The corresponding delegate method must be named "$init".
+   </li>
+   <li>
+      Added support for the verification (inside any kind of <code>Verifications</code> block) of
+      invocations that should not have happened through a regular call to <code>repeats(0)</code>.
+      Previously, this was achieved through a call to <code>neverHappens()</code> that should be
+      made <em>before</em> the verified invocation (the <code>repeats</code> methods are always to
+      be called <em>after</em> the corresponding invocations).
+   </li>
+   <li>
+      As a consequence of the previous enhancement, the <code>Verifications#neverHappens()</code>
+      method is now deprecated, and will be removed before version 1.0 is released.
+   </li>
+   <li>
+      New feature: inside a <code>FullVerifications</code> or <code>FullVerificationsInOrder</code>
+      block, a call to <code>repeatsAtLeast(0)</code> (or <code>repeats(0, &lt;big number>)</code>)
+      will now allow the preceding invocation to be ignored.
+      This can be useful when a test needs to verify that certain invocations did not occur in the
+      replay phase, while at the same time allowing other invocations to have occurred any number of
+      times (including zero).
+   </li>
+   <li>
+      Enhancement: the Reflection-based utility methods previously defined in the
+      <code>Expectations</code> class have been moved to the base <code>Invocations</code> class, so
+      they can also be used from <code>Verifications</code> subclasses.
+   </li>
+   <li>
+      Fixed a bug which caused a <code>ClassCastException</code> in the capturing of new instances
+      (for example, <code>@Mocked(capture = 1) Callable<?> mock;</code>) when the mocked type is
+      parameterized.
+   </li>
+   <li>
+      Fixed a bug which caused capturing mock fields declared at the test class level to not capture
+      new instances in tests which also declared a local capturing field.
+   </li>
+   <li>
+      The old methods <code>Expectations#endReplay()</code> (which has become unnecessary),
+      <code>Expectations#invokeReturning</code> (which is redundant and inconsistent), and
+      <code>Expectations#restoreFieldTypeDefinitions()</code> (also redundant and normally
+      unnecessary) were deprecated in this release and will be removed for version 1.0.
+      <br/>
+      The methods <code>Expectations#endRecording()</code> and
+      <code>Expectations#assertSatisfied()</code> were <em>not</em> deprecated, even though they
+      should be rarely, if ever, used. This is emphasized in the API documentation, though.
+   </li>
+</ul>
+
+<p>Version 0.988 (September 6, 2009):</p>
+<ul>
+   <li>
+      JMockit Core/Annotations: implemented support for mocking constructors of a JRE class with
+      mock constructors in a mock class.
+      Previously, this could only be done with a <code>$init</code> mock method.
+   </li>
+   <li>
+      Fixed an issue in the TestNG integration, where parameters in test methods which rely on a
+      <code>@org.testng.annotations.DataProvider</code> were being inadvertently mocked.
+   </li>
+   <li>
+      Implemented basic support for running tests in parallel in TestNG.
+      The use of <code>@Test(invocationCount=5, threadPoolSize=2)</code>, for example, should not
+      cause a NPE inside <code>mockit.integration.testng.TestNGTestRunnerDecorator</code> anymore.
+   </li>
+   <li>
+      JMockit Coverage: fixed a bug in the checking of read-only status for output files, which
+      caused the XHTML report and XML output file to not be generated when running with coverage for
+      the first time.
+   </li>
+   <li>
+      Fixed an issue in the use of Reflection to find methods from the method name and actual
+      argument values (not from specified parameter types).
+   </li>
+   <li>
+      Fixed an issue in <code>Delegate</code> support, where null arguments passed to a delegated
+      method caused an exception to be thrown.
+   </li>
+   <li>
+      Improvements to API documentation, with new links to example test classes in the CVS 
+      repository.
+   </li>
+</ul>
+
+<p>Version 0.987 (August 17, 2009):</p>
+<ul>
+   <li>
+      <strong>New feature</strong>: the <code>@MockClass</code> annotation now has an
+      "instantiation" attribute which controls when a mock instance is created (for each invocation
+      of an instance mock method, only once for every time the mock class is applied/set up, or
+      one mock instance for each mocked instance).
+   </li>
+   <li>
+      Several changes and enhancements to JMockit Coverage:
+      <ol>
+         <li>
+            Support for <em>incremental test suite execution</em> was updated for JUnit 4.5/4.6
+            (JUnit 4.4 is not supported; JUnit 3.8 also is not supported, but individual tests in
+            the JUnit 3.8 style inside a JUnit 4 suite are).
+         </li>
+         <li>
+            The file "jmockit-incremental.jar" was created. It contains the incremental testing
+            support, and whenever included in the classpath any JMockit-enabled tests (all those
+            executed after JMockit gets initialized, whether they use the JMockit API or not) will
+            be run incrementally (unless the feature is switched off, see below).
+         </li>
+         <li>
+            Classes that generate output files (in XML or XHTML) that were previously inside
+            "jmockit-coverage.jar" are now in separate jars, one for each type of output:
+            "jmockit-coverage-xmlbasic.jar" (generates "coverage.xml" without call points),
+            "jmockit-coverage-xmlfull.jar" (generates "coverage.xml" with call points),
+            "jmockit-coverage-htmlbasic.jar" (generates "coverage-report" without call points), and
+            "jmockit-coverage-htmlfull.jar" (generates "coverage-report" with call points).
+         </li>
+         <li>
+            The jar file "jmockit-coverage.jar" will be added to the classpath implicitly if any
+            one of the dependent jars (including "jmockit-incremental.jar") is explicitly added.
+            Therefore, it is not necessary to explicitly include it in the classpath.
+            It needs to be present in the same directory as those other jars, though.
+         </li>
+         <li>
+            Added support for enabling/disabling coverage output re-generation according to whether
+            the output file is read only or not. For XML output, the "coverage.xml" file in the
+            working directory will be considered when running the test suite. For XHTML output, the
+            "coverage-report/index.html" file will be considered. (If said file does not yet exist,
+            then output will be generated and the corresponding writable file created.)
+         </li>
+         <li>
+            Added support for enabling/disabling incremental testing according to whether the
+            "testRun.properties" file in the working directory is read only or not.
+            (If this file does not yet exist, then it will be created and left in a writable state.)
+         </li>
+      </ol>
+   </li>
+   <li>
+      Minor improvement to JUnit 4 integration: now the <code>JMockitTest</code> base class can also
+      be used by <code>@Suite</code> classes (those annotated with
+      <code>@RunWith(Suite.class)</code>), in order to get JMockit initialized before the first
+      test in the custom suite is executed.
+   </li>
+   <li>
+      Implemented special handling for test execution environments where the method
+      <code>ProtectionDomain#getCodeSource()</code> returns <code>null</code>. This is used by
+      JMockit to discover the local path to "jmockit.jar", needed to auto-load the "java agent".
+      If that method returns <code>null</code>, the entries in the execution classpath will be
+      examined instead.
+   </li>
+   <li>
+      Implemented workaround for an apparent JDK issue, where calling
+      <code>isAnonymousClass()</code> in a nested class could lead to a failed attempt to load a
+      sibling nested class.
+   </li>
+   <li>
+      Fixed a bug that caused mocks set up in a JUnit <code>@BeforeClass</code> method, when defined
+      inside a base test class, to be discarded.
+   </li>
+   <li>
+      Fixed a bug in the explicit verification (ie, done inside a verification block) of non-strict
+      expectations, when the expectation was previously recorded: the lower limit on the invocation
+      count was not verified when the number of iterations of the verification block is 1 (the
+      default).
+   </li>
+   <li>
+      Upgraded the versions of JUnit and TestNG used in all test suites to 4.7 and 5.10,
+      respectively.
+   </li>
+   <li>
+      Upgraded the version of Mockito used in the comparison test suite to 1.8.0.
+   </li>
+</ul>
+
+<p>Version 0.986 (July 27, 2009):</p>
+<ul>
+   <li>
+      Fixed an issue where synthetic methods were inadvertently modified. (Such methods are created
+      by the Java compiler in a nested class, to allow the outer class or another nested class to
+      call private methods declared in the first nested class.)
+   </li>
+   <li>
+      Removed an improper runtime dependency on <code>org.junit.Assert</code> from an internal
+      class in the Expectations API (issue 26).
+   </li>
+   <li>
+      Fixed a bug in the JUnit 4 and TestNG integrations, where the use of "before" methods in a
+      base test class caused improper restoration of mocked classes just before the actual test
+      methods began execution.
+   </li>
+   <li>
+      Fixed an issue in the on-demand initialization of JMockit (with "tools.jar" in the classpath),
+      where the path to "jmockit.jar" in the classpath contained an space or non-ASCII character,
+      causing an error saying "Error opening zip file or JAR manifest missing" (issue 28). 
+   </li>
+   <li>
+      Added an "Implementation-Version: n.nn" entry to "META-INF/MANIFEST.MF" in "jmockit.jar", and
+      a "version.txt" file in the root of the full distribution zip file.
+      "n.nn" will be the current version number for JMockit ("0.986" currently).
+      This is only a convenience for users, to help tracking the version of JMockit in use
+      (issue 32).
+   </li>
+   <li>
+      Implemented support for thread-safe reentrant mocks (JMockit Annotations). See issue 30.
+   </li>
+</ul>
+
+<p>Version 0.985 (July 12, 2009):</p>
+<ul>
+   <li>
+      Fixed an issue in JMockit initialization which caused a hang when running JUnit 4 tests with
+      <code>@RunWith(Suite.class)</code>, but without using either "-javaagent" or one of the
+      mechanisms for on-demand initialization (<code>@RunWith(JMockit.class)</code>,
+      <code>extends JMockitTest</code>, etc.).
+   </li>
+   <li>
+      Enhancement to JUnit 4 integration: the <em>test suite</em> scope (in addition to the <em>test
+      method</em> and <em>test class</em> scopes) is now supported in the automatic management of
+      mocks and stubs set up by methods like <code>Mockit.setUpMocks(...)</code>, or through the
+      <code>@UsingMocksAndStubs(...)</code> annotation.
+      This means that any mock class (<code>@MockClass</code>) applied in a JUnit 4.5+ test suite
+      class (annotated with <code>@Suite.SuiteClasses(...)</code>) will remain in effect for all
+      tests in the suite.
+   </li>
+   <li>
+      Upgraded the Hamcrest libraries embedded in jmockit.jar from version 1.1 to version 1.2.
+   </li>
+   <li>
+      Fixed an issue with user-provided non-final subclasses of <code>Expectations</code> or
+      <code>Verifications</code>, which caused final subclasses to not be modified as they should.
+   </li>
+   <li>
+      Fixed an issue in the automatic creation of expectations for invocations not previously
+      recorded, where one that should be strict was created as non-strict.
+   </li>
+   <li>
+      Enhancement to the <code>Expectations#returns(value)</code> method, to facilitate returning
+      multiple values for a single recorded method. Now two or more return values can be specified
+      through "varargs" syntax, in a collection, or from an iterator. (Previously, this was possible
+      only by calling the <code>returns</code> method multiple times.)
+   </li>
+   <li>
+      Added a new sample test suite, based on
+      <a href="http://schuchert.wikispaces.com/Mockito.LoginServiceExample">this</a> article.
+   </li>
+   <li>
+      Fixed a bug in the mocking of abstract classes without no-args constructors.
+   </li>
+   <li>
+      Fixed a bug in the mocking of abstract classes when a method that provides arguments to the
+      super-constructor is provided, and constructors of the abstract class itself are allowed to
+      be mocked.
+   </li>
+</ul>
+
+<p>Version 0.984 (July 5, 2009):</p>
+<ul>
+   <li>
+      Enhancement to blocks of invocations, both the ordered (<code>Expectations</code>,
+      <code>VerificationsInOrder</code>, <code>FullVerificationsInOrder</code>) and unordered ones
+      (<code>NonStrictExpectations</code>, <code>Verifications</code>,
+      <code>FullVerifications</code>), to allow the specification of the number of expected
+      <em>iterations</em> for the whole set of invocations inside each block.
+   </li>
+   <li>
+      Enhancement to non-strict expectations: a minimum invocation count specified for an
+      expectation will now be checked at the end of the replay phase (previously, only the maximum
+      number of invocations was checked).
+   </li>
+   <li>
+      Created the <code>Mockit.setUpStartupMocks(mock classes...)</code> method to facilitate the
+      use of <em>startup mocks</em>, which allow applying arbitrary mock classes (annotated with
+      <code>@MockClass</code>) at JMockit startup. This can be used to mock or stub out classes
+      for an entire test suite run. The associated "jmockit.properties" configuration file even
+      allow the creation of reusable jar files containing mock classes, that can be applied to a
+      test suite simply by adding the jar file to the classpath.
+   </li>
+   <li>
+      Changed the <code>ClassLoader</code> first used when reading class files from disk, from the
+      "System" class loader (the one that regularly loads classes from production/test code) to the
+      "Context" class loader associated with the current thread (which runs a test).
+      This allows the execution of test suites in runtime environments (such as the JBoss
+      application server) that load regular classes through a custom class loader.
+   </li>
+   <li>
+      Fixed a bug in the <code>Expectations#returns(...)</code> method when the return type was
+      <code>SortedSet</code> or <code>SortedMap</code>.
+   </li>
+   <li>
+      One bug fix and a few small enhancements in JMockit Coverage.
+   </li>
+</ul>
+
+<p>Version 0.983 (June 29/30, 2009):</p>
+<ul>
+   <li>
+      Implemented a workaround for an incompatibility introduced in release 0.98, which caused the
+      <code>new Expectations(true)</code> instantiation to throw a <code>StackOverflowError</code>.
+   </li>
+   <li>
+      Enhancement to mocked types so that mocks created by JMockit can implement multiple
+      interfaces without the need to define a test-specific interface.
+      A <em>type variable</em>, defined either by generifying the test class or a test method, can
+      be declared to extend two or more interfaces (for example,
+      <code>&lt;M extends Runnable & Collection&lt;?>></code>).
+      Any mock field or parameter declared with this type variable (as in <code>M mock;</code>) will
+      implement all interfaces.
+   </li>
+   <li>
+      Enhancement to <code>VerificationsInOrder</code> to support <em>partial ordering</em>.
+      This allows (for example) the verification that one given method was executed first or last.
+      It also allows the verification of arbitrary sequences of consecutive invocations.
+   </li>
+   <li>
+      Enhancement to <em>verifications</em> blocks to allow having several of them in the same test,
+      just as it was already possible with <em>expectations</em> blocks.
+      This facilitates reuse of verification code, and allows ordered and unordered blocks (usually
+      one of each kind) to be combined in the same test.
+   </li>
+   <li>
+      Fixed a bug where non-private fields defined in a test class or in a base test class which
+      doesn't use JMockit were also mocked. Now only fields annotated with one of the annotations
+      for mocked types (<code>@Mocked</code>, <code>@NonStrict</code>, and <code>@Capturing</code>)
+      are considered, as well as non-private fields in subclasses of the <code>Expectations</code>
+      class, which may or may not be annotated.
+   </li>
+   <li>
+      Fixed a bug in the tracking of the current test class in a test run, where multiple instances
+      of the corresponding field existed instead of only one.
+   </li>
+   <li>
+      Fixed a bug in the JUnit 4.5+ integration, where mocks defined by one test class remained in
+      effect for the next test class, if it used a different test runner than the default one from
+      JUnit.
+   </li>
+</ul>
+
+<p>Version 0.982 (June 19, 2009):</p>
+<ul>
+   <li>
+      <strong>TestNG support</strong> added.
+   </li>
+   <li>
+      Enhancement of method <code>Expectations#with(Matcher&lt;T> argumentMatcher)</code>, so that
+      it won't return <code>null</code> in most cases; now, calls like <code>with(is(false))</code>
+      actually work as expected, passing <code>false</code> to the parameter.
+   </li>
+   <li>
+      Enhancement in the reusability of <code>Expectations/NonStrictExpectations</code> subclasses:
+      now all such subclasses that are nested and <code>final</code>, even those that extend an intermediate
+      <code>Expectations/NonStrictExpectations</code> subclass, will automatically call <code>endRecording()</code> at
+      the end of the initialization block;
+      those subclasses which are not <code>final</code> (and are nested or not) will be considered as intended for reuse
+      through extension in individual tests, and therefore won't call <code>endRecording()</code> at the end of their
+      own instance initialization.
+   </li>
+   <li>
+      Attempts to mock native methods when running under JDK 1.5 (which doesn't support the redefinition of such
+      methods, contrary to JDK 1.6) will now cause a user friendly exception to be thrown.
+   </li>
+   <li>
+      A few bug fixes for less common situations.
+   </li>
+</ul>
+
+<p>Version 0.981 (June 14, 2009):</p>
+<ul>
+   <li>
+      New feature: class <code>FullVerifications</code> created as a subclass of
+      <code>Verifications</code>, that allows the developer to write a full set of verifications for
+      the mocked types used in a given test. Non-strict invocations that occur inside code under
+      test but are not explicitly verified are considered unexpected, causing the test to fail.
+      Also created the class <code>FullVerificationsInOrder</code>, which combines
+      <code>FullVerifications</code> and <code>VerificationsInOrder</code>.
+   </li>
+   <li>
+      New package <code>mockit.integration.logging</code> with mock classes for popular logging
+      frameworks: JDK logging, Log4j, Commons-Logging, SLF4J.
+      The mock classes can be used with the <code>@UsingMocksAndStubs</code> annotation.
+   </li>
+   <li>
+      New feature: the <code>Expectations#returns(Object)</code> method now accepts instances of the
+      new <code>mockit.Delegate</code> interface. This allows test code to define return values or
+      thrown errors/exceptions at replay time, based on test-specific logic. Works even for final
+      and static methods of a mocked type.
+   </li>
+   <li>
+      New sample test suite created, for comparison with the
+      <a href="http://unitils.org">Unitils</a> mocking API.
+   </li>
+   <li>
+      Fixed issue with certain Hamcrest matchers used inside a <code>Verifications</code> block.
+      Fixed an issue with dynamic partial mocking.
+      Fixed an issue in the stubbing out of abstract/native methods.
+      Other fixes and small enhancements.
+   </li>
+</ul>
+
+<h4>Migrating from a previous release</h4>
+<p>
+   The following changes need to be made to existing JUnit test suites, when migrating from JMockit
+   release 0.97 (or older) to newer releases.
+</p>
+<ol>
+   <li>First of all, recompile all test sources with the new jmockit.jar in the classpath.</li>
+   <li>
+      Any test classes that extended <code>junit.framework.TestCase</code> now need to extend
+      <code>mockit.integration.junit3.JMockitTestCase</code>, unless the test suite is always run
+      with "-javaagent:jmockit.jar".
+      Alternatively, the test class can be converted to JUnit 4, with the addition of
+      <code>@RunWith(JMockit.class)</code> to the class and of <code>@Test</code> to its test
+      methods.
+   </li>
+   <li>
+      In any test class which itself extends <code>mockit.Expectations</code>, if there is any
+      initialization of instance fields outside of a <code>@Before/setUp</code> method, then a JUnit
+      fixture setup method will have to be created to perform the initialization.
+      This is necessary because now any mock fields of the test class will only be assigned
+      <em>after</em> the test class instance is created (but before any setup or test methods are
+      executed).
+   </li>
+   <li>
+      If an <code>Expectations</code> subclass (which can be a test class, an anonymous inner class
+      inside a test method, and so on) declares two or more mock fields of the same type or with a
+      common base type, then these fields must mock exactly the same set of methods and constructors
+      belonging to the common class types.
+      By default, all methods and constructors are mocked, so this issue can only happen when
+      (static) partial mocking is used, through the <code>methods</code> or <code>value</code>
+      attribute of the <code>MockField/Mocked</code> annotation.
+      So, if that's the case, simply copy the mock filters specified in one mock field to the
+      others.
+   </li>
+   <li>
+      JMockit now restores mocked classes automatically both for test-scoped and test class-scoped
+      mocks.
+      Consequently, none of the methods <code>Mockit.tearDownMocks()</code>,
+      <code>Mockit.restoreAllOriginalDefinitions()</code>, or
+      <code>Mockit.restoreOriginalDefinition(...)</code> need to be explicitly called anymore,
+      unless a given test method really needs to restore some mocked class before the test completes
+      its execution.
+      This also means that classes that remained mocked between tests or from one test class to the
+      next in the suite, will <em>not</em> remain mocked as before, but will be restored
+      automatically either between individual tests, or from one test class to the next.
+      Therefore, it will be necessary to set up the mocks again at the appropriate point (for
+      example, in a <code>@Before</code> or <code>@BeforeClass</code> method when using JUnit 4).
+   </li>
+</ol>
+<p>
+   It should be easy enough to adapt existing tests according to the incompatibilities listed above.
+   If after making such changes some tests remain broken that weren't before, please let me know.
+</p>
+
+<p>Version 0.98 (June 7, 2009):</p>
+<ul>
+   <li>
+      Enhancement: for any <code>Expectations</code> anonymous subclass instance, the
+      <code>endRecording()</code> method is automatically called at the end of the initialization
+      block.
+      Accordingly, the <code>Expectations</code> constructors which took a
+      <code>boolean autoEndRecording</code> parameter were removed (a breaking API change).
+   </li>
+   <li>
+      Enhancement: mock fields declared in a test class which does <strong>not</strong> extend
+      <code>Expectations</code> now will be assigned mock instances as soon as the test class is
+      instantiated (before any tests or setup methods are executed).
+   </li>
+   <li>
+      New feature: ability to capture instances created inside code under test, from the
+      initialization of a <code>Expectations</code> subclass to the end of the test, while mocking
+      the concrete class, whichever it may be; each captured instance is assigned to the appropriate
+      mock field (one or more times, with an specified upper limit). For example, this allows the
+      mocking of a concrete class that implements an interface (used as the type of a mock field)
+      and is dynamically loaded by production code sometime during the test.
+   </li>
+   <li>
+      New <code>@Capturing</code> annotation which, similarly to the previous item, allows
+      implementations of abstract types (interfaces or base classes) to be mocked on-demand,
+      either when the implementation class is loaded by the JVM, or when the targeted scope (test
+      class, test method) is entered during test suite execution.
+   </li>
+   <li>
+      New method <code>onInstance(mock)</code> in <code>Expectations</code> to match the mock
+      instance on which invocations occur between corresponding calls in the record and replay
+      phases.
+      By default, such instances can be different, so this method allows a test to compare them when
+      they must be the same.
+   </li>
+   <li>
+      New method <code>stubOut(classes)</code> in <code>Mockit</code> that stubs out the
+      implementation of all methods, constructors, and static initializers in one or more given
+      classes.
+      Individual stubbed out methods/constructors can later be mocked by regular means
+      (<code>setUpMocks</code>, <code>Expectations</code>).
+   </li>
+   <li>
+      New annotation <code>@UsingMocksAndStubs(classes)</code> that can be applied to test classes
+      so that one or more mock classes (annotated with <code>@MockClass</code>) are applied, and/or
+      one or more regular classes are stubbed out. The scope for such mocks and stubs is the set of
+      all tests in the annotated test class.
+   </li>
+   <li>
+      New feature: <em>dynamic partial mocking</em>, where only the methods and constructors invoked
+      in the record phase of an Expectations test remain mocked for the replay phase; when the
+      replay phase begins, all methods/constructors not previously invoked will be back to their
+      original definitions, so any calls to them will result in the execution of real production
+      code.
+      This is an alternative to the previous feature of <em>static partial mocking</em>, with the
+      advantage that the desired methods/constructors to be mocked or not don't have to be
+      explicitly specified in test code.
+   </li>
+   <li>
+      Enhancement: stack traces for certain failed expectations now include a cause which points to
+      the line of code executed in the replay phase which was the source of the failure; other
+      small improvements to stack traces were also made.
+   </li>
+   <li>
+      New feature: multiple results (values to return and/or exceptions/errors to throw) can now be
+      recorded for a given expectation.
+      Any corresponding invocation in the replay phase will then produce the next consecutive
+      result as recorded.
+   </li>
+   <li>
+      Expanded support for non-strict expectations:
+      1) the new <code>@NonStrict</code> annotation indicates a mock on which all invocations will
+      be considered non-strict;
+      2) the new <code>NonStrictExpectations</code> class extends <code>Expectations</code>
+      so that all invocations to mocked types inside the initialization block will be considered
+      non-strict.
+   </li>
+   <li>
+      New API for verification of non-strict expectations after the replay phase, provided by the
+      new <code>Verifications</code> class, which shares many of the methods provided by the
+      <code>Expectations</code> class.
+      In addition, there is a <code>VerificationsInOrder</code> subclass which also verifies the
+      order of invocation to the expectations of one or more mocked types.
+   </li>
+   <li>
+      New sample test suite created, for comparison of the new Verifications API with the
+      <a href="http://code.google.com/p/mockito">Mockito</a> API (where all expectations are
+      non-strict by default, and preference is given to verifying invocations at the end of the test
+      over recording expectations for them at the beginning of the test).
+   </li>
+   <li>
+      New feature: support for "mock parameters" in JUnit test methods. Everything which applies to
+      a mock field also applies to such parameters.
+      Tests written with the Expectations/Verifications API can greatly benefit from using
+      parameters instead of local fields in an Expectations anonymous subclass, since the scope of
+      each parameter is the whole test method.
+   </li>
+   <li>
+      As a consequence of the previous new feature, the <code>@MockField</code> annotation was
+      deprecated in favor of a new <code>@Mocked</code> annotation which can be applied to either
+      fields or parameters.
+   </li>
+   <li>
+      New utility class <code>Deencapsulation</code> created, with static methods to access fields,
+      methods and constructors non-accessible to the test, mirroring the previously existing methods
+      in the <code>Expectations</code> class (which continue to exist).
+   </li>
+   <li>
+      Internal refactorings and other implementation enhancements and optimizations.
+      A few bug corrections, including an important one related to reentrant mocks.
+   </li>
+</ul>
+
+<p>Version 0.97 (May 10, 2009):</p>
+<ul>
+   <li>
+      New feature: classes of the JRE (loaded by the bootstrap class loader) can now be mocked just
+      like other classes; use of the "-Xbootclasspath/a" JVM argument is therefore no longer needed.
+   </li>
+   <li>
+      Full support for mocking abstract classes implemented, where all abstract methods, including
+      those inherited from super-classes, are implemented as mocks in the generated concrete
+      subclass.
+   </li>
+   <li>
+      Full support for mocking constructors, including the ability to specify which constructor
+      in the super-class should be called, and with what arguments, which can be determined at test
+      execution time.
+   </li>
+   <li>
+      New feature: <strong>non-strict expectations</strong>, which can be recorded once and later
+      replayed any number of times (including none) and in any order.
+   </li>
+   <li>
+      New feature in Expectations: mocked classes instantiated in the recording phase will have
+      their instances automatically matched to the corresponding instantiations in the replay phase,
+      eliminating the need to use an argument matcher in such cases (see next item).
+   </li>
+   <li>
+      <strong>Breaking API change</strong>: the method "withInstanceOf(Object)" in the Expectations
+      class was renamed to "withInstanceLike". On the other hand, the new feature described in the
+      previous item makes the need to use this method much less likely (in all the sample tests,
+      no use remains).
+   </li>
+   <li>
+      <strong>Breaking API change</strong>: the two constructors in the Expectations class which had
+      an "Object instanceWithMockFields" parameter were removed; now the enclosing class of each
+      Expectations subclass will also be searched for mock fields, making those constructors
+      redundant.
+   </li>
+   <li>
+      Improvements in JMockit Coverage: finds source files in sub-directories of any "src" dirs;
+      now considers for coverage all classes loaded by tests that are not inside jar files, instead
+      of only the classes in the same packages as the tests.
+   </li>
+   <li>
+      Updated existing samples to take advantage of the new features.
+   </li>
+   <li>
+      Created new sample: full test suite for the Animated Transitions framework (still incomplete 
+      in this version, with the remaining tests to be added shortly).
+   </li>
+   <li>
+      Created new sample: equivalent JMockit tests for comparison with the PowerMock Tutorial test
+      suite.
+   </li>
+   <li>Other bug corrections, improvements, and smaller new features.</li>
+</ul>
+
+<p>Version 0.96 (April 21, 2009):</p>
+<ul>
+   <li>
+      Implemented support for JUnit 4.5 (also works with JUnit 4.6).
+   </li>
+   <li>
+      JMockit Expectations: improved Javadoc documentation; corrected a few bugs; created new helper
+      methods; added new attributes to @MockField annotation.
+   </li>
+   <li>
+      New feature: jmockit.properties (see default inside jmockit.jar) used for configuring startup
+      mocks and external class transformers.
+   </li>
+   <li>
+      A few corrections and improvements in JMockit Coverage (now reports interfaces properly).
+   </li>
+   <li>
+      Created new sample: full test suite for the Timing Framework, with 60+ JMockit-based tests.
+   </li>
+   <li>
+      Updated and expanded information on web site.
+   </li>
+</ul>
+
+<p>Version 0.95 (October 19, 2008):</p>
+<ul>
+   <li>
+      JMockit Expectations: added Javadoc documentation that was still missing; added more tests
+      and corrected a few bugs.
+   </li>
+</ul>
+
+<p>Version 0.94/b/c (January 30/February 14/March 29, 2008):</p>
+<ul>
+   <li>
+      New feature: several new methods in mockit.Expectations for specifying expected invocation
+      counts.
+   </li>
+   <li>
+      JCoverage: corrections; intra-line feature replaced with "partiallyCovered" lines
+      (until intra-line coverage support is fully implemented).
+   </li>
+   <li>
+      New feature: JMockit Coverage now accepts an empty class selection regex, then applying
+      coverage only to packages containing the tests that are actually run.
+   </li>
+   <li>
+      New feature: the standard tools which could be loaded by specifying "junit3", "junit4",
+      "hibernate" or "coverage" in the JVM command line will now be loaded by default if not
+      included in the command line but the corresponding jar file is in the classpath.
+   </li>
+</ul>
+
+<p>Version 0.93 (January 14, 2008):</p>
+<ul>
+   <li>
+      New feature: support for on-demand loading of the jmockit.jar javaagent when using a
+      Sun JDK 1.6 (requires tools.jar in the classpath).
+   </li>
+   <li>
+      New feature: automatic/transparent JUnit 3.8/4.4 integration when the jmockit.jar agent
+      is loaded on-demand.
+   </li>
+   <li>Better error reporting for unexpected invocations (JMockit Expectations).</li>
+   <li>New method "setField" added to mockit.Expectations.</li>
+   <li>
+      Additional features implemented in JMockit AOP, such as preliminary support for interface
+      and subclass introduction.
+   </li>
+</ul>
+
+<p>Version 0.92/0.91 (January 4, 2008):</p>
+<ul>
+   <li>Initial (and very incomplete) version of the AOP tool.</li>
+   <li>Bug corrections and many minor improvements and new features.</li>
+   <li>New sample for comparison with jMock 2.</li>
+   <li>Sample for comparison with EasyMock Class Extension updated to version 2.3.</li>
+</ul>
+
+<p>Version 0.90 (November 11, 2007):</p>
+<ul>
+   <li>Major new feature: use of annotations to specify mock classes and methods.</li>
+   <li>Major new feature: record/replay model for setting expectations.</li>
+   <li>Major new feature: mechanism to load arbitrary class file transformers.</li>
+   <li>Major new feature: code coverage (as an external class file transformer).</li>
+   <li>New minor features to fully support mock constructors.</li>
+   <li>New feature to support mocking static class initializers.</li>
+   <li>Bug corrections and optimizations.</li>
+   <li>New samples (comparison with EasyMock 2 and EasyMock 2 Class Extension).</li>
+</ul>
+
+<p>Version 0.86 (September 13, 2007):</p>
+<ul>
+   <li>
+      Finished implementation of "it" field support. See documentation in Javadoc for
+      Mockit.redefineMethods.
+   </li>
+</ul>
+
+<p>Version 0.85 (May 20, 2007)</p>
+<p>Version 0.84 (March 9, 2007)</p>
+<p>Version 0.83 (November 26, 2006)</p>
+<p>Version 0.81 (June 2, 2006)</p>
+</body>
+</html>

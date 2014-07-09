@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2006-2014 Rogério Liesenfeld
+  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
+  -->
+<html>
+<head>
+   <title>JMockit - About The JMockit Testing Toolkit</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <meta name="description"
+         content="Motivations for the creation of JMockit and goals for its continued development.">
+   <link rel="stylesheet" type="text/css" href="prettify.css"/>
+   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+</head>
+<body>
+<h1 class="header">
+   <a href="index.html">JMockit</a>
+   <span>The Mock <span>Anything</span> Toolkit for Java</span>
+</h1>
+<ul class="navBar">
+   <li><a href="gettingStarted.html">Getting&nbsp;started</a></li>
+   <li><a href="about.html">About</a></li>
+   <li><a href="tutorial.html">Tutorial</a></li>
+   <li><a href="javadoc/index.html">API</a></li>
+   <li><a href="samples.html">Samples</a></li>
+   <li><a href="http://code.google.com/p/jmockit/source/checkout">Source</a></li>
+   <li><a href="http://code.google.com/p/jmockit/issues/list">Issues</a></li>
+   <li><a href="community.html">Community</a></li>
+   <li><a href="changes.html">History</a></li>
+</ul>
+
+<h1>About the JMockit Testing Toolkit</h1>
+
+<p>
+   JMockit is open source software licensed under the
+   <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.
+   It is a collection of tools and APIs for use in <em>developer testing</em>, that is, tests written by developers
+   using a testing framework such as <a href="http://junit.org">JUnit</a> or <a href="http://testng.org">TestNG</a>.
+   The tools rely on the Java 6 SE instrumentation feature (the
+   <a href="http://download.oracle.com/javase/6/docs/api/java/lang/instrument/package-summary.html"
+      >java.lang.instrument</a> package), internally using the <a href="http://asm.objectweb.org">ASM</a> library to
+   modify bytecode at runtime.
+</p>
+<p>
+   This toolkit was created mainly as an attempt to overcome certain limitations found in "conventional"
+   <a href="http://www.martinfowler.com/articles/mocksArentStubs.html">mocking</a> tools, which prevented the creation
+   of unit tests for code designed according to well-established OO practices.
+   Another goal was to provide simpler and more succinct APIs for writing developer tests.
+   In addition, and differently from other testing tools which specifically target the use of mocks, JMockit also
+   includes other tools designed to support the creation of large test suites.
+</p>
+
+<h2 id="conventionalTools">Conventional tools for mock objects</h2>
+<p>
+   The JMockit approach is an alternative to the conventional use of "mock objects" as provided by tools such as
+   <a href="http://easymock.org">EasyMock</a>, <a href="http://jmock.org">jMock</a>, and
+   <a href="http://mockito.org">Mockito</a>.
+</p>
+<p>
+   Such tools are based on the dynamic generation of implementation classes (through
+   <a href="http://download.oracle.com/javase/6/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>, when
+   given an interface to be mocked) and subclasses (through <a href="http://cglib.sourceforge.net">CGLIB</a>, when given
+   a non-final class to be mocked).
+   Because of this particular mocking implementation technique where a subclass with overriding mock methods is
+   created, <code>final</code> classes, constructors, and non-overridable methods simply <em>cannot</em> be mocked;
+   even worse, when mocking a non-final class which happens to contain <code>final</code> methods, these tools
+   will silently ignore them, often surprising users.
+   Most importantly, however, when using these tools the dependencies of code under test (that is, the objects of other
+   classes on which a given class under test depends) must be controlled by the tests, so that mock instances can be
+   passed to the clients of those dependencies;
+   that is, dependencies cannot simply be instantiated with the <code>new</code> operator in a client class for which
+   we want to write unit tests.
+</p>
+<p>
+   Ultimately, the technical limitations of conventional mocking tools impose the following design restrictions on
+   production code:
+</p>
+<ol>
+   <li>
+      Each class which may need to be mocked in a test must either implement a separate interface or not be
+      <code>final</code>.
+   </li>
+   <li>
+      The dependencies of each class to be tested must either be obtained through configurable instance creation methods
+      (factories or a <em>Service Locator</em>), or be exposed for
+      <a href="http://martinfowler.com/articles/injection.html">dependency injection</a>.
+      Otherwise, tests won't be able to pass mock implementations of dependencies to code under test.
+   </li>
+   <li>
+      Since only non-final instance methods can be mocked, classes to be unit tested in isolation from their
+      dependencies cannot call any <code>static</code> or <code>final</code> methods on said dependencies, nor
+      directly instantiate them.
+   </li>
+</ol>
+
+<h2 id="productionCode">Design considerations for production code</h2>
+<p>
+   The problem with imposing restrictions on the design of production code is that there <em>are</em> good reasons for
+   making classes and methods <code>final</code>, for directly obtaining instances of collaborators with the
+   <code>new</code> operator, and for using APIs containing <code>static</code> methods.
+   There is nothing inherently wrong with using these three Java language keywords, after all.
+</p>
+
+<h3 id="final">Use of <code>final</code></h3>
+<p>
+   In the first case, declaring classes or methods <code>final</code> makes it clear that they are not intended for
+   extension by subclassing.
+   For example, in a correct application of the <a href="http://en.wikipedia.org/wiki/Template_method_pattern">Template
+   Method</a> design pattern, the "template" method itself (which implements an algorithm calling one or more
+   overridable methods) must <em>not</em> be overridable.
+   Also, from the point of view of API design, <code>final</code> classes are the only ones which can be safely evolved;
+   otherwise, you risk running into the <em>fragile base-class</em> problem.
+   For more on this, see the following articles:
+   <a href="http://www.javaworld.com/article/2073649/core-java/why-extends-is-evil.html">Why extends is evil</a>,
+   <a href="http://www.gotw.ca/publications/mill18.htm">Virtuality</a>.
+</p>
+<p>
+   In practice, most classes and methods in an application or even in a reusable class library are not designed with
+   extension by subclassing in mind, so it makes sense to declare them as <code>final</code>; probably that's why most
+   other OO languages (C++, C#, etc.) make all methods non-overridable by default.
+</p>
+<p>
+   Another benefit of making Java classes or methods <code>final</code> is that a good static analysis tool will be able
+   to provide more useful feedback.
+   The code inspections associated with the use of <code>final</code> in IntelliJ IDEA, for example, led me numerous
+   times to simplify and even eliminate unused parts of the code base, when developing large business applications.
+   (For the curious, some of the relevant inspections are: "Class structure: 'protected' member in 'final' class",
+   "Declaration redundancy: redundant throws declaration", and "Initialization issues: overridable method call during
+   object construction".)
+</p>
+<p>
+   For an authoritative discussion on design for extension (which defends the judicious use of <code>final</code> for
+   classes and methods), see "Item 17: Design and document for inheritance or else prohibit it" in the
+   <a href="http://www.amazon.com/Effective-Java-2nd-Joshua-Bloch/dp/0321356683">Effective Java</a> book.
+   Another book which strongly recommends the use of <code>final</code> for classes and methods is
+   <a href="http://www.amazon.com/Practical-API-Design-Confessions-Framework/dp/1430209739">Practical API Design</a>
+   (see "Make Everything Final", in chapter 5).
+   Yet another relevant book is <a href="http://www.apibook.com/blog">API Design for C++</a>, which is also largely
+   applicable to Java (see sections "2.3.2 Add Virtual Functions Judiciously" and "4.6.3 Using Inheritance").
+   The site for this last book points to several interesting articles, including
+   <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=142428">Java API Design Guidelines</a>.
+</p>
+<p>
+   Personally, I consider the choice by the Java language designers to make non-private instance methods overridable
+   <em>by default</em> a mistake, one which was probably influenced by a mentality typical until the 1990's that the
+   more you can inherit, the better.
+   Personal experience, however, shows two things that discredit that position: 1) in most cases, Java programmers
+   simply take the easy route and leave all classes and methods as non-final, without consideration for API design
+   questions (just like for languages with the "<code>virtual</code>" keyword, where most methods end up as
+   non-overridable simply because it was the default - the difference here, of course, being that this usually is the
+   right choice); 2) often, when a programmer decides to create a subclass for a non-final Java class, it is done only
+   as a "hack" intended to arbitrarily change the behavior of some method, without any consideration to object-oriented
+   design principles such as the <a href="http://www.objectmentor.com/resources/articles/lsp.pdf">Liskov Substitution
+   Principle</a> (LSP), or the recommendation to "<cite>Favor object composition over class inheritance</cite>"
+   (<a href="http://c2.com/cgi/wiki?DesignPatternsBook">Design Patterns</a>, page 20).
+</p>
+
+<h3 id="new">Use of <code>new</code></h3>
+<p>
+   In the second case, directly instantiating dependencies with <code>new</code> facilitates the use of stateful
+   objects.
+   In OO design, objects normally are not stateless.
+   However, when dependencies are obtained or injected through external means (such as a "Service Locator" or a DI
+   framework) there is a tendency to make them stateless, and with a single global instance.
+   Such a practice leads to code that is more procedural and less object oriented.
+   Of course, this applies to dependencies whose interfaces have only one implementation in production code, or when the
+   selection of an implementation between many would not benefit from external configuration (for example, people 
+   typically instantiate <code>List</code> implementations directly, even though they code to the abstract interface
+   only); situations where one implementation <em>must</em> be selected through external configuration tend to be quite
+   rare in practice.
+</p>
+<p>
+   Related to this issue, I think, there is a widely observed misunderstanding of just what the phrase "<cite>Program to
+   an interface, not an implementation</cite>" (from the famous "Design Patterns" book, page 18) actually means.
+   Many seem to think that one should <em>create</em> a new separate Java interface (or abstract class) for any concrete
+   class which is being created or doesn't yet implement one.
+   In reality, it was only meant as a recommendation to avoid declaring variables, fields, parameters, or return types
+   as the implementation type <em>when an abstract type already exists</em> (for example, don't declare variables of
+   type <code>ArrayList</code> if all you need is a <code>List</code>).
+   The "Effective Java" book mentioned above also discusses this topic, in "Item 52: Refer to objects by their
+   interfaces".
+</p>
+<p>
+   Another bad motivation to avoid the use of <code>new</code> may simply be an unreasonable fear of getting "too much"
+   garbage collection.
+   The truth, however, is that JVM implementations are (and have been for many years) very good at efficiently managing
+   short-lived objects.
+   Using single-instance classes as a rudimentary object caching mechanism is a terrible use of the Java platform.
+   From my experience, this practice not only leads to anti-OO code but also to big, un-cohesive, stateless classes with
+   many methods, the exact opposite of small, cohesive, and stateful classes which are what true objects are about.
+</p>
+
+<h3 id="static">Use of <code>static</code></h3>
+<p>
+   In the third case, the use of classes containing only <code>static</code> methods is the best choice when none of the
+   methods operate on any state (for example, the <code>Math</code> class), or the actual state is stored in a separate
+   context object, such as the HTTP request context or the persistence context.
+   For this last situation, consider an application that has a persistence subsystem which provides access to a
+   relational database.
+   One possibility is to inject instances of work unit objects (an Hibernate <code>Session</code>, or a JPA
+   <code>EntityManager</code>) wherever they are needed, and use the persistence API directly.
+   A better approach, in my experience, is to use a <em>static facade</em> which encapsulates all access from the
+   application to the persistence subsystem.
+   The benefits of this are many, not the least of which is that it actually provides <em>more</em> flexibility than the
+   more direct, instance-based, approach, while providing a tight and easily accessible client API.
+</p>
+<p>
+   Another recommended usage of static methods is presented in "Item 1: Consider static factory methods instead of
+   constructors", again in the "Effective Java" book.
+</p>
+<p>
+   Finally, it's interesting to note that some major mocking APIs (namely, EasyMock and Mockito) provide their most
+   important methods precisely as <code>static</code> methods.
+   (The JMockit APIs, by the way, don't make any use of <code>static</code> methods, except for one class of secondary
+   importance, which was specifically designed to provide stateless utility methods.)
+</p>
+
+<h2 id="testability">Testability</h2>
+<p>
+   The limitations found in conventional mocking tools have come to be associated with the idea of "untestable code".
+   Often, we see the restrictions resulting from those limitations considered as inevitable, or even as something that
+   could be beneficial.
+   The JMockit toolkit, which breaks away from these limitations and restrictions, shows that in fact there is no such
+   thing as truly untestable code. There is, of course, code that is harder to test because it is too complicated and
+   convoluted, lacks cohesion, and so on and so forth.
+</p>
+<p>
+   Therefore, by eliminating the technical limitations traditionally involved in the isolation of a unit from its
+   dependencies, we get the benefit that no artificial design restrictions must be imposed on production code for the
+   sake of unit testing.
+   Additionally, it becomes possible to write unit tests for legacy code, without the need for any prior adaptation or
+   refactoring.
+   The ability to create automated regression tests for existing code before <em>refactoring</em> it is extremely
+   valuable, as implied by the very <a href="http://martinfowler.com/bliki/DefinitionOfRefactoring.html">definition</a>
+   of the term.
+   In short, with a less restrictive mock testing tool the <em>testability</em> of production code becomes less of an
+   issue, giving developers more freedom to use the language and more design choices when creating new code, while
+   facilitating the initial creation of tests for legacy code.
+</p>
+<p>
+   Another way of thinking about testability is to differentiate between <em>intrinsic</em> and <em>extrinsic</em>
+   testability.
+   In the first case, we can conclude that whatever makes the code more or less <em>maintainable</em> also makes it more
+   or less easily testable, and vice-versa.
+   For example, methods with higher <em>cyclomatic complexity</em> (basically, the number of different execution paths
+   through the method) require more tests to be fully covered, while at the same time being more difficult to understand
+   and change; in other words, intrinsic testability is not particularly useful as a separate measure for code quality,
+   if it is nothing more than <em>maintainability</em>.
+   In the second case, <em>extrinsic testability</em>, we are not really considering properties of the production code,
+   but instead properties of the <em>tools</em> used to <em>test</em> that code.
+   Therefore, when a tool for testing code in isolation provides an easy to use API that is able to deal with
+   <em>all</em> possible isolation scenarios, such extrinsic concerns for testability completely disappear.
+</p>
+
+<h2 id="mockingAPIs">Design considerations for mocking APIs</h2>
+<p>
+   The APIs for testing with mocks that are available in existing toolkits, even the more recent ones, have certain
+   undesirable characteristics. Of course, this is partly a matter of personal taste, but some objective observations
+   can certainly be made.
+</p>
+<p>
+   In the following discussion, five different mocking toolkits (besides JMockit) are considered, all in their latest
+   stable releases as of Aug 24, 2013: <strong>EasyMock 3.2</strong>, <strong>jMock 2.6.0</strong>,
+   <strong>Mockito 1.9.5</strong>, <strong>PowerMock 1.5</strong>, and <strong>Unitils 3.3</strong>.
+   The code snippets below come from the sample JMockit test suites that compare the JMockit approach with those other
+   toolkits.
+</p>
+<ul>
+   <li>
+      Most mocking APIs rely on the imperative creation of mock instances through method calls, as opposed to a
+      declarative approach where mocks are created implicitly from instance field declarations. Examples:
+      <code>mock = createMock(Collaborator.class)</code> in EasyMock;
+      <code>final Subscriber subscriber = context.mock(Subscriber.class)</code> in jMock;
+      <code>myServiceMock = createMock(MyService.class)</code> in PowerMock (which also supports declarative mocks with
+      the <code>@Mock</code> annotation on instance fields);
+      <code>List&lt;String> mockedList = mock(List.class)</code> in Mockito (which, like PowerMock, has an optional
+      <code>@Mock</code> annotation for instance fields).
+      Unitils follows the declarative approach, but using a generic type for declaring mock fields, eg
+      <code>Mock&lt;MessageService> mockMessageService</code>.
+      The approach in JMockit Expectations is always declarative, with the use of annotations for instance fields as
+      well as for <em>test method parameters</em> (the use of parameters to declare mocks is a feature unique to
+      JMockit, and as examples can show, an extremely convenient one).
+   </li>
+   <li>
+      When recording or verifying invocations on mocks, all other mocking APIs require mixing extra mocking API calls
+      with regular calls to mocked methods. Some examples, with extra API calls in bold:
+      <code><strong>expect</strong>(mock.voteForRemoval("Document"))</code> in EasyMock;
+      <code><strong>oneOf</strong>(subscriber).receive(message)</code> in jMock;
+      <code><strong>expect</strong>(myServiceMock.getAllPersons())</code> in PowerMock;
+      <code><strong>when</strong>(mockedList.get(0))</code> and <code><strong>verify</strong>(mockedList).get(0)</code>
+      in Mockito;
+      <code>mockMessageService.<strong>assertInvoked()</strong>.sendMessage(alert1)</code> in Unitils.
+      In the JMockit Expectations & Verifications API, you always call the mocked method directly, without any need to
+      wrap or chain it with a mocking API specific call (there is only one exception to this, but it is rarely used).
+   </li>
+   <li>
+      Just like with the other mocking APIs, there are calls in the JMockit Expectations API that need to be made for
+      recording expected return values and thrown exceptions, for specifying invocation count constraints, and so on.
+      Such calls are always kept separate from calls to mocked methods, though (actually, JMockit mostly uses
+      <em>field assignments</em> instead of method calls). In other words, JMockit does not follow the
+      <a href="http://martinfowler.com/dslwip/MethodChaining.html">method chaining</a> approach.
+      Although it sometimes looks nice, the chaining of method calls tends to produce long and complex statements which
+      can easily exceed the maximum line length, therefore requiring line wrapping at odd places.
+      In addition, method chaining may require a different API when setting return values or thrown exceptions for
+      <code>void</code> methods, since calls to such methods cannot be wrapped in an API call like
+      <code>expect(&lt;call to mocked method>)</code>; both EasyMock and Mockito suffer from this problem, although that
+      is not the case with jMock or Unitils.
+   </li>
+   <li>
+      All mocking toolkits above, including JMockit, follow a <em>record-replay-verify</em> execution model for tests.
+      These three execution <em>phases</em> divide the test in three consecutive steps:
+      1) invocations to mocks are <em>recorded</em> with the desired return values or thrown exceptions, if any (each
+      invocation is recorded as being <em>expected</em> or <em>allowed</em>);
+      2) the code under test is exercised, when the recorded invocations to mocks can be <em>replayed</em>, resulting in
+      the specified return values or thrown exceptions (here, invocations not recorded but allowed will simply result in
+      default return values, while unexpected ones - if any - will result in assertion errors); and
+      3) the invocations that did actually occur or not occur in the replay phase are <em>verified</em> against the
+      invocations of interest (which were previously recorded as allowed ones, or not recorded at all but still
+      allowed) in order to detect invocations that are either missing or occurring in excess.
+      <br/>
+      For any given test, both the first (<em>record</em>) and third (<em>verify</em>) phases can be empty, although at
+      least one of them will always be specified. The <em>replay</em> phase, obviously, always exists.
+      <br/>
+      The issue I am getting at here is that most other mocking toolkits require explicit coding for transitioning a
+      test between phases, while none of them helps the developer to quickly and easily visualize the separate phases of
+      the test.
+      In EasyMock, you need to call <code>replay(mock)</code> to switch from <em>record</em> to <em>replay</em>, and
+      then later call <code>verify(mock)</code> to switch from <em>replay</em> to <em>verify</em> (alternatively, there
+      is a base test class that provides <code>replayAll()</code> and <code>verifyAll()</code> helper methods).
+      PowerMock, when using the EasyMock API, also relies on calls to <code>replayAll()</code> and
+      <code>verifyAll()</code>.
+      Mockito and Unitils are better on this point, but at the cost of requiring explicit API calls for every invocation
+      to be recorded or verified.
+      jMock is similar to the JMockit Expectations syntax, where recorded invocations are those written inside an
+      <em>Expectations</em> code block (an anonymous inner class containing one instance initialization block but no
+      method implementations).
+      However, jMock has nothing like the <em>Verifications</em> block available in JMockit, and each Expectations
+      instance must be passed as argument in a call to the <code>Mockery#checking</code> method, which transitions the
+      test from <em>record</em> to <em>replay</em>.
+      <br/>
+      The JMockit Expectations & Verifications API relies on the instance initialization of anonymous inner classes to
+      demarcate the <em>record</em> and <em>verify</em> phases.
+      This does require extra indentation levels and curly braces, but the advantages are big: the explicit
+      expectation/verification blocks avoid repetition of method calls like "expect(...)" and "verify(...)", while
+      adding structure and readability to the test by clearly and cleanly separating code which belongs to each of the
+      three phases.
+   </li>
+</ul>
+<p>
+   There are other less dramatic differences in style between JMockit and other mocking APIs, but the above items should
+   be enough to show that many possibilities exist in the realm of mocking API design.
+</p>
+
+<h2 id="alternativeTools">Alternative mocking tools</h2>
+<p>
+   There are other mocking tools for Java which also overcome the limitations of the conventional ones, namely
+   <a href="http://code.google.com/p/powermock">PowerMock</a>,
+   <a href="http://java.net/projects/jeasytest">jEasyTest</a>, and
+   <a href="http://mockinject.codehaus.org">MockInject</a>.
+   The one that comes closest to the feature set of JMockit is PowerMock, so I will briefly evaluate it here (besides,
+   the other two are more limited and don't seem to be developed anymore, or even used).
+</p>
+<dl id="PowerMock"><dd><strong>JMockit</strong> vs <strong>PowerMock</strong></dd></dl>
+<ul>
+<li>
+   First of all, PowerMock does not provide a complete API for mocking, but instead works as an extension to another
+   tool, which is either EasyMock or Mockito.
+   This is obviously an advantage for existing users of those tools.
+   <br/>
+   JMockit, on the other hand, provides entirely new APIs (that said, the "Expectations" API is similar to
+   EasyMock/jMock, while the "Verifications" API is similar to Mockito/Unitils).
+   While this creates a longer learning curve, it also allows JMockit to provide a simpler, more consistent, and easier
+   to use API.
+</li>
+<li>
+   Compared to the JMockit Expectations API, the PowerMock API is more "low-level", forcing users to figure out and
+   specify which classes need to be prepared for testing (with the <code>@PrepareForTest({ClassA.class, ...})</code>
+   annotation) and requiring specific API calls to deal with various kinds of language constructs that may be present in
+   the production code: static methods (<code>mockStatic(ClassA.class)</code>),
+   constructors (<code>suppress(constructor(ClassXyz.class))</code>),
+   constructor invocations (<code>expectNew(AClass.class)</code>),
+   partial mocks (<code>createPartialMock(ClassX.class, "methodToMock")</code>), etc.
+   <br/>
+   With JMockit Expectations, all kinds of methods and constructors are mocked in a purely declarative way, with partial
+   mocking specified through regular expressions in the <code>@Mocked</code> annotation or by simply "un-mocking" the
+   members with no recorded expectations; that is, the developer simply declares some shared "mock fields" for the test
+   class, or some "mock parameters" for individual test methods.
+</li>
+<li>
+   Some capabilities available in JMockit, such as support for mocking <code>equals</code> and <code>hashCode</code>,
+   overridden methods, and others, are currently not supported in PowerMock.
+   Also, there is no equivalent to JMockit's ability to automatically mock implementations of specified base types as
+   the test executes, without the test code itself having any knowledge of the actual implementation classes.
+</li>
+<li>
+   PowerMock uses custom class loaders (usually one per test class) in order to generate modified versions of the mocked
+   classes.
+   Such heavy use of custom class loaders can lead to conflicts with third-party libraries, hence the need to sometimes
+   use the <code>@PowerMockIgnore("package.to.be.ignored")</code> annotation on test classes.
+   <br/>
+   The mechanism used by JMockit (runtime instrumentation through a "Java agent") is simpler and safer, although it does
+   require the use of a JVM from JDK 1.6 or newer.
+</li>
+</ul>
+
+<p>
+   Another mocking tool is <a href="http://code.google.com/p/mockito">Mockito</a>.
+   Although it does not attempt to overcome the limitations of older tools (jMock, EasyMock), it does introduce a new
+   style of behavior testing with mocks.
+   JMockit also supports this alternative style, through the Verifications API.
+</p>
+<dl id="Mockito"><dd><strong>JMockit</strong> vs <strong>Mockito</strong></dd></dl>
+<ul>
+<li>
+   Mockito relies on explicit calls to its API in order to separate code between the <em>record</em>
+   (<code>when(...)</code>) and <em>verify</em> (<code>verify(...)</code>) phases.
+   This means that any invocation to a mock object in test code will also require a call to the mocking API.
+   Additionally, this will often lead to repetitive <code>when(...)</code> and <code>verify(mock)...</code> calls.
+   <br/>
+   With JMockit, no similar calls exist. Sure, we have the <code>new NonStrictExpectations()</code> and
+   <code>new Verifications()</code> constructor calls, but they occur only once per test (typically), and are completely
+   separate from the invocations to mocked methods and constructors.
+</li>
+<li>
+   The Mockito API contains several inconsistencies in the syntax used for invocations to mocked methods.
+   In the <em>record</em> phase, we have calls like <code>when<strong>(mock.mockedMethod(args))</strong>...</code> while
+   in the <em>verify</em> phase this same call will be written as
+   <code>verify<strong>(mock)</strong>.mockedMethod(args)</code>.
+   Notice that in the first case the invocation to <code>mockedMethod</code> is made directly on the
+   <code>mock</code> object, while in the second case it is made on the object returned by <code>verify(mock)</code>.
+   <br/>
+   JMockit has no such inconsistencies because invocations to mocked methods are always made directly on the mocked
+   instances themselves.
+   (With one exception only: to match invocations on the same mocked instance, an <code>onInstance(mock)</code> call is
+   used, resulting in code like <code>onInstance(mock).mockedMethod(args)</code>; most tests won't need to use this,
+   though.)
+   <br/>
+   Just like other mocking tools which rely on method chaining/wrapping, Mockito also runs into inconsistent syntax when
+   stubbing <code>void</code> methods.
+   For example, you write <code>when(mockedList.get(1)).thenThrow(new RuntimeException());</code> for a
+   non-<code>void</code> method, and <code>doThrow(new RuntimeException()).when(mockedList).clear();</code> for a
+   <code>void</code> one.
+   With JMockit, it's always the same syntax:
+   <code>mockedList.clear(); <em>result</em> = new RuntimeException();</code>.
+   <br/>
+   Yet another inconsistency occurs in the use of Mockito <em>spies</em>: "mocks" that allow the real methods to be
+   executed on the spied instance.
+   For example, if <code>spy</code> refers to an empty <code>List</code>, then instead of writing
+   <code>when(spy.get(0)).thenReturn("foo")</code> you will need to write <code>doReturn("foo").when(spy).get(0)</code>.
+   With JMockit, the <em>dynamic mocking</em> feature provides similar functionality to spies, but without this issue
+   since real methods only get executed during the <em>replay</em> phase.
+</li>
+<li>
+   In EasyMock and jMock, the first mocking APIs for Java, the focus was entirely on the recording of <em>expected
+   invocations</em> of mocked methods, for mock objects that (by default) do not allow unexpected invocations.
+   Those APIs also provide the recording of <em>allowed invocations</em> for mock objects that do allow unexpected
+   invocations, but this was treated as a second-class feature.
+   Additionally, with these tools there is no way to explicitly verify invocations to mocks after the code under test is
+   exercised. All such verifications are performed implicitly and automatically.
+   <br/>
+   In Mockito (and also in Unitils Mock), the opposite viewpoint is taken.
+   All invocations to mock objects that may happen during the test, whether recorded or not, are <em>allowed</em>, never
+   <em>expected</em>.
+   Verification is performed explicitly after the code under test is exercised, never automatically.
+   <br/>
+   Both approaches are too extreme, and consequently less than optimal.
+   JMockit Expectations & Verifications is the only API that allows the developer to seamlessly choose the best
+   combination of <em>strict</em> (expected by default) and <em>non-strict</em> (allowed by default) mock invocations
+   for each test.
+   <br/>
+   To be more clear, the Mockito API has the following shortcoming. If you need to verify that an invocation to a
+   non-<code>void</code> mocked method happened during the test, but the test requires a return value from that method
+   that is different from the default for the return type, then the Mockito test will have duplicate code: a
+   <code>when(mock.someMethod()).thenReturn(xyz)</code> call in the <em>record</em> phase, and a
+   <code>verify(mock).someMethod()</code> in the <em>verify</em> phase.
+   With JMockit, a <em>strict</em> expectation can always be recorded, which won't have to be explicitly verified.
+   Alternatively, an invocation count constraint (<code><em>times</em> = 1</code>) can be specified for any recorded
+   <em>non-strict</em> expectation (with Mockito such constraints can only be specified in a
+   <code>verify(mock, <em>constraint</em>)</code> call).
+</li>
+<li>
+   Mockito has poor syntax for verifications <em>in order</em>, and for <em>full</em> verifications (that is, checking
+   that all invocations to mock objects are explicitly verified).
+   In the first case, an extra object needs to be created, and calls to <code>verify</code> made on it:
+   <code>InOrder inOrder = inOrder(mock1, mock2, ...)</code>.
+   In the second case, calls like <code>verifyNoMoreInteractions(mock)</code> or
+   <code>verifyZeroInteractions(mock1, mock2)</code> need to be made.
+   <br/>
+   With JMockit, you simply write <code>new VerificationsInOrder()</code> or <code>new FullVerifications()</code>
+   instead of <code>new Verifications()</code> (or <code>new FullVerificationsInOrder()</code> to combine both
+   requirements). No need to specify which mock objects are involved. No extra mocking API calls.
+   And as a bonus, by calling <code>unverifiedInvocations()</code> inside an ordered verification block, you can
+   perform order-related verifications that are simply impossible in Mockito.
+</li>
+</ul>
+
+<p>
+   Finally, the JMockit Testing Toolkit has a wider scope and more ambitious goals than other mocking toolkits, in order
+   to provide a complete and sophisticated developer testing solution.
+   A good API for mocking, even without artificial limitations, is not enough for productive creation of tests.
+   An IDE-agnostic, easy to use, and well integrated Code Coverage tool is also essential, and that's what JMockit
+   Coverage aims to provide.
+</p>
+
+<h2 id="coverage">Code Coverage</h2>
+<p>
+   Existing open source code coverage tools, such as <a href="http://emma.sourceforge.net">EMMA</a>,
+   <a href="http://cobertura.sourceforge.net">Cobertura</a>, and
+   <a href="http://jacoco.org/jacoco/index.html">JaCoCo</a> are less than ideal, for several reasons.
+   Therefore, in addition to mocking APIs, the JMockit toolkit includes its own code coverage tool, <strong>JMockit
+   Coverage</strong>.
+   This tool aims to provide the following benefits.
+</p>
+<ol>
+   <li>
+      Bytecode modification performed only at runtime, therefore avoiding the creation of undesirable files.
+      No extra source or class files are created, and no coverage data file is generated unless explicitly requested.
+      The only files created or modified are those that the user really wants as the desired output.
+      <br/>
+      Apart from JaCoCo, all other coverage tools require an extra build step for code instrumentation before a test
+      suite can be executed.
+   </li>
+   <li>
+      Running tests with JMockit Coverage does not require the use of any particular command line script, Ant task,
+      Maven plugin, or IDE-specific plugin.
+      The tool applies the idea of convention over configuration, trying to make it as easy as possible for the
+      developer to run tests with code coverage: by simply adding one jar file to the classpath, and optionally
+      specifying certain initialization parameters to the JVM (system properties settable with "<code>-D</code>" or its
+      Ant/Maven equivalent).
+   </li>
+   <li>
+      No need to specify which classes should be considered for coverage and which should not (by default, as they can
+      be explicitly specified if needed).
+      All code under test will automatically be analyzed for coverage.
+      Specifically, the tool will gather coverage data for all production code executed by the test suite, excluding
+      classes defined inside jar files (on the assumption that such code belongs to libraries used by the code under
+      test).
+   </li>
+   <li>
+      An HTML report and/or a serialized output file can be easily generated at the end of each test run.
+      The first requires no extra configuration as it is the default form of coverage output; the second only requires
+      setting the "<code>coverage-output</code>" system property.
+      For the generation of the HTML report, Java source files are automatically searched in all "src" directories
+      under the working directory.
+   </li>
+   <li>
+      In code coverage reports, each line of production code can be accurately linked to the lines
+      in test code which caused their execution, for each individual execution of each line of code.
+      (However, this feature is inactive by default, because of the higher runtime cost and the larger resulting HTML
+      report.)
+   </li>
+   <li>
+      Besides a <em>line coverage</em> metric, a <em>path coverage</em> metric is also made available.
+      Both metrics are calculated and shown at the source file, package, and global levels.
+      For path coverage, each possible path through a method or constructor can be interactively displayed in the HTML
+      report.
+   </li>
+   <li>
+      <em>Intra-line</em> coverage is provided, with the appropriate red/green coloring in the HTML report for each
+      conditionally executed line segment.
+   </li>
+</ol>
+<p>
+   In short, the two main differentiating factors for JMockit Coverage are that 1) it attempts to generate the coverage
+   report as easily as possible and without depending on special conditions (JaCoCo achieves this, but only for Eclipse
+   JDT users, through the EclEmma plugin); and 2) it attempts to provide newer and more sophisticated <em>coverage
+   metrics</em>, such as path coverage and true line coverage.
+</p>
+<hr/>
+<div class="links">
+  <a href="tutorial/CodeCoverage.html">Running tests with JMockit Coverage</a>
+  <a href="coverage-sample/index.html">Sample coverage report</a>
+</div>
+
+<div class="footer">
+   <p>
+      Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
+      <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
+   </p>
+   <p>
+      <a href="http://opensource.org/licenses/mit-license.php">MIT License</a>
+   </p>
+</div>
+</body>
+</html>

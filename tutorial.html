@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2006-2014 Rogério Liesenfeld
+  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
+  -->
+<html>
+<head>
+   <title>JMockit - Tutorial</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <link rel="stylesheet" type="text/css" href="prettify.css"/>
+   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+</head>
+<body>
+<h1 class="header">
+   <a href="index.html">JMockit</a>
+   <span>The Mock <span>Anything</span> Toolkit for Java</span>
+</h1>
+
+<h1>The JMockit Testing Toolkit Tutorial</h1>
+
+<ol>
+   <li>
+      <a href="tutorial/Introduction.html">Introduction</a>
+      <ul>
+         <li><a href="tutorial/Introduction.html#isolation">Developer testing and test isolation</a></li>
+         <li><a href="tutorial/Introduction.html#mocks">Testing with mock objects</a></li>
+         <li><a href="tutorial/Introduction.html#tools">Tools for testing with mock objects</a></li>
+         <li><a href="tutorial/Introduction.html#issues">Issues with conventional mock objects</a></li>
+      </ul>
+   </li>
+   <li>
+      <a href="tutorial/AnExample.html">An example</a>
+      <ul>
+         <li><a href="tutorial/AnExample.html#expectations">Using the Expectations API</a></li>
+         <li><a href="tutorial/AnExample.html#verifications">Using the Verifications API</a></li>
+         <li><a href="tutorial/AnExample.html#mockups">Using the Mockups API</a></li>
+      </ul>
+   </li>
+   <li>
+      <a href="tutorial/RunningTests.html">Running tests with JMockit</a>
+      <ul>
+         <li><a href="tutorial/RunningTests.html#ant">Running tests with the JUnit Ant task</a></li>
+         <li><a href="tutorial/RunningTests.html#maven">Using JMockit in a Maven project</a></li>
+      </ul>
+   </li>
+   <li>
+      <a href="tutorial/BehaviorBasedTesting.html">Behavior-based testing</a>
+      <ol>
+         <li><a href="tutorial/BehaviorBasedTesting.html#mocked">Mocked types</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#expectation">Expectations</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#model">The <em>record-replay-verify</em> model</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#declaration">Declaring and using mocked types</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#strictness"><em>Strict</em> and <em>non-strict</em> expectations</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#results">Recording results for an expectation</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#instanceMatching">Matching invocations to specific instances</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#argumentMatching">Flexible matching of argument values</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#constraints">Specifying invocation count constraints</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#verification">Explicit verification</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#delegates">Delegates: specifying custom results</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#withCapture">Capturing invocation arguments for verification</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#deencapsulation">Accessing private members</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#partial">Partial mocking</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#cascading">Cascading mocks</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#capturing">Capturing implementation classes and instances</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#tested">Instantiation and injection of tested classes</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#reuse">Reusing expectation and verification blocks</a></li>
+         <li><a href="tutorial/BehaviorBasedTesting.html#otherTopics">Other topics</a></li>
+      </ol>
+   </li>
+   <li>
+      <a href="tutorial/StateBasedTesting.html">Fakes and state-based testing</a>
+      <ol>
+         <li><a href="tutorial/StateBasedTesting.html#mocks">Mock methods and mock classes</a></li>
+         <li><a href="tutorial/StateBasedTesting.html#setUp">Setting up mocks for a test</a></li>
+         <li><a href="tutorial/StateBasedTesting.html#interfaces">Mocking interfaces</a></li>
+         <li><a href="tutorial/StateBasedTesting.html#implementationClasses">Mocking unspecified implementation classes</a></li>
+         <li><a href="tutorial/StateBasedTesting.html#constraints">Invocation count constraints</a></li>
+         <li><a href="tutorial/StateBasedTesting.html#initializers">Mocking class initializers</a></li>
+         <li><a href="tutorial/StateBasedTesting.html#invocation">Accessing the invocation context</a></li>
+         <li><a href="tutorial/StateBasedTesting.html#proceed">Proceeding into the real implementation</a></li>
+         <li><a href="tutorial/StateBasedTesting.html#reuse">Reusing mocks between tests</a></li>
+         <li><a href="tutorial/StateBasedTesting.html#widerScopes">Mock-ups at the test class/suite level</a></li>
+      </ol>
+   </li>
+   <li>
+      <a href="tutorial/ReflectionUtilities.html">Reflection-based utilities</a>
+      <ul>
+         <li><a href="tutorial/ReflectionUtilities.html#deencapsulatingFields">Getting/setting fields by name or type</a></li>
+         <li><a href="tutorial/ReflectionUtilities.html#deencapsulatingMethods">Invoking non-accessible methods</a></li>
+         <li><a href="tutorial/ReflectionUtilities.html#deencapsulatingConstructors">Invoking non-accessible constructors</a></li>
+      </ul>
+   </li>
+   <li>
+      <a href="tutorial/CodeCoverage.html">Measuring code coverage</a>
+      <ol>
+         <li><a href="tutorial/CodeCoverage.html#line">Line coverage</a></li>
+         <li><a href="tutorial/CodeCoverage.html#path">Path coverage</a></li>
+         <li><a href="tutorial/CodeCoverage.html#data">Data coverage</a></li>
+         <li><a href="tutorial/CodeCoverage.html#output">Types of coverage output</a></li>
+         <li><a href="tutorial/CodeCoverage.html#configuration">Configuring the coverage tool</a></li>
+         <li><a href="tutorial/CodeCoverage.html#merging">Aggregated reports for multiple test runs</a></li>
+         <li><a href="tutorial/CodeCoverage.html#checking">Checking minimum coverage</a></li>
+         <li><a href="tutorial/CodeCoverage.html#maven">Activating coverage in a Maven project</a></li>
+         <li><a href="tutorial/CodeCoverage.html#switching">Turning coverage output off</a></li>
+         <li><a href="tutorial/CodeCoverage.html#standalone">Standalone mode</a></li>
+      </ol>
+   </li>
+</ol>
+
+</body>
+</html>

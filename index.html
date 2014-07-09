@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>The JMockit testing toolkit</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <meta name="description"
+         content="Home of the JMockit open source project.
+                  JMockit is a Java toolkit for developer testing, including mocking APIs and a code coverage tool.">
+   <link rel="stylesheet" type="text/css" href="prettify.css"/>
+   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+   <script type="text/javascript" src="highlight.pack.js"></script>
+   <script type="text/javascript">hljs.initHighlightingOnLoad()</script>
+</head>
+<body>
+<h1 class="header">
+   <a href="http://jmockit.org">JMockit</a>
+   <span>The Mock <span>Anything</span> Toolkit for Java</span>
+</h1>
+<ul class="navBar">
+   <li><a href="gettingStarted.html">Getting&nbsp;started</a></li>
+   <li><a href="about.html">About</a></li>
+   <li><a href="tutorial.html">Tutorial</a></li>
+   <li><a href="javadoc/index.html">API</a></li>
+   <li><a href="samples.html">Samples</a></li>
+   <li><a href="http://code.google.com/p/jmockit/source/checkout">Source</a></li>
+   <li><a href="http://code.google.com/p/jmockit/issues/list">Issues</a></li>
+   <li><a href="community.html">Community</a></li>
+   <li><a href="changes.html">History</a></li>
+</ul>
+
+<h2>Features</h2>
+<ul>
+   <li>mocks static/final methods, constructors and future instances</li>
+   <li>mocks enums, annotations, and multiple interfaces</li>
+   <li>mocks implementation classes given just the base type</li>
+   <li>concise argument matchers; elegant, consistent API</li>
+</ul>
+<p>
+   See the <a href="http://code.google.com/p/jmockit/wiki/MockingToolkitComparisonMatrix">Mocking Toolkit Comparison
+   Matrix</a> for more features.
+</p>
+
+<h2>Example</h2>
+<pre><code>public class ExampleTest {
+   @Tested ServiceAbc tested;
+   @Injectable DependencyXyz mockXyz;
+
+   @Test
+   public void doOperationAbc(@Mocked final AnotherDependency anyInstance) {
+      new NonStrictExpectations() {{
+         anyInstance.doSomething(anyString); result = 123;
+         AnotherDependency.someStaticMethod(); result = new IOException();
+      }};
+
+      tested.doOperationAbc("some data");
+
+      new Verifications() {{ mockXyz.complexOperation(true, anyInt, null); times = 1; }};
+   }
+}
+</code></pre>
+
+<h2>Get JMockit</h2>
+<p>
+   Download <a href="http://jmockit.googlecode.com/svn/jmockit-1.9.zip"><strong>jmockit-1.9.zip</strong></a>
+   or use Maven:
+</p>
+<pre><code>&lt;dependency>
+   &lt;groupId>org.jmockit&lt;/groupId> &lt;artifactId>jmockit&lt;/artifactId> &lt;version>1.9&lt;/version>
+   &lt;scope>test&lt;/scope>
+&lt;/dependency>
+</code></pre>
+
+<div class="footer">
+   <p>
+      Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
+      <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
+   </p>
+   <p>
+      <a href="http://opensource.org/licenses/mit-license.php">MIT License</a>
+   </p>
+</div>
+</body>
+</html>

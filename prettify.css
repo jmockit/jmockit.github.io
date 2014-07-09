@@ -1,0 +1,125 @@
+@font-face {
+   font-family: 'PT Sans';
+   font-style: normal;
+   font-weight: 400;
+   src: local('PT Sans'), local('PTSans-Regular'), url(http://themes.googleusercontent.com/static/fonts/ptsans/v6/LKf8nhXsWg5ybwEGXk8UBQ.woff) format('woff');
+}
+@font-face {
+   font-family: 'PT Sans';
+   font-style: italic;
+   font-weight: 400;
+   src: local('PT Sans Italic'), local('PTSans-Italic'), url(http://themes.googleusercontent.com/static/fonts/ptsans/v6/PIPMHY90P7jtyjpXuZ2cLD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+}
+@font-face {
+   font-family: 'Inconsolata';
+   font-style: normal;
+   font-weight: 400;
+   src: local('Inconsolata'), url(http://themes.googleusercontent.com/static/fonts/inconsolata/v7/BjAYBlHtW3CJxDcjzrnZCIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+
+body {
+   background-color: #444; color: #eee;
+   font-family: 'PT Sans', sans-serif;
+   font-size: 1.05em;
+   min-width: 843px; max-width: 45em; margin: 0 auto;
+   padding: 1.5em;
+}
+a {
+   color: #bee916;
+   text-decoration: none;
+}
+
+h2[id] { border-top: 1px solid #bee916; }
+h2, h3 { margin-top: 3ex; }
+
+pre {
+   background-color: #bbb;
+   padding-left: 6px; padding-right: 4px; padding-top: 2px; padding-bottom: 3px;
+   border-radius: 0.2em;
+}
+pre code { font-size: 0.88em; }
+code {
+   font-family: 'Inconsolata', 'Courier New', sans-serif;
+   font-size: 1.0em;
+}
+
+ul > li { list-style-type: square; }
+
+img { border: none; }
+.links a { padding-right: 1em; }
+
+.type { font-weight: bolder; }
+
+.contents {
+   background-color: #666;
+   border: 2px ridge #bee916;
+   border-radius: 0.2em;
+   font-size: 90%;
+}
+
+.navBar {
+   background: #bee916; color: black; padding: 0.5em; border-radius: 0.2em;
+}
+.navBar li { list-style: none; display: inline; margin-right: 1em; }
+.navBar a { color: black; }
+
+.navigation { display: inline; float: right; }
+.navigation img {
+   margin-left: 2px; margin-right: 2px; margin-top: 0px;
+   width: 22px; height: 22px;
+}
+
+.sidebar {
+   width: 22em;
+   padding: 3px;
+   margin-left: 5px; margin-bottom: 5px;
+   border: 2px ridge #bbb;
+   border-radius: 0.2em;
+   float: right;
+}
+
+.header { margin: 0; }
+.header a { font-family: serif; font-size: 150%; }
+.header > span { font-size: 50%; padding-left: 2em; position: relative; top: -1ex; }
+.header span span { text-shadow: 0 0 3px white; }
+
+.footer {
+   text-align: center;
+   font-size: 80%;
+   margin-top: 4ex;
+}
+
+pre code {
+  display: block;
+  color: #000;
+}
+
+pre .class .title {
+  color: #606;
+}
+
+pre .comment, pre .javadoc {
+  color: #800;
+}
+
+code.annotation { color: #a0a000; }
+pre .annotation { color: #707000; }
+
+pre .tag .title, pre .keyword {
+  font-weight: bold;
+  color: #000080;
+}
+
+pre .attribute {
+  font-weight: bold;
+  color: #0000ff;
+}
+
+pre .number {
+  color: #0000ff;
+}
+
+pre .string, pre .value {
+  font-weight: bold;
+  color: #008000;
+}

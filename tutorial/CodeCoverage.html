@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2006-2014 Rogério Liesenfeld
+  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
+  -->
+<html>
+<head>
+   <title>JMockit - Tutorial - Measuring code coverage</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <link rel="stylesheet" type="text/css" href="../prettify.css"/>
+   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+   <script type="text/javascript" src="../highlight.pack.js"></script>
+   <script type="text/javascript">hljs.initHighlightingOnLoad()</script>
+</head>
+<body>
+<h1 class="header">
+   <a href="../index.html">JMockit</a>
+   <span>The Mock <span>Anything</span> Toolkit for Java</span>
+</h1>
+
+<h1 id="top">
+   Measuring code coverage
+   <span class="navigation">
+      <a href="#line"><img src="go-down.png" title="Next section"></a>
+      <a href="ReflectionUtilities.html"><img src="go-previous.png" title="Previous chapter"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <img src="blank.gif" width="22">
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h1>
+
+<ol class="contents">
+   <li><a href="#line">Line coverage</a></li>
+   <li><a href="#path">Path coverage</a></li>
+   <li><a href="#data">Data coverage</a></li>
+   <li>
+      <a href="#output">Types of coverage output</a>
+      <ol>
+         <li><a href="#callPoints">Call points</a></li>
+      </ol>
+   </li>
+   <li>
+      <a href="#configuration">Configuring the coverage tool</a>
+   </li>
+   <li>
+      <a href="#merging">Aggregated reports for multiple test runs</a>
+      <ol>
+         <li><a href="#serial">Generating an aggregate report from multiple data files</a></li>
+         <li><a href="#serial-append">Generating an aggregate report from a single data file appended after each test run</a></li>
+      </ol>
+   </li>
+   <li><a href="#checking">Checking minimum coverage</a></li>
+   <li>
+      <a href="#maven">Activating coverage in a Maven project</a>
+      <ol>
+         <li><a href="#site">Including the HTML report in a Maven site</a></li>
+      </ol>
+   </li>
+   <li><a href="#switching">Turning coverage output off</a></li>
+   <li><a href="#standalone">Standalone mode</a></li>
+</ol>
+
+<div class="sidebar">
+   Other coverage tools for Java include EMMA, Clover, <a href="http://cobertura.sourceforge.net">Cobertura</a>, and
+   <a href="http://www.eclemma.org/jacoco">JaCoCo</a>.
+   (The latter being more often used through the <em>EclEmma</em> Eclipse plugin.)
+   These tools provide two separate coverage metrics, namely <em>statement</em> and <em>branch</em> coverage.
+   The first one is also called <em>line</em> coverage, even though they don't actually attempt to measure how much of
+   the executable code in individual lines has been covered.
+   The second measures how many of the alternative branches resulting from decision points (an <code>if</code> or
+   <code>switch</code> statement) have been taken during a test run.
+   JMockit Coverage uses a different, but related, set of coverage metrics.
+</div>
+<p>
+<a href="http://en.wikipedia.org/wiki/Code_coverage"><em>Code coverage</em></a> consists of a set of software metrics
+that can tell you how much of the production code is covered by a given test suite.
+It's purely quantitative, and does not say anything about the <em>quality</em> of either the production code or the
+test code.
+That said, the examination of code coverage reports will sometimes lead to the discovery of unreachable code which
+can be eliminated.
+But more importantly, such reports can be used as a guide for the discovery of missing tests.
+This is not only useful when creating tests for existing production code, but also when writing tests first, such as
+in the practice of TDD (Test Driven Development).
+</p>
+<div style="text-align: center;">
+   <img src="Coverage.png">
+</div>
+<p>
+JMockit Coverage provides three different and complementary code coverage metrics:
+<em>line coverage</em>, <em>path coverage</em>, and <em>data coverage</em>.
+An <a href="../coverage-sample/index.html">example coverage report</a> showing all metrics can be found on-line.
+</p>
+
+<h2 id="line">
+   Line coverage
+   <span class="navigation">
+      <a href="#path"><img src="go-down.png" title="Next section"></a>
+      <a href="#top"><img src="go-up.png" title="Top"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   The <em>line coverage</em> metric tells us how much of the <em>executable code</em> in a source file has been
+   exercised by tests.
+   Each executable line of code can be <em>uncovered</em>, <em>covered</em>, or <em>partially covered</em>.
+   In the first case, <em>none</em> of the executable code in it was executed at all.
+   In the second, <em>all</em> of the code was fully executed at least once.
+   In the third case, only <em>part</em> of the executable code in the line was executed.
+   This can happen, for example, with lines of code containing multiple logical conditions in a complex boolean
+   expression.
+   JMockit Coverage identifies all three cases, computing the <em>coverage percentage</em> for each executable line of
+   code accordingly: <strong>0%</strong> for an uncovered line, <strong>100%</strong> for a covered line, or some value
+   in between for a partially covered line.
+</p>
+<p>
+   A <em>branching point</em> exists wherever the program makes a decision between two possible execution paths to
+   follow.
+   Any line of code containing a logical condition will be divided in at least two executable <em>segments</em>, each
+   belonging to a separate <em>branch</em>.
+   An executable line of source code with no branching points contains a single segment.
+   Lines with one or more branching points contain two or more executable segments, separated by consecutive branching
+   points in the line.
+</p>
+<p>
+   Lets say that <code><strong>NS</strong> >= 1</code> is the number of executable segments on a given line.
+   If <code><strong>NE</strong></code> is the number of segments in that line which were executed at least once during a
+   test run (ie, they are <em>covered segments</em>), then we can calculate the coverage percentage for the line as
+   <strong><code>100 * NE / NS</code></strong>.
+</p>
+<p>
+   Similarly, the line coverage percentage for a whole source file is calculated from the total number of executable
+   segments and the total number of covered segments, considering all executable lines of code in the file.
+   The percentage for a <em>package</em>, in turn, is calculated from the total and covered numbers of segments in the
+   whole set of source files belonging to the package.
+   Finally, the <em>total code coverage</em> percentage is computed by the same formula on the totals for all packages.
+</p>
+
+<h2 id="path">
+   <span class="navigation">
+      <a href="#data"><img src="go-down.png" title="Next section"></a>
+      <a href="#line"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+   Path coverage
+</h2>
+<p>
+   A completely different metric is <em>path coverage</em>, which is computed for method and constructor bodies, not for
+   lines or segments of code.
+   It tells us how many of the possible <em>execution paths</em> through a method or constructor, from <em>entry</em> to
+   <em>exit</em>, have been executed at least once during the test run.
+</p>
+<p>
+   Note that each method or constructor has a single point of entry, but can have multiple exits.
+   An exit occurs when a <code>return</code> or <code>throw</code> statement is executed.
+   These are <em>normal exits</em>, of course. A method/constructor execution can also terminate <em>abruptly</em>, by
+   propagating an exception (or error) thrown as a result of a method call, an attempt to access a <code>null</code>
+   reference, or some other action which caused an unintended program failure.
+</p>
+<p>
+   Each possible path can be either fully executed (covered) or not (uncovered).
+   Paths that execute only partially (ie, they were terminated abruptly) are simply considered as uncovered.
+</p>
+<p>
+   The <em>path coverage percentage</em> for a method or constructor body is computed in a way similar to the line
+   coverage computation.
+   If <code><strong>NP</strong></code> is the number of possible paths through the implementation body and
+   <code><strong>NPE</strong></code> is the number of paths executed from entry to exit, then the metric is computed as
+   <strong><code>100 * NPE / NP</code></strong>.
+   Also in the same way as the line coverage metric, we extend this formula to the whole source file, the whole package,
+   and the whole set of packages touched by the test run.
+</p>
+
+<h2 id="data">
+   <span class="navigation">
+      <a href="#output"><img src="go-down.png" title="Next section"></a>
+      <a href="#path"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+   Data coverage
+</h2>
+<p>
+   Measures how many of the instance and static non-final <em>fields</em> were fully exercised by the test run.
+   To be fully exercised, a field must have the last value assigned to it read by at least one test.
+   The percentages are calculated as <code>100 * NFE / NF</code>, where <code>NF</code> is the number of non-final
+   fields and <code>NFE</code> the number of fully exercised fields.
+</p>
+
+<h2 id="output">
+   Types of coverage output
+   <span class="navigation">
+      <a href="#configuration"><img src="go-down.png" title="Next section"></a>
+      <a href="#data"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   The JMockit Coverage tool can generate the following types of output:
+</p>
+<ol>
+   <li>
+      <strong>HTML reports</strong>: a multi-page HTML report is written in the "coverage-report" directory, under the
+      current working directory (a different output directory can be specified if needed).
+      The directory is created if it doesn't yet exist; its contents are overwritten if previously generated.
+      The report will include pages containing all Java source files covered by the test suite.
+      By default, the tool looks for "<code>.java</code>" source files inside all directories of name "<code>src</code>"
+      found directly or indirectly under the current working directory; any intermediate sub-directories between
+      "<code>src</code>" and the top-level package directory, such as "<code>src/java</code>" for example, are also
+      searched.
+   </li>
+   <li>
+      <strong>Coverage data files</strong>: a single serialized file of name "<code>coverage.ser</code>" is written
+      under the current working directory or an specified output directory.
+      If the file already exists, its contents are either overwritten or appended with the in-memory results of the
+      current test run, as specified.
+      <br>
+      These files can be read and processed by external tools.
+      The <code>mockit.coverage.data.CoverageData.readDataFromFile(File)</code> method will create a new
+      <code class="type">CoverageData</code> instance with all the coverage data available in a given serialized file.
+      For more on this, refer to the API documentation available in <code>jmockit-coverage.jar</code>.
+   </li>
+</ol>
+
+<h3 id="callPoints">Call points</h3>
+<p>
+   When running a test suite with the coverage tool, there is optional "call point" information which can be gathered,
+   as selected by the user.
+   A <em>call point</em> is the point in the source test code from which an specific line of production code was
+   exercised.
+</p>
+<p>
+   Generating coverage with this extra information takes more time and produces significantly larger output;
+   on the other hand, it can be useful to know which lines of test code caused a given line of production code to be
+   executed during the test run.
+   When included in the HTML report, the list of call points appears hidden at first but can be easily viewed by
+   clicking on each executable line of code.
+</p>
+
+<h2 id="configuration">
+   Configuring the coverage tool
+   <span class="navigation">
+      <a href="#merging"><img src="go-down.png" title="Next section"></a>
+      <a href="#output"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   To enable the JMockit Coverage tool in a JUnit/TestNG test run, add both <code>jmockit.jar</code> and
+   <code>jmockit-coverage.jar</code> to the runtime classpath.
+   With JUnit, make sure that <code>jmockit.jar</code> appears first in the classpath.
+   (For more details on <a href="RunningTests.html">running tests with JMockit</a>, see the corresponding chapter in
+   the Tutorial.)
+</p>
+<p>
+   When not using the JMockit mocking APIs, code coverage can still be activated without adding any jar to the
+   classpath.
+   Instead, run with "<code>-javaagent:&lt;proper path>/<strong>jmockit-coverage</strong>.jar</code>" as a JVM
+   initialization parameter.
+</p>
+<p>
+   In most cases, the coverage tool does not require any additional configuration to be used.
+   There are, however, several aspects of the tool's behavior which <em>can</em> optionally be configured for a given
+   test run.
+   This is done by setting one or more of several "<code>jmockit-coverage-<em>xyz</em></code>"
+   <em>system properties</em> for the JVM instance running the test suite.
+   For convenience, the "<code>jmockit-</code>" prefix can be omitted, so "<code>coverage-<em>xyz</em></code>" is also
+   valid.
+</p>
+<p>
+   Note that you should be able to easily specify these properties inside an Ant target, a Maven <code>surefire</code>
+   plugin configuration, or a test run configuration for your Java IDE of choice, using either JUnit or TestNG; no
+   JMockit-specific plugin is needed.
+</p>
+<p>
+   The available configuration properties are:
+</p>
+<ol>
+   <li>
+      <code>[jmockit-]coverage-<strong>output</strong></code>: one or more comma-separated values between
+      <strong><code>html</code></strong>, <strong><code>html-nocp</code></strong> ("nocp" stands for "no call points"),
+      <strong><code>serial</code></strong>, and <strong><code>serial-append</code></strong>, which select the kind of
+      output to be generated at the end of the test run.
+      The default if none is specified is to generate the basic HTML report (<code>html-nocp</code>).
+      <br/>
+      The "html" and "html-nocp" values are mutually exclusive, just like "serial" and "serial-append".
+      However, it <em>is</em> valid to have one of each pair specified at the same time.
+      In such a case, at the end of the test run both kinds of output will be written.
+      <br/>
+      The presence of "<code>serial</code>" or "<code>serial-append</code>" causes a <em>serialized data file</em> of
+      name "<code>coverage.ser</code>" to be generated; in the case of "<code>serial-append</code>", coverage data
+      gathered by the current test run will be <em>appended</em> to the contents of a previously existing data file
+      (if said file doesn't exist, it has the same effect as "<code>serial</code>").
+   </li>
+   <li>
+      <code>[jmockit-]coverage-<strong>outputDir</strong></code>: absolute or relative path to the output directory, to
+      be used for writing any "<code>coverage.ser</code>" or "<code>index.html</code>" files (plus the remaining
+      "<code>.html</code>" files of the HTML report, in automatically created sub-directories).
+      By default, the current working directory of the running JVM is used, with all "<code>.html</code>" files of the
+      HTML report generated inside a "<code>coverage-report</code>" sub-directory.
+   </li>
+   <li>
+      <code>[jmockit-]coverage-<strong>srcDirs</strong></code>: comma-separated list of Java source directories to be
+      searched when generating an HTML report.
+      (This is not relevant for the serialized data file.)
+      Each directory is specified by an absolute or relative path.
+      If no such directory is specified, all "<code>src</code>" directories under the current working directory are
+      searched.
+   </li>
+   <li>
+      <code>[jmockit-]coverage-<strong>classes</strong></code>:
+      Either an OS-like regular expression (with the typical "<code>*</code>" and "<code>?</code>" wildcards), or a
+      <a href="http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html">java.util.regex</a>-conformable
+      regular expression.
+      The given expression will be used to select the classes (by fully qualified name) from production code which
+      should be considered for coverage.
+      By default, all classes in production code loaded during the test run and which are not inside jar files are
+      considered.
+      <br/>
+      For example, "<code>some.package.*</code>" selects all classes under <code>some.package</code> or any
+      sub-package.
+      <br/>
+      As a special case, if the property is specified as "<code>loaded</code>", then all classes will be considered,
+      but only those which get loaded by the JVM during the test run; classes that are part of the codebase but never
+      get loaded are left out.
+      This is very useful when the test run includes only a few tests, targeting only a subset of the codebase.
+   </li>
+   <li>
+      <code>[jmockit-]coverage-<strong>excludes</strong></code>:
+      The same as the previous property, but for class names which should be excluded from consideration when
+      instrumenting classes for coverage.
+      This property can be used together with <code>coverage-classes</code> or on its own.
+      By default, no classes between those selected for coverage are excluded from consideration.
+   </li>
+   <li>
+      <code>[jmockit-]coverage-<strong>metrics</strong></code>:
+      one or more comma-separated words between <strong><code>line</code></strong> (the default),
+      <strong><code>path</code></strong>, <strong><code>data</code></strong>, and <strong><code>all</code></strong>,
+      which select the specific set of code coverage <strong>metrics</strong> to gather coverage information for.
+   </li>
+   <li>
+      <code>[jmockit-]coverage-<strong>check</strong></code>:
+      one or more semicolon-separated rules specifying <em>minimum coverage</em> checks to be performed at the end of a
+      test run.
+      By default, no such checks are performed.
+      For details, see the <a href="#checking">Checking minimum coverage</a> section.
+   </li>
+</ol>
+
+<h2 id="merging">
+   Aggregated reports for multiple test runs
+   <span class="navigation">
+      <a href="#checking"><img src="go-down.png" title="Next section"></a>
+      <a href="#configuration"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   When the coverage tool generates a report at the end of a test run, it always overwrites any previous report.
+   Normally, the coverage data from which the report is generated reflects only what was gathered during the current
+   test run.
+   Now suppose you have multiple test suites or test run configurations, and you want to generate a single aggregated
+   HTML report for the code covered by the full set of tests.
+   Here is where the "coverage.ser" serialized data files come in.
+</p>
+<p>
+   To activate the generation of these files, we simply set the <code>coverage-output</code> system property to a value
+   containing "<code>serial</code>" or "<code>serial-append</code>".
+   As these two values suggest, there are different ways to combine multiple coverage data files.
+   The following sub-sections provide the details for each case.
+</p>
+
+<h3 id="serial">Generating an aggregate report from multiple data files</h3>
+<p>
+   Suppose we want to gather coverage data from multiple test runs and later generate an aggregate HTML report merging
+   together the results from all test runs.
+   Each test run needs to generate its own <code>coverage.ser</code> file, so that later they can be merged together
+   in a final step which produces the report; therefore, each test run should be configured with
+   "<code>coverage-output=serial</code>".
+   Note that, in order to preserve the original <code>coverage.ser</code> output files generated by each test run, they
+   will need to be written or copied into different output directories.
+</p>
+<p>
+   Assuming that two or more <code>coverage.ser</code> files are available in separate directories, an aggregate report
+   can be generated from them by executing the <code>mockit.coverage.CodeCoverage.main</code> method (a regular Java
+   "main" method).
+   To facilitate this, the <code>jmockit-coverage.jar</code> file is <em>executable</em>.
+   As an example, the following Ant task could be used:
+</p>
+<pre><code>&lt;java fork="yes" dir="myBaseDir" jar="jmockit-coverage.jar">
+   &lt;arg line="-Dcoverage-output=html module1-outDir anotherOutDir"/>
+&lt;/java>
+</code></pre>
+<p>
+   The example above uses "<code>myBaseDir</code>" as the base directory where a separate JVM instance will run.
+   Two output directories containing "<code>coverage.ser</code>" data files are specified, as command line arguments.
+   Other configuration parameters can be specified through the "<code>coverage-xyz</code>" system properties.
+   This separate JVM instance will read each of the "<code>coverage.ser</code>" data files, merge the coverage data in
+   memory, and then generate the aggregate HTML report before exiting.
+</p>
+
+<h3 id="serial-append">Generating an aggregate report from a single data file appended after each test run</h3>
+<p>
+   Another way to obtain an aggregate coverage report from the execution of multiple test runs is to accumulate coverage
+   data from all tests into a <em>single</em> data file.
+   This can be achieved by using the same working directory for all test runs or by pointing
+   <code>coverage-outputDir</code> to a shared directory, while having
+   <code>coverage-output=<strong>serial-append</strong></code> for each test run.
+   Additionally, the last test run in the sequence should also specify <code>html</code> or <code>html-nocp</code>
+   for the <code>coverage-output</code> property, <em>together</em> with <code>serial-append</code>.
+   Naturally, the first test run must <em>not</em> read data from this file; therefore, either the file should be
+   deleted before the first test run, or ignored by having the first test run use <code>coverage-output=serial</code>.
+</p>
+<p>
+   So, the difference between output modes "<code>serial</code>" and "<code>serial-append</code>" is that with the first
+   we have multiple "<code>coverage.ser</code>" files (each in a different directory used by a separate test run), while
+   with the second we share a single data file between all test runs.
+</p>
+
+<h2 id="checking">
+   Checking minimum coverage
+   <span class="navigation">
+      <a href="#maven"><img src="go-down.png" title="Next section"></a>
+      <a href="#merging"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   If desired, JMockit Coverage can check that the final coverage percentages at the end of a test run satisfy arbitrary
+   minimum values.
+   Such checks can be specified through one or more <em>checking rules</em> assigned to the
+   "<code>coverage-check</code>" system property (when more than one, they must be separated by ";" characters).
+</p>
+<p>
+   Each checking rule must be in the form
+   "[<em>scope</em>:]min <em>line</em> percentage[,min <em>path</em> percentage[,min <em>data</em> percentage]]".
+   There are three types of scopes:
+</p>
+<ul>
+   <li>
+      <em>Total</em>: The default when no scope is specified. It refers to the total percentage for each metric.
+      For example, the rule "<code>80</code>" specifies that the total line coverage should be at least 80%, with no
+      minimum percentages for the other metrics.
+      An example specifying thresholds for all three metrics could be "<code>70,60,85</code>".
+      Note that a value of "<code>0</code>" can also be used to specify no minimum.
+   </li>
+   <li>
+      <code>perFile</code>: Specifies minimum percentages that <em>each</em> source file must satisfy. If one or more
+      files end up with a lower percentage, the check fails.
+      An example: "<code>perFile:50,0,40</code>", meaning that each source file must have at least 50% of line coverage
+      and at least 40% of data coverage.
+   </li>
+   <li>
+      <em>Package</em>: Specifies minimum total percentages for the set of source files in a given package, including
+      sub-packages.
+      For example, the rule "<code>com.important:90,70</code>" specifies that total line coverage for files under
+      "<code>com.important</code>" should be at least 90%, while total path coverage should be at least 70%.
+   </li>
+</ul>
+<p>
+   All checks (if any) are performed at the end of the test run (at JVM shutdown, actually).
+   Other forms of output (HTML report, serialized file) are not affected.
+   When an individual check fails, a descriptive message is printed to standard output.
+   If one or more checks have failed, two final actions are taken to have the fact reported: first, an empty file of
+   name "<code>coverage.check.failed</code>" is created in the current working directory; second, an error
+   (specifically, an <code class="type">AssertionError</code>) is thrown.
+   When checks are performed but they all pass, the "<code>coverage.check.failed</code>" file, if present in the current
+   directory, is deleted.
+</p>
+<p>
+   The use of a file to mark the success or failure of coverage checks is meant to allow build tools to react
+   accordingly, typically by failing the build when the file is present.
+   For example, we can do the following in an Ant build script:
+</p>
+<pre><code>&lt;fail message="Coverage check failed">
+   &lt;condition>&lt;available file="<strong>coverage.check.failed</strong>"/>&lt;/condition>
+&lt;/fail>
+</code></pre>
+
+<h2 id="maven">
+   Activating coverage in a Maven project
+   <span class="navigation">
+      <a href="#switching"><img src="go-down.png" title="Next section"></a>
+      <a href="#checking"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   If you run tests with Maven's "test" goal, you will need the following dependencies in the <code>pom.xml</code> file
+   (assuming the "<code>jmockit.version</code>" property has been properly defined):
+</p>
+<pre><code>&lt;dependency>
+   &lt;groupId><strong>org.jmockit</strong>&lt;/groupId>
+   &lt;artifactId><strong>jmockit</strong>&lt;/artifactId>
+   &lt;version><strong>${jmockit.version}</strong>&lt;/version>
+   &lt;scope>test&lt;/scope>
+&lt;/dependency>
+&lt;dependency>
+   &lt;groupId><strong>org.jmockit</strong>&lt;/groupId>
+   &lt;artifactId><strong>jmockit-coverage</strong>&lt;/artifactId>
+   &lt;version><strong>${jmockit.version}</strong>&lt;/version>
+   &lt;scope>runtime&lt;/scope>
+&lt;/dependency>
+</code></pre>
+<p>
+   In Maven 2/3, the <code>surefire</code> plugin is the one usually responsible for actually running tests.
+   To configure the coverage tool, specify values for the appropriate "<code>coverage-xyz</code>" system properties.
+   For example, the output directory for generated files can be specified through the <code>coverage-outputDir</code>
+   property.
+</p>
+<pre><code>&lt;plugin>
+   &lt;artifactId>maven-surefire-plugin&lt;/artifactId>
+   &lt;configuration>
+      &lt;systemPropertyVariables>
+         <strong>&lt;coverage-outputDir>target/my-coverage-report&lt;/coverage-outputDir></strong>
+         &lt;!-- other properties, if needed -->
+      &lt;/systemPropertyVariables>
+   &lt;/configuration>
+&lt;/plugin>
+</code></pre>
+<p>
+   Finally, if the tests don't actually use the JMockit mocking APIs, it's still possible to use the coverage tool.
+   In this case, the only dependency needed is the one on "<code>jmockit-coverage</code>".
+   Additionally, it's necessary to configure the <code>surefire</code> plugin as follows:
+</p>
+<pre><code>&lt;plugin>
+   &lt;artifactId>maven-surefire-plugin&lt;/artifactId>
+   &lt;configuration>
+      &lt;argLine>
+<strong>-javaagent:"${settings.localRepository}"/org/jmockit/jmockit-coverage/${jmockit.version}/
+jmockit-coverage-${jmockit.version}.jar</strong>
+         &lt;!-- coverage properties, if any are needed -->
+      &lt;/argLine>
+   &lt;/configuration>
+&lt;/plugin>
+</code></pre>
+
+<h3 id="site">Including the HTML report in a Maven site</h3>
+<p>
+   To have the JMockit Coverage HTML report included in the generated
+   <a href="http://maven.apache.org/guides/mini/guide-site.html">Maven site</a> documentation, the
+   <code>src/site/site.xml</code> descriptor file needs to be provided, with contents similar to what's shown below.
+</p>
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;project
+   xmlns="http://maven.apache.org/DECORATION/1.3.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0
+                       http://maven.apache.org/xsd/decoration-1.3.0.xsd">
+   &lt;body>
+      &lt;menu ref="reports"/>
+      &lt;menu>
+         &lt;item name="Code Coverage Report" href="../../coverage-report/index.html"/>
+      &lt;/menu>
+   &lt;/body>
+&lt;/project>
+</code></pre>
+
+<h2 id="switching">
+   Turning coverage output off
+   <span class="navigation">
+      <a href="#standalone"><img src="go-down.png" title="Next section"></a>
+      <a href="#maven"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   Sometimes we want to turn coverage output off for a particular test run, without having to remove the coverage jar
+   from the classpath.
+   This can be done in two different ways.
+</p>
+<p>
+   For one, we can manipulate the <em>read-only attribute</em> of the relevant output file, when one has already been
+   generated.
+   The particular file to be manipulated, always in the working directory, is "<code>coverage.ser</code>" for serialized
+   output or "<code>coverage-report/index.html</code>" for HTML output.
+   The file attribute is checked by JMockit at startup; when marked as read-only it cannot be overwritten, so JMockit
+   avoids the attempt entirely.
+</p>
+<p>
+   Note that the working directory can usually be selected separately for each test run configuration in the Java IDE.
+   Also, a Java IDE usually provides an easy mechanism to toggle the read-only status of a file in the project:
+   in IntelliJ IDEA it is done by double clicking the status bar, with the desired file opened in the editor;
+   in Eclipse there is a "Read only" check box in the "Properties" screen (which can be opened by typing "Alt+Enter")
+   for the text file selected in the editor.
+</p>
+<p>
+   Another way to switch coverage off is to simply set the <strong><code>coverage-output</code></strong> system property
+   to an unknown output format, such as "<code>-Dcoverage-output=<strong>none</strong></code>".
+</p>
+
+<h2 id="standalone">
+   Standalone mode
+   <span class="navigation">
+      <a href="#bottom"><img src="go-down.png" title="Bottom"></a>
+      <a href="#switching"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   In previous sections we described the most typical way to use the coverage tool, by enabling it during a JUnit/TestNG
+   test run to measure <em>test</em> coverage.
+   The tool can also be used in a more general context, though: the <em>standalone</em> mode, where it can attach to
+   <em>any</em> Java 6+ process to measure line and path coverage metrics on specified classes, regardless of which code
+   is making calls into said classes.
+</p>
+<p>
+   To activate standalone mode, the target JVM instance must be started with the
+   "<code>-javaagent:&lt;proper/path/>jmockit-coverage.jar</code>" command line argument.
+   That's it; none of the JMockit toolkit jars need to be present in the classpath of the target process.
+   Initial configuration settings for the coverage tool can be specified through the "<code>coverage-xyz</code>" system
+   properties previously described, but this is entirely optional; the configuration properties can be modified later
+   through a dedicated UI.
+</p>
+<p>
+   Once the target process is running with the JMockit Coverage Java agent, the user should connect to it with a JMX
+   client which can access arbitrary "MBeans".
+   Usually, the standard
+   <a href="http://download.oracle.com/javase/6/docs/technotes/guides/management/jconsole.html">JConsole</a> tool
+   available in a Java 6+ JDK will be used.
+   The JMockit Coverage MBean provides several configuration properties (the same ones which can be set with
+   "<code>-D</code>" on the command line), and one operation through which the desired output can be generated.
+   The user interface provided by JConsole is shown below, where the process that is running with the coverage tool is a
+   Tomcat 7 server instance.
+</p>
+<img src="mbeanUI.png" title="User interface presented by the JConsole tool, after connecting to a Tomcat instance
+   started with the JMockit Coverage agent.">
+<p>
+   The configuration properties (shown as "Attributes" of the "CoverageControl" MBean above) are as before, except in
+   the case of "SrcDirs" (which corresponds to <code>coverage-srcDirs</code>).
+   If this property is not specified, no attempt is made to find source files for the classes considered for coverage.
+</p>
+
+<div id="bottom" class="navigation">
+   <a href="ReflectionUtilities.html"><img src="go-previous.png" title="Previous chapter"></a>
+   <a href="#standalone"><img src="go-up.png" title="Previous section"></a>
+   <img src="blank.gif" width="22">
+   <a href="#top"><img src="go-top.png" title="Top"></a>
+   <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+</div>
+<br/>
+</body>
+</html>

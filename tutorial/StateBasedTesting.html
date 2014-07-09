@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2006-2014 Rogério Liesenfeld
+  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
+  -->
+<html>
+<head>
+   <title>JMockit - Tutorial - Fakes and state-based testing</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <link rel="stylesheet" type="text/css" href="../prettify.css"/>
+   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+   <script type="text/javascript" src="../highlight.pack.js"></script>
+   <script type="text/javascript">hljs.initHighlightingOnLoad()</script>
+</head>
+<body>
+<h1 class="header">
+   <a href="../index.html">JMockit</a>
+   <span>The Mock <span>Anything</span> Toolkit for Java</span>
+</h1>
+
+<h1 id="top">
+   Fakes and state-based testing
+   <span class="navigation">
+      <a href="#mocks"><img src="go-down.png" title="Next section"></a>
+      <a href="BehaviorBasedTesting.html"><img src="go-previous.png" title="Previous chapter"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="ReflectionUtilities.html"><img src="go-next.png" title="Next chapter"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h1>
+
+<ol class="contents">
+   <li><a href="#mocks">Mock methods and mock classes</a></li>
+   <li>
+      <a href="#setUp">Setting up mocks for a test</a>
+      <ol>
+         <li><a href="#mockableMethods">Kinds of methods which can have mocks</a></li>
+         <li><a href="#inline">In-line mock classes</a></li>
+      </ol>
+   </li>
+   <li><a href="#interfaces">Mocking interfaces</a></li>
+   <li><a href="#implementationClasses">Mocking unspecified implementation classes</a></li>
+   <li><a href="#constraints">Invocation count constraints</a></li>
+   <li><a href="#initializers">Mocking class initializers</a></li>
+   <li><a href="#invocation">Accessing the invocation context</a></li>
+   <li><a href="#proceed">Proceeding into the real implementation</a></li>
+   <li>
+      <a href="#reuse">Reusing mocks between tests</a>
+      <ol>
+         <li><a href="#beforeAfter">Using before/after methods</a></li>
+         <li><a href="#reusableMocks">Reusable mock classes</a></li>
+      </ol>
+   </li>
+   <li><a href="#widerScopes">Mock-ups at the test class/suite level</a></li>
+</ol>
+
+<p>
+   In the JMockit toolkit, the <strong>Mockups API</strong> provides support for the creation of <em>state-based</em>
+   tests and for the creation of <em>fake</em> implementations.
+</p>
+<div style="text-align: center;" title="Click on types to open API documentation">
+   <map name="figure1">
+      <area shape="rect" coords="1,1,131,34" href="../javadoc/mockit/MockUp.html">
+      <area shape="rect" coords="138,1,215,34" href="../javadoc/mockit/Mock.html">
+      <area shape="rect" coords="222,1,342,34" href="../javadoc/mockit/Invocation.html">
+   </map>
+   <img src="StateBasedAPI.png" usemap="#figure1">
+</div>
+<p>
+   In <em>state-oriented mocking</em>, the focus is not on the interactions between a tested class and its dependencies,
+   but on the data items received by and returned from those dependencies.
+   Rather than writing a test from the perspective of the <em>tested</em> class, we write it from the perspective of the
+   <em>used</em> classes, regardless of who uses them.
+   In stated-based tests, regular state verification is typically performed through JUnit/TestNG assertions written at
+   the end of a test method.
+   State-oriented mocking, then, allows such tests to perform assertions on the parameter values received by mocked
+   dependencies.
+   These assertions will get executed at the time a mocked method/constructor of a dependency is invoked by the tested
+   class.
+</p>
+<p>
+   As for fake implementations, they can be particularly useful in <em>integration</em> tests which depend on external
+   entities or resources such as the network, the file system, etc.
+   The <em>faking</em> of dependencies which access such external entities allows us to run the same integration
+   test in two "modes":
+   1) a "real" mode, where all code (tested unit <em>and</em> its dependencies) is exercised normally; and
+   2) an "emulated" mode, where the "problematic" dependencies have their implementations replaced with fake ones, so
+   that the test can succeed even with no network connection, no file system, or whatever external dependency it would
+   need otherwise.
+   The replacement of real implementations with fake ones is completely transparent to the code which uses those
+   dependencies, and can be switched on and off for different test runs.
+</p>
+<p>
+   For the remaining of this chapter, lets say we want to write tests for an application that uses the
+   <a href="http://download.oracle.com/javase/6/docs/api/javax/security/auth/login/LoginContext.html">
+      javax.security.auth.login.LoginContext</a> class (from the standard JAAS API) in order to authenticate users.
+   In this case, we don't want our tests to actually execute any of the real JAAS code, since it may depend on external
+   configuration and might not easily work in a developer testing environment.
+   Therefore, an application class depending on <code class="type">LoginContext</code> will be our "unit under test",
+   while the <code class="type">LoginContext</code> class (the dependency) will have at least some of its methods and
+   constructors "mocked" for any given test which involves authentication logic.
+</p>
+
+<h2 id="mocks">
+   Mock methods and mock classes
+   <span class="navigation">
+      <a href="#setUp"><img src="go-down.png" title="Next section"></a>
+      <a href="#top"><img src="go-up.png" title="Top"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   In the context of the Mockups API, a <em>mock method</em> is any method in a <em>mock class</em> that gets annotated
+   with <code class="annotation">@Mock</code>.
+   For short, in this chapter we refer to annotated mock methods simply as "mocks"; in other contexts, the word "mock"
+   may refer to an <em>instance</em> of a mocked class instead.
+   A <em>mock class</em> is any class extending the <code class="type">mockit.MockUp&lt;T></code> generic base class,
+   where <code>&lt;T></code> is the type to be mocked.
+   The example below shows several mocks defined in a mock class for our example "real" class,
+   <code class="type">javax.security.auth.login.LoginContext</code>.
+</p>
+<pre><code>public final class MockLoginContext extends MockUp&lt;LoginContext>
+{
+   @Mock
+   public void $init(String name, CallbackHandler callbackHandler)
+   {
+      assertEquals("test", name);
+      assertNotNull(callbackHandler);
+   }
+
+   @Mock
+   public void login() {}
+
+   @Mock
+   public Subject getSubject() { return null; }
+}
+</code></pre>
+<p>
+   When a mock class is applied to a real class, the latter gets the implementation of those methods and constructors
+   which have corresponding mocks temporarily replaced with the implementations of the matching mock methods, as
+   defined in the mock class.
+   In other words, the real class becomes "mocked" for the duration of the test which applied the mock class, and will
+   respond accordingly whenever it receives invocations during test execution.
+   At runtime, what really happens is that the execution of a mocked method/constructor is intercepted and redirected to
+   the corresponding mock method, which then executes and returns (unless an exception/error is thrown) to the original
+   caller, without this one noticing that a different method was actually executed.
+   Normally, the "caller" class is the one under test, while the mocked class is a dependency.
+</p>
+<p>
+   Mock classes are often defined as nested (<code>static</code>), inner (non-<code>static</code>), or even more often
+   as <em>anonymous</em> classes inside a JUnit/TestNG test class.
+   There is nothing preventing mock classes from being top-level, though.
+   That would be useful if the mock class is to be reused in multiple test classes.
+   As we'll see later, often the most convenient way to implement mock classes is by making them <em>anonymous</em>
+   and <em>local</em> to an individual test method.
+</p>
+<p>
+   A new mock class is created when we have a "real class" defined in production code which needs to be mocked for a
+   given test.
+   It should define at least one mock method, with any number of additional methods and constructors;
+   it can also define any number of fields.
+</p>
+<p>
+   Each <code class="annotation">@Mock</code> method must have a corresponding "real method/constructor" with the
+   <em>same signature</em> in the targeted real class.
+   For a mocked <em>method</em>, the signature consists of the method name and parameters; for a mocked
+   <em>constructor</em>, it's just the parameters, with the mock method having the special name "<code>$init</code>".
+   If a matching real method/constructor cannot be found for a given mock method, either in the specified real class or
+   in its super-classes (excluding <code class="type">java.lang.Object</code>), an
+   <code class="type">IllegalArgumentException</code> is thrown when the test attempts to apply the mock class.
+   Notice this exception can be caused by a refactoring in the real class (such as renaming the real method), so it's
+   important to understand why it happens.
+</p>
+<p>
+   Finally, notice there is no need to have mocks for <em>all</em> methods and constructors in a real class.
+   Any such method or constructor for which no corresponding mock exists in the mock class will simply stay "as is",
+   that is, it won't be mocked.
+   This, of course, assuming there isn't some <em>other</em> mock class applied by the same test to the same real class,
+   something which is perfectly valid (and sometimes useful).
+   If two (or more) mock classes happen to be applied to the same real class for the same test, then such mock classes
+   should avoid defining the same mock twice.
+   In case a mock <em>is</em> duplicated, though, the "last" one to be applied wins.
+</p>
+
+<h2 id="setUp">
+   Setting up mocks for a test
+   <span class="navigation">
+      <a href="#interfaces"><img src="go-down.png" title="Next section"></a>
+      <a href="#mocks"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   A given mock class must be applied to a corresponding real class to have any effect.
+   We call this "setting up" the mock class.
+   This is usually done inside an individual test method or inside a <code class="annotation">@BeforeMethod</code>
+   (TestNG) or <code class="annotation">@Before</code> (JUnit 4) method.
+   Once a mock class is set up, all executions of the mocked methods and constructors of the real class get
+   automatically redirected to the corresponding mock methods.
+</p>
+<p>
+   To set up the <code class="type">MockLoginContext</code> mock class above, we simply instantiate it:
+</p>
+<pre><code>@Test
+public void settingUpAMockClass() throws Exception
+{
+   <strong>new MockLoginContext()</strong>);
+
+   // Inside an application class which creates a suitable <span class="type">CallbackHandler</span>:
+   new LoginContext("test", callbackHandler).login();
+
+   ...
+}
+</code></pre>
+<p>
+   Since the mock class is set up inside a test method, the mocking of <code class="type">LoginContext</code> by
+   <code class="type">MockLoginContext</code> will be in effect only for that particular test.
+</p>
+<p>
+   When the constructor invocation that instantiates <code class="type">LoginContext</code> executes, the corresponding
+   "<code>$init</code>" mock method in <code class="type">MockLoginContext</code> will be executed, asserting the
+   validity of the invocation arguments.
+   Similarly, when the <code>LoginContext#login</code> method is called, the corresponding mock method will be executed,
+   which in this case will do nothing since the method has no parameters and <code>void</code> return type.
+   The mock class instance on which these invocations occur is the one created in the first part of the test.
+</p>
+<p>
+   The (partial) example test above simply verifies that the <code class="type">LoginContext</code> class is
+   instantiated with valid arguments through a particular constructor that takes a context name and a callback handler.
+   If the real class is not instantiated at all, the test would still pass (unless some other condition causes it to
+   fail).
+   The invocation of the <code>login</code> method also has no effect on the outcome of this test, except for the fact
+   that such an invocation will result in the execution of an empty mock method instead of the real method.
+</p>
+<p>
+   Now, what if we wanted to simulate an authentication failure for a different test?
+   The <code>LoginContext#login()</code> method declares that it can throw a <code class="type">LoginException</code>
+   "if the authentication fails", so what we need to do is very simple (using JUnit 4 in this example):
+</p>
+<pre><code>public static class MockLoginContextThatFailsAuthentication extends MockUp&lt;LoginContext>
+{
+   @Mock
+   public void $init(String name) {}
+
+   @Mock
+   public void login() throws LoginException
+   {
+      throw new LoginException();
+   }
+}
+
+@Test(expected = LoginException.class)
+public void settingUpAnotherMockClass() throws Exception
+{
+   new <strong>MockLoginContextThatFailsAuthentication</strong>();
+
+   // Inside an application class:
+   new LoginContext("test").login();
+}
+</code></pre>
+<p>
+   This test will only pass if the <code>LoginContext#login()</code> method throws an exception, which it will when the
+   corresponding mock method is executed.
+</p>
+
+<h3 id="mockableMethods">Kinds of methods which can have mocks</h3>
+<p>
+   So far, we have only mocked public instance methods with public instance mock methods.
+   In reality, any other kind of method in a real class can be mocked: methods with <code>private</code>,
+   <code>protected</code> or "package-private" accessibility, <code>static</code> methods, <code>final</code> methods,
+   and <code>native</code> methods.
+   (Also <code>synchronized</code> and <code>strictfp</code> methods, but these modifiers only affect the method
+   implementation, not its interface.)
+   Even more, an <code>static</code> method in the real class can be mocked by an <em>instance</em> mock method, and
+   vice-versa (an instance real method with an <code>static</code> mock); the same applies for the <code>final</code>
+   modifier.
+</p>
+<p>
+   Methods to be mocked need to have an implementation, though not necessarily in bytecode (in the case of
+   <code>native</code> methods).
+   Therefore, an <code>abstract</code> method cannot be mocked directly, and the same applies to the methods of a Java
+   <code>interface</code>.
+   (That said, as shown later the Mockups API can automatically create a proxy class that implements an interface.)
+</p>
+
+<h3 id="inline">In-line mock classes</h3>
+<p>
+   Typically, an specific group of mock methods for a given real class will only be useful for a single test.
+   In such a situation we can create an <em>anonymous mock class</em> inside an individual test method, as demonstrated
+   by the next example.
+</p>
+<pre><code>@Test
+public void settingUpMocksUsingAnAnonymousMockClass() throws Exception
+{
+   new MockUp&lt;LoginContext>() {
+      @Mock void $init(String name) { assertEquals("test", name); }
+      @Mock void login() {}
+   });
+
+   new LoginContext("test").login();
+}
+</code></pre>
+<p>
+   Note that mock methods don't need to be <code>public</code>.
+</p>
+
+<h2 id="interfaces">
+   Mocking interfaces
+   <span class="navigation">
+      <a href="#implementationClasses"><img src="go-down.png" title="Next section"></a>
+      <a href="#setUp"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   Most of the time a mock class targets a real class directly.
+   But what if we need a mock object that implements a certain interface, to be passed to code under test?
+   The following example test shows how it is done for the interface
+   <a href="http://download.oracle.com/javase/6/docs/api/javax/security/auth/callback/CallbackHandler.html">
+      javax.security.auth.callback.CallbackHandler</a>.
+</p>
+<pre><code>@Test
+public void mockingAnInterface() throws Exception
+{
+   CallbackHandler callbackHandler = new MockUp&lt;CallbackHandler>() {
+      @Mock
+      void handle(Callback[] callbacks)
+      {
+         assertEquals(1, callbacks.length);
+         assertTrue(callbacks[0] instanceof NameCallback);
+      }
+   }<strong>.getMockInstance()</strong>;
+
+   callbackHandler.handle(new Callback[] {new NameCallback("Enter name:")});
+}
+</code></pre>
+<p>
+   The <a href="../javadoc/mockit/MockUp.html#getMockInstance()"><code>MockUp#getMockInstance()</code></a> method
+   returns a proxy object that implements the desired interface.
+   This method returns <code>null</code> if the mocked type is not an interface.
+</p>
+
+<h2 id="implementationClasses">
+   Mocking unspecified implementation classes
+   <span class="navigation">
+      <a href="#constraints"><img src="go-down.png" title="Next section"></a>
+      <a href="#interfaces"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   To demonstrate this feature, lets consider the following code under test.
+</p>
+<pre><code>public interface Service { int doSomething(); }
+final class ServiceImpl implements Service { public int doSomething() { return 1; } }
+
+public final class TestedUnit
+{
+   private final Service service1 = <strong>new ServiceImpl();</strong>
+   private final Service service2 = <strong>new Service() { public int doSomething() { return 2; } };</strong>
+
+   public int businessOperation()
+   {
+      return service1.doSomething() + service2.doSomething();
+   }
+}
+</code></pre>
+<p>
+   The method we want to test, <code>businessOperation()</code>, uses classes that implement a separate interface,
+   <code class="type">Service</code>.
+   One of these implementations is defined through an anonymous inner class, which is completely inaccessible (except
+   for the use of Reflection) from client code.
+</p>
+<p>
+   Given a base type (be it an <code>interface</code>, an <code>abstract</code> class, or any sort of base class), we
+   can write a test which only knows about the base type but where all implementing/extending implementation classes get
+   mocked.
+   To do so, we create a mock-up whose mocked type refers only to the known base type, and does so through a
+   <em>type variable</em>.
+   Not only will implementation classes already loaded by the JVM get mocked, but also any additional classes that
+   happen to get loaded by the JVM during later test execution.
+   This ability is demonstrated below.
+</p>
+<pre><code>@Test
+public <strong>&lt;T extends Service></strong> void mockingImplementationClassesFromAGivenBaseType()
+{
+   new MockUp<strong>&lt;T></strong>() {
+      @Mock int doSomething() { return 7; }
+   };
+
+   int result = new TestedUnit().businessOperation();
+
+   assertEquals(7, result);
+}
+</code></pre>
+<p>
+   In the test above, all invocations to methods implementing <code>Service#doSomething()</code> will be redirected to
+   the mock method implementation, regardless of the actual class implementing the interface method.
+</p>
+
+<h2 id="constraints">
+   Invocation count constraints
+   <span class="navigation">
+      <a href="#initializers"><img src="go-down.png" title="Next section"></a>
+      <a href="#implementationClasses"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   All example tests shown so far only used JUnit/TestNG "asserts" to verify invocation arguments.
+   This is the part of the API that extends conventional state-based testing to the data items
+   exchanged between objects.
+   Sometimes, though, we may want to verify if a given method/constructor in a dependency is invoked
+   at all by the unit under test.
+   We may also want to verify exactly how many invocations a given mock received during the
+   execution of a test, or specify that the test should fail if more/less than a certain number of
+   invocations occurs.
+   For this, we can specify <em>declarative constraints</em> on the <em>invocation count</em> of a
+   given mock, as the following example shows.
+</p>
+<pre><code>@Test
+public void specifyingInvocationCountConstraints() throws Exception
+{
+   new MockUp&lt;LoginContext>() {
+      @Mock(<strong>minInvocations = 1</strong>)
+      void $init(String name) { assertEquals("test", name); }
+
+      @Mock(<strong>invocations = 1</strong>)
+      void login() {}
+
+      @Mock(<strong>maxInvocations = 1</strong>)
+      void logout() {}
+   });
+
+   new LoginContext("test").login();
+}
+</code></pre>
+<p>
+   In this test we used all three attributes of the <code class="annotation">@Mock</code> annotation related to
+   invocation counts.
+   The first mock specifies that the <code>LoginContext(String)</code> constructor must be invoked
+   <em>at least once</em> during the test.
+   The second one specifies that the <code>login()</code> method must be invoked <em>exactly once</em>, while the third
+   declares that <code>logout()</code> <em>can</em> be invoked, but not more than once.
+</p>
+<p>
+   It is also valid to specify both <code>minInvocations</code> and <code>maxInvocations</code> on
+   the same mock, in order to constrain the invocation count to a given range.
+</p>
+
+<h2 id="initializers">
+   Mocking class initializers
+   <span class="navigation">
+      <a href="#invocation"><img src="go-down.png" title="Next section"></a>
+      <a href="#constraints"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   When a class in production code performs some work in one or more <em>static initialization blocks</em>, we may
+   need to mock it out so it doesn't interfere with test execution.
+   We can define an special mock method for that, as shown below.
+</p>
+<pre><code>@Test
+public void mockingStaticInitializers()
+{
+   new MockUp&lt;ClassWithStaticInitializers>() {
+      @Mock
+      <strong>void $clinit()</strong>
+      {
+         // Do nothing here (usually).
+      }
+   };
+
+   ClassWithStaticInitializers.doSomething();
+}
+</code></pre>
+<p>
+   Special care must be taken when the static initialization code of a class is mocked out.
+   Note that this includes not only any "<code>static</code>" blocks in the class, but also any assignments to
+   <code>static</code> fields (excluding those resolved at compile time, which do not produce executable bytecode).
+   Since the JVM only attempts to initialize a class <em>once</em>, restoring the static initialization code of a
+   mocked out class will have no effect.
+   So, if you mock out the static initialization of a class that hasn't been initialized by the JVM yet, the original
+   class initialization code will <em>never</em> be executed in the test run.
+   This will cause any static fields that are assigned with expressions computed at runtime to instead remain
+   initialized with the <em>default</em> values for their types.
+</p>
+
+<h2 id="invocation">
+   Accessing the invocation context
+   <span class="navigation">
+      <a href="#proceed"><img src="go-down.png" title="Next section"></a>
+      <a href="#initializers"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   A mock method can optionally declare an extra parameter of type <code class="type">mockit.Invocation</code>, provided
+   it is the <em>first</em> parameter.
+   For each actual invocation to the corresponding mocked method/constructor, an <code class="type">Invocation</code>
+   object will be automatically passed in when the mock method is executed.
+</p>
+<p>
+   This invocation context object provides several "getters" which can be used inside the mock method.
+   One is the <code>getInvokedInstance()</code> method, which returns the <em>mocked</em> instance on which the
+   invocation occurred (<code>null</code> if the mocked method is <code>static</code>).
+   Other getters provide the number of invocations (including the current one) to the mocked method/constructor,
+   the invocation count constraints (if any) as specified in the <code class="annotation">@Mock</code> annotation, etc.
+   Below we have an example test.
+</p>
+<pre><code>@Test
+public void accessingTheMockedInstanceInMockMethods() throws Exception
+{
+   final Subject testSubject = new Subject();
+
+   new MockUp&lt;LoginContext>() {
+      @Mock
+      void $init(<strong>Invocation invocation</strong>, String name, Subject subject)
+      {
+         assertNotNull(name);
+         assertSame(testSubject, subject);
+
+         // Gets the invoked instance.
+         LoginContext loginContext = <strong>invocation.getInvokedInstance()</strong>;
+
+         // Verifies that this is the first invocation.
+         assertEquals(1, invocation.getInvocationCount());
+
+         // Forces setting of private Subject field, since no setter is available.
+         Deencapsulation.setField(loginContext, subject);
+      }
+
+      @Mock(minInvocations = 1)
+      void login(Invocation invocation)
+      {
+         // Gets the invoked instance.
+         LoginContext loginContext = invocation.getInvokedInstance();
+
+         // getSubject() returns null until the subject is authenticated.
+         assertNull(loginContext.getSubject());
+
+         // Private field set to true when login succeeds.
+         Deencapsulation.setField(loginContext, "loginSucceeded", true);
+      }
+
+      @Mock
+      void logout(Invocation invocation)
+      {
+         // Gets the invoked instance.
+         LoginContext loginContext = invocation.getInvokedInstance();
+
+         assertSame(testSubject, loginContext.getSubject());
+      }
+   };
+
+   LoginContext theMockedInstance = new LoginContext("test", testSubject);
+   theMockedInstance.login();
+   theMockedInstance.logout();
+}
+</code></pre>
+
+<h2 id="proceed">
+   Proceeding into the real implementation
+   <span class="navigation">
+      <a href="#reuse"><img src="go-down.png" title="Next section"></a>
+      <a href="#invocation"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   Once a <code class="annotation">@Mock</code> method is executing, any additional calls to the corresponding mocked
+   method are also redirected to the mock method, causing its implementation to be re-entered.
+   If, however, we want to execute the real implementation of the mocked method, we can call the <code>proceed()</code>
+   method on the <code class="type">Invocation</code> object received as the first parameter to the mock method.
+</p>
+<p>
+   The example test below exercises a <code class="type">LoginContext</code> object created normally (without any
+   mocking in effect at creation time), using an unspecified <code>configuration</code>.
+   (For the complete version of the test, see the
+   <a href="http://code.google.com/p/jmockit/source/browse/trunk/main/test/mockit/MockAnnotationsTest.java">
+      <code>mockit.MockAnnotationsTest</code></a> class.)
+</p>
+<pre><code>@Test
+public void proceedIntoRealImplementationsOfMockedMethods() throws Exception
+{
+   // Create objects to be exercised by the code under test:
+   LoginContext loginContext = new LoginContext("test", null, null, configuration);
+
+   // Set up mocks:
+   ProceedingMockLoginContext mockInstance = new ProceedingMockLoginContext();
+
+   // Exercise the code under test:
+   assertNull(loginContext.getSubject());
+   <strong>loginContext.login();</strong>
+   assertNotNull(loginContext.getSubject());
+   assertTrue(mockInstance.loggedIn);
+
+   mockInstance.ignoreLogout = true;
+   <strong>loginContext.logout();</strong> // first entry: do nothing
+   assertTrue(mockInstance.loggedIn);
+
+   mockInstance.ignoreLogout = false;
+   <strong>loginContext.logout();</strong> // second entry: execute real implementation
+   assertFalse(mockInstance.loggedIn);
+}
+
+static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
+{
+   boolean ignoreLogout;
+   boolean loggedIn;
+
+   @Mock
+   void login(Invocation inv) throws LoginException
+   {
+      try {
+         <strong>inv.proceed();</strong> // executes the real code of the mocked method
+         loggedIn = true;
+      }
+      finally {
+         // This is here just to show that arbitrary actions can be taken inside
+         // the mock, <em>before</em> and/or <em>after</em> the real method gets executed.
+         LoginContext lc = inv.getInvokedInstance();
+         System.out.println("Login attempted for " + lc.getSubject());
+      }
+   }
+
+   @Mock
+   void logout(Invocation inv) throws LoginException
+   {
+      // We can choose to proceed into the real implementation <em>or not</em>.
+      if (!ignoreLogout) {
+         <strong>inv.proceed();</strong>
+         loggedIn = false;
+      }
+   }
+}
+</code></pre>
+<p>
+   In the example above, <em>all</em> the code inside the tested <code class="type">LoginContext</code> class will get
+   executed, even though some methods (<code>login</code> and <code>logout</code>) are mocked.
+   This example is contrived; in practice, the ability to proceed into real implementations would not normally be useful
+   for <em>testing</em> per se, not directly at least.
+</p>
+<p>
+   Although not shown here, a call to <code>proceed()</code> can be also be done inside a
+   "<code><strong>$init</strong>(Invocation inv, ...)</code>" mock method, to execute the real implementation of a
+   mocked constructor.
+   Additionally, for mocked methods/constructors having parameters, we can <em>replace</em> the argument values passed
+   to the real implementation by passing the replacement values in a <code>proceed(&lt;arg1>, &lt;arg2>, ...)</code>
+   call.
+</p>
+<p>
+   You may have noticed that use of <code>Invocation#proceed(...)</code> in a mock method effectively behaves like
+   <em>advice</em> (from AOP jargon) for the corresponding real method.
+   This is a powerful ability that can be useful for certain things (think of an interceptor or decorator).
+</p>
+<p>
+   For more details on all the methods available in the <code class="type">mockit.Invocation</code> class, see its
+   <a href="../javadoc/mockit/Invocation.html">API documentation</a>.
+</p>
+
+<h2 id="reuse">
+   Reusing mocks between tests
+   <span class="navigation">
+      <a href="#widerScopes"><img src="go-down.png" title="Next section"></a>
+      <a href="#proceed"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   Most tests will probably only use dedicated mock classes, specifically created for each particular test.
+   There will be times, though, when the same mock class can be reused by multiple test methods, either in a single test
+   class or across the entire test suite.
+   We will now see different ways to set up mocks so they are shared by a whole group of tests, as well as ways to
+   define reusable mock classes.
+</p>
+
+<h3 id="beforeAfter">Using before/after methods</h3>
+<p>
+   In a given test class, we can define instance methods that will run <em>before</em> and <em>after</em> each test
+   method (even when the test throws an error or exception).
+   With JUnit 3.8-style tests, these are the <code>setUp()</code> and <code>tearDown()</code> method overrides.
+   In JUnit 4.x we use the <code class="annotation">@Before</code> and <code class="annotation">@After</code>
+   annotations on one or more arbitrary instance methods of the test class. The same applies to the
+   <code class="annotation">@BeforeMethod</code> and <code class="annotation">@AfterMethod</code> annotations of TestNG.
+</p>
+<p>
+   Any mock class that can be applied from inside a test method can also be applied from a "before" method, by
+   instantiating a mock-up class.
+   Such a mock class will remain in effect for the execution of all test methods in the test class.
+   The only difference of applying mocks in a "before" method is that they also remain in effect inside "after" methods,
+   if any.
+</p>
+<p>
+   For example, if we wanted to mock the <code class="type">LoginContext</code> class with a mock-up class for a bunch
+   of related tests, we would have the following methods in the test class:
+</p>
+<pre><code>public class MyTestClass
+{
+   @Before
+   public void setUpSharedMocks()
+   {
+      new MockUp&lt;LoginContext>() {
+         // shared mocks here...
+      };
+   }
+
+   // test methods that will share the mocks set up above...
+}
+</code></pre>
+<p>
+   The example above uses JUnit 4, but the equivalent code for TestNG or with JUnit 3.8-style tests would be practically
+   the same.
+</p>
+<p>
+   It is also valid to extend from base test classes, which may optionally define "before" and/or "after" methods
+   containing calls to the Mockups API.
+</p>
+
+<h3 id="reusableMocks">Reusable mock classes</h3>
+<p>
+   Named mock classes can be designed as concrete (and optionally <code>final</code>) classes that are then used in
+   specific tests.
+   When instantiated directly by test code, such mock instances can be configured through constructor arguments, fields,
+   or non-mock methods.
+   Alternatively, they can be designed as base classes (possibly <code>abstract</code>) to be extended by concrete mock
+   classes inside specific test classes or methods.
+</p>
+<p>
+   The example tests for this section come from JMockit's own test suite. They exercise the following class, partially
+   reproduced here:
+</p>
+<pre><code>public final class TextFile
+{
+   // fields and constructors that accept a TextReader or DefaultTextReader object...
+   
+   public List&lt;String[]> parse()
+   {
+      <strong>skipHeader();</strong>
+
+      List&lt;String[]> result = new ArrayList&lt;String[]>();
+
+      while(true) {
+         String  strLine = <strong>nextLine();</strong>
+
+         if (strLine == null) {
+            <strong>closeReader();</strong>
+            break;
+         }
+
+         String[] parsedLine = strLine.split(",");
+         result.add(parsedLine);
+      }
+
+      return result;
+   }
+
+   // private helper methods that call "skip(n)", "readLine()", and "close()"...
+   
+   public interface <strong>TextReader</strong>
+   {
+      long skip(long n) throws IOException;
+      String readLine() throws IOException;
+      void close() throws IOException;
+   }
+
+   static final class <strong>DefaultTextReader</strong> implements TextReader
+   {
+      DefaultTextReader(String fileName) throws FileNotFoundException { ...mocked... }
+      public long skip(long n) throws IOException { ...mocked... }
+      public String readLine() throws IOException { ...mocked... }
+      public void close() throws IOException { ...mocked... }
+   }
+}
+</code></pre>
+<p>
+   Some of the tests for the class above are as follows.
+</p>
+<pre><code>public final class TextFileUsingMockUpsTest
+{
+   // A reusable mock-up class to be applied in specific tests.
+   static final class <strong>MockTextReaderConstructor</strong> extends MockUp&lt;<strong>DefaultTextReader</strong>>
+   {
+      @Mock(invocations = 1)
+      void $init(String fileName) { assertThat(fileName, equalTo("file")); }
+   }
+
+   @Test
+   public void parseTextFileUsingDefaultTextReader() throws Exception
+   {
+      <strong>new MockTextReaderConstructor();</strong>
+      <strong>new MockTextReaderForParse&lt;DefaultTextReader>() {};</strong>
+
+      List&lt;String[]> result = new TextFile("file", 200).parse();
+
+      // assert result from parsing
+   }
+
+   ...
+</code></pre>
+<p>
+   The test above uses two reusable mock classes. The first one encapsulates a mock for the single constructor of the
+   <code class="type">TextFile.DefaultTextReader</code> nested class.
+   Any tests exercising code in the <code class="type">TextFile</code> class that invokes this constructor will
+   therefore use this mock class.
+   It is applied by simply being instantiated inside the test method.
+</p>
+<p>
+   The second mock class used by the test targets the same <code class="type">DefaultTextReader</code> class.
+   As we see next, it defines mocks for a whole different set of members, which happen to be the methods called from
+   the <code>TextFile#parse()</code> method.
+</p>
+<pre><code>...
+
+// A reusable base mock class to be extended in specific tests.
+static class <strong>MockTextReaderForParse&lt;T extends TextReader></strong> extends MockUp&lt;T>
+{
+   static final String[] LINES = { "line1", "another,line", null};
+   int invocation;
+
+   @Mock(invocations = 1)
+   long skip(long n)
+   {
+      assertEquals(200, n);
+      return n;
+   }
+
+   @Mock(invocations = 3)
+   String readLine() throws IOException { return LINES[invocation++]; }
+
+   @Mock(invocations = 1)
+   void close() {}
+}
+
+...
+</code></pre>
+<p>
+   The mock-up class above, like the <code class="type">mockit.MockUp&lt;T></code> class which it extends, is
+   <em>generic</em>.
+   In this particular case, this is necessary because the tested <code class="type">TextFile</code> class works
+   with two different types for the "text reader" dependency:
+   <code class="type">TextFile.TextReader</code> (an interface which client code can implement), and
+   <code class="type">TextFile.DefaultTextReader</code> (an internal default implementation of the interface).
+   The previous test simply used this mock class <em>as is</em>, by defining an anonymous subclass which specifies the
+   type to be mocked as the <code class="type">DefaultTextReader</code> concrete class.
+   The next test, on the other hand, passes a <code class="type">TextReader</code> implementation to
+   <code class="type">TextFile</code>:
+</p>
+<pre><code>...
+
+@Test
+public void parseTextFileUsingProvidedTextReader() throws Exception
+{
+   TextReader textReader = <strong>new MockTextReaderForParse&lt;TextReader>() {}</strong>.getMockInstance();
+
+   List&lt;String[]> result = new TextFile(textReader, 200).parse();
+
+   // assert result from parsing
+}
+
+...
+</code></pre>
+<p>
+   The interface implementation, in this case, is a mock proxy object obtained through the
+   <code>MockUp&lt;T>#getMockInstance()</code> method.
+</p>
+<p>
+   Finally, we get to a more interesting case, where the concrete mock subclass actually <em>overrides</em> some of the
+   mocks inherited from the base mock class:
+</p>
+<pre><code>...
+
+@Test
+public void doesNotCloseTextReaderInCaseOfIOFailure() throws Exception
+{
+   new MockTextReaderConstructor();
+
+   <strong>new MockTextReaderForParse&lt;DefaultTextReader>()</strong> {
+      <strong>@Override</strong> @Mock
+      String readLine() throws IOException { <strong>throw new IOException();</strong> }
+
+      <strong>@Override</strong> @Mock(<strong>invocations = 0</strong>)
+      void close() {}
+   };
+
+   TextFile textFile = new TextFile("file", 200);
+
+   try {
+      textFile.parse();
+      fail();
+   }
+   catch (RuntimeException e) {
+      assertTrue(e.getCause() instanceof IOException);
+   }
+}
+</code></pre>
+<p>
+   The test forces an <code class="type">IOException</code> to be thrown in the first call to <code>readLine()</code>.
+   (This exception will get wrapped in a <code class="type">RuntimeException</code> by the <code>parse</code> method.)
+   It also specifies, through an invocation count constraint, that the <code>close()</code> method should never be
+   called.
+   This shows that not only the behavior of the inherited mock is overridden, but also any of the metadata specified
+   through the <code class="annotation">@Mock</code> annotation.
+</p>
+
+<h2 id="widerScopes">
+   Mock-ups at the test class/suite level
+   <span class="navigation">
+      <a href="#bottom"><img src="go-down.png" title="Bottom"></a>
+      <a href="#reuse"><img src="go-up.png" title="Previous section"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <a href="#top"><img src="go-top.png" title="Top"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+<p>
+   As we have seen, mock-up classes are usually applied for the duration of an individual test.
+   There may be times when we want to mock classes for the entire scope of a test class (that is, for all of its test
+   methods), or for the entire scope of a test suite (that is, for all of its test classes).
+   It is also possible to specify mock classes for an entire test run through external configuration, by setting a
+   JVM-wide system property or adding a <code>jmockit.properties</code> file to the runtime classpath.
+</p>
+
+<h3 id="programmatic">Programmatic application of mock-ups in wider scopes</h3>
+<p>
+   To have a mock-up class cover the entire scope (all tests) of a given test class, we simply apply it inside a
+   <code class="annotation">@BeforeClass</code> method (with JUnit or TestNG).
+   To apply mock-ups over a test <em>suite</em>, we can use a TestNG <code class="annotation">@BeforeSuite</code>
+   method, or a JUnit <code class="type">Suite</code> class.
+   The next example shows a JUnit 4 test suite configuration with the application of mock-ups.
+</p>
+<pre><code>@RunWith(Suite.class)
+@Suite.SuiteClasses({MyFirstTest.class, MySecondTest.class})
+public final class TestSuite
+{
+   @BeforeClass
+   public static void setupMocks()
+   {
+      new LoggingMocks();
+
+      new MockUp&lt;SomeClass>() {
+         @Mock someMethod() {}
+      };
+   }
+}
+</code></pre>
+<p>
+   In this example, we apply the <code class="type">LoggingMocks</code> mock class and an inline mock-up class; their
+   mocks will be in effect until just after the last test in the test suite has been executed.
+</p>
+
+<h3 id="systemProperty">External application through a system property</h3>
+<p>
+   The <strong><code>jmockit-mocks</code></strong> system property supports a comma-separated list of fully qualified
+   mock-up class names.
+   If specified at JVM startup time, any such class (which must extend <code class="type">MockUp&ltT></code>) will be
+   automatically applied for the whole test run.
+   The mocks defined in startup mock classes will remain in effect until the end of the test run, for all test classes.
+</p>
+<p>
+   Note that a system property can be passed to the JVM through the standard "<code>-D</code>" command line parameter.
+   Ant/Maven/etc. build scripts have their own ways of specifying system properties, so check their documentation for
+   details.
+</p>
+
+<h3 id="propertiesFile">External application through the <code>jmockit.properties</code> file</h3>
+<p>
+   Mock-up classes specified in the <code>jmockit-mocks</code> system property can alternatively be specified in a
+   separate <strong><code>jmockit.properties</code></strong> file, which should be present at the root of the classpath.
+   If there are multiple such files in the classpath (either inside jars or plain directories), all class names listed
+   are added together.
+   This allows the creation of reusable mock classes which can be packaged in a jar file with its own properties file;
+   when added to the execution classpath of a test suite, the mock classes will be automatically applied at startup.
+</p>
+<p>
+   For convenience, the entry in the properties file can be written without the "<code>jmockit-</code>" prefix.
+</p>
+
+<div id="bottom" class="navigation">
+   <a href="BehaviorBasedTesting.html"><img src="go-previous.png" title="Previous chapter"></a>
+   <a href="#widerScopes"><img src="go-up.png" title="Previous section"></a>
+   <a href="ReflectionUtilities.html"><img src="go-next.png" title="Next chapter"></a>
+   <a href="#top"><img src="go-top.png" title="Top"></a>
+   <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+</div>
+<br/>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2006-2013 Rogério Liesenfeld
+  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
+  -->
+<html>
+<head>
+   <title>The JMockit Tutorial - Running tests incrementally</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+   <link rel="stylesheet" type="text/css" href="../prettify.css"/>
+</head>
+<body>
+<h2 id="top">
+   Running tests incrementally
+   <span class="navigation">
+      <a href="#jar"><img src="go-down.png" title="Next section"></a>
+      <a href="CodeCoverage.html"><img src="go-previous.png" title="Previous chapter"></a>
+      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
+      <img src="blank.gif" width="22">
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h2>
+
+<p>
+   Suppose you have a test suite containing hundreds or thousands of tests.
+   When changing production code in a local development environment, we would like to re-execute the test suite to make
+   sure everything is still working.
+   Re-running the whole suite for every small change will not be very productive, though, if each test suite execution
+   takes more than a few seconds.
+</p>
+<div style="text-align: center;">
+   <img src="Incremental.png">
+</div>
+<p>
+   One approach to reduce the total suite execution time, when a multi-CPU or multi-core machine is available, is to run
+   tests in parallel.
+   An smarter approach is to take advantage of the fact that in most cases, most of those tests simply don't need to be
+   re-executed, because the production code they cover wasn't changed since the last test run.
+   In other words, after an <em>increment</em> of functionality to the application (either by adding, changing, or
+   removing production code) we have an increment of testing, by re-executing only that part of the whole test suite
+   which is affected by the change in code under test.
+</p>
+<p>
+   Therefore, what we want is to only re-execute the required minimum number of tests after each set of local changes to
+   production code.
+   That way, we should be able to frequently execute the test suite, independently of its size, in order to discover any
+   regressions in the functionality of production code already covered by existing tests.
+</p>
+<p>
+   In case the test code itself is changed, any tests added or modified will always be executed.
+</p>
+
+<h3 id="jar">Activating incremental test runs</h3>
+<p>
+   To have the ability of running tests in a JUnit or TestNG suite incrementally, add the following jar file to the
+   classpath: <em><code>jmockit-incremental.jar</code></em>.
+   This jar file depends on <code>jmockit-coverage.jar</code>, which must be available in the same directory but does
+   not need to be explicitly added to the classpath.
+</p>
+<p>
+   As with any other tool or API in the toolkit, JMockit must be initialized before the first test is executed.
+   See <a href="RunningTests.html">these instructions</a>.
+</p>
+<p>
+   When a test suite execution terminates, an output file of name <em><code>testRun.properties</code></em> is written in
+   whatever was the working directory for the test run. When the file already exists it is overwritten.
+</p>
+
+<h3 id="switching">Turning incremental test runs on/off</h3>
+<p>
+   To facilitate turning incremental test runs on/off, the <em>read-only status</em> of the "testRun.properties" file is
+   checked by JMockit at startup. If the file is currently marked as read-only in the OS, then the next test run will
+   execute all tests.
+</p>
+<p>
+   Notice that a Java IDE usually provides an easy mechanism to toggle the read-only status of a project file.
+   In IntelliJ IDEA it is done by double clicking the status bar, with the desired file opened in the editor.
+   In Eclipse there is a "Read only" check box in the "Properties" screen for the text file selected in the editor,
+   which can be opened by typing "Alt + Enter".
+</p>
+<div id="bottom" class="navigation">
+   <a href="CodeCoverage.html"><img src="go-previous.png" title="Previous chapter"></a>
+   <a href="#switching"><img src="go-up.png" title="Previous section"></a>
+   <img src="blank.gif" width="22">
+   <a href="#top"><img src="go-top.png" title="Top"></a>
+   <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+</div>
+<br/>
+</body>
+</html>
