@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>The JMockit testing toolkit</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <meta name="description" content="A feature matrix comparing several mocking toolkits.">
+   <link rel="stylesheet" type="text/css" href="prettify.css"/>
+   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+   <style>
+      td { border: 1px solid; }
+   </style>
+</head>
+<body>
+<h1 class="header">
+   <a href="http://jmockit.org">JMockit</a>
+   <span>The Mock <span>Anything</span> Toolkit for Java</span>
+</h1>
+
+<p>
+   Our intention here is to objectively compare the feature sets of several mocking toolkits.
+   Every feature under consideration should make a noticeable difference for developers writing tests with the toolkit,
+   either by *enabling* them to address some real-world situation or by making it *easy/simple*.
+   On the other hand, features that all mocking toolkits support on an equal footing, such as the creation of mocks for
+   interfaces, are not included in the comparison.
+</p>
+
+<table cellspacing="0">
+<thead>
+   <tr>
+      <td><strong>Feature</strong></td>
+      <td><a href="http://easymock.org">EasyMock</a></td>
+      <td><a href="http://jmock.org">jMock</a></td>
+      <td><a href="http://mockito.org">Mockito</a></td>
+      <td><a href="http://www.unitils.org/summary.html">Unitils Mock</a></td>
+      <td><a href="http://code.google.com/p/powermock">PowerMock:<br>EasyMock API</a></td>
+      <td><a href="http://code.google.com/p/powermock">PowerMock:<br>Mockito API</a></td>
+      <td><a href="http://jmockit.org">JMockit</a></td>
+   </tr>
+</thead>
+<tbody>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#constraints">
+            Invocation count constraints
+         </a>
+      </td>
+      <td>√</td> <td>√</td> <td>√</td> <td></td> <td>√</td> <td>√</td> <td>√</td>
+   </tr>
+   <tr>
+      <td><a href="#Recording_strict_expectations">Recording strict expectations</a></td>
+      <td>√</td> <td>√</td> <td></td> <td></td> <td>√</td> <td></td> <td>√</td>
+   </tr>
+   <tr>
+      <td><a href="#Explicit_verification">Explicit verification</a></td>
+      <td></td> <td></td> <td>√</td> <td>√</td> <td></td> <td>√</td> <td>√</td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#partial">Partial mocking</a>
+      </td>
+      <td>√</td> <td></td> <td>√</td> <td>√</td> <td>√</td> <td>√</td> <td>√</td>
+   </tr>
+   <tr>
+      <td>
+         <a href="#No_method_call_to_switch_from_record_to_replay">No method call to switch from record to replay></a>
+      </td>
+      <td></td> <td></td> <td>√</td> <td>√</td> <td></td> <td>√</td> <td>√</td>
+   </tr>
+   <tr>
+      <td>
+         <a href="#No_extra_code_for_implicit_verification">No extra code for implicit verification</a>
+      </td>
+      <td> <td> <td> N/A <td> N/A <td> <td> N/A <td> √ </td>
+   </tr>
+   <tr>
+      <td>No extra "prepare for test" code</td>
+      <td> √ <td> √ <td> √ <td> √ <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>No need to use <code>@RunWith</code> annotation or base test class</td>
+      <td> √ <td> √ <td> √ <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>Consistent syntax between <code>void</code> and non-<code>void</code> methods</td>
+      <td> <td> √ <td> <td> √ <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#hamcrest">Argument matchers</a>
+         for some parameters only, not all
+      </td>
+      <td> <td> <td> <td> √ <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="#Easier_argument_matching_based_on_properties_of_value_objects">
+            Easier argument matching based on properties of value objects>
+         </a>
+      </td>
+      <td> √ <td> <td> √ <td> √ <td> √ <td> √ <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/javadoc/mockit/Cascading.html">Cascading mocks</a>
+      </td>
+      <td> <td> <td> √ <td> √ <td> <td> √ <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#multipleInterfaces">
+            Support for mocking multiple interfaces
+         </a>
+      </td>
+      <td> <td> <td> √ <td> <td> <td> √ <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://code.google.com/p/jmockit/source/browse/trunk/main/test/mockit/MockedAnnotationsTest.java">
+            Support for mocking annotation types
+         </a>
+      </td>
+      <td> <td> √ <td> √ <td> √ <td> <td> √ <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#partiallyOrdered">
+            Partially ordered expectations
+         </a>
+      </td>
+      <td> <td> √ <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>Mocking of constructors and final/static/native/private methods</td>
+      <td> <td> <td> <td> <td> √ <td> √ <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/UsingMocksAndStubs.html">
+            Declarative application of mocks/stubs to whole test classes
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> √ <td> √ <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/javadoc/mockit/Tested.html">Auto-injection of mocks</a>
+      </td>
+      <td> <td> <td> √ <td> √ <td>   <td> √ <td> √ </td>
+   </tr>
+   <tr>
+      <td>Mocking of "new-ed" objects</td>
+      <td> <td> <td>   <td>   <td> √ <td> √ <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://code.google.com/p/jmockit/source/browse/trunk/main/test/mockit/MockedEnumsTest.java">
+            Support for mocking enum types
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> √ <td> √ <td> √ </td>
+   </tr>
+   <tr>
+      <td>Declarative mocks for the test class (mock fields)</td>
+      <td> <td> <td> √ <td> √ <td> √ <td> √ <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#declaration">
+            Declarative mocks for test methods (mock parameters)
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#matcherFields">
+            Special fields for "any" argument matching
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/javadoc/mockit/Expectations.html#result">
+            Use of an special field to specify invocation results
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/javadoc/mockit/Expectations.html#times">
+            Use of special fields to specify invocation count constraints
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/javadoc/mockit/Expectations.html#$">
+            Expectations with custom error messages
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/CapturingImplementations.html">
+            On-demand mocking of unspecified implementation classes
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#capturing">
+            Capture of instances created by code under test
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#iterations">
+            Recording & verification of expectations in loops
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://code.google.com/p/jmockit/source/browse/trunk/main/test/mockit/CovariantReturnTypesTest.java">
+            Support for covariant return types
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>
+         <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/StateBasedTesting.html">
+            "Duck typing" mocks for state-based tests
+         </a>
+      </td>
+      <td> <td> <td> <td> <td> <td> <td> √ </td>
+   </tr>
+   <tr>
+      <td>Single jar file in the classpath is sufficient to use mocking API</td>
+      <td> <td> <td> √ <td> <td> N/A <td> N/A <td> √ </td>
+   </tr>
+   <tr>
+      <td><strong>Total</strong>
+      <td> 6/32 <td> 7/32 <td> 13/31 <td> 11/31 <td> 9/31 <td> 14/30 <td> 32/32 </td>
+   </tr>
+   <tr>
+      <td><strong>Total when ignoring JMockit-only features</strong>
+      <td> 6/22 <td> 7/22 <td> 13/21 <td> 11/21 <td> 9/21 <td> 14/20 <td> 22/22 </td>
+   </tr>
+</tbody>
+</table>
+
+<h3>Recording strict expectations</h3>
+<p>
+   Invocations that <em>must</em> occur when the unit under test is exercised can be recorded as <em>strict</em>
+   expectations.
+   When invocations are <em>allowed</em> but <em>not</em> required to occur, they can be recorded as non-strict
+   expectations.
+   Some mocking APIs only support the recording of non-strict expectations, while supporting the <em>verification</em>
+   of expectations to compensate the lack of support for the recording of strict expectations.
+</p>
+
+<h3>Explicit verification</h3>
+<p>
+   Strict expectations are always verified implicitly and automatically.
+   Non-strict ones, however, are not.
+   Some toolkits provide a way to explicitly verify invocations that belong to non-strict expectations, after the unit
+   under test was exercised.
+</p>
+
+<h3>No method call to switch from record to replay</h3>
+<p>
+   Expectations are recorded before the unit under test is exercised, at which time they will (potentially) be replayed.
+   Some mocking APIs have a special method that needs to be explicitly called in the test method, so that the toolkit
+   will know that when the next invocation occurs it will be a "replayed" one, instead of another recording.
+   (In EasyMock, this special method is <code>replay(mock)</code> or <code>replayAll()</code>;
+   in jMock, it's <code>checking(expectations)</code>.)
+</p>
+
+<h3>No extra code for implicit verification</h3>
+<p>
+   Some mocking APIs, like EasyMock and jMock, require extra code to enable the verification of missing invocations at
+   the end of a test.
+   In the case of EasyMock, a <code>verify(mock)</code> or <code>verifyAll()</code> method call is required in each test
+   method.
+   With jMock, one of the following alternatives is needed: 1) a JUnit 3.8 test class needs to extend
+   <code>MockObjectTest</code>; 2) a JUnit 4 test class must be annotated with <code>@RunWith(JMock.class)</code>;
+   or 3) the <code>Mockery#assertIsSatisfied()</code> method needs to be called at the end of each test method.
+   The Mockito and Unitils Mock APIs do not support implicit verification at all, so this item isn't applicable.
+</p>
+
+<h3>Easier argument matching based on properties of value objects</h3>
+<p>
+   Sometimes an invocation argument is an object containing one or more properties of interest, which must have their
+   values at replay time verified in the test.
+   Custom matchers (which all mocking APIs allow without significant differences) provide the ability to implement
+   argument matching behavior of any complexity, and can therefore be used in this situation.
+   The problem, though, is that it takes too much code to create a new matcher class.
+   There are three alternative approaches to deal with this issue in a behavior-oriented mocking API:
+   1) make deep copies of invocation arguments and then compare the property values in the two instances through
+   reflection;
+   2) allow argument values to be captured into special objects or variables which can later be verified through regular
+   assertions; and
+   3) verify arguments through regular assertions in a custom validation method executed for each matching invocation.
+   Approach 1 is used by <a href="http://www.unitils.org/tutorial.html#Testing_with_mock_objects Unitils Mock"></a>.
+   Approach 2 is provided by `EasyMock` and Mockito, and therefore also available when using `PowerMock`.
+   JMockit supports approaches 2 and 3, through the
+   <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#withCapture withCapture()"></a> method and
+   the <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#forEachInvocation forEachInvocation"></a>
+   field, respectively.
+</p>
+</body>
+</html>
