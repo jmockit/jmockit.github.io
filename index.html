@@ -16,17 +16,17 @@
    <a href="http://jmockit.org">JMockit</a>
    <span>The Mock <span>Anything</span> Toolkit for Java</span>
 </h1>
-<ul class="navBar">
-   <li><a href="gettingStarted.html">Getting&nbsp;started</a></li>
-   <li><a href="about.html">About</a></li>
-   <li><a href="tutorial.html">Tutorial</a></li>
-   <li><a href="samples.html">Samples</a></li>
-   <li><a href="../artifacts1x/javadoc/index.html">API</a></li>
-   <li><a href="http://github.com/jmockit/jmockit1">Source</a></li>
-   <li><a href="http://github.com/jmockit/jmockit1/issues">Issues</a></li>
-   <li><a href="community.html">Community</a></li>
-   <li><a href="changes.html">History</a></li>
-</ul>
+<table class="navBar"><tr>
+   <th><a href="gettingStarted.html">Getting&nbsp;started</a></th>
+   <th><a href="about.html">About</a></th>
+   <th><a href="tutorial.html">Tutorial</a></th>
+   <th><a href="samples.html">Samples</a></th>
+   <th><a href="api1x/index.html">API</a></th>
+   <th><a href="http://github.com/jmockit/jmockit1">Source</a></th>
+   <th><a href="http://github.com/jmockit/jmockit1/issues">Issues</a></th>
+   <th><a href="community.html">Community</a></th>
+   <th><a href="changes.html">History</a></th>
+</tr></table>
 
 <h2>Features</h2>
 <ul>
@@ -41,19 +41,19 @@
 
 <h2>Example</h2>
 <pre><code>public class ExampleTest {
-   @Tested ServiceAbc tested;
-   @Injectable DependencyXyz mockXyz;
+   @Tested ServiceAbc <b>tested</b>;
+   @Injectable DependencyXyz <b>mockXyz</b>;
 
    @Test
    public void doOperationAbc(@Mocked final AnotherDependency anyInstance) {
       new NonStrictExpectations() {{
-         anyInstance.doSomething(anyString); result = 123;
-         AnotherDependency.someStaticMethod(); result = new IOException();
+         anyInstance.doSomething(<b>anyString</b>); <b>result</b> = 123;
+         AnotherDependency.<em>someStaticMethod</em>(); <b>result</b> = new IOException();
       }};
 
-      tested.doOperationAbc("some data");
+      <b>tested</b>.doOperationAbc("some data");
 
-      new Verifications() {{ mockXyz.complexOperation(true, anyInt, null); times = 1; }};
+      new Verifications() {{ <b>mockXyz</b>.complexOperation(true, <b>anyInt</b>, null); <b>times</b> = 1; }};
    }
 }
 </code></pre>

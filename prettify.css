@@ -58,9 +58,11 @@ img { border: none; }
 }
 
 .navBar {
-   background: #bee916; color: black; padding: 0.5em; border-radius: 0.2em;
+   background: #bee916; color: black;
+   padding: 3px; margin-top: 3px;
+   border-radius: 0.2em; width: 100%;
 }
-.navBar li { list-style: none; display: inline; margin-right: 1em; }
+.navBar th { font-weight: normal; }
 .navBar a { color: black; }
 
 .navigation { display: inline; float: right; }
@@ -90,36 +92,30 @@ img { border: none; }
 }
 
 pre code {
-  display: block;
-  color: #000;
+   display: block;
+   color: black;
 }
 
-pre .class .title {
-  color: #606;
-}
-
-pre .comment, pre .javadoc {
-  color: #800;
-}
-
+pre .class .title { color: #660066; }
+pre .comment, pre .javadoc { color: #800; }
 code.annotation { color: #a0a000; }
 pre .annotation { color: #707000; }
 
 pre .tag .title, pre .keyword {
-  font-weight: bold;
-  color: #000080;
+   font-weight: bold;
+   color: #000080;
 }
 
 pre .attribute {
-  font-weight: bold;
-  color: #0000ff;
+   font-weight: bold;
+   color: #0000ff;
 }
 
-pre .number {
-  color: #0000ff;
-}
+pre .number { color: #0000ff; }
 
 pre .string, pre .value {
-  font-weight: bold;
-  color: #008000;
+   font-weight: bold;
+   color: #008000;
 }
+
+pre b { color: #660E7A; }

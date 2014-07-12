@@ -19,17 +19,17 @@
    <a href="index.html">JMockit</a>
    <span>The Mock <span>Anything</span> Toolkit for Java</span>
 </h1>
-<ul class="navBar">
-   <li><a href="gettingStarted.html">Getting&nbsp;started</a></li>
-   <li><a href="about.html">About</a></li>
-   <li><a href="tutorial.html">Tutorial</a></li>
-   <li><a href="samples.html">Samples</a></li>
-   <li><a href="../artifacts1x/javadoc/index.html">API</a></li>
-   <li><a href="http://github.com/jmockit/jmockit1">Source</a></li>
-   <li><a href="http://github.com/jmockit/jmockit1/issues">Issues</a></li>
-   <li><a href="community.html">Community</a></li>
-   <li><a href="changes.html">History</a></li>
-</ul>
+<table class="navBar"><tr>
+   <th><a href="gettingStarted.html">Getting&nbsp;started</a></th>
+   <th><a href="about.html">About</a></th>
+   <th><a href="tutorial.html">Tutorial</a></th>
+   <th><a href="samples.html">Samples</a></th>
+   <th><a href="api1x/index.html">API</a></th>
+   <th><a href="http://github.com/jmockit/jmockit1">Source</a></th>
+   <th><a href="http://github.com/jmockit/jmockit1/issues">Issues</a></th>
+   <th><a href="community.html">Community</a></th>
+   <th><a href="changes.html">History</a></th>
+</tr></table>
 
 <h1>Getting started with the JMockit toolkit</h1>
 
@@ -38,7 +38,7 @@
    configuration files), and also as a set of Maven artifacts deployed to the
    <a href="http://repo.maven.apache.org/maven2/org/jmockit/">Maven Central</a> repository.
    The mocking APIs and other tools are documented through a <a href="tutorial.html">tutorial</a>,
-   <a href="../artifacts1x/javadoc/overview-summary.html">API documentation</a>, and several
+   <a href="api1x/overview-summary.html">API documentation</a>, and several
    <a href="samples.html">sample test suites</a>.
 </p>
 
@@ -50,7 +50,7 @@
    <li>
       Download the full distribution for the
       <a href="http://github.com/jmockit/artifacts1x/jmockit-1.9.zip">current release</a>.
-      Alternatively, you can <a href="http://github.com/jmockit/jmockit1">clone the repository</a> in GitHub.
+      Alternatively, you can <a href="http://github.com/jmockit/jmockit1">clone the GitHub repository</a>.
    </li>
    <li>
       Unpack the zip file to any directory.
@@ -85,8 +85,8 @@
    <li>
       Optionally, configure your IDE to find API source code and Javadoc comments in this same <code>jmockit.jar</code>
       file.
-      <a href="http://github.com/jmockit/artifacts1x/javadoc/overview-summary.html">API documentation</a> in HTML
-      is also available in the "<code>jmockit/www/javadoc</code>" directory, as well as on-line.
+      <a href="api1x/overview-summary.html">API documentation</a> is also available in the
+      "<code>jmockit/www/javadoc</code>" directory, as well as online.
    </li>
 </ol>
 <p>
@@ -117,8 +117,11 @@ public class MyFirstJMockitTest
 {
    // <strong>Mocked instances</strong> (rather than conventional "mock objects") will be
    // automatically created and assigned to annotated mock fields:
-   @Mocked Collaborator mock1; // <strong>all</strong> current <strong>and future</strong> instances are mocked
-   @Injectable AnotherDependency anotherMock; // only <strong>one</strong> particular instance is mocked
+   @Mocked
+   Collaborator <b>mock1</b>; // <strong>all</strong> current <strong>and future</strong> instances are mocked
+
+   @Injectable
+   AnotherDependency <b>anotherMock</b>; // only <strong>one</strong> particular instance is mocked
 
    @Test
    public void myFirstTestMethod()
@@ -155,11 +158,11 @@ public class MyFirstJMockitTest
 <pre><code>@Test
 public void aTestMethod(<em>&lt;any number of mock parameters></em>)
 {
-   // <strong>Record phase</strong>: expectations on mocks are <strong>recorded</strong>; empty if there is nothing to record.
+   // <strong>Record phase</strong>: expectations on mocks are <strong>recorded</strong>; empty if nothing to record.
 
-   // <strong>Replay phase</strong>: invocations on mocks are "<strong>replayed</strong>"; here the code under test is exercised.
+   // <strong>Replay phase</strong>: invocations on mocks are "<strong>replayed</strong>"; code under test is exercised.
 
-   // <strong>Verify phase</strong>: expectations on mocks are <strong>verified</strong>; empty if there is nothing to verify.
+   // <strong>Verify phase</strong>: expectations on mocks are <strong>verified</strong>; empty if nothing to verify.
 }
 </code></pre>
 <p>
@@ -184,19 +187,19 @@ public void aTestMethod(<em>&lt;any number of mock parameters></em>)
 </p>
 <p>
 <pre><code>@Test
-public void aTestMethod(@Mocked final MyCollaborator mock)
+public void aTestMethod(@Mocked final MyCollaborator anyCollaborator)
 {
    new <strong>NonStrictExpectations</strong>() {{
-      mock.getData(); <em>result</em> = "my test data";
-      mock.doSomething(<em>anyInt</em>, "some expected value", <em>anyString</em>); <em>times</em> = 1;
+      anyCollaborator.getData(); <b>result</b> = "my test data";
+      anyCollaborator.doSomething(<b>anyInt</b>, "some expected value", <b>anyString</b>); <b>times</b> = 1;
    }};
 
    // In the replay phase, the tested method would call the "getData" and "doSomething"
    // methods on a "MyCollaborator" instance.
    ...
 
-   // In the verify phase, we may optionally verify expected invocations to "MyCollaborator"
-   // objects.
+   // In the verify phase, we may optionally verify expected invocations to
+   // "MyCollaborator" objects.
    ...
 }
 </code></pre>
@@ -214,10 +217,11 @@ public void aTestMethod(@Mocked final MyCollaborator mock)
    You may be wondering what are those field assignments in the example test above.
    This is indeed something that you won't see in any other mocking API. That said, it should feel very intuitive once
    the semantics are known:
-   the <em><code>result</code></em> field takes the desired return value for the preceding invocation, while
-   <em><code>times</code></em> takes the number of times the preceding invocation is allowed and expected to occur.
-   (There is also a <em><code>minTimes</code></em> and a <em><code>maxTimes</code></em> field.)
-   The <em><code>result</code></em> field also accepts a <code class="type">Throwable</code> instance, which would cause
+   the <strong><code>result</code></strong> field takes the desired return value for the preceding invocation, while
+   <strong><code>times</code></strong> takes the number of times the preceding invocation is allowed and expected to
+   occur.
+   (There is also a <code>minTimes</code> and a <code>maxTimes</code> field.)
+   The <code>result</code> field also accepts a <code class="type">Throwable</code> instance, which would cause
    the corresponding invocation in the replay phase to throw the specified exception or error.
 </p>
 <p>
@@ -254,13 +258,14 @@ public void aTestMethod(@Injectable final MyCollaborator mock)
    new <strong>Verifications</strong>() {{
       // If no new instance of the mocked class should have been created with the
       // no-args constructor, we can verify it:
-      new MyCollaborator(); <em>times</em> = 0;
+      new MyCollaborator(); <b>times</b> = 0;
 
-      // Here we verify that the "MyCollaborator#doSomething()" method was executed at least once:
+      // Here we verify the "MyCollaborator#doSomething()" method was executed
+      // at least once:
       mock.doSomething();
 
       // Another verification, which must have occurred no more than three times:
-      mock.someOtherMethod(<em>anyBoolean</em>, <em>any</em>, withInstanceOf(Xyz.class)); <em>maxTimes</em> = 3;
+      mock.someOtherMethod(<b>anyBoolean</b>, <b>any</b>, withInstanceOf(Xyz.class)); <b>maxTimes</b> = 3;
    }};
 }
 </code></pre>
@@ -287,7 +292,7 @@ public void aTestMethod(@Injectable final MyCollaborator mock)
 <pre><code>@Test
 public void stateBasedTestMethod()
 {
-   new MockUp&lt;MyCollaborator>() {
+   new <strong>MockUp</strong>&lt;MyCollaborator>() {
       @Mock(invocations = 1) // (the invocation count constraint is optional)
       boolean doSomething(int n, String s, ComplexData otherData)
       {
@@ -302,14 +307,15 @@ public void stateBasedTestMethod()
       // Other mock or regular methods...
    };
 
-   // Exercise the code under test normally; calls to MyCollaborator#doSomething will execute
-   // the mock method above; if more or less than one such invocation occurs, the test fails.
+   // Exercise code under test normally; calls to MyCollaborator#doSomething will
+   // execute the mock method above; also, due to the invocation count constraint,
+   // if more or less than one such invocation occurs, the test will fail.
    ...
 }
 </code></pre>
 <p>
    The <code class="annotation">@Mock</code> annotation marks those methods in the <em>mock-up class</em> which are
-   meant to provide mock/stub implementations for the corresponding methods (of the same signature) in the mocked class.
+   meant to provide mock implementations for the corresponding methods (of the same signature) in the mocked class.
    If no invocation count constraint is specified through attributes of the <code class="annotation">@Mock</code>
    annotation, then any number (including zero) of invocations will be allowed.
 </p>
@@ -320,14 +326,19 @@ public void stateBasedTestMethod()
    Such implementations can even be applied globally, by setting the "<code>jmockit-mocks</code>" system property or
    providing a "<code>jmockit.properties</code>" configuration file.
 </p>
+<p>
+   Mock-up classes providing partial fake implementations can be very useful in integration testing.
+   They can be used in a supporting role when creating an integration testing infrastructure for complex application
+   frameworks such as Spring, Hibernate, or Java EE.
+</p>
 
 <h3 id="moreInfo">More information</h3>
 <p>
    The examples above give only a brief overview of the available mocking APIs. There is more.
    The <a href="tutorial.html">JMockit Tutorial</a> contains an extensive discussion of nearly all methods, fields,
    annotations, etc., with many examples.
-   The <a href="../artifacts1x/javadoc/overview-summary.html">API documentation</a> provides a detailed specification
-   for all elements of the mocking APIs.
+   The <a href="api1x/index.html">API documentation</a> provides a detailed specification for all elements of the
+   mocking APIs.
    Finally, there are hundreds of JUnit <a href="samples.html">sample tests</a> available under the
    "<code>jmockit/samples</code>" folder, which use nearly everything that is available in the APIs.
 </p>
