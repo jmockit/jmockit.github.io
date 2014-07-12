@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<title>Tested (JMockit Toolkit API)</title>
+<link rel="stylesheet" type="text/css" href="../stylesheet.css" title="Style">
+<link rel="shortcut icon" type="image/x-icon" href="../resources/favicon.ico">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Tested (JMockit Toolkit API)";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+</ul>
+<div class="aboutLanguage"><em><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></em></div>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../mockit/NonStrictExpectations.html" title="class in mockit"><span class="strong">Prev Class</span></a></li>
+<li><a href="../mockit/Verifications.html" title="class in mockit"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../index.html?mockit/Tested.html" target="_top">Frames</a></li>
+<li><a href="Tested.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Required&nbsp;|&nbsp;</li>
+<li>Optional</li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Element</li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">mockit</div>
+<h2 title="Annotation Type Tested" class="title">Annotation Type Tested</h2>
+</div>
+<div class="contentContainer">
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<hr>
+<br>
+<pre><a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html?is-external=true#value()" title="class or interface in java.lang.annotation">value</a>=<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
+<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Target.html?is-external=true#value()" title="class or interface in java.lang.annotation">value</a>=<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#FIELD" title="class or interface in java.lang.annotation">FIELD</a>)
+public @interface <span class="strong">Tested</span></pre>
+<div class="block">Indicates a class to be tested in isolation from selected dependencies, with optional automatic instantiation and/or
+ automatic injection of dependencies.
+ This annotation is only applicable to instance fields of a test class.
+ <p/>
+ If the tested field is not <code>final</code> and its value remains <code>null</code> at the time a test method is about to be
+ executed, then a suitable instance of the tested class is created and assigned to the field.
+ At this time, <em>constructor injection</em> will take place, provided all of the constructor parameters (if any) can
+ be satisfied with the values of available <a href="../mockit/Injectable.html" title="annotation in mockit">injectable</a> fields and/or injectable test method
+ parameters.
+ If the tested class has a constructor annotated with the standard Java EE annotation "<code>@Inject</code>", then it
+ is the one to be used;
+ otherwise, if there are multiple satisfiable constructors then the one with the most parameters <em>and</em> the
+ widest accessibility (ie, first <code>public</code>, then <code>protected</code>, then <em>package-private</em>, and finally
+ <code>private</code>) is chosen.
+ The matching between <em>injectable</em> fields/parameters and <em>constructor</em> parameters is done by
+ <em>type</em> when there is only one parameter of a given type; otherwise, by type <em>and name</em>.
+ <p/>
+ Whenever the tested object is created automatically, <em>field injection</em> is also performed.
+ Only non-<code>final</code> instance fields are considered, between those declared in the tested class itself or in
+ one of its super-classes; at this time constructor injection already occurred, so only fields annotated with
+ <code>@Inject</code> or which remain uninitialized are targeted.
+ For each such <em>target</em> field, the value of an still unused <a href="../mockit/Injectable.html" title="annotation in mockit">injectable</a> field or test
+ method parameter of the <em>same</em> type is assigned.
+ Multiple target fields of the same type can be injected from separate injectables, provided each target field has the
+ same name as an available injectable field/parameter of that type.
+ Finally, if there is no matching and available injectable value for a given target field, it is left unassigned.
+ <p/>
+ Whenever constructor or field injection is used, the value of each injectable mock field/parameter goes into
+ <em>at most one</em> matching constructor parameter or instance field of a tested class.
+ <p/>
+ The tested class can be <code>abstract</code>.
+ In this case, if the tested field is left null then a subclass implementing all abstract methods is automatically
+ generated and instantiated.
+ The abstract method implementations are automatically <em>mocked</em> so that expectations can be recorded or
+ verified on them.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#tested">Tutorial</a></dd></dl>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+</ul>
+<div class="aboutLanguage"><em><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></em></div>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../mockit/NonStrictExpectations.html" title="class in mockit"><span class="strong">Prev Class</span></a></li>
+<li><a href="../mockit/Verifications.html" title="class in mockit"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../index.html?mockit/Tested.html" target="_top">Frames</a></li>
+<li><a href="Tested.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Required&nbsp;|&nbsp;</li>
+<li>Optional</li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Element</li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+</body>
+</html>

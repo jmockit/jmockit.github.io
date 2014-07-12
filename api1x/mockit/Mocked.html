@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<title>Mocked (JMockit Toolkit API)</title>
+<link rel="stylesheet" type="text/css" href="../stylesheet.css" title="Style">
+<link rel="shortcut icon" type="image/x-icon" href="../resources/favicon.ico">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Mocked (JMockit Toolkit API)";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+</ul>
+<div class="aboutLanguage"><em><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></em></div>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../mockit/Mock.html" title="annotation in mockit"><span class="strong">Prev Class</span></a></li>
+<li><a href="../mockit/MockUp.html" title="class in mockit"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../index.html?mockit/Mocked.html" target="_top">Frames</a></li>
+<li><a href="Mocked.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Required&nbsp;|&nbsp;</li>
+<li><a href="#annotation_type_optional_element_summary">Optional</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#annotation_type_element_detail">Element</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">mockit</div>
+<h2 title="Annotation Type Mocked" class="title">Annotation Type Mocked</h2>
+</div>
+<div class="contentContainer">
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<hr>
+<br>
+<pre><a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html?is-external=true#value()" title="class or interface in java.lang.annotation">value</a>=<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
+<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Target.html?is-external=true#value()" title="class or interface in java.lang.annotation">value</a>={<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#FIELD" title="class or interface in java.lang.annotation">FIELD</a>,<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#PARAMETER" title="class or interface in java.lang.annotation">PARAMETER</a>})
+public @interface <span class="strong">Mocked</span></pre>
+<div class="block">Indicates an instance field of a test class as being a <em>mock field</em>, or a parameter of a test method as a
+ <em>mock parameter</em>; in either case, the declared type of the field/parameter is a <em>mocked type</em>, whose
+ instances are <em>mocked instances</em>.
+ <p/>
+ Any type can be mocked, except for primitive and array types.
+ A mocked instance of that type is automatically created and assigned to the mock field/parameter, for use when
+ <a href="../mockit/NonStrictExpectations.html" title="class in mockit">recording</a> or <a href="../mockit/Verifications.html" title="class in mockit">verifying</a> expectations.
+ <p/>
+ The effect of declaring a <code>@Mocked</code> type, by default, is that all new instances of that type, as well as those
+ previously created, will also be mocked instances; this will last for the duration of each test where the associated
+ mock field/parameter is in scope.
+ Also, all methods of the mocked type will be mocked, unless a subset is <a href="../mockit/Mocked.html#value()">explicitly specified</a>.
+ <p/>
+ When the mocked type is a class, all super-classes up to but not including <code>java.lang.Object</code> are also mocked.
+ Additionally, <em>static methods</em> and <em>constructors</em> are mocked as well, just like instance methods.
+ <p/>
+ When mocking an <code>enum</code> type, the <code>java.lang.Enum</code> base class is <em>not</em> mocked by default.
+ If needed, however, base types like <code>Object</code> and <code>Enum</code> can be mocked by explicitly declaring a mock
+ field or mock parameter of the specific base type.
+ <p/>
+ While a method or constructor is mocked, an invocation does not result in the execution of the original code, but in
+ a (generated) call into JMockit, which then responds with either a default or a <em>recorded</em> result (or with a
+ constraint violation, if the invocation is deemed to be unexpected - which depends on a few factors discussed
+ elsewhere).
+ <p/>
+ Static <em>class initializers</em> (including assignments to <code>static</code> fields) of a mocked class are not
+ affected, unless <a href="../mockit/Mocked.html#stubOutClassInitialization()">specified otherwise</a>.
+ <p/>
+ Normally, a new mocked instance gets created and assigned to a declared mock field/parameter automatically.
+ An exception to that occurs in the case of a mocked <code>enum</code> type, where the first enumeration element is used.
+ Alternatively, and only in the case of a mock <em>field</em>, the test itself can provide the instance by declaring
+ the field as <code>final</code> and explicitly assigning it with the desired instance (which will still be a mocked
+ instance); if no instance is necessary (perhaps because only static methods or constructors will be called), then
+ this final field can receive the <code>null</code> reference.
+ Mock parameters, on the other hand, will always receive a new mocked instance whenever the test method is executed by
+ the test runner.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../mockit/Mocked.html#value()"><code>value()</code></a>, 
+<a href="../mockit/Mocked.html#stubOutClassInitialization()"><code>stubOutClassInitialization()</code></a>, 
+<a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#declaration">Tutorial</a></dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- =========== ANNOTATION TYPE OPTIONAL MEMBER SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="annotation_type_optional_element_summary">
+<!--   -->
+</a>
+<h3>Optional Element Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Optional Element Summary table, listing optional elements, and an explanation">
+<caption><span>Optional Elements</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Optional Element and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../mockit/Mocked.html#stubOutClassInitialization()">stubOutClassInitialization</a></strong></code>
+<div class="block">Indicates whether <em>static initialization code</em> in the mocked class should be stubbed out or not.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
+<td class="colLast"><code><strong><a href="../mockit/Mocked.html#value()">value</a></strong></code>
+<div class="block">One or more <em>mock filters</em>.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ============ ANNOTATION TYPE MEMBER DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="annotation_type_element_detail">
+<!--   -->
+</a>
+<h3>Element Detail</h3>
+<a name="value()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>value</h4>
+<pre>public abstract&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value</pre>
+<div class="block">One or more <em>mock filters</em>.
+ Given a target class for mocking, only those methods and constructors which match at least one filter will be
+ mocked.
+ <p/>
+ Each mock filter must follow the syntax <strong><code>[nameRegex][(paramTypeName...)]</code></strong>, where
+ <code>nameRegex</code> is a <a href="http://download.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex">regular expression</a> for matching method names, and
+ <code>paramTypeName</code> is the name of a primitive or reference parameter type (actually, any suffix of the type
+ name is enough, like "String" instead of the full class name "java.lang.String").
+ If <code>nameRegex</code> is omitted the filter matches only constructors.
+ If <code>(paramTypeName...)</code> is omitted the filter matches methods with any parameters.
+ <p/>
+ If no filters are specified, then all methods and constructors declared in the target class are mocked.
+ <p/>
+ A filter containing just the empty string matches <em>no</em> methods or constructors of the target class;
+ this can be used to obtain a mocked instance where no executable code is actually mocked.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../mockit/Mocked.html#stubOutClassInitialization()"><code>stubOutClassInitialization()</code></a>, 
+<a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/BehaviorBasedTesting.html#staticPartial">Tutorial</a></dd></dl>
+<dl>
+<dt>Default:</dt>
+<dd>{}</dd>
+</dl>
+</li>
+</ul>
+<a name="stubOutClassInitialization()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>stubOutClassInitialization</h4>
+<pre>public abstract&nbsp;boolean&nbsp;stubOutClassInitialization</pre>
+<div class="block">Indicates whether <em>static initialization code</em> in the mocked class should be stubbed out or not.
+ Static initialization includes the execution of assignments to static fields of the class and the execution of
+ static initialization blocks, if any.
+ (Note that <code>static final</code> fields initialized with <em>compile-time</em> constants are not assigned at
+ runtime, remaining unaffected whether the class is stubbed out or not.)
+ <p/>
+ By default, static initialization code in a mocked class is <em>not</em> stubbed out.
+ The JVM will only perform static initialization of a class <em>once</em>, so stubbing out the initialization code
+ can have unexpected consequences.
+ Static initialization will occur the first time the class is instantiated, has a static method called on it, or
+ has a static field whose value is defined at runtime accessed; these are the only events which prompt the JVM to
+ initialize a class.
+ If the original class initialization code was stubbed out, then it will not be there to be executed at the time of
+ static initialization, potentially leaving static fields <code>null</code> and later causing
+ <code>NullPointerException</code>'s to occur.</div>
+<dl>
+<dt>Default:</dt>
+<dd>false</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+</ul>
+<div class="aboutLanguage"><em><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></em></div>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../mockit/Mock.html" title="annotation in mockit"><span class="strong">Prev Class</span></a></li>
+<li><a href="../mockit/MockUp.html" title="class in mockit"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../index.html?mockit/Mocked.html" target="_top">Frames</a></li>
+<li><a href="Mocked.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Required&nbsp;|&nbsp;</li>
+<li><a href="#annotation_type_optional_element_summary">Optional</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#annotation_type_element_detail">Element</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+</body>
+</html>
