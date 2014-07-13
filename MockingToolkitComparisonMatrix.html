@@ -22,15 +22,8 @@
    <span>The Mock <span>Anything</span> Toolkit for Java</span>
 </h1>
 
-<p>
-   This feature matrix attempts to objectively compare the feature sets of the main Java mocking libraries.
-   Every feature under consideration should make a noticeable difference for developers when using the mocking API,
-   either by <em>enabling</em> the creation of a test or by making it <em>simple</em>.
-   Features that all mocking tools support without a significant difference, such as the creation of mocks for
-   interfaces, are not included in the comparison.
-</p>
-
 <table cellspacing="0">
+<caption>Features</caption>
 <colgroup>
    <col width="30%">
    <col width="9%">
@@ -74,6 +67,114 @@
    </tr>
    <tr>
       <td class="feature">
+         <a href="#Easier_argument_matching_based_on_properties_of_value_objects">
+            Easier argument matching based on properties of value objects
+         </a>
+      </td>
+      <td>√</td> <td></td> <td>√</td> <td>√</td> <td>√</td> <td>√</td> <td>√</td>
+   </tr>
+   <tr>
+      <td class="feature">
+         <a href="tutorial/BehaviorBasedTesting.html#cascading">Cascading mocks</a>
+      </td>
+      <td></td> <td></td> <td>√</td> <td>√</td> <td></td> <td>√</td> <td>√</td>
+   </tr>
+   <tr>
+      <td class="feature">
+         <a href="tutorial/BehaviorBasedTesting.html#multipleInterfaces">Mocking of multiple interfaces</a>
+      </td>
+      <td></td> <td></td> <td>√</td> <td></td> <td></td> <td>√</td> <td>√</td>
+   </tr>
+   <tr>
+      <td class="feature">
+         <a href="http://github.com/jmockit/jmockit1/blob/master/main/test/mockit/MockedAnnotationsTest.java">
+            Mocking of annotation types
+         </a>
+      </td>
+      <td></td> <td>√</td> <td>√</td> <td>√</td> <td></td> <td>√</td> <td>√</td>
+   </tr>
+   <tr>
+      <td class="feature">
+         <a href="tutorial/BehaviorBasedTesting.html#partiallyOrdered">Partially ordered expectations</a>
+      </td>
+      <td></td> <td>√</td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
+   </tr>
+   <tr>
+      <td class="feature">
+         <a href="tutorial/BehaviorBasedTesting.html#tested">Auto-injection of mocks</a>
+      </td>
+      <td></td> <td></td> <td>√</td> <td>√</td> <td></td> <td>√</td> <td>√</td>
+   </tr>
+   <tr>
+      <td class="feature">
+         <a href="http://github.com/jmockit/jmockit1/blob/master/main/test/mockit/MockedEnumsTest.java">
+            Mocking of enums
+         </a>
+      </td>
+      <td></td> <td></td> <td></td> <td></td> <td>√</td> <td>√</td> <td>√</td>
+   </tr>
+   <tr>
+      <td class="feature">
+         <a href="tutorial/BehaviorBasedTesting.html#declaration">Declarative mocks for test methods (mock
+             parameters)</a>
+      </td>
+      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
+   </tr>
+   <tr>
+      <td class="feature">
+         <a href="tutorial/BehaviorBasedTesting.html#capturing">Mocking of unspecified implementation classes</a>
+      </td>
+      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
+   </tr>
+   <tr>
+      <td class="feature">
+         <a href="tutorial/StateBasedTesting.html">"Duck typing" mocks for state-based & integration tests</a>
+      </td>
+      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
+   </tr>
+</tbody>
+<tfoot>
+   <tr class="totals">
+      <td class="feature">Total</td>
+      <td>4/14</td> <td>4/14</td> <td>8/14</td> <td>6/14</td> <td>5/14</td> <td>9/14</td> <td>14/14</td>
+   </tr>
+</tfoot>
+</table>
+<br>
+<table cellspacing="0">
+<caption>Qualities</caption>
+<colgroup>
+   <col width="30%">
+   <col width="9%">
+   <col width="9%">
+   <col width="9%">
+   <col width="9%">
+   <col width="13%">
+   <col width="12%">
+   <col width="9%">
+</colgroup>
+<thead>
+   <tr>
+      <th class="feature">Quality</th>
+      <th><a href="http://easymock.org">EasyMock</a></th>
+      <th><a href="http://jmock.org">jMock</a></th>
+      <th><a href="http://mockito.org">Mockito</a></th>
+      <th><a href="http://www.unitils.org/summary.html">Unitils Mock</a></th>
+      <th><a href="http://code.google.com/p/powermock">PowerMock<br>(EasyMock)</a></th>
+      <th><a href="http://code.google.com/p/powermock">PowerMock<br>(Mockito)</a></th>
+      <th><a href="http://jmockit.org">JMockit</a></th>
+   </tr>
+</thead>
+<tbody>
+   <tr>
+      <td class="feature">
+         <a href="tutorial/BehaviorBasedTesting.html#argumentMatching">Argument matchers</a>
+         for some parameters only, not all
+      </td>
+      <td></td> <td></td> <td></td> <td>√</td> <td></td> <td></td> <td>√</td>
+   </tr>
+   <tr>
+      <td class="feature">
          <a href="#No_method_call_to_switch_from_record_to_replay">No method call to switch from record to replay</a>
       </td>
       <td></td> <td></td> <td>√</td> <td>√</td> <td></td> <td>√</td> <td>√</td>
@@ -97,61 +198,8 @@
       <td></td> <td>√</td> <td></td> <td>√</td> <td></td> <td></td> <td>√</td>
    </tr>
    <tr>
-      <td class="feature">
-         <a href="tutorial/BehaviorBasedTesting.html#argumentMatching">Argument matchers</a>
-         for some parameters only, not all
-      </td>
-      <td></td> <td></td> <td></td> <td>√</td> <td></td> <td></td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="#Easier_argument_matching_based_on_properties_of_value_objects">
-            Easier argument matching based on properties of value objects
-         </a>
-      </td>
-      <td>√</td> <td></td> <td>√</td> <td>√</td> <td>√</td> <td>√</td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="http://jmockit.googlecode.com/svn/trunk/www/javadoc/mockit/Cascading.html">Cascading mocks</a>
-      </td>
-      <td></td> <td></td> <td>√</td> <td>√</td> <td></td> <td>√</td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="tutorial/BehaviorBasedTesting.html#multipleInterfaces">Support for mocking multiple interfaces</a>
-      </td>
-      <td></td> <td></td> <td>√</td> <td></td> <td></td> <td>√</td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="http://code.google.com/p/jmockit/source/browse/trunk/main/test/mockit/MockedAnnotationsTest.java">
-            Support for mocking annotation types
-         </a>
-      </td>
-      <td></td> <td>√</td> <td>√</td> <td>√</td> <td></td> <td>√</td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="tutorial/BehaviorBasedTesting.html#partiallyOrdered">Partially ordered expectations</a>
-      </td>
-      <td></td> <td>√</td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">Mocking of constructors and final/static/native/private methods</td>
+      <td class="feature">Mocking of constructors and final/static/private methods</td>
       <td></td> <td></td> <td></td> <td></td> <td>√</td> <td>√</td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="tutorial/UsingMocksAndStubs.html">Declarative application of mocks/stubs to whole test classes</a>
-      </td>
-      <td></td> <td></td> <td></td> <td></td> <td>√</td> <td>√</td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="http://jmockit.googlecode.com/svn/trunk/www/javadoc/mockit/Tested.html">Auto-injection of mocks</a>
-      </td>
-      <td></td> <td></td> <td>√</td> <td>√</td> <td></td> <td>√</td> <td>√</td>
    </tr>
    <tr>
       <td class="feature">Mocking of "new-ed" objects</td>
@@ -159,79 +207,9 @@
    </tr>
    <tr>
       <td class="feature">
-         <a href="http://code.google.com/p/jmockit/source/browse/trunk/main/test/mockit/MockedEnumsTest.java">
-            Support for mocking enum types
-         </a>
-      </td>
-      <td></td> <td></td> <td></td> <td></td> <td>√</td> <td>√</td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">Declarative mocks for the test class (mock fields)</td>
-      <td></td> <td></td> <td>√</td> <td>√</td> <td>√</td> <td>√</td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="tutorial/BehaviorBasedTesting.html#declaration">
-            Declarative mocks for test methods (mock parameters)
-         </a>
-      </td>
-      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="tutorial/BehaviorBasedTesting.html#matcherFields">Special fields for "any" argument matching</a>
-      </td>
-      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="http://jmockit.googlecode.com/svn/trunk/www/javadoc/mockit/Expectations.html#result">
-            Use of an special field to specify invocation results
-         </a>
-      </td>
-      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="http://jmockit.googlecode.com/svn/trunk/www/javadoc/mockit/Expectations.html#times">
-            Use of special fields to specify invocation count constraints
-         </a>
-      </td>
-      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="http://jmockit.googlecode.com/svn/trunk/www/javadoc/mockit/Expectations.html#$">
-            Expectations with custom error messages
-         </a>
-      </td>
-      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="tutorial/BehaviorBasedTesting.html#capturing">
-            On-demand mocking of unspecified implementation classes
-         </a>
-      </td>
-      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="tutorial/BehaviorBasedTesting.html#iterations">Recording & verification of expectations in loops</a>
-      </td>
-      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="http://code.google.com/p/jmockit/source/browse/trunk/main/test/mockit/CovariantReturnTypesTest.java">
+         <a href="http://github.com/jmockit/jmockit1/blob/master/main/test/mockit/CovariantReturnTypesTest.java">
             Support for covariant return types
          </a>
-      </td>
-      <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
-   </tr>
-   <tr>
-      <td class="feature">
-         <a href="tutorial/StateBasedTesting.html">"Duck typing" mocks for state-based tests</a>
       </td>
       <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
    </tr>
@@ -243,11 +221,7 @@
 <tfoot>
    <tr class="totals">
       <td class="feature">Total</td>
-      <td>6/31</td> <td>7/31</td> <td>13/30</td> <td>11/30</td> <td>9/30</td> <td>14/29</td> <td>32/31</td>
-   </tr>
-   <tr>
-      <td class="feature">Total when ignoring JMockit-only features</td>
-      <td>6/22</td> <td>7/22</td> <td>13/21</td> <td>11/21</td> <td>9/21</td> <td>14/20</td> <td>22/22</td>
+      <td>2/10</td> <td>3/10</td> <td>4/9</td> <td>4/9</td> <td>2/9</td> <td>3/8</td> <td>10/10</td>
    </tr>
 </tfoot>
 </table>
