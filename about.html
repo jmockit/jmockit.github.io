@@ -34,20 +34,38 @@
 <p>
    JMockit is open source software licensed under the
    <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.
-   It is a collection of tools and APIs for use in <em>developer testing</em>, that is, tests written by developers
+   It includes mocking APIs and other tools for use in <em>developer testing</em>, that is, tests written by developers
    using a testing framework such as <a href="http://junit.org">JUnit</a> or <a href="http://testng.org">TestNG</a>.
-   The tools rely on the Java 6 SE instrumentation feature (the
-   <a href="http://download.oracle.com/javase/6/docs/api/java/lang/instrument/package-summary.html"
-      >java.lang.instrument</a> package), internally using the <a href="http://asm.objectweb.org">ASM</a> library to
-   modify bytecode at runtime.
 </p>
 <p>
-   This toolkit was created mainly as an attempt to overcome certain limitations found in "conventional"
+   The toolkit was created mainly as an attempt to overcome certain limitations found in "conventional"
    <a href="http://www.martinfowler.com/articles/mocksArentStubs.html">mocking</a> tools, which prevented the creation
    of unit tests for code designed according to well-established OO practices.
    Another goal was to provide simpler and more succinct APIs for writing developer tests.
    In addition, and differently from other testing tools which specifically target the use of mocks, JMockit also
    includes other tools designed to support the creation of large test suites.
+</p>
+
+<h2 id="internalWorkings">How it works</h2>
+<p>
+   Internally, the Java SE 6 bytecode instrumentation feature (the
+   <a href="http://download.oracle.com/javase/6/docs/api/java/lang/instrument/package-summary.html"
+      >java.lang.instrument</a> package) is used extensively.
+   For the reading and in-memory generation of modified bytecode arrays, the <a href="http://asm.objectweb.org">ASM</a>
+   library is used.
+</p>
+<p>
+   Mocking features mostly use the JVM's ability to <em>redefine</em> classes that have already been loaded, as exposed
+   through the <code>java.lang.instrument.Instrumentation#redefineClasses(ClassDefinition...)</code> method.
+   This method uses the same mechanism behind the "hotswap" feature commonly used while debugging Java code, which
+   allows a new version of a class to take the place of its current version in a running JVM.
+</p>
+<p>
+   Whenever a class to be mocked is found in the course of a test run, it has its current bytecode definition
+   temporarily modified, so that the regular behavior of methods and constructors can be replaced by mock behavior, as
+   specified in the test.
+   As soon as the test is completed, the class has its bytecode restored, and its original behavior is resumed.
+   This process repeats itself for the next test, whenever needed as specified in test code through the mocking API.
 </p>
 
 <h2 id="conventionalTools">Conventional tools for mock objects</h2>
