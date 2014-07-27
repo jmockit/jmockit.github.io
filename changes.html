@@ -18,7 +18,7 @@
 
 <h1>Development history</h1>
 
-<h2>Next release</h2>
+<h2>Current release</h2>
 
 <p>Version <a href="https://github.com/jmockit/jmockit1/commits/master">1.10</a> (Jul 27, 2014):</p>
 <ul>
@@ -33,9 +33,33 @@
       <strong>Removed</strong> the methods <code>Invocation#setMinInvocations(int)</code> and
       <code>Invocation#setMaxInvocations(int)</code>, which were deprecated in release 1.9.
    </li>
+   <li>
+      <strong>Enhancement</strong>: Added <code>MockUp(Object)</code> constructor and improved
+      <code>MockUp#getMockInstance()</code> method to support mock-up behavior for exclusive instances of mocked
+      classes.
+      See API documentation for details.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Added a "<code>fullyInitialized</code>" attribute to the
+      <code class="annotation">@Tested</code> annotation, to recursively instantiate and inject all fields from the
+      root tested object down to its deepest dependencies.
+      Types with no <code class="annotation">@Injectable</code> instances declared in the test class are resolved to
+      their real, unmocked, implementations.
+      This new ability is intended for <em>integration</em> tests, rather than unit tests.
+   </li>
+   <li>
+      Issues fixed:
+      <a href="https://github.com/jmockit/jmockit1/issues/1">#1</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/2">#2</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/3">#3</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/5">#5</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/6">#6</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/7">#7</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/19">#19</a>.
+   </li>
 </ul>
 
-<h2>Current release</h2>
+<h2>Previous releases</h2>
 
 <p>Version <a href="http://code.google.com/p/jmockit/source/list?num=99&start=2808">1.9</a> (Jun 22, 2014):</p>
 <ul>
@@ -90,8 +114,6 @@
       <a href="http://code.google.com/p/jmockit/issues/detail?id=354">354</a>.
    </li>
 </ul>
-
-<h2>Previous releases</h2>
 
 <p>Version <a href="http://code.google.com/p/jmockit/source/list?num=70&start=2709">1.8</a> (Apr 27, 2014):</p>
 <ul>
