@@ -119,3 +119,18 @@ pre .string, pre .value {
 }
 
 pre b { color: #660E7A; }
+
+@media print {
+   * { background: transparent; color: black !important; text-shadow: none; }
+   pre { border: 1px solid #999; page-break-inside: avoid; }
+   img { max-width: 100% !important; page-break-inside: avoid; }
+   h2, h3 { page-break-after: avoid; }
+   h2[id] { border-top-color: black; }
+   .navBar, .navigation, .contents { display: none; }
+   @page {
+      margin-left: 0.5cm;
+      margin-right: 0.5cm;
+      margin-top: 1.2cm;
+      margin-bottom: 1.2cm;
+   }
+}
