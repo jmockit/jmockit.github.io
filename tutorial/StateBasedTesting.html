@@ -343,7 +343,6 @@ public void mockingAnInterface() throws Exception
 <p>
    The <a href="../api1x/mockit/MockUp.html#getMockInstance()"><code>MockUp#getMockInstance()</code></a> method
    returns a proxy object that implements the desired interface.
-   This method returns <code>null</code> if the mocked type is not an interface.
 </p>
 
 <h2 id="implementationClasses">
@@ -698,10 +697,10 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
 <p>
    In a given test class, we can define instance methods that will run <em>before</em> and <em>after</em> each test
    method (even when the test throws an error or exception).
-   With JUnit 3.8-style tests, these are the <code>setUp()</code> and <code>tearDown()</code> method overrides.
-   In JUnit 4.x we use the <code class="annotation">@Before</code> and <code class="annotation">@After</code>
-   annotations on one or more arbitrary instance methods of the test class. The same applies to the
-   <code class="annotation">@BeforeMethod</code> and <code class="annotation">@AfterMethod</code> annotations of TestNG.
+   With JUnit, we use the <code class="annotation">@Before</code> and <code class="annotation">@After</code>
+   annotations on one or more arbitrary instance methods of the test class.
+   The same applies to the <code class="annotation">@BeforeMethod</code> and
+   <code class="annotation">@AfterMethod</code> annotations when using TestNG.
 </p>
 <p>
    Any mock class that can be applied from inside a test method can also be applied from a "before" method, by
@@ -728,8 +727,7 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
 }
 </code></pre>
 <p>
-   The example above uses JUnit 4, but the equivalent code for TestNG or with JUnit 3.8-style tests would be practically
-   the same.
+   The example above uses JUnit, but the equivalent code for TestNG would be practically the same.
 </p>
 <p>
    It is also valid to extend from base test classes, which may optionally define "before" and/or "after" methods
