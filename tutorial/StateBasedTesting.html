@@ -60,9 +60,9 @@
 </p>
 <div style="text-align: center;" title="Click on types to open API documentation">
    <map name="figure1">
-      <area shape="rect" coords="1,1,131,34" href="../javadoc/mockit/MockUp.html">
-      <area shape="rect" coords="138,1,215,34" href="../javadoc/mockit/Mock.html">
-      <area shape="rect" coords="222,1,342,34" href="../javadoc/mockit/Invocation.html">
+      <area shape="rect" coords="1,1,131,34" href="../api1x/mockit/MockUp.html">
+      <area shape="rect" coords="138,1,215,34" href="../api1x/mockit/Mock.html">
+      <area shape="rect" coords="222,1,342,34" href="../api1x/mockit/Invocation.html">
    </map>
    <img src="StateBasedAPI.png" usemap="#figure1">
 </div>
@@ -341,7 +341,7 @@ public void mockingAnInterface() throws Exception
 }
 </code></pre>
 <p>
-   The <a href="../javadoc/mockit/MockUp.html#getMockInstance()"><code>MockUp#getMockInstance()</code></a> method
+   The <a href="../api1x/mockit/MockUp.html#getMockInstance()"><code>MockUp#getMockInstance()</code></a> method
    returns a proxy object that implements the desired interface.
    This method returns <code>null</code> if the mocked type is not an interface.
 </p>
@@ -594,7 +594,7 @@ public void accessingTheMockedInstanceInMockMethods() throws Exception
    The example test below exercises a <code class="type">LoginContext</code> object created normally (without any
    mocking in effect at creation time), using an unspecified <code>configuration</code>.
    (For the complete version of the test, see the
-   <a href="http://code.google.com/p/jmockit/source/browse/trunk/main/test/mockit/MockAnnotationsTest.java">
+   <a href="http://github.com/jmockit/jmockit1/blob/master/main/test/mockit/MockAnnotationsTest.java">
       <code>mockit.MockAnnotationsTest</code></a> class.)
 </p>
 <pre><code>@Test
@@ -673,7 +673,7 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
 </p>
 <p>
    For more details on all the methods available in the <code class="type">mockit.Invocation</code> class, see its
-   <a href="../javadoc/mockit/Invocation.html">API documentation</a>.
+   <a href="../api1x/mockit/Invocation.html">API documentation</a>.
 </p>
 
 <h2 id="reuse">

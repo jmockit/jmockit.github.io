@@ -18,6 +18,35 @@
 
 <h1>Development history</h1>
 
+<h2>Next release</h2>
+
+<p>Version <a href="https://github.com/jmockit/jmockit1/commits/master">1.11</a> (Aug 24, 2014):</p>
+<ul>
+   <li>
+      Improved support for the IBM "J9" JRE (tested on version 7 of the SDK), to about the same level as the Oracle
+      "HotSpot" JREs.
+      The J9 JRE has a few limitations, however:
+      1) <code>native</code> methods cannot be redefined and therefore are never mocked;
+      2) JMockit initialization without the use of "-javaagent" only works if running in <em>debug</em> mode;
+      3) the <code>java.lang.System</code> class cannot be reliably mocked.
+   </li>
+   <li>
+      Upgraded the ASM library used internally to version 5.0.3.
+   </li>
+   <li>
+      Issues closed:
+      <a href="https://github.com/jmockit/jmockit1/issues/13">#13</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/20">#20</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/21">#21</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/25">#25</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/27">#27</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/28">#28</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/29">#29</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/30">#30</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/31">#31</a>.
+   </li>
+</ul>
+
 <h2>Current release</h2>
 
 <p>Version <a href="https://github.com/jmockit/jmockit1/commits/master">1.10</a> (Jul 27, 2014):</p>
@@ -48,7 +77,7 @@
       This new ability is intended for <em>integration</em> tests, rather than unit tests.
    </li>
    <li>
-      Issues fixed:
+      Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/1">#1</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/2">#2</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/3">#3</a>,

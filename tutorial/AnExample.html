@@ -48,7 +48,7 @@
    In order to unit test the business operation while verifying proper interaction with these collaborators, we will use
    the available mocking APIs.
    Complete source code for a working solution - with all tests - is
-   <a href="http://code.google.com/p/jmockit/source/browse/trunk#trunk/samples/tutorial">available online</a> and under
+   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/tutorial">available online</a> and under
    <code>samples/tutorial</code> in the full distribution zip file.
 </p>
 <pre><code>package jmockit.tutorial.domain;
@@ -201,7 +201,7 @@ public final class MyBusinessService_ExpectationsAPI_Test
    The same holds true for the constructors of a mocked class.
    Class initialization code (in <code>static</code> blocks and/or non-compile time assignments to <code>static</code>
    fields) can be <em>stubbed out</em> when needed, as done above for the
-   <a href="http://code.google.com/p/jmockit/source/browse/trunk/samples/tutorial/src/jmockit/tutorial/persistence/Database.java">
+   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/tutorial/src/jmockit/tutorial/persistence/Database.java">
       <code class="type">Database</code></a> class.
    (This isn't done by default because the JVM can only initialize a class <em>once</em>, potentially resulting in
    <code>static</code> fields left <code>null</code> when the class is initialized while mocked.)
@@ -282,7 +282,7 @@ public final class MyBusinessService_ExpectationsAPI_Test
 <p>
    There is more to the Expectations API, about which you can find in the chapter on
    <a href="BehaviorBasedTesting.html">behavior-based testing</a>, in the
-   <a href="../javadoc/mockit/Expectations.html">API documentation</a>, and also in the many additional sample tests
+   <a href="../api1x/mockit/Expectations.html">API documentation</a>, and also in the many additional sample tests
    inside the full distribution.
 </p>
 
@@ -391,8 +391,8 @@ public final class MyBusinessService_VerificationsAPI_Test
 <p>
    Another advantage of non-strict expectations is that they can be explicitly verified in test code.
    Such verifications are just like the recording of invocations: simply invoke the method or constructor to be
-   verified, but inside a <a href="../javadoc/mockit/Verifications.html"><code class="type">Verifications</code></a>
-   block (or a subclass such as <a href="../javadoc/mockit/VerificationsInOrder.html">
+   verified, but inside a <a href="../api1x/mockit/Verifications.html"><code class="type">Verifications</code></a>
+   block (or a subclass such as <a href="../api1x/mockit/VerificationsInOrder.html">
    <code class="type">VerificationsInOrder</code></a>, which also verifies the relative order of execution).
    Such blocks must always be executed <em>after</em> the code under test was exercised, that is, after the end of the
    replay phase.
@@ -509,7 +509,7 @@ public final class MyBusinessService_MockupsAPI_Test
    <code class="annotation">@Mock</code>.
    They are defined in a <em>mock class</em>, which can either be a separate class (nested or not) or an anonymous inner
    class defined inside a test method; in either case, it must extend the generic
-   <a href="../javadoc/mockit/MockUp.html"><code class="type">MockUp&lt;T></code></a> base class, while providing the
+   <a href="../api1x/mockit/MockUp.html"><code class="type">MockUp&lt;T></code></a> base class, while providing the
    type to be mocked as the "value" for the type parameter <code>T</code>.
 </p>
 <p>
@@ -518,7 +518,7 @@ public final class MyBusinessService_MockupsAPI_Test
    Notice that we also stub out static initializers in the <code class="type">Database</code> class, by defining the
    special mock method "<code>$clinit()</code>".
    This is necessary in this case because the
-   <a href="http://code.google.com/p/jmockit/source/browse/trunk/samples/tutorial/src/jmockit/tutorial/persistence/Database.java">
+   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/tutorial/src/jmockit/tutorial/persistence/Database.java">
       <code class="type">Database</code></a>
    class actually creates a JPA <code class="type">EntityManagerFactory</code> instance during its static
    initialization.

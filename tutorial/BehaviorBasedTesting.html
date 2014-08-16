@@ -114,19 +114,19 @@
 </p>
 <div style="text-align: center;" title="Click on types to open API documentation">
    <map name="figure1">
-      <area shape="rect" coords="38,84,172,117" href="../javadoc/mockit/Expectations.html">
-      <area shape="rect" coords="2,166,208,199" href="../javadoc/mockit/NonStrictExpectations.html">
-      <area shape="rect" coords="453,84,585,117" href="../javadoc/mockit/Verifications.html">
-      <area shape="rect" coords="227,166,421,199" href="../javadoc/mockit/VerificationsInOrder.html">
-      <area shape="rect" coords="440,166,598,199" href="../javadoc/mockit/FullVerifications.html">
-      <area shape="rect" coords="617,166,838,199" href="../javadoc/mockit/FullVerificationsInOrder.html">
-      <area shape="rect" coords="736,2,838,35" href="../javadoc/mockit/Delegate.html">
-      <area shape="rect" coords="719,51,838,84" href="../javadoc/mockit/Invocation.html">
-      <area shape="rect" coords="2,215,90,248" href="../javadoc/mockit/Tested.html">
-      <area shape="rect" coords="108,215,223,248" href="../javadoc/mockit/Injectable.html">
-      <area shape="rect" coords="363,215,457,248" href="../javadoc/mockit/Mocked.html">
-      <area shape="rect" coords="593,215,707,248" href="../javadoc/mockit/Cascading.html">
-      <area shape="rect" coords="726,215,838,248" href="../javadoc/mockit/Capturing.html">
+      <area shape="rect" coords="38,84,172,117" href="../api1x/mockit/Expectations.html">
+      <area shape="rect" coords="2,166,208,199" href="../api1x/mockit/NonStrictExpectations.html">
+      <area shape="rect" coords="453,84,585,117" href="../api1x/mockit/Verifications.html">
+      <area shape="rect" coords="227,166,421,199" href="../api1x/mockit/VerificationsInOrder.html">
+      <area shape="rect" coords="440,166,598,199" href="../api1x/mockit/FullVerifications.html">
+      <area shape="rect" coords="617,166,838,199" href="../api1x/mockit/FullVerificationsInOrder.html">
+      <area shape="rect" coords="736,2,838,35" href="../api1x/mockit/Delegate.html">
+      <area shape="rect" coords="719,51,838,84" href="../api1x/mockit/Invocation.html">
+      <area shape="rect" coords="2,215,90,248" href="../api1x/mockit/Tested.html">
+      <area shape="rect" coords="108,215,223,248" href="../api1x/mockit/Injectable.html">
+      <area shape="rect" coords="363,215,457,248" href="../api1x/mockit/Mocked.html">
+      <area shape="rect" coords="593,215,707,248" href="../api1x/mockit/Cascading.html">
+      <area shape="rect" coords="726,215,838,248" href="../api1x/mockit/Capturing.html">
    </map>
    <img src="BehaviorBasedAPI.png" usemap="#figure1">
 </div>
@@ -568,7 +568,7 @@ public class SomeTest
    Also, a single assignment to the <code>result</code> field will achieve the same effect, if the value assigned to it
    is a <em>list</em> or <em>array</em> containing the consecutive values.
    For more details about this ability, see the corresponding
-   <a href="../javadoc/mockit/Expectations.html#returns(java.lang.Object, java.lang.Object...)">API documentation</a>.
+   <a href="../api1x/mockit/Expectations.html#returns(java.lang.Object, java.lang.Object...)">API documentation</a>.
 </p>
 <p>
    The following example test records both types of results for the methods of a mocked
@@ -877,7 +877,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 </code></pre>
 <p>
    There are more "with" methods than shown above.
-   See the <a href="../javadoc/mockit/Expectations.html#withEqual(T)">API documentation</a> for more details.
+   See the <a href="../api1x/mockit/Expectations.html#withEqual(T)">API documentation</a> for more details.
 </p>
 <p>
    Besides the several predefined argument matching constraints available in the API, JMockit allows the user to provide
@@ -885,7 +885,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    methods.
    The parameter of type <code class="type">Object</code> can be an <code class="type">org.hamcrest.Matcher</code>
    object from the <a href="http://code.google.com/p/hamcrest">Hamcrest</a> library, or a suitable handler object
-   (see the <a href="../javadoc/mockit/Expectations.html#with(T, java.lang.Object)">API documentation</a> for details).
+   (see the <a href="../api1x/mockit/Expectations.html#with(T, java.lang.Object)">API documentation</a> for details).
 </p>
 
 <h3 id="matcherFields">Using the "any" <em>fields</em> for argument matching</h3>
@@ -918,7 +918,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 <p>
    The same requirement of having calls to "with" methods inside the invocation statement applies in the case of
    accesses to "any" fields: they must appear at the actual argument positions in the invocation statement, not before.
-   Again, see the <a href="../javadoc/mockit/Expectations.html#anyInt">API documentation</a> for
+   Again, see the <a href="../api1x/mockit/Expectations.html#anyInt">API documentation</a> for
    more details on argument matching fields.
 </p>
 
@@ -966,7 +966,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 <p>
    Probably the best way to understand the exact semantics of varargs matching (since there is no specific API involved)
    is to look at or experiment with actual tests.
-   <a href="http://code.google.com/p/jmockit/source/browse/trunk/main/test/mockit/ExpectationsWithVarArgsMatchersTest.java">This</a>
+   <a href="http://github.com/jmockit/jmockit1/blob/master/main/test/mockit/ExpectationsWithVarArgsMatchersTest.java">This</a>
    test class demonstrates virtually all possibilities.
 </p>
 
@@ -1035,7 +1035,7 @@ public void someOtherTestMethod(@Mocked final DependencyAbc abc)
    Any non-negative integer value is valid for any of the invocation count constraints.
    If <code><em>times</em> = <strong>0</strong></code> or <code><em>maxTimes</em> = <strong>0</strong></code> is
    specified, the first invocation matching the expectation to occur during replay (if any) will cause the test to fail.
-   For more, see the <a href="../javadoc/mockit/Expectations.html#times">API documentation</a>.
+   For more, see the <a href="../api1x/mockit/Expectations.html#times">API documentation</a>.
 </p>
 
 <h2 id="verification">
@@ -1128,7 +1128,7 @@ public void verifyingExpectationsInOrder(@Mocked final DependencyAbc abc)
    Suppose you want to verify that a particular method (or constructor) was called <em>before</em>/<em>after</em> other
    invocations, but you don't care about the order in which those other invocations occurred.
    Inside an ordered verification block, this can be achieved by simply calling the
-   <a href="../javadoc/mockit/VerificationsInOrder.html#unverifiedInvocations()">unverifiedInvocations()</a>
+   <a href="../api1x/mockit/VerificationsInOrder.html#unverifiedInvocations()">unverifiedInvocations()</a>
    method at the appropriate place(s).
    The following test demonstrates it.
 </p>
@@ -1824,8 +1824,8 @@ public void recordAndVerifyExpectationsOnCascadedMocks(
 <p>
    Our discussion of this feature will be based on the (contrived) code below.
    Realistic examples can be found in the
-   <a href="http://code.google.com/p/jmockit/source/browse/trunk/samples/tutorial">Tutorial</a> and
-   <a href="http://code.google.com/p/jmockit/source/browse/trunk/samples/TimingFramework">Timing Framework</a>
+   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/tutorial">Tutorial</a> and
+   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/TimingFramework">Timing Framework</a>
    sample test suites, available in the full JMockit distribution.
 </p>
 <pre><code>public interface Service { int doSomething(); }
@@ -2021,7 +2021,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    As the next example shows, the objects that are created and assigned to such fields (by JMockit or explicit test
    code) can be used in any number of test methods.
    The complete source code for this example can be found under
-   <a href="http://code.google.com/p/jmockit/source/browse/trunk/samples/LoginService">jmockit/samples/LoginService</a>.
+   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/LoginService">jmockit/samples/LoginService</a>.
 </p>
 <pre><code>public final class LoginServiceTest
 {
