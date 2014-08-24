@@ -35,7 +35,6 @@
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
-<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
 </div>
@@ -181,10 +180,41 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <!--   -->
 </a>
 <h3>Element Detail</h3>
-<a name="value--">
+<a name="stubOutClassInitialization--">
 <!--   -->
 </a>
 <ul class="blockList">
+<li class="blockList">
+<h4>stubOutClassInitialization</h4>
+<pre>public abstract&nbsp;boolean&nbsp;stubOutClassInitialization</pre>
+<div class="block">Indicates whether <em>static initialization code</em> in the mocked class should be stubbed out or not.
+ Static initialization includes the execution of assignments to static fields of the class and the execution of
+ static initialization blocks, if any.
+ (Note that <code>static final</code> fields initialized with <em>compile-time</em> constants are not assigned at
+ runtime, remaining unaffected whether the class is stubbed out or not.)
+ <p/>
+ By default, static initialization code in a mocked class is <em>not</em> stubbed out.
+ The JVM will only perform static initialization of a class <em>once</em>, so stubbing out the initialization code
+ can have unexpected consequences.
+ Static initialization will occur the first time the class is instantiated, has a static method called on it, or
+ has a static field whose value is defined at runtime accessed; these are the only events which prompt the JVM to
+ initialize a class.
+ If the original class initialization code was stubbed out, then it will not be there to be executed at the time of
+ static initialization, potentially leaving static fields <code>null</code> and later causing
+ <code>NullPointerException</code>'s to occur.</div>
+<dl>
+<dt>Default:</dt>
+<dd>false</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="value--">
+<!--   -->
+</a>
+<ul class="blockListLast">
 <li class="blockList">
 <h4>value</h4>
 <pre>public abstract&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value</pre>
@@ -216,37 +246,6 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 </ul>
 </li>
 </ul>
-<ul class="blockList">
-<li class="blockList"><a name="stubOutClassInitialization--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>stubOutClassInitialization</h4>
-<pre>public abstract&nbsp;boolean&nbsp;stubOutClassInitialization</pre>
-<div class="block">Indicates whether <em>static initialization code</em> in the mocked class should be stubbed out or not.
- Static initialization includes the execution of assignments to static fields of the class and the execution of
- static initialization blocks, if any.
- (Note that <code>static final</code> fields initialized with <em>compile-time</em> constants are not assigned at
- runtime, remaining unaffected whether the class is stubbed out or not.)
- <p/>
- By default, static initialization code in a mocked class is <em>not</em> stubbed out.
- The JVM will only perform static initialization of a class <em>once</em>, so stubbing out the initialization code
- can have unexpected consequences.
- Static initialization will occur the first time the class is instantiated, has a static method called on it, or
- has a static field whose value is defined at runtime accessed; these are the only events which prompt the JVM to
- initialize a class.
- If the original class initialization code was stubbed out, then it will not be there to be executed at the time of
- static initialization, potentially leaving static fields <code>null</code> and later causing
- <code>NullPointerException</code>'s to occur.</div>
-<dl>
-<dt>Default:</dt>
-<dd>false</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
 </li>
 </ul>
 </div>
@@ -264,7 +263,6 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
-<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
 </div>
