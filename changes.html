@@ -18,10 +18,17 @@
 
 <h1>Development history</h1>
 
-<h2>Next release</h2>
+<h2>Current release</h2>
 
 <p>Version <a href="https://github.com/jmockit/jmockit1/commits/master">1.11</a> (Aug 24, 2014):</p>
 <ul>
+   <li>
+      <strong>Removed</strong> the methods <code>with(Object)</code> and <code>with(T, Object)</code> from base class
+      <code class="type">mockit.Invocations</code> (shared by <code class="type">Expectations</code> and
+      <code class="type">Verifications</code>), which were deprecated in release 1.9.<br/>
+      As documented in the corresponding API deprecation comments, existing calls to these methods should be replaced
+      with calls to <code>with(Delegate)</code> or <code>withArgThat(org.hamcrest.Matcher)</code>.
+   </li>
    <li>
       Improved support for the IBM "J9" JRE (tested on version 7 of the SDK), to about the same level as the Oracle
       "HotSpot" JREs.
@@ -38,16 +45,20 @@
       <a href="https://github.com/jmockit/jmockit1/issues/13">#13</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/20">#20</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/21">#21</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/22">#22</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/25">#25</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/27">#27</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/28">#28</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/29">#29</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/30">#30</a>,
-      <a href="https://github.com/jmockit/jmockit1/issues/31">#31</a>.
+      <a href="https://github.com/jmockit/jmockit1/issues/31">#31</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/41">#41</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/42">#42</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/47">#47</a>.
    </li>
 </ul>
 
-<h2>Current release</h2>
+<h2>Previous releases</h2>
 
 <p>Version <a href="https://github.com/jmockit/jmockit1/commits/master">1.10</a> (Jul 27, 2014):</p>
 <ul>
@@ -87,8 +98,6 @@
       <a href="https://github.com/jmockit/jmockit1/issues/19">#19</a>.
    </li>
 </ul>
-
-<h2>Previous releases</h2>
 
 <p>Version <a href="http://code.google.com/p/jmockit/source/list?num=99&start=2808">1.9</a> (Jun 22, 2014):</p>
 <ul>
