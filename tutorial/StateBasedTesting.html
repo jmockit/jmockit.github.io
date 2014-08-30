@@ -275,8 +275,8 @@ public void settingUpAnotherMockClass() throws Exception
    and <code>native</code> methods.
    (Also <code>synchronized</code> and <code>strictfp</code> methods, but these modifiers only affect the method
    implementation, not its interface.)
-   Even more, an <code>static</code> method in the real class can be mocked by an <em>instance</em> mock method, and
-   vice-versa (an instance real method with an <code>static</code> mock); the same applies for the <code>final</code>
+   Even more, a <code>static</code> method in the real class can be mocked by an <em>instance</em> mock method, and
+   vice-versa (an instance real method with a <code>static</code> mock); the same applies for the <code>final</code>
    modifier.
 </p>
 <p>
@@ -289,7 +289,7 @@ public void settingUpAnotherMockClass() throws Exception
 
 <h3 id="inline">In-line mock classes</h3>
 <p>
-   Typically, an specific group of mock methods for a given real class will only be useful for a single test.
+   Typically, a specific group of mock methods for a given real class will only be useful for a single test.
    In such a situation we can create an <em>anonymous mock class</em> inside an individual test method, as demonstrated
    by the next example.
 </p>
@@ -470,7 +470,7 @@ public void specifyingInvocationCountConstraints() throws Exception
 <p>
    When a class in production code performs some work in one or more <em>static initialization blocks</em>, we may
    need to mock it out so it doesn't interfere with test execution.
-   We can define an special mock method for that, as shown below.
+   We can define a special mock method for that, as shown below.
 </p>
 <pre><code>@Test
 public void mockingStaticInitializers()

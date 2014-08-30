@@ -107,7 +107,7 @@ public final class MyBusinessService
    code?
    JMockit actually provides three different mocking APIs, each capable enough for our needs.
    (In practice, the first two APIs are just subsets of a larger <em>behavior-oriented</em> mocking API; the other one,
-   which can be described as an <em>state-oriented</em> mocking API, is truly different and unique.)
+   which can be described as a <em>state-oriented</em> mocking API, is truly different and unique.)
    We will see how to use each one of them in the following sections.
    In every situation, a JUnit test case will verify the invocations of interest made from the unit under test to its
    external dependencies. These invocations are the ones at points <code>(1)</code>-<code>(4)</code> indicated above.
@@ -299,7 +299,7 @@ public final class MyBusinessService_ExpectationsAPI_Test
 <p>
    Up to this point we focused on expectations that are recorded/specified <em>before</em> exercising the code under
    test.
-   Such expectations are verified implicitly (when strict or with an specified invocation count constraint) or not at
+   Such expectations are verified implicitly (when strict or with a specified invocation count constraint) or not at
    all (when non-strict and without any associated invocation count constraint).
    Lets now consider the use of the <strong>JMockit Verifications</strong> API, which lets us explicitly verify
    expectations <em>after</em> having exercised the code under test.
@@ -364,7 +364,7 @@ public final class MyBusinessService_VerificationsAPI_Test
 <p>
    When we use non-strict expectations, invocations to mocked methods and constructors during the replay phase are not
    immediately verified (unless explicitly specified otherwise through an invocation count constraint).
-   Those non-strict invocations which were recorded with an specific return value or with an exception/error to be
+   Those non-strict invocations which were recorded with a specific return value or with an exception/error to be
    thrown will produce the expected result if and when replayed by production code.
 </p>
 <p>
@@ -409,7 +409,7 @@ public final class MyBusinessService_VerificationsAPI_Test
    The invocation count for a particular method or constructor can be verified by specifying constraints through one of
    the <code>times</code>, <code>minTimes</code>, and <code>maxTimes</code> fields, just like it can be done for
    expectations in the recording phase.
-   In particular, it can be verified that an specific invocation never happened by specifying a
+   In particular, it can be verified that a specific invocation never happened by specifying a
    <code><em>times</em> = 0</code> invocation count constraint (or <code><em>maxTimes</em> = 0</code> if preferred).
 </p>
 

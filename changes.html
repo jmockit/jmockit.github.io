@@ -141,7 +141,7 @@
       </ul>
    </li>
    <li>
-      <strong>New feature</strong>: The Mockups API now supports AOP-style <em>advice</em>, in the form of an special
+      <strong>New feature</strong>: The Mockups API now supports AOP-style <em>advice</em>, in the form of a special
       "<code>Object $advice(Invocation)</code>" mock method.
    </li>
    <li>
@@ -188,7 +188,7 @@
    </li>
    <li>
       <strong>Enhancement</strong>: The <code class="type">MockUp&lt;T></code> class now has the ability to extend
-      mocking to the classes implementing an specified interface, or to the subclasses of a specified base class.
+      mocking to the classes implementing a specified interface, or to the subclasses of a specified base class.
       This is similar to what <code class="annotation">@Capturing</code> provides in the Expectations API.
    </li>
    <li>
@@ -1480,8 +1480,8 @@ domain/MyBusinessService_ExpectationsAPI2_Test.java">here</a> for examples.
       available for some time.
    </li>
    <li>
-      <strong>New validation</strong> implemented to detect uses of the Expectations API from an
-      invalid context, such as an static <code>@BeforeClass</code> JUnit method.
+      <strong>New validation</strong> implemented to detect uses of the Expectations API from an invalid context, such
+      as a static <code>@BeforeClass</code> JUnit method.
    </li>
    <li>
       <strong>Bug fixes</strong> in the "Java agent" auto-initialization under JDK 1.6, when not
@@ -2439,7 +2439,7 @@ domain/MyBusinessService_ExpectationsAPI2_Test.java">here</a> for examples.
    </li>
    <li>
       Fixed an issue in the on-demand initialization of JMockit (with "tools.jar" in the classpath),
-      where the path to "jmockit.jar" in the classpath contained an space or non-ASCII character,
+      where the path to "jmockit.jar" in the classpath contained a space or non-ASCII character,
       causing an error saying "Error opening zip file or JAR manifest missing" (issue 28). 
    </li>
    <li>
@@ -2717,7 +2717,7 @@ domain/MyBusinessService_ExpectationsAPI2_Test.java">here</a> for examples.
       New feature: ability to capture instances created inside code under test, from the
       initialization of a <code>Expectations</code> subclass to the end of the test, while mocking
       the concrete class, whichever it may be; each captured instance is assigned to the appropriate
-      mock field (one or more times, with an specified upper limit). For example, this allows the
+      mock field (one or more times, with a specified upper limit). For example, this allows the
       mocking of a concrete class that implements an interface (used as the type of a mock field)
       and is dynamically loaded by production code sometime during the test.
    </li>

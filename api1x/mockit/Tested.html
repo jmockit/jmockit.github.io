@@ -116,7 +116,7 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
  uninitialized are targeted; eligible fields are those annotated with a standard DI annotation (one of
  <code>@Inject</code>, <code>@PersistenceContext</code>, <code>@PersistenceUnit</code>), or any <em>instance</em> fields when such
  annotations are not being used.
- For each such <em>target</em> field, the value of an still unused <a href="../mockit/Injectable.html" title="annotation in mockit">injectable</a> field or test
+ For each such <em>target</em> field, the value of a still unused <a href="../mockit/Injectable.html" title="annotation in mockit">injectable</a> field or test
  method parameter of the <em>same</em> type is assigned, if any is available.
  Multiple target fields of the same type can be injected from separate injectables, provided each target field has the
  same name as an available injectable field/parameter of that type.

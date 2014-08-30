@@ -201,7 +201,7 @@ public void doBusinessOperationXyz()
    ...
    new NonStrictExpectations() {{ // an "expectation block"
       ...
-      // A recorded expectation, with an specified value to return:
+      // A recorded expectation, with a specified value to return:
       <strong>mockInstance.mockedMethod(...);</strong> <em>result</em> = 123;
       ...
    }};
@@ -228,7 +228,7 @@ public void doBusinessOperationXyz()
    </span>
 </h2>
 <p>
-   An <em>expectation</em> is a set of invocations to an specific mocked method/constructor that is relevant for a given
+   An <em>expectation</em> is a set of invocations to a specific mocked method/constructor that is relevant for a given
    test.
    An expectation may cover multiple different invocations to the same method or constructor, but it doesn't have to
    cover <em>all</em> such invocations that occur during the test execution.
@@ -1316,7 +1316,7 @@ public void verifyAllInvocationsToOnlyOneOfTwoMockedTypes(
 <p>
    To verify that <em>no</em> invocations at all occurred on the non-strict mocked types/instances used in a test, add
    an <em>empty</em> full verification block to it.
-   As always, note that any expectations that were <em>recorded</em> as expected through an specified
+   As always, note that any expectations that were <em>recorded</em> as expected through a specified
    <code>times/minTimes</code> constraint are verified implicitly and therefore disregarded by the full verification
    block; in such a case the empty verification block will verify that no <em>other</em> invocations occurred.
    Additionally, if any expectations were verified in a <em>previous</em> verification block in the same test, they are
@@ -2068,7 +2068,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    This method first attempts to look up an existing user account from the given login name ("accountId", which is
    expected to be unique among all accounts).
    Since several different tests are needed to fully exercise this unit, a non-strict invocation to the
-   <code>UserAccount#find(String accountId)</code> method is recorded for all tests in the class, with an specific login
+   <code>UserAccount#find(String accountId)</code> method is recorded for all tests in the class, with a specific login
    name ("john") and the mocked account as the value to be returned.
    Remember, any given test can use multiple expectation and/or verification blocks.
    Such blocks can also be written inside shared "before" and "after" methods, respectively.
@@ -2215,7 +2215,7 @@ public void recordStrictInvocationsInIteratingBlock(@Mocked final Collaborator m
 <h3 id="iterations">Verifying iterations</h3>
 <p>
    Just like we saw for recorded expectation blocks, verification blocks also have the ability to deal with invocations
-   that occur inside loops, for an specified number of iterations of the loop.
+   that occur inside loops, for a specified number of iterations of the loop.
 </p>
 <pre><code>@Test
 public void verifyAllInvocationsInLoop(@Mocked final Dependency mock)
