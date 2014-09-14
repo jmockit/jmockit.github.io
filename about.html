@@ -62,8 +62,8 @@
 </p>
 <p>
    Whenever a class to be mocked is found in the course of a test run, it has its current bytecode definition
-   temporarily modified, so that the regular behavior of methods and constructors can be replaced by mock behavior, as
-   specified in the test.
+   temporarily modified, so that the regular behavior of methods and constructors can be replaced with mock behavior, as
+   specified in a test.
    As soon as the test is completed, the class has its bytecode restored, and its original behavior is resumed.
    This process repeats itself for the next test, whenever needed as specified in test code through the mocking API.
 </p>
@@ -79,15 +79,14 @@
    <a href="http://download.oracle.com/javase/6/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>, when
    given an interface to be mocked) and subclasses (through <a href="http://cglib.sourceforge.net">CGLIB</a>, when given
    a non-final class to be mocked).
-   Because of this particular mocking implementation technique where a subclass with overriding mock methods is
-   created, <code>final</code> classes, constructors, and non-overridable methods simply <em>cannot</em> be mocked;
-   even worse, when mocking a non-final class which happens to contain <code>final</code> methods, these tools
-   will silently ignore them, often surprising users.
-   Most importantly, however, when using these tools the dependencies of code under test (that is, the objects of other
+   This particular mocking implementation technique, in which a subclass with overriding mock methods is created,
+   carries some penalties: <code>final</code> classes, constructors, and non-overridable methods simply <em>cannot</em>
+   be mocked; even worse, when mocking a non-final class which happens to contain <code>final</code> methods, these
+   tools will silently ignore them, often surprising users.
+   Most importantly, however, these limitations mean that dependencies of code under test (that is, the objects of other
    classes on which a given class under test depends) must be controlled by the tests, so that mock instances can be
    passed to the clients of those dependencies;
-   that is, dependencies cannot simply be instantiated with the <code>new</code> operator in a client class for which
-   we want to write unit tests.
+   that is, dependencies cannot simply be instantiated with the <code>new</code> operator in the client class.
 </p>
 <p>
    Ultimately, the technical limitations of conventional mocking tools impose the following design restrictions on
@@ -121,7 +120,7 @@
 
 <h3 id="final">Use of <code>final</code></h3>
 <p>
-   In the first case, declaring classes or methods <code>final</code> makes it clear that they are not intended for
+   Declaring classes or methods <code>final</code> communicates the design decision that they are not intended for
    extension by subclassing.
    For example, in a correct application of the <a href="http://en.wikipedia.org/wiki/Template_method_pattern">Template
    Method</a> design pattern, the "template" method itself (which implements an algorithm calling one or more
@@ -175,17 +174,16 @@
 
 <h3 id="new">Use of <code>new</code></h3>
 <p>
-   In the second case, directly instantiating dependencies with <code>new</code> facilitates the use of stateful
-   objects.
+   Directly instantiating dependencies with <code>new</code> facilitates the use of stateful objects.
    In OO design, objects normally are not stateless.
    However, when dependencies are obtained or injected through external means (such as a "Service Locator" or a DI
    framework) there is a tendency to make them stateless, and with a single global instance.
    Such a practice leads to code that is more procedural and less object oriented.
-   Of course, this applies to dependencies whose interfaces have only one implementation in production code, or when the
-   selection of an implementation between many would not benefit from external configuration (for example, people 
-   typically instantiate <code>List</code> implementations directly, even though they code to the abstract interface
-   only); situations where one implementation <em>must</em> be selected through external configuration tend to be quite
-   rare in practice.
+   Of course, this criticism applies to dependencies whose interfaces have only one implementation in production code,
+   or when the selection of an implementation between many would not benefit from external configuration (for example,
+   people typically instantiate <code>List</code> implementations directly, even if they code to the abstract
+   interface only); situations where one implementation <em>must</em> be selected through external configuration tend to
+   be quite rare in practice.
 </p>
 <p>
    Related to this issue, I think, there is a widely observed misunderstanding of just what the phrase "<cite>Program to
@@ -210,9 +208,9 @@
 
 <h3 id="static">Use of <code>static</code></h3>
 <p>
-   In the third case, the use of classes containing only <code>static</code> methods is the best choice when none of the
-   methods operate on any state (for example, the <code>Math</code> class), or the actual state is stored in a separate
-   context object, such as the HTTP request context or the persistence context.
+   The use of classes containing only <code>static</code> methods is the best choice when none of the methods operate on
+   any state (for example, the <code>Math</code> class), or the actual state is stored in a separate context object,
+   such as the HTTP request context or the persistence context.
    For this last situation, consider an application that has a persistence subsystem which provides access to a
    relational database.
    One possibility is to inject instances of work unit objects (an Hibernate <code>Session</code>, or a JPA
@@ -272,16 +270,9 @@
 
 <h2 id="mockingAPIs">Design considerations for mocking APIs</h2>
 <p>
-   The APIs for testing with mocks that are available in existing toolkits, even the more recent ones, have certain
-   undesirable characteristics. Of course, this is partly a matter of personal taste, but some objective observations
-   can certainly be made.
-</p>
-<p>
-   In the following discussion, five different mocking toolkits (besides JMockit) are considered, all in their latest
-   stable releases as of Aug 24, 2013: <strong>EasyMock 3.2</strong>, <strong>jMock 2.6.0</strong>,
-   <strong>Mockito 1.9.5</strong>, <strong>PowerMock 1.5</strong>, and <strong>Unitils 3.3</strong>.
-   The code snippets below come from the sample JMockit test suites that compare the JMockit approach with those other
-   toolkits.
+   In the following discussion, five different mocking libraries (besides JMockit) are examined, all in their latest
+   stable releases as of Sep 13, 2014: <strong>EasyMock 3.2</strong>, <strong>jMock 2.6.0</strong>,
+   <strong>Mockito 1.9.5</strong>, <strong>PowerMock 1.5</strong>, and <strong>Unitils 3.4</strong>.
 </p>
 <ul>
    <li>
@@ -366,17 +357,14 @@
 </ul>
 <p>
    There are other less dramatic differences in style between JMockit and other mocking APIs, but the above items should
-   be enough to show that many possibilities exist in the realm of mocking API design.
+   be enough to show that many possibilities exist for the design of mocking APIs.
 </p>
 
 <h2 id="alternativeTools">Alternative mocking tools</h2>
 <p>
-   There are other mocking tools for Java which also overcome the limitations of the conventional ones, namely
-   <a href="http://code.google.com/p/powermock">PowerMock</a>,
-   <a href="http://java.net/projects/jeasytest">jEasyTest</a>, and
-   <a href="http://mockinject.codehaus.org">MockInject</a>.
-   The one that comes closest to the feature set of JMockit is PowerMock, so I will briefly evaluate it here (besides,
-   the other two are more limited and don't seem to be developed anymore, or even used).
+   There are other mocking tools for Java which also overcome the limitations of the conventional ones.
+   The one that comes closest to the feature set of JMockit is
+   <a href="http://code.google.com/p/powermock">PowerMock</a>, so I will briefly evaluate it here.
 </p>
 <dl id="PowerMock"><dd><strong>JMockit</strong> vs <strong>PowerMock</strong></dd></dl>
 <ul>
@@ -432,12 +420,12 @@
 <li>
    Mockito relies on explicit calls to its API in order to separate code between the <em>record</em>
    (<code>when(...)</code>) and <em>verify</em> (<code>verify(...)</code>) phases.
-   This means that any invocation to a mock object in test code will also require a call to the mocking API.
-   Additionally, this will often lead to repetitive <code>when(...)</code> and <code>verify(mock)...</code> calls.
+   This means that any invocation to a mock object in test code requires a call to the mocking API.
    <br/>
-   With JMockit, no similar calls exist. Sure, we have the <code>new NonStrictExpectations()</code> and
-   <code>new Verifications()</code> constructor calls, but they occur only once per test (typically), and are completely
-   separate from the invocations to mocked methods and constructors.
+   With JMockit, no similar calls exist.
+   Instead, we have the <code>new NonStrictExpectations()</code> and <code>new Verifications()</code> constructor calls,
+   which occur a few times per test (many tests will have a single expectation block), and are completely separate from
+   the invocations to mocked methods.
 </li>
 <li>
    The Mockito API contains several inconsistencies in the syntax used for invocations to mocked methods.
@@ -474,7 +462,7 @@
    Those APIs also provide the recording of <em>allowed invocations</em> for mock objects that do allow unexpected
    invocations, but this was treated as a second-class feature.
    Additionally, with these tools there is no way to explicitly verify invocations to mocks after the code under test is
-   exercised. All such verifications are performed implicitly and automatically.
+   exercised; all such verifications are performed implicitly and automatically.
    <br/>
    In Mockito (and also in Unitils Mock), the opposite viewpoint is taken.
    All invocations to mock objects that may happen during the test, whether recorded or not, are <em>allowed</em>, never
@@ -506,18 +494,18 @@
    <br/>
    With JMockit, you simply write <code>new VerificationsInOrder()</code> or <code>new FullVerifications()</code>
    instead of <code>new Verifications()</code> (or <code>new FullVerificationsInOrder()</code> to combine both
-   requirements). No need to specify which mock objects are involved. No extra mocking API calls.
-   And as a bonus, by calling <code>unverifiedInvocations()</code> inside an ordered verification block, you can
-   perform order-related verifications that are simply impossible in Mockito.
+   requirements).
+   There is no need to specify which mock objects are involved, and no extra mocking API calls.
+   Also, order-related verifications that are simply impossible in other mocking APIs can be performed by calling
+   <code>unverifiedInvocations()</code> and/or <code>verifiedInvocations(alreadyVerified)</code> inside an ordered
+   verification block.
 </li>
 </ul>
 
 <p>
    Finally, the JMockit Testing Toolkit has a wider scope and more ambitious goals than other mocking toolkits, in order
-   to provide a complete and sophisticated developer testing solution.
-   A good API for mocking, even without artificial limitations, is not enough for productive creation of tests.
-   An IDE-agnostic, easy to use, and well integrated Code Coverage tool is also essential, and that's what JMockit
-   Coverage aims to provide.
+   to provide a complete and sophisticated developer testing solution, not only for unit tests but also for integration
+   tests.
 </p>
 
 <h2 id="coverage">Code Coverage</h2>
