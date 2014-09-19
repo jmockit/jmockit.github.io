@@ -29,7 +29,7 @@ a {
    text-decoration: none;
 }
 
-h2[id] { border-top: 1px solid #bee916; }
+h2[id] { border-bottom: 1px solid; }
 h2, h3 { margin-top: 3ex; }
 
 pre {
