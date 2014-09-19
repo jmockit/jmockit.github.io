@@ -16,17 +16,15 @@
 <h1 class="header">
    <a href="../index.html">JMockit</a>
    <span>The Mock <span>Anything</span> Toolkit for Java</span>
-</h1>
-
-<h1 id="top">
-   Fakes and state-based testing
    <span class="navigation">
-      <a href="#mocks"><img src="go-down.png" title="Next section"></a>
       <a href="BehaviorBasedTesting.html"><img src="go-previous.png" title="Previous chapter"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
       <a href="ReflectionUtilities.html"><img src="go-next.png" title="Next chapter"></a>
       <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
    </span>
+</h1>
+
+<h1 id="top">
+   <a href="#">Fakes and state-based testing</a>
 </h1>
 
 <ol class="contents">
@@ -102,14 +100,7 @@
 </p>
 
 <h2 id="mocks">
-   Mock methods and mock classes
-   <span class="navigation">
-      <a href="#setUp"><img src="go-down.png" title="Next section"></a>
-      <a href="#top"><img src="go-up.png" title="Top"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#mocks">Mock methods and mock classes</a>
 </h2>
 <p>
    In the context of the Mockups API, a <em>mock method</em> is any method in a <em>mock class</em> that gets annotated
@@ -185,14 +176,7 @@
 </p>
 
 <h2 id="setUp">
-   Setting up mocks for a test
-   <span class="navigation">
-      <a href="#interfaces"><img src="go-down.png" title="Next section"></a>
-      <a href="#mocks"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#setUp">Setting up mocks for a test</a>
 </h2>
 <p>
    A given mock class must be applied to a corresponding real class to have any effect.
@@ -267,7 +251,9 @@ public void settingUpAnotherMockClass() throws Exception
    corresponding mock method is executed.
 </p>
 
-<h3 id="mockableMethods">Kinds of methods which can have mocks</h3>
+<h3 id="mockableMethods">
+   <a href="#mockableMethods">Kinds of methods which can have mocks</a>
+</h3>
 <p>
    So far, we have only mocked public instance methods with public instance mock methods.
    In reality, any other kind of method in a real class can be mocked: methods with <code>private</code>,
@@ -287,7 +273,9 @@ public void settingUpAnotherMockClass() throws Exception
    (That said, as shown later the Mockups API can automatically create a proxy class that implements an interface.)
 </p>
 
-<h3 id="inline">In-line mock classes</h3>
+<h3 id="inline">
+   <a href="#inline">In-line mock classes</a>
+</h3>
 <p>
    Typically, a specific group of mock methods for a given real class will only be useful for a single test.
    In such a situation we can create an <em>anonymous mock class</em> inside an individual test method, as demonstrated
@@ -309,14 +297,7 @@ public void settingUpMocksUsingAnAnonymousMockClass() throws Exception
 </p>
 
 <h2 id="interfaces">
-   Mocking interfaces
-   <span class="navigation">
-      <a href="#implementationClasses"><img src="go-down.png" title="Next section"></a>
-      <a href="#setUp"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#interfaces">Mocking interfaces</a>
 </h2>
 <p>
    Most of the time a mock class targets a real class directly.
@@ -346,14 +327,7 @@ public void mockingAnInterface() throws Exception
 </p>
 
 <h2 id="implementationClasses">
-   Mocking unspecified implementation classes
-   <span class="navigation">
-      <a href="#constraints"><img src="go-down.png" title="Next section"></a>
-      <a href="#interfaces"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#implementationClasses">Mocking unspecified implementation classes</a>
 </h2>
 <p>
    To demonstrate this feature, lets consider the following code under test.
@@ -406,14 +380,7 @@ public <strong>&lt;T extends Service></strong> void mockingImplementationClasses
 </p>
 
 <h2 id="constraints">
-   Invocation count constraints
-   <span class="navigation">
-      <a href="#initializers"><img src="go-down.png" title="Next section"></a>
-      <a href="#implementationClasses"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#constraints">Invocation count constraints</a>
 </h2>
 <p>
    All example tests shown so far only used JUnit/TestNG "asserts" to verify invocation arguments.
@@ -458,14 +425,7 @@ public void specifyingInvocationCountConstraints() throws Exception
 </p>
 
 <h2 id="initializers">
-   Mocking class initializers
-   <span class="navigation">
-      <a href="#invocation"><img src="go-down.png" title="Next section"></a>
-      <a href="#constraints"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#initializers">Mocking class initializers</a>
 </h2>
 <p>
    When a class in production code performs some work in one or more <em>static initialization blocks</em>, we may
@@ -499,14 +459,7 @@ public void mockingStaticInitializers()
 </p>
 
 <h2 id="invocation">
-   Accessing the invocation context
-   <span class="navigation">
-      <a href="#proceed"><img src="go-down.png" title="Next section"></a>
-      <a href="#initializers"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#invocation">Accessing the invocation context</a>
 </h2>
 <p>
    A mock method can optionally declare an extra parameter of type <code class="type">mockit.Invocation</code>, provided
@@ -574,14 +527,7 @@ public void accessingTheMockedInstanceInMockMethods() throws Exception
 </code></pre>
 
 <h2 id="proceed">
-   Proceeding into the real implementation
-   <span class="navigation">
-      <a href="#reuse"><img src="go-down.png" title="Next section"></a>
-      <a href="#invocation"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#proceed">Proceeding into the real implementation</a>
 </h2>
 <p>
    Once a <code class="annotation">@Mock</code> method is executing, any additional calls to the corresponding mocked
@@ -676,14 +622,7 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
 </p>
 
 <h2 id="reuse">
-   Reusing mocks between tests
-   <span class="navigation">
-      <a href="#widerScopes"><img src="go-down.png" title="Next section"></a>
-      <a href="#proceed"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#reuse">Reusing mocks between tests</a>
 </h2>
 <p>
    Most tests will probably only use dedicated mock classes, specifically created for each particular test.
@@ -693,7 +632,9 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
    define reusable mock classes.
 </p>
 
-<h3 id="beforeAfter">Using before/after methods</h3>
+<h3 id="beforeAfter">
+   <a href="#beforeAfter">Using before/after methods</a>
+</h3>
 <p>
    In a given test class, we can define instance methods that will run <em>before</em> and <em>after</em> each test
    method (even when the test throws an error or exception).
@@ -734,7 +675,9 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
    containing calls to the Mockups API.
 </p>
 
-<h3 id="reusableMocks">Reusable mock classes</h3>
+<h3 id="reusableMocks">
+   <a href="#reusableMocks">Reusable mock classes</a>
+</h3>
 <p>
    Named mock classes can be designed as concrete (and optionally <code>final</code>) classes that are then used in
    specific tests.
@@ -921,14 +864,7 @@ public void doesNotCloseTextReaderInCaseOfIOFailure() throws Exception
 </p>
 
 <h2 id="widerScopes">
-   Mock-ups at the test class/suite level
-   <span class="navigation">
-      <a href="#bottom"><img src="go-down.png" title="Bottom"></a>
-      <a href="#reuse"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#widerScopes">Mock-ups at the test class/suite level</a>
 </h2>
 <p>
    As we have seen, mock-up classes are usually applied for the duration of an individual test.
@@ -938,7 +874,9 @@ public void doesNotCloseTextReaderInCaseOfIOFailure() throws Exception
    JVM-wide system property or adding a <code>jmockit.properties</code> file to the runtime classpath.
 </p>
 
-<h3 id="programmatic">Programmatic application of mock-ups in wider scopes</h3>
+<h3 id="programmatic">
+   <a href="#programmatic">Programmatic application of mock-ups in wider scopes</a>
+</h3>
 <p>
    To have a mock-up class cover the entire scope (all tests) of a given test class, we simply apply it inside a
    <code class="annotation">@BeforeClass</code> method (with JUnit or TestNG).
@@ -966,7 +904,9 @@ public final class TestSuite
    mocks will be in effect until just after the last test in the test suite has been executed.
 </p>
 
-<h3 id="systemProperty">External application through a system property</h3>
+<h3 id="systemProperty">
+   <a href="#systemProperty">External application through a system property</a>
+</h3>
 <p>
    The <strong><code>jmockit-mocks</code></strong> system property supports a comma-separated list of fully qualified
    mock-up class names.
@@ -980,7 +920,9 @@ public final class TestSuite
    details.
 </p>
 
-<h3 id="propertiesFile">External application through the <code>jmockit.properties</code> file</h3>
+<h3 id="propertiesFile">
+   <a href="#propertiesFile">External application through the <code>jmockit.properties</code> file</a>
+</h3>
 <p>
    Mock-up classes specified in the <code>jmockit-mocks</code> system property can alternatively be specified in a
    separate <strong><code>jmockit.properties</code></strong> file, which should be present at the root of the classpath.
@@ -995,11 +937,12 @@ public final class TestSuite
 
 <div id="bottom" class="navigation">
    <a href="BehaviorBasedTesting.html"><img src="go-previous.png" title="Previous chapter"></a>
-   <a href="#widerScopes"><img src="go-up.png" title="Previous section"></a>
    <a href="ReflectionUtilities.html"><img src="go-next.png" title="Next chapter"></a>
-   <a href="#top"><img src="go-top.png" title="Top"></a>
    <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
 </div>
-<br/>
+<div class="footer">
+   Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
+   <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
+</div>
 </body>
 </html>

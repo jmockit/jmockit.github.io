@@ -29,15 +29,16 @@ a {
    text-decoration: none;
 }
 
-h2[id] { border-top: 1px solid #bee916; }
+h2[id] { border-top: 1px solid; }
+h1 a, h2 a, h3 a { color: #eee; }
+h1 a:hover, h2 a:hover, h3 a:hover { color: #bee916; }
 h2, h3 { margin-top: 3ex; }
-
 pre {
    background-color: #bbb;
    padding-left: 6px; padding-right: 4px; padding-top: 2px; padding-bottom: 3px;
    border-radius: 0.2em;
 }
-pre code { font-size: 0.88em; }
+pre code { font-size: 0.85em; }
 code {
    font-family: 'Inconsolata', 'Courier New', sans-serif;
    font-size: 1.0em;
@@ -52,7 +53,6 @@ img { border: none; }
 
 .contents {
    background-color: #666;
-   border: 2px ridge #bee916;
    border-radius: 0.2em;
    font-size: 90%;
 }
@@ -67,7 +67,7 @@ img { border: none; }
 
 .navigation { display: inline; float: right; }
 .navigation img {
-   margin-left: 2px; margin-right: 2px; margin-top: 0px;
+   margin-left: 2px; margin-right: 2px;
    width: 22px; height: 22px;
 }
 
@@ -81,8 +81,9 @@ img { border: none; }
 }
 
 .header { margin: 0; }
-.header a { font-family: serif; font-size: 150%; }
+.header a { font-family: serif; font-size: 150%; color: #bee916; }
 .header > span { font-size: 50%; padding-left: 2em; position: relative; top: -1ex; }
+.header .navigation { margin-top: 3ex; }
 .header span span { text-shadow: 0 0 3px white; }
 
 .footer {

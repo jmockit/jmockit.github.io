@@ -29,8 +29,9 @@
    <th><a href="changes.html">History</a></th>
 </tr></table>
 
-<h1>About the JMockit Testing Toolkit</h1>
-
+<h1>
+   <a href="#">About the JMockit Testing Toolkit</a>
+</h1>
 <p>
    JMockit is open source software licensed under the
    <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.
@@ -46,7 +47,9 @@
    includes other tools designed to support the creation of large test suites.
 </p>
 
-<h2 id="internalWorkings">How it works</h2>
+<h2 id="internalWorkings">
+   <a href="#internalWorkings">How it works</a>
+</h2>
 <p>
    Internally, the Java SE 6 bytecode instrumentation feature (the
    <a href="http://download.oracle.com/javase/6/docs/api/java/lang/instrument/package-summary.html"
@@ -68,7 +71,9 @@
    This process repeats itself for the next test, whenever needed as specified in test code through the mocking API.
 </p>
 
-<h2 id="conventionalTools">Conventional tools for mock objects</h2>
+<h2 id="conventionalTools">
+   <a href="#conventionalTools">Conventional tools for mock objects</a>
+</h2>
 <p>
    The JMockit approach is an alternative to the conventional use of "mock objects" as provided by tools such as
    <a href="http://easymock.org">EasyMock</a>, <a href="http://jmock.org">jMock</a>, and
@@ -110,7 +115,9 @@
    </li>
 </ol>
 
-<h2 id="productionCode">Design considerations for production code</h2>
+<h2 id="productionCode">
+   <a href="#productionCode">Design considerations for production code</a>
+</h2>
 <p>
    The problem with imposing restrictions on the design of production code is that there <em>are</em> good reasons for
    making classes and methods <code>final</code>, for directly obtaining instances of collaborators with the
@@ -118,7 +125,9 @@
    There is nothing inherently wrong with using these three Java language keywords, after all.
 </p>
 
-<h3 id="final">Use of <code>final</code></h3>
+<h3 id="final">
+   <a href="#final">Use of <code>final</code></a>
+</h3>
 <p>
    Declaring classes or methods <code>final</code> communicates the design decision that they are not intended for
    extension by subclassing.
@@ -172,7 +181,9 @@
    (<a href="http://c2.com/cgi/wiki?DesignPatternsBook">Design Patterns</a>, page 20).
 </p>
 
-<h3 id="new">Use of <code>new</code></h3>
+<h3 id="new">
+   <a href="#new">Use of <code>new</code></a>
+</h3>
 <p>
    Directly instantiating dependencies with <code>new</code> facilitates the use of stateful objects.
    In OO design, objects normally are not stateless.
@@ -206,7 +217,9 @@
    many methods, the exact opposite of small, cohesive, and stateful classes which are what true objects are about.
 </p>
 
-<h3 id="static">Use of <code>static</code></h3>
+<h3 id="static">
+   <a href="#static">Use of <code>static</code></a>
+</h3>
 <p>
    The use of classes containing only <code>static</code> methods is the best choice when none of the methods operate on
    any state (for example, the <code>Math</code> class), or the actual state is stored in a separate context object,
@@ -231,7 +244,9 @@
    importance, which was specifically designed to provide stateless utility methods.)
 </p>
 
-<h2 id="testability">Testability</h2>
+<h2 id="testability">
+   <a href="#testability">Testability</a>
+</h2>
 <p>
    The limitations found in conventional mocking tools have come to be associated with the idea of "untestable code".
    Often, we see the restrictions resulting from those limitations considered as inevitable, or even as something that
@@ -268,7 +283,9 @@
    <em>all</em> possible isolation scenarios, such extrinsic concerns for testability completely disappear.
 </p>
 
-<h2 id="mockingAPIs">Design considerations for mocking APIs</h2>
+<h2 id="mockingAPIs">
+   <a href="#mockingAPIs">Design considerations for mocking APIs</a>
+</h2>
 <p>
    In the following discussion, five different mocking libraries (besides JMockit) are examined, all in their latest
    stable releases as of Sep 13, 2014: <strong>EasyMock 3.2</strong>, <strong>jMock 2.6.0</strong>,
@@ -360,7 +377,9 @@
    be enough to show that many possibilities exist for the design of mocking APIs.
 </p>
 
-<h2 id="alternativeTools">Alternative mocking tools</h2>
+<h2 id="alternativeTools">
+   <a href="#alternativeTools">Alternative mocking tools</a>
+</h2>
 <p>
    There are other mocking tools for Java which also overcome the limitations of the conventional ones.
    The one that comes closest to the feature set of JMockit is
@@ -508,7 +527,9 @@
    tests.
 </p>
 
-<h2 id="coverage">Code Coverage</h2>
+<h2 id="coverage">
+   <a href="#coverage">Code Coverage</a>
+</h2>
 <p>
    Existing open source code coverage tools, such as <a href="http://emma.sourceforge.net">EMMA</a>,
    <a href="http://cobertura.sourceforge.net">Cobertura</a>, and
@@ -577,15 +598,9 @@
   <a href="tutorial/CodeCoverage.html">Running tests with JMockit Coverage</a>
   <a href="coverage-sample/index.html">Sample coverage report</a>
 </div>
-
 <div class="footer">
-   <p>
-      Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
-      <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
-   </p>
-   <p>
-      <a href="http://opensource.org/licenses/mit-license.php">MIT License</a>
-   </p>
+   Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
+   <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
 </div>
 </body>
 </html>

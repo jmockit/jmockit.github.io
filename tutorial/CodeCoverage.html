@@ -16,17 +16,14 @@
 <h1 class="header">
    <a href="../index.html">JMockit</a>
    <span>The Mock <span>Anything</span> Toolkit for Java</span>
+   <span class="navigation">
+      <a href="ReflectionUtilities.html"><img src="go-previous.png" title="Previous chapter"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
 </h1>
 
 <h1 id="top">
-   Measuring code coverage
-   <span class="navigation">
-      <a href="#line"><img src="go-down.png" title="Next section"></a>
-      <a href="ReflectionUtilities.html"><img src="go-previous.png" title="Previous chapter"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <img src="blank.gif" width="22">
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#">Measuring code coverage</a>
 </h1>
 
 <ol class="contents">
@@ -92,14 +89,7 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
 </p>
 
 <h2 id="line">
-   Line coverage
-   <span class="navigation">
-      <a href="#path"><img src="go-down.png" title="Next section"></a>
-      <a href="#top"><img src="go-up.png" title="Top"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#line">Line coverage</a>
 </h2>
 <p>
    The <em>line coverage</em> metric tells us how much of the <em>executable code</em> in a source file has been
@@ -138,14 +128,7 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
 </p>
 
 <h2 id="path">
-   <span class="navigation">
-      <a href="#data"><img src="go-down.png" title="Next section"></a>
-      <a href="#line"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
-   Path coverage
+   <a href="#path">Path coverage</a>
 </h2>
 <p>
    A completely different metric is <em>path coverage</em>, which is computed for method and constructor bodies, not for
@@ -175,14 +158,7 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
 </p>
 
 <h2 id="data">
-   <span class="navigation">
-      <a href="#output"><img src="go-down.png" title="Next section"></a>
-      <a href="#path"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
-   Data coverage
+   <a href="#data">Data coverage</a>
 </h2>
 <p>
    Measures how many of the instance and static non-final <em>fields</em> were fully exercised by the test run.
@@ -192,14 +168,7 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
 </p>
 
 <h2 id="output">
-   Types of coverage output
-   <span class="navigation">
-      <a href="#configuration"><img src="go-down.png" title="Next section"></a>
-      <a href="#data"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#output">Types of coverage output</a>
 </h2>
 <p>
    The JMockit Coverage tool can generate the following types of output:
@@ -228,7 +197,9 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    </li>
 </ol>
 
-<h3 id="callPoints">Call points</h3>
+<h3 id="callPoints">
+   <a href="#callPoints">Call points</a>
+</h3>
 <p>
    When running a test suite with the coverage tool, there is optional "call point" information which can be gathered,
    as selected by the user.
@@ -244,14 +215,7 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
 </p>
 
 <h2 id="configuration">
-   Configuring the coverage tool
-   <span class="navigation">
-      <a href="#merging"><img src="go-down.png" title="Next section"></a>
-      <a href="#output"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#configuration">Configuring the coverage tool</a>
 </h2>
 <p>
    To enable the JMockit Coverage tool in a JUnit/TestNG test run, add both <code>jmockit.jar</code> and
@@ -356,14 +320,7 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
 </ol>
 
 <h2 id="merging">
-   Aggregated reports for multiple test runs
-   <span class="navigation">
-      <a href="#checking"><img src="go-down.png" title="Next section"></a>
-      <a href="#configuration"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#merging">Aggregated reports for multiple test runs</a>
 </h2>
 <p>
    When the coverage tool generates a report at the end of a test run, it always overwrites any previous report.
@@ -380,7 +337,9 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    The following sub-sections provide the details for each case.
 </p>
 
-<h3 id="serial">Generating an aggregate report from multiple data files</h3>
+<h3 id="serial">
+   <a href="#serial">Generating an aggregate report from multiple data files</a>
+</h3>
 <p>
    Suppose we want to gather coverage data from multiple test runs and later generate an aggregate HTML report merging
    together the results from all test runs.
@@ -409,7 +368,9 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    memory, and then generate the aggregate HTML report before exiting.
 </p>
 
-<h3 id="serial-append">Generating an aggregate report from a single data file appended after each test run</h3>
+<h3 id="serial-append">
+   <a href="#serial-append">Generating an aggregate report from a single data file appended after each test run</a>
+</h3>
 <p>
    Another way to obtain an aggregate coverage report from the execution of multiple test runs is to accumulate coverage
    data from all tests into a <em>single</em> data file.
@@ -428,14 +389,7 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
 </p>
 
 <h2 id="checking">
-   Checking minimum coverage
-   <span class="navigation">
-      <a href="#maven"><img src="go-down.png" title="Next section"></a>
-      <a href="#merging"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#checking">Checking minimum coverage</a>
 </h2>
 <p>
    If desired, JMockit Coverage can check that the final coverage percentages at the end of a test run satisfy arbitrary
@@ -490,14 +444,7 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
 </code></pre>
 
 <h2 id="maven">
-   Activating coverage in a Maven project
-   <span class="navigation">
-      <a href="#switching"><img src="go-down.png" title="Next section"></a>
-      <a href="#checking"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#maven">Activating coverage in a Maven project</a>
 </h2>
 <p>
    If you run tests with Maven's "test" goal, you will need the following dependencies in the <code>pom.xml</code> file
@@ -549,7 +496,9 @@ jmockit-coverage-${jmockit.version}.jar</strong>
 &lt;/plugin>
 </code></pre>
 
-<h3 id="site">Including the HTML report in a Maven site</h3>
+<h3 id="site">
+   <a href="#site">Including the HTML report in a Maven site</a>
+</h3>
 <p>
    To have the JMockit Coverage HTML report included in the generated
    <a href="http://maven.apache.org/guides/mini/guide-site.html">Maven site</a> documentation, the
@@ -571,14 +520,7 @@ jmockit-coverage-${jmockit.version}.jar</strong>
 </code></pre>
 
 <h2 id="switching">
-   Turning coverage output off
-   <span class="navigation">
-      <a href="#standalone"><img src="go-down.png" title="Next section"></a>
-      <a href="#maven"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#switching">Turning coverage output off</a>
 </h2>
 <p>
    Sometimes we want to turn coverage output off for a particular test run, without having to remove the coverage jar
@@ -606,14 +548,7 @@ jmockit-coverage-${jmockit.version}.jar</strong>
 </p>
 
 <h2 id="standalone">
-   Standalone mode
-   <span class="navigation">
-      <a href="#bottom"><img src="go-down.png" title="Bottom"></a>
-      <a href="#switching"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#standalone">Standalone mode</a>
 </h2>
 <p>
    In previous sections we described the most typical way to use the coverage tool, by enabling it during a JUnit/TestNG
@@ -651,11 +586,11 @@ jmockit-coverage-${jmockit.version}.jar</strong>
 
 <div id="bottom" class="navigation">
    <a href="ReflectionUtilities.html"><img src="go-previous.png" title="Previous chapter"></a>
-   <a href="#standalone"><img src="go-up.png" title="Previous section"></a>
-   <img src="blank.gif" width="22">
-   <a href="#top"><img src="go-top.png" title="Top"></a>
    <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
 </div>
-<br/>
+<div class="footer">
+   Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
+   <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
+</div>
 </body>
 </html>

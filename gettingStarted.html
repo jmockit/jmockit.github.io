@@ -31,8 +31,9 @@
    <th><a href="changes.html">History</a></th>
 </tr></table>
 
-<h1>Getting started with the JMockit toolkit</h1>
-
+<h1>
+   <a href="#">Getting started with the JMockit toolkit</a>
+</h1>
 <p>
    The toolkit is provided as a versioned zip file that contains everything (jars, sources, documentation, and Maven
    configuration files), and also as a set of Maven artifacts deployed to the
@@ -42,7 +43,9 @@
    <a href="samples.html">sample test suites</a>.
 </p>
 
-<h2 id="fullDistribution">Using the JMockit full distribution</h2>
+<h2 id="fullDistribution">
+   <a href="#fullDistribution">Using the JMockit full distribution</a>
+</h2>
 <p>
    Follow these instructions to start using JMockit:
 </p>
@@ -95,7 +98,9 @@
    <a href="tutorial/RunningTests.html#maven">Maven</a>.
 </p>
 
-<h2 id="mockingAPIs">Using the mocking APIs</h2>
+<h2 id="mockingAPIs">
+   <a href="#mockingAPIs">Using the mocking APIs</a>
+</h2>
 <p>
    The JMockit mocking APIs can be used in tests written with any of the popular testing frameworks:
    JUnit 4 (version 4.5 or newer) and TestNG (version 6.2 or newer).
@@ -103,7 +108,9 @@
    <code>mockit</code> package.
 </p>
 
-<h3 id="mockObject">Creating a "mock object"</h3>
+<h3 id="mockObject">
+   <a href="#mockObject">Creating a "mock object"</a>
+</h3>
 <p>
    In a test class, declare a <em>mock field</em> of the type you wish to mock, annotating it with a JMockit annotation
    such as <code class="annotation">@Mocked</code> or <code class="annotation">@Injectable</code>.
@@ -150,7 +157,9 @@ public class MyFirstJMockitTest
    test runner.
 </p>
 
-<h3 id="testMethod">What exactly goes inside a test method?</h3>
+<h3 id="testMethod">
+   <a href="#testMethod">What exactly goes inside a test method?</a>
+</h3>
 <p>
    The following template shows the basic structure of a JMockit test method, when using the
    <em>Expectations & Verifications API</em> for <em>behavior-based</em> testing:
@@ -180,7 +189,9 @@ public void aTestMethod(<em>&lt;any number of mock parameters></em>)
    record or verify expectations on them, you simply <em>invoke</em> them during the corresponding test execution phase.
 </p>
 
-<h3 id="record">Recording expectations</h3>
+<h3 id="record">
+   <a href="#record">Recording expectations</a>
+</h3>
 <p>
    For the "record" phase of a test, we can write one or more <em>expectation blocks</em>, inside which invocations to
    mocked types/instances are recorded.
@@ -237,7 +248,9 @@ public void aTestMethod(@Mocked final MyCollaborator anyCollaborator)
    remaining ones.
 </p>
 
-<h3 id="verify">Verifying expectations</h3>
+<h3 id="verify">
+   <a href="#verify">Verifying expectations</a>
+</h3>
 <p>
    When one or more types get mocked non-strictly in a test, we often end up with a non-empty verification phase.
    (If, on the other hand, all mocked types used in the test have only strict expectations, then all invocations get
@@ -280,7 +293,9 @@ public void aTestMethod(@Injectable final MyCollaborator mock)
    the verification block (excluding those which are verified implicitly, if any).
 </p>
 
-<h3 id="stateOriented"><em>State</em>-oriented mocking, <em>fake</em> implementations</h3>
+<h3 id="stateOriented">
+   <a href="#stateOriented"><em>State</em>-oriented mocking, <em>fake</em> implementations</a>
+</h3>
 <p>
    Sometimes you are more interested in checking the argument values passed to a mocked collaborator, instead of
    checking that the invocation to the collaborator was made from the client/tested method.
@@ -332,7 +347,9 @@ public void stateBasedTestMethod()
    frameworks such as Spring, Hibernate, or Java EE.
 </p>
 
-<h3 id="moreInfo">More information</h3>
+<h3 id="moreInfo">
+   <a href="#moreInfo">More information</a>
+</h3>
 <p>
    The examples above give only a brief overview of the available mocking APIs. There is more.
    The <a href="tutorial.html">JMockit Tutorial</a> contains an extensive discussion of nearly all methods, fields,
@@ -344,13 +361,8 @@ public void stateBasedTestMethod()
 </p>
 
 <div class="footer">
-   <p>
-      Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
-      <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
-   </p>
-   <p>
-      <a href="http://opensource.org/licenses/mit-license.php">MIT License</a>
-   </p>
+   Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
+   <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
 </div>
 </body>
 </html>

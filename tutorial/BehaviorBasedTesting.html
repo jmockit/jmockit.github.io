@@ -16,17 +16,15 @@
 <h1 class="header">
    <a href="../index.html">JMockit</a>
    <span>The Mock <span>Anything</span> Toolkit for Java</span>
-</h1>
-
-<h1 id="top">
-   Behavior-based testing
    <span class="navigation">
-      <a href="#mocked"><img src="go-down.png" title="Next section"></a>
       <a href="RunningTests.html"><img src="go-previous.png" title="Previous chapter"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
       <a href="StateBasedTesting.html"><img src="go-next.png" title="Next chapter"></a>
       <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
    </span>
+</h1>
+
+<h1 id="top">
+   <a href="#">Behavior-based testing</a>
 </h1>
 <ol class="contents">
    <li><a href="#mocked">Mocked types</a></li>
@@ -151,14 +149,7 @@
 </p>
 
 <h2 id="mocked">
-   Mocked types
-   <span class="navigation">
-      <a href="#expectation"><img src="go-down.png" title="Next section"></a>
-      <a href="#top"><img src="go-up.png" title="Top"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#mocked">Mocked types</a>
 </h2>
 <p>
    Methods and constructors invoked from the unit under test, and which belong to a dependency/collaborator of said
@@ -218,14 +209,7 @@ public void doBusinessOperationXyz()
 </p>
 
 <h2 id="expectation">
-   Expectations
-   <span class="navigation">
-      <a href="#model"><img src="go-down.png" title="Next section"></a>
-      <a href="#mocked"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#expectation">Expectations</a>
 </h2>
 <p>
    An <em>expectation</em> is a set of invocations to a specific mocked method/constructor that is relevant for a given
@@ -273,14 +257,7 @@ public void doBusinessOperationXyz(@Mocked final Dependency mockInstance)
 </p>
 
 <h2 id="model">
-   The <em>record-replay-verify</em> model
-   <span class="navigation">
-      <a href="#declaration"><img src="go-down.png" title="Next section"></a>
-      <a href="#expectation"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#model">The <em>record-replay-verify</em> model</a>
 </h2>
 <p>
    Any developer test can be divided in at least three separate execution <em>phases</em>.
@@ -409,14 +386,7 @@ public class SomeTest
 <img src="code-folding.png" style="border: 1px solid #888; box-shadow: 4px 4px 4px #666;">
 
 <h2 id="declaration">
-   Declaring and using mocked types
-   <span class="navigation">
-      <a href="#strictness"><img src="go-down.png" title="Next section"></a>
-      <a href="#model"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#declaration">Declaring and using mocked types</a>
 </h2>
 <p>
    A mocked type can be introduced either through an instance field or a parameter declaration.
@@ -447,7 +417,9 @@ public class SomeTest
    static methods are going to be called on it.
 </p>
 
-<h3 id="mockedInstances">Mocked instances</h3>
+<h3 id="mockedInstances">
+   <a href="#mockedInstances">Mocked instances</a>
+</h3>
 <p>
    The mocked instances created by JMockit can be used normally in test code (for the recording and verification of
    expectations), and/or passed to the code under test. Or they may simply go unused.
@@ -468,14 +440,7 @@ public class SomeTest
 </p>
 
 <h2 id="strictness">
-   <em>Strict</em> and <em>non-strict</em> expectations
-   <span class="navigation">
-      <a href="#results"><img src="go-down.png" title="Next section"></a>
-      <a href="#declaration"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#strictness"><em>Strict</em> and <em>non-strict</em> expectations</a>
 </h2>
 <p>
    Expectations recorded inside a <code>new <strong>Expectations</strong>() {...}</code> block are <em>strict</em> by
@@ -523,7 +488,9 @@ public class SomeTest
    after the code under test is exercised.
 </p>
 
-<h3 id="strictMocks">Strict and non-strict <em>mocks</em></h3>
+<h3 id="strictMocks">
+   <a href="#strictMocks">Strict and non-strict <em>mocks</em></a>
+</h3>
 <p>
    Note that we do not specify that a given mocked type/instance should be <em>strict</em> or <em>non-strict</em>.
    Instead, the strictness for a given mock field/parameter is determined by how it is used in the test.
@@ -535,14 +502,7 @@ public class SomeTest
 </p>
 
 <h2 id="results">
-   Recording results for an expectation
-   <span class="navigation">
-      <a href="#instanceMatching"><img src="go-down.png" title="Next section"></a>
-      <a href="#strictness"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#results">Recording results for an expectation</a>
 </h2>
 <p>
    For a given method with non-<code>void</code> return type, a return value can be recorded through an assignment to
@@ -636,14 +596,7 @@ public void doSomethingHandlesSomeCheckedException(@Mocked final DependencyAbc a
 </p>
 
 <h2 id="instanceMatching">
-   Matching invocations to specific instances
-   <span class="navigation">
-      <a href="#argumentMatching"><img src="go-down.png" title="Next section"></a>
-      <a href="#results"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#instanceMatching">Matching invocations to specific instances</a>
 </h2>
 <p>
    Previously, we explained that an expectation recorded on a mocked instance, such as
@@ -658,7 +611,9 @@ public void doSomethingHandlesSomeCheckedException(@Mocked final DependencyAbc a
    shall see.
 </p>
 
-<h3 id="onInstance">The <code>onInstance(m)</code> constraint</h3>
+<h3 id="onInstance">
+   <a href="#onInstance">The <code>onInstance(m)</code> constraint</a>
+</h3>
 <p>
    We can use the <code><strong>onInstance</strong>(mockObject)</code> method when recording an expectation, as the next
    example shows.
@@ -697,7 +652,9 @@ public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>
    Therefore, in such common situations it isn't necessary to explicitly use the <code>onInstance(m)</code> method.
 </p>
 
-<h3 id="injectable">Injectable mocked instances</h3>
+<h3 id="injectable">
+   <a href="#injectable">Injectable mocked instances</a>
+</h3>
 <p>
    Suppose we need to test code which works with multiple instances of a given class.
    If we declare said class to be mocked, then all of its instances will be equally affected: they all become mocked
@@ -779,7 +736,9 @@ public void concatenateInputStreams(
    method was called by the test.)
 </p>
 
-<h3 id="futureInstancesByConstructor">Instances created with a given constructor</h3>
+<h3 id="futureInstancesByConstructor">
+   <a href="#futureInstancesByConstructor">Instances created with a given constructor</a>
+</h3>
 <p>
    Specifically for <em>future</em> instances that will later get created by code under test, JMockit provides a
    mechanism through which we can match invocations on them: by recording an expectation on a specific <em>constructor
@@ -810,14 +769,7 @@ public void newCollaboratorsWithDifferentBehaviors(
 </code></pre>
 
 <h2 id="argumentMatching">
-   Flexible matching of argument values
-   <span class="navigation">
-      <a href="#constraints"><img src="go-down.png" title="Next section"></a>
-      <a href="#instanceMatching"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#argumentMatching">Flexible matching of argument values</a>
 </h2>
 <p>
    In both the <em>record</em> and <em>verify</em> phases, an invocation to a mocked method or constructor identifies an
@@ -841,7 +793,9 @@ public void newCollaboratorsWithDifferentBehaviors(
    Therefore, they can be used in expectation as well as verification blocks.
 </p>
 
-<h3 id="withMethods">Using the "with" methods for argument matching</h3>
+<h3 id="withMethods">
+   <a href="#withMethods">Using the "with" methods for argument matching</a>
+</h3>
 <p>
    When recording or verifying an expectation, calls to the <code>withXyz(...)</code> methods can occur for any subset
    of the arguments passed in the invocation.
@@ -888,7 +842,9 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    (see the <a href="../api1x/mockit/Expectations.html#with(T, java.lang.Object)">API documentation</a> for details).
 </p>
 
-<h3 id="matcherFields">Using the "any" <em>fields</em> for argument matching</h3>
+<h3 id="matcherFields">
+   <a href="#matcherFields">Using the "any" <em>fields</em> for argument matching</a>
+</h3>
 <p>
    The most common argument matching constraint tends also to be the <em>least</em> restrictive one: to match
    invocations with <em>any</em> value for a given parameter (of the proper parameter type, of course).
@@ -922,7 +878,9 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    more details on argument matching fields.
 </p>
 
-<h3 id="nullAsMatcher">Using the <code>null</code> value to match any object reference</h3>
+<h3 id="nullAsMatcher">
+   <a href="#nullAsMatcher">Using the <code>null</code> value to match any object reference</a>
+</h3>
 <p>
    When using at least one argument matching method or field for a given expectation, we can use a "shortcut" to specify
    that any object reference should be accepted (for a parameter of reference type).
@@ -949,7 +907,9 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    matcher can be used.
 </p>
 
-<h3 id="varargs">Matching values passed through a <em>varargs</em> parameter</h3>
+<h3 id="varargs">
+   <a href="#varargs">Matching values passed through a <em>varargs</em> parameter</a>
+</h3>
 <p>
    Occasionally we may need to deal with expectations for "varargs" methods or constructors.
    It's valid to pass regular values as a varargs argument, and <em>also</em> valid to use the "with"/"any" matchers
@@ -971,14 +931,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 </p>
 
 <h2 id="constraints">
-   Specifying invocation count constraints
-   <span class="navigation">
-      <a href="#verification"><img src="go-down.png" title="Next section"></a>
-      <a href="#argumentMatching"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#constraints">Specifying invocation count constraints</a>
 </h2>
 <p>
    So far, we saw that besides an associated method or constructor, an expectation can have invocation results and
@@ -1039,14 +992,7 @@ public void someOtherTestMethod(@Mocked final DependencyAbc abc)
 </p>
 
 <h2 id="verification">
-   Explicit verification
-   <span class="navigation">
-      <a href="#delegates"><img src="go-down.png" title="Next section"></a>
-      <a href="#constraints"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#verification">Explicit verification</a>
 </h2>
 <p>
    Strict expectations are verified implicitly, so there is no point in re-verifying them in a explicit verification
@@ -1084,14 +1030,18 @@ public void verifyInvocationsExplicitlyAtEndOfTest(@Mocked final Dependency mock
    constraint must be specified.
 </p>
 
-<h3 id="neverHappened">Verifying that an invocation never happened</h3>
+<h3 id="neverHappened">
+   <a href="#neverHappened">Verifying that an invocation never happened</a>
+</h3>
 <p>
    To do this inside a verification block, add a <code>times = 0</code> assignment right after the
    invocation that is expected to not have happened during the replay phase.
    If one or more matching invocations did happen, the test will fail.
 </p>
 
-<h3 id="verificationInOrder">Verification in order</h3>
+<h3 id="verificationInOrder">
+   <a href="#verificationInOrder">Verification in order</a>
+</h3>
 <p>
    Regular verification blocks created with the <code class="type">Verifications</code> class are <em>unordered</em>.
    The actual relative order in which <code>aMethod()</code> and <code>anotherMethod()</code> were called during the
@@ -1123,7 +1073,9 @@ public void verifyingExpectationsInOrder(@Mocked final DependencyAbc abc)
    at any time (or not at all).
 </p>
 
-<h3 id="partiallyOrdered">Partially ordered verification</h3>
+<h3 id="partiallyOrdered">
+   <a href="#partiallyOrdered">Partially ordered verification</a>
+</h3>
 <p>
    Suppose you want to verify that a particular method (or constructor) was called <em>before</em>/<em>after</em> other
    invocations, but you don't care about the order in which those other invocations occurred.
@@ -1198,7 +1150,9 @@ public void verifyFirstAndLastCallsWithOthersInBetweenInAnyOrder()
    invocations occurred between the first and last expected calls.
 </p>
 
-<h3 id="fullVerification">Full verification</h3>
+<h3 id="fullVerification">
+   <a href="#fullVerification">Full verification</a>
+</h3>
 <p>
    Sometimes it may be important to have <em>all</em> invocations to the mocked types involved in a test verified.
    This is automatically the case when recording strict expectations, since any unexpected invocation causes the test to
@@ -1229,7 +1183,9 @@ public void verifyAllInvocations(@Mocked final Dependency mock)
    Therefore, explicitly verifying such an expectation inside the full verification block is not necessary.
 </p>
 
-<h3 id="fullVerificationInOrder">Full verification in order</h3>
+<h3 id="fullVerificationInOrder">
+   <a href="#fullVerificationInOrder">Full verification in order</a>
+</h3>
 <p>
    So, we have seen how to do <em>unordered</em> verifications with <code class="type">Verifications</code>,
    <em>ordered</em> verifications with <code class="type">VerificationsInOrder</code>, and full verifications with
@@ -1272,7 +1228,9 @@ public void verifyAllInvocationsInOrder(@Mocked final Dependency mock)
    specified inside the verification block).
 </p>
 
-<h3 id="restrictedFullVerifications">Restricting the set of mocked types to be fully verified</h3>
+<h3 id="restrictedFullVerifications">
+   <a href="#restrictedFullVerifications">Restricting the set of mocked types to be fully verified</a>
+</h3>
 <p>
    By default, <em>all</em> invocations to <em>all</em> mocked instances/types in effect for a given test must be
    verified explicitly when using a <code>new FullVerifications() {}</code> or
@@ -1312,7 +1270,9 @@ public void verifyAllInvocationsToOnlyOneOfTwoMockedTypes(
    sure that all invocations to the mocked <code class="type">AnotherDependency</code> class were verified.
 </p>
 
-<h3 id="emptyFullVerifications">Verifying that no invocations occurred</h3>
+<h3 id="emptyFullVerifications">
+   <a href="#emptyFullVerifications">Verifying that no invocations occurred</a>
+</h3>
 <p>
    To verify that <em>no</em> invocations at all occurred on the non-strict mocked types/instances used in a test, add
    an <em>empty</em> full verification block to it.
@@ -1349,7 +1309,9 @@ public void verifyNoInvocationsOnOneOfTwoMockedDependenciesBeyondThoseRecordedAs
 }
 </code></pre>
 
-<h3 id="unspecifiedInvocations">Verifying unspecified invocations that should not happen</h3>
+<h3 id="unspecifiedInvocations">
+   <a href="#unspecifiedInvocations">Verifying unspecified invocations that should not happen</a>
+</h3>
 <p>
    A full verification block (ordered or not) also allows us to verify that certain methods and/or constructors never
    get invoked, without having to record or verify each one of them with a corresponding <code><em>times</em> = 0</code>
@@ -1381,14 +1343,7 @@ public void readOnlyOperation(@Mocked final Dependency mock)
 </p>
 
 <h2 id="delegates">
-   Delegates: specifying custom results
-   <span class="navigation">
-      <a href="#withCapture"><img src="go-down.png" title="Next section"></a>
-      <a href="#verification"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#delegates">Delegates: specifying custom results</a>
 </h2>
 <p>
    We have seen how to record results for invocations through assignments to the <code><em>result</em></code> field or
@@ -1448,14 +1403,7 @@ public void delegatingConstructorInvocations(@Mocked Collaborator mock)
 </code></pre>
 
 <h2 id="withCapture">
-   Capturing invocation arguments for verification
-   <span class="navigation">
-      <a href="#deencapsulation"><img src="go-down.png" title="Next section"></a>
-      <a href="#delegates"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#withCapture">Capturing invocation arguments for verification</a>
 </h2>
 <p>
    Invocation arguments can be captured for later verification through a pair of special "<code>withCapture(...)</code>"
@@ -1507,14 +1455,7 @@ public void capturingArgumentsFromMultipleInvocations(@Mocked final Collaborator
 </p>
 
 <h2 id="deencapsulation">
-   Accessing private members
-   <span class="navigation">
-      <a href="#partial"><img src="go-down.png" title="Next section"></a>
-      <a href="#withCapture"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#deencapsulation">Accessing private members</a>
 </h2>
 <p>
    Normally, behavior-based tests for a given unit are written against the <code>public/protected/default</code>
@@ -1571,14 +1512,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 </p>
 
 <h2 id="partial">
-   Partial mocking
-   <span class="navigation">
-      <a href="#cascading"><img src="go-down.png" title="Next section"></a>
-      <a href="#deencapsulation"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#partial">Partial mocking</a>
 </h2>
 <p>
    By default, <em>all</em> methods and constructors which can be called on a mocked type <em>and</em> its super-types
@@ -1588,7 +1522,9 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    Methods/constructors not mocked in an otherwise mocked type will execute normally when called.
 </p>
 
-<h3 id="staticPartial">Static partial mocking</h3>
+<h3 id="staticPartial">
+   <a href="#staticPartial">Static partial mocking</a>
+</h3>
 <p>
    Methods and constructors to be mocked can be explicitly specified through the
    <code><span class="annotation">@Mocked</span>(<strong>value</strong> = {"filter1", "filter2", ...})</code>
@@ -1632,7 +1568,9 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    <code class="type">java.lang.Object</code>.
 </p>
 
-<h3 id="dynamicPartial">Dynamic partial mocking</h3>
+<h3 id="dynamicPartial">
+   <a href="#dynamicPartial">Dynamic partial mocking</a>
+</h3>
 <p>
    Static partial mocking has the inconvenience that we need to explicitly specify the methods/constructors to be
    mocked, and do so inside strings instead of in Java code.
@@ -1748,14 +1686,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 </p>
 
 <h2 id="cascading">
-   Cascading mocks
-   <span class="navigation">
-      <a href="#capturing"><img src="go-down.png" title="Next section"></a>
-      <a href="#partial"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#cascading">Cascading mocks</a>
 </h2>
 <p>
    When using complex APIs where functionality is distributed through many different objects, it is not uncommon to see
@@ -1812,14 +1743,7 @@ public void recordAndVerifyExpectationsOnCascadedMocks(
 </p>
 
 <h2 id="capturing">
-   Capturing implementation classes and instances
-   <span class="navigation">
-      <a href="#tested"><img src="go-down.png" title="Next section"></a>
-      <a href="#cascading"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#capturing">Capturing implementation classes and instances</a>
 </h2>
 <p>
    Our discussion of this feature will be based on the (contrived) code below.
@@ -1849,7 +1773,9 @@ public final class TestedUnit
    for the use of Reflection) from client code.
 </p>
 
-<h3 id="mockingUnspecifiedImplementations">Mocking unspecified implementation classes</h3>
+<h3 id="mockingUnspecifiedImplementations">
+   <a href="#mockingUnspecifiedImplementations">Mocking unspecified implementation classes</a>
+</h3>
 <p>
    Given a base type (be it an <code>interface</code>, an <code>abstract</code> class, or any sort of base class), we
    can write a test which only knows about the base type but where all implementing/extending implementation classes get
@@ -1883,7 +1809,9 @@ public final class TestedUnit
    occurs, <em>and</em> regardless of the actual class implementing the method.
 </p>
 
-<h3 id="futureInstances">Specifying behavior for <em>future</em> instances</h3>
+<h3 id="futureInstances">
+   <a href="#futureInstances">Specifying behavior for <em>future</em> instances</a>
+</h3>
 <p>
    An additional ability related to capturing applies to <em>future</em> instances assignable to the mocked type, and
    is activated through the "<code>maxInstances</code>" optional attribute.
@@ -1931,14 +1859,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
 </p>
 
 <h2 id="tested">
-   Instantiation and injection of tested classes
-   <span class="navigation">
-      <a href="#reuse"><img src="go-down.png" title="Next section"></a>
-      <a href="#capturing"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#tested">Instantiation and injection of tested classes</a>
 </h2>
 <p>
    Typically, a test class will exercise a single <em>tested class</em>.
@@ -2007,14 +1928,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
 </p>
 
 <h2 id="reuse">
-   Reusing expectation and verification blocks
-   <span class="navigation">
-      <a href="#otherTopics"><img src="go-down.png" title="Next section"></a>
-      <a href="#tested"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#reuse">Reusing expectation and verification blocks</a>
 </h2>
 <p>
    The simplest form of test code reuse with JMockit is the declaration of mock fields at the test class level.
@@ -2113,20 +2027,15 @@ public void setAccountToLoggedInWhenPasswordMatches() throws Exception
 </p>
 
 <h2 id="otherTopics">
-   Other topics
-   <span class="navigation">
-      <a href="#bottom"><img src="go-down.png" title="Bottom"></a>
-      <a href="#reuse"><img src="go-up.png" title="Previous section"></a>
-      <a href="#bottom"><img src="go-bottom.png" title="Bottom"></a>
-      <a href="#top"><img src="go-top.png" title="Top"></a>
-      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
-   </span>
+   <a href="#otherTopics">Other topics</a>
 </h2>
 <p>
    The following are more advanced scenarios and API elements, which tend to occur less often.
 </p>
 
-<h3 id="multipleInterfaces">Mocking multiple interfaces at the same time</h3>
+<h3 id="multipleInterfaces">
+   <a href="#multipleInterfaces">Mocking multiple interfaces at the same time</a>
+</h3>
 <p>
    (Feel free to skip over this section, as it is an advanced topic for rarer cases.)
    Suppose the unit under test needs to be given an object which implements two or more interfaces.
@@ -2179,7 +2088,9 @@ public final class MultiMocksTest<strong>&lt;MultiMock extends Dependency & Runn
    interfaces in each case.
 </p>
 
-<h3 id="iteratedExpectations">Iterated expectations</h3>
+<h3 id="iteratedExpectations">
+   <a href="#iteratedExpectations">Iterated expectations</a>
+</h3>
 <p>
    When a sequence of consecutive invocations is recorded with strict expectations (the relative order between
    invocations is irrelevant with <em>non-strict</em> expectations), the whole sequence is expected to occur exactly
@@ -2212,7 +2123,9 @@ public void recordStrictInvocationsInIteratingBlock(@Mocked final Collaborator m
    Non-strict expectations with no specified invocation count constraint, therefore, are not affected.
 </p>
 
-<h3 id="iterations">Verifying iterations</h3>
+<h3 id="iterations">
+   <a href="#iterations">Verifying iterations</a>
+</h3>
 <p>
    Just like we saw for recorded expectation blocks, verification blocks also have the ability to deal with invocations
    that occur inside loops, for a specified number of iterations of the loop.
@@ -2262,11 +2175,12 @@ public void verifyAllInvocationsInLoop(@Mocked final Dependency mock)
 
 <div id="bottom" class="navigation">
    <a href="RunningTests.html"><img src="go-previous.png" title="Previous chapter"></a>
-   <a href="#otherTopics"><img src="go-up.png" title="Previous section"></a>
    <a href="StateBasedTesting.html"><img src="go-next.png" title="Next chapter"></a>
-   <a href="#top"><img src="go-top.png" title="Top"></a>
    <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
 </div>
-<br/>
+<div class="footer">
+   Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
+   <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
+</div>
 </body>
 </html>
