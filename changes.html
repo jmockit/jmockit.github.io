@@ -29,26 +29,66 @@
 
 <h1>Development history</h1>
 
-<h2 id="next">
-   <a href="#next">Next release</a>
+<h2 id="current">
+   <a href="#current">Current release</a>
 </h2>
 
 <p>Version <a href="https://github.com/jmockit/jmockit1/commits/master">1.12</a> (Sep 21, 2014):</p>
 <ul>
    <li>
+      <strong>Deprecated</strong> the <code class="annotation">@Cascading</code> annotation.
+      Mocking now cascades by default on any mocked type, unless specified otherwise through the new
+      <code>boolean</code> <strong><code>cascading</code></strong> attribute of <code class="annotation">@Mocked</code>
+      (which is <code>true</code> by default).<br/>
+      This change may break existing tests if they require <code>null</code> to be returned, or if the return type of
+      some method <em>must</em> not be mocked; in such cases, the test will have to be changed to either record a
+      explicit <code>null</code> return, or to deactivate cascading.
+   </li>
+   <li>
+      The annotations <code class="annotation">@Tested</code> and <code class="annotation">@Mocked</code> can now be
+      applied together to the same field.
+      This causes the tested object to become <em>partially</em> mocked, as if it had been passed in a call to the
+      <code>NonStrictExpectations(Object...)</code> constructor.
+   </li>
+   <li>
+      The annotations <code class="annotation">@Tested</code> and <code class="annotation">@Injectable</code> can also
+      be applied together to the same field.
+      Besides causing the tested object to be partially mocked, it can also get injected into another
+      <code class="annotation">@Tested</code> field, if one exists having a suitable dependency.
+      This ability can be used in integration tests where a top-level tested object has one or more second-level
+      tested objects as dependencies.
+   </li>
+   <li>
+      Improved the support for integration tests through
+      <code class="annotation">@Tested(fullyInitialized = true)</code> fields, by properly handling injected fields of
+      type <code class="type">javax.inject.Provider&lt;T></code>, and <em>servlet</em> classes (which extend
+      <code class="type">javax.servlet.GenericServlet</code>, whose <code>init()</code> and <code>destroy()</code>
+      methods get automatically called).
+   </li>
+   <li>
+      New system property "<strong><code>coverage-maxCallPoints</code></strong>", to allow overriding the default value
+      (10 call points per covered line of source code, in the HTML report).
+   </li>
+   <li>
       Issues closed:
+      <a href="https://github.com/jmockit/jmockit1/issues/4">#4</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/48">#48</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/50">#50</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/52">#52</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/53">#53</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/54">#54</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/57">#57</a>,
-      <a href="https://github.com/jmockit/jmockit1/issues/58">#58</a>.
+      <a href="https://github.com/jmockit/jmockit1/issues/58">#58</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/59">#59</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/62">#62</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/63">#63</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/65">#65</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/66">#66</a>.
    </li>
 </ul>
 
-<h2 id="current">
-   <a href="#current">Current release</a>
+<h2 id="previous">
+   <a href="#previous">Previous releases</a>
 </h2>
 
 <p>Version <a href="https://github.com/jmockit/jmockit1/commits/master">1.11</a> (Aug 24, 2014):</p>
@@ -88,10 +128,6 @@
       <a href="https://github.com/jmockit/jmockit1/issues/47">#47</a>.
    </li>
 </ul>
-
-<h2 id="previous">
-   <a href="#previous">Previous releases</a>
-</h2>
 
 <p>Version <a href="https://github.com/jmockit/jmockit1/commits/master">1.10</a> (Jul 27, 2014):</p>
 <ul>
