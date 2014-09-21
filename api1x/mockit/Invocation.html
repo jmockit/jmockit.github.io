@@ -41,6 +41,7 @@ var activeTableTab = "activeTableTab";
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
 </div>
@@ -266,37 +267,6 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getInvocationCount--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getInvocationCount</h4>
-<pre>public final&nbsp;int&nbsp;getInvocationCount()</pre>
-<div class="block">Returns the current invocation count. The first invocation starts at 1 (one).</div>
-</li>
-</ul>
-<a name="getInvocationIndex--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getInvocationIndex</h4>
-<pre>public final&nbsp;int&nbsp;getInvocationIndex()</pre>
-<div class="block">Returns the index for the current invocation. The first invocation starts at 0 (zero).
- Note that this is equivalent to <a href="../mockit/Invocation.html#getInvocationCount--"><code>getInvocationCount()</code></a> - 1.</div>
-</li>
-</ul>
-<a name="getInvokedArguments--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getInvokedArguments</h4>
-<pre>public final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;getInvokedArguments()</pre>
-<div class="block">Returns the actual argument values passed in the invocation to the mocked method/constructor.</div>
-</li>
-</ul>
 <a name="getInvokedInstance--">
 <!--   -->
 </a>
@@ -319,21 +289,35 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
  respectively.</div>
 </li>
 </ul>
-<a name="getMaxInvocations--">
+<a name="getInvokedArguments--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getMaxInvocations</h4>
-<pre>public final&nbsp;int&nbsp;getMaxInvocations()</pre>
-<div class="block">Returns the current value of the maximum invocation count for the matching expectation or mock method
- (<code>-1</code> indicates that it's unlimited).
- <p/>
- For an expectation, this call will return the value specified through the
- times or maxTimes field, if that was the case;
- if not, the value will be <code>-1</code> for a non-strict expectation and <code>1</code> for a strict expectation.
- For a <code>@Mock</code> method, it will return the value specified for the <a href="../mockit/Mock.html#invocations--">invocations</a>
- or <a href="../mockit/Mock.html#maxInvocations--">maxInvocations</a> attribute, or <code>-1</code> if none.</div>
+<h4>getInvokedArguments</h4>
+<pre>public final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;getInvokedArguments()</pre>
+<div class="block">Returns the actual argument values passed in the invocation to the mocked method/constructor.</div>
+</li>
+</ul>
+<a name="getInvocationCount--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInvocationCount</h4>
+<pre>public final&nbsp;int&nbsp;getInvocationCount()</pre>
+<div class="block">Returns the current invocation count. The first invocation starts at 1 (one).</div>
+</li>
+</ul>
+<a name="getInvocationIndex--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInvocationIndex</h4>
+<pre>public final&nbsp;int&nbsp;getInvocationIndex()</pre>
+<div class="block">Returns the index for the current invocation. The first invocation starts at 0 (zero).
+ Note that this is equivalent to <a href="../mockit/Invocation.html#getInvocationCount--"><code>getInvocationCount()</code></a> - 1.</div>
 </li>
 </ul>
 <a name="getMinInvocations--">
@@ -350,6 +334,23 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
  if not, the value will be <code>0</code> for a non-strict expectation and <code>1</code> for a strict expectation.
  For a <code>@Mock</code> method, it will return the value specified for the <a href="../mockit/Mock.html#invocations--">invocations</a>
  or <a href="../mockit/Mock.html#minInvocations--">minInvocations</a> attribute, or <code>0</code> if none.</div>
+</li>
+</ul>
+<a name="getMaxInvocations--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMaxInvocations</h4>
+<pre>public final&nbsp;int&nbsp;getMaxInvocations()</pre>
+<div class="block">Returns the current value of the maximum invocation count for the matching expectation or mock method
+ (<code>-1</code> indicates that it's unlimited).
+ <p/>
+ For an expectation, this call will return the value specified through the
+ times or maxTimes field, if that was the case;
+ if not, the value will be <code>-1</code> for a non-strict expectation and <code>1</code> for a strict expectation.
+ For a <code>@Mock</code> method, it will return the value specified for the <a href="../mockit/Mock.html#invocations--">invocations</a>
+ or <a href="../mockit/Mock.html#maxInvocations--">maxInvocations</a> attribute, or <code>-1</code> if none.</div>
 </li>
 </ul>
 <a name="proceed-java.lang.Object...-">
@@ -410,6 +411,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
 </div>

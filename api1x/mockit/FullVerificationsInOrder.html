@@ -41,6 +41,7 @@ var activeTableTab = "activeTableTab";
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
 </div>
@@ -452,24 +453,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="Z:Z:D">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>$</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a> $</pre>
-<div class="block">An string assigned to this field will be used as a prefix for the error message shown for the current expectation
- if it's found to be violated.
- <p/>
- Inside an expectation/verification block, the assignment must follow the invocation which records/verifies the
- expectation; if there is no current expectation at the point the assignment appears, an
- <code>IllegalStateException</code> is thrown.
- <p/>
- Notice there are only two different ways in which an expectation can be violated: either an <em>unexpected</em>
- invocation occurs during replay, or a <em>missing</em> invocation is detected.</div>
-</li>
-</ul>
 <a name="any">
 <!--   -->
 </a>
@@ -506,26 +489,104 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 </dl>
 </li>
 </ul>
-<a name="anyBoolean">
+<a name="anyString">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>anyBoolean</h4>
-<pre>protected final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a> anyBoolean</pre>
-<div class="block">Matches any <code>boolean</code> or <code>Boolean</code> value received by a parameter of one of these types.
+<h4>anyString</h4>
+<pre>protected final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> anyString</pre>
+<div class="block">Matches any <code>String</code> value received by a parameter of this type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#anyByte"><code>anyByte</code></a>, 
+<dd><a href="../mockit/FullVerificationsInOrder.html#anyBoolean"><code>anyBoolean</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyByte"><code>anyByte</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#anyChar"><code>anyChar</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#anyDouble"><code>anyDouble</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#anyFloat"><code>anyFloat</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#anyInt"><code>anyInt</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#anyLong"><code>anyLong</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#anyShort"><code>anyShort</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#any"><code>any</code></a>, 
+<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#matcherFields">Tutorial</a></dd>
+</dl>
+</li>
+</ul>
+<a name="anyLong">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>anyLong</h4>
+<pre>protected final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a> anyLong</pre>
+<div class="block">Matches any <code>long</code> or <code>Long</code> value received by a parameter of one of these types.
+ <p/>
+ This field can only be used as the argument value at the proper parameter position in a method/constructor
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/FullVerificationsInOrder.html#anyBoolean"><code>anyBoolean</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyByte"><code>anyByte</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyChar"><code>anyChar</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyDouble"><code>anyDouble</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyFloat"><code>anyFloat</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyInt"><code>anyInt</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyShort"><code>anyShort</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyString"><code>anyString</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#any"><code>any</code></a>, 
+<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#matcherFields">Tutorial</a></dd>
+</dl>
+</li>
+</ul>
+<a name="anyInt">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>anyInt</h4>
+<pre>protected final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a> anyInt</pre>
+<div class="block">Matches any <code>int</code> or <code>Integer</code> value received by a parameter of one of these types.
+ <p/>
+ This field can only be used as the argument value at the proper parameter position in a method/constructor
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/FullVerificationsInOrder.html#anyBoolean"><code>anyBoolean</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyByte"><code>anyByte</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyChar"><code>anyChar</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyDouble"><code>anyDouble</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyFloat"><code>anyFloat</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyLong"><code>anyLong</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyShort"><code>anyShort</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyString"><code>anyString</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#any"><code>any</code></a>, 
+<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#matcherFields">Tutorial</a></dd>
+</dl>
+</li>
+</ul>
+<a name="anyShort">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>anyShort</h4>
+<pre>protected final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a> anyShort</pre>
+<div class="block">Matches any <code>short</code> or <code>Short</code> value received by a parameter of one of these types.
+ <p/>
+ This field can only be used as the argument value at the proper parameter position in a method/constructor
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/FullVerificationsInOrder.html#anyBoolean"><code>anyBoolean</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyByte"><code>anyByte</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyChar"><code>anyChar</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyDouble"><code>anyDouble</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyFloat"><code>anyFloat</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyInt"><code>anyInt</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyLong"><code>anyLong</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#anyString"><code>anyString</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#any"><code>any</code></a>, 
 <a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#matcherFields">Tutorial</a></dd>
@@ -546,6 +607,32 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/FullVerificationsInOrder.html#anyBoolean"><code>anyBoolean</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyChar"><code>anyChar</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyDouble"><code>anyDouble</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyFloat"><code>anyFloat</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyInt"><code>anyInt</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyLong"><code>anyLong</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyShort"><code>anyShort</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#anyString"><code>anyString</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#any"><code>any</code></a>, 
+<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#matcherFields">Tutorial</a></dd>
+</dl>
+</li>
+</ul>
+<a name="anyBoolean">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>anyBoolean</h4>
+<pre>protected final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a> anyBoolean</pre>
+<div class="block">Matches any <code>boolean</code> or <code>Boolean</code> value received by a parameter of one of these types.
+ <p/>
+ This field can only be used as the argument value at the proper parameter position in a method/constructor
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/FullVerificationsInOrder.html#anyByte"><code>anyByte</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#anyChar"><code>anyChar</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#anyDouble"><code>anyDouble</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#anyFloat"><code>anyFloat</code></a>, 
@@ -636,127 +723,19 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 </dl>
 </li>
 </ul>
-<a name="anyInt">
+<a name="times">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>anyInt</h4>
-<pre>protected final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a> anyInt</pre>
-<div class="block">Matches any <code>int</code> or <code>Integer</code> value received by a parameter of one of these types.
- <p/>
- This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+<h4>times</h4>
+<pre>protected&nbsp;int times</pre>
+<div class="block">A non-negative value assigned to this field will be taken as the exact number of times that invocations matching
+ the current expectation should occur during replay.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#anyBoolean"><code>anyBoolean</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyByte"><code>anyByte</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyChar"><code>anyChar</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyDouble"><code>anyDouble</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyFloat"><code>anyFloat</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyLong"><code>anyLong</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyShort"><code>anyShort</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyString"><code>anyString</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#any"><code>any</code></a>, 
-<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#matcherFields">Tutorial</a></dd>
-</dl>
-</li>
-</ul>
-<a name="anyLong">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>anyLong</h4>
-<pre>protected final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a> anyLong</pre>
-<div class="block">Matches any <code>long</code> or <code>Long</code> value received by a parameter of one of these types.
- <p/>
- This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#anyBoolean"><code>anyBoolean</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyByte"><code>anyByte</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyChar"><code>anyChar</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyDouble"><code>anyDouble</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyFloat"><code>anyFloat</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyInt"><code>anyInt</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyShort"><code>anyShort</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyString"><code>anyString</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#any"><code>any</code></a>, 
-<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#matcherFields">Tutorial</a></dd>
-</dl>
-</li>
-</ul>
-<a name="anyShort">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>anyShort</h4>
-<pre>protected final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a> anyShort</pre>
-<div class="block">Matches any <code>short</code> or <code>Short</code> value received by a parameter of one of these types.
- <p/>
- This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#anyBoolean"><code>anyBoolean</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyByte"><code>anyByte</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyChar"><code>anyChar</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyDouble"><code>anyDouble</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyFloat"><code>anyFloat</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyInt"><code>anyInt</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyLong"><code>anyLong</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyString"><code>anyString</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#any"><code>any</code></a>, 
-<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#matcherFields">Tutorial</a></dd>
-</dl>
-</li>
-</ul>
-<a name="anyString">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>anyString</h4>
-<pre>protected final&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> anyString</pre>
-<div class="block">Matches any <code>String</code> value received by a parameter of this type.
- <p/>
- This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#anyBoolean"><code>anyBoolean</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyByte"><code>anyByte</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyChar"><code>anyChar</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyDouble"><code>anyDouble</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyFloat"><code>anyFloat</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyInt"><code>anyInt</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyLong"><code>anyLong</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#anyShort"><code>anyShort</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#any"><code>any</code></a>, 
-<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#matcherFields">Tutorial</a></dd>
-</dl>
-</li>
-</ul>
-<a name="maxTimes">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>maxTimes</h4>
-<pre>protected&nbsp;int maxTimes</pre>
-<div class="block">A non-negative value assigned to this field will be taken as the maximum number of times that invocations matching
- the current expectation should occur during replay.
- A <em>negative</em> value implies there is no upper limit.
- <p/>
- Both <code>minTimes</code> and <code>maxTimes</code> can be specified for the same expectation, as long as <code>minTimes</code>
- is assigned first.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#times"><code>times</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#minTimes"><code>minTimes</code></a>, 
+<dd><a href="../mockit/FullVerificationsInOrder.html#minTimes"><code>minTimes</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#maxTimes"><code>maxTimes</code></a>, 
 <a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#constraints">Tutorial</a></dd>
 </dl>
 </li>
@@ -783,21 +762,43 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 </dl>
 </li>
 </ul>
-<a name="times">
+<a name="maxTimes">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>maxTimes</h4>
+<pre>protected&nbsp;int maxTimes</pre>
+<div class="block">A non-negative value assigned to this field will be taken as the maximum number of times that invocations matching
+ the current expectation should occur during replay.
+ A <em>negative</em> value implies there is no upper limit.
+ <p/>
+ Both <code>minTimes</code> and <code>maxTimes</code> can be specified for the same expectation, as long as <code>minTimes</code>
+ is assigned first.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/FullVerificationsInOrder.html#times"><code>times</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#minTimes"><code>minTimes</code></a>, 
+<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#constraints">Tutorial</a></dd>
+</dl>
+</li>
+</ul>
+<a name="Z:Z:D">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>times</h4>
-<pre>protected&nbsp;int times</pre>
-<div class="block">A non-negative value assigned to this field will be taken as the exact number of times that invocations matching
- the current expectation should occur during replay.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#minTimes"><code>minTimes</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#maxTimes"><code>maxTimes</code></a>, 
-<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#constraints">Tutorial</a></dd>
-</dl>
+<h4>$</h4>
+<pre>protected&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a> $</pre>
+<div class="block">An string assigned to this field will be used as a prefix for the error message shown for the current expectation
+ if it's found to be violated.
+ <p/>
+ Inside an expectation/verification block, the assignment must follow the invocation which records/verifies the
+ expectation; if there is no current expectation at the point the assignment appears, an
+ <code>IllegalStateException</code> is thrown.
+ <p/>
+ Notice there are only two different ways in which an expectation can be violated: either an <em>unexpected</em>
+ invocation occurs during replay, or a <em>missing</em> invocation is detected.</div>
 </li>
 </ul>
 </li>
@@ -846,10 +847,31 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 </dl>
 </li>
 </ul>
-<a name="FullVerificationsInOrder-java.lang.Integer-java.lang.Object...-">
+<a name="FullVerificationsInOrder-java.lang.Object...-">
 <!--   -->
 </a>
 <ul class="blockList">
+<li class="blockList">
+<h4>FullVerificationsInOrder</h4>
+<pre>protected&nbsp;FullVerificationsInOrder(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;mockedTypesAndInstancesToVerify)</pre>
+<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a>, but restricting the verification to the specified mocked types and/or
+ mocked instances.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>mockedTypesAndInstancesToVerify</code> - one or more of the mocked types (ie, <code>Class</code> objects) and/or mocked
+ instances that are in scope for the test; for a given mocked <em>instance</em>, all classes up to (but not
+ including) <code>java.lang.Object</code> are considered</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-int-"><code>FullVerificationsInOrder(int)</code></a>, 
+<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Integer-java.lang.Object...-"><code>FullVerificationsInOrder(Integer, Object...)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="FullVerificationsInOrder-java.lang.Integer-java.lang.Object...-">
+<!--   -->
+</a>
+<ul class="blockListLast">
 <li class="blockList">
 <h4>FullVerificationsInOrder</h4>
 <pre>protected&nbsp;FullVerificationsInOrder(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;numberOfIterations,
@@ -865,27 +887,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dd><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-int-"><code>FullVerificationsInOrder(int)</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Object...-"><code>FullVerificationsInOrder(Object...)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="FullVerificationsInOrder-java.lang.Object...-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>FullVerificationsInOrder</h4>
-<pre>protected&nbsp;FullVerificationsInOrder(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;mockedTypesAndInstancesToVerify)</pre>
-<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a>, but restricting the verification to the specified mocked types and/or
- mocked instances.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>mockedTypesAndInstancesToVerify</code> - one or more of the mocked types (ie, <code>Class</code> objects) and/or mocked
- instances that are in scope for the test; for a given mocked <em>instance</em>, all classes up to (but not
- including) <code>java.lang.Object</code> are considered</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-int-"><code>FullVerificationsInOrder(int)</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Integer-java.lang.Object...-"><code>FullVerificationsInOrder(Integer, Object...)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -937,6 +938,25 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
  to this method</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#onInstance">Tutorial</a></dd>
+</dl>
+</li>
+</ul>
+<a name="withArgThat-org.hamcrest.Matcher-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withArgThat</h4>
+<pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withArgThat(org.hamcrest.Matcher&lt;? super T&gt;&nbsp;argumentMatcher)</pre>
+<div class="block">Applies a <em>Hamcrest</em> argument matcher for a parameter in the current expectation.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>argumentMatcher</code> - any <code>org.hamcrest.Matcher</code> object</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the value recorded inside the given Hamcrest matcher, or <code>null</code> if there is no such value to be
+ found</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/FullVerificationsInOrder.html#with-mockit.Delegate-"><code>with(Delegate)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -998,25 +1018,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 </dl>
 </li>
 </ul>
-<a name="withArgThat-org.hamcrest.Matcher-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>withArgThat</h4>
-<pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withArgThat(org.hamcrest.Matcher&lt;? super T&gt;&nbsp;argumentMatcher)</pre>
-<div class="block">Applies a <em>Hamcrest</em> argument matcher for a parameter in the current expectation.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>argumentMatcher</code> - any <code>org.hamcrest.Matcher</code> object</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the value recorded inside the given Hamcrest matcher, or <code>null</code> if there is no such value to be
- found</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#with-mockit.Delegate-"><code>with(Delegate)</code></a></dd>
-</dl>
-</li>
-</ul>
 <a name="withCapture-java.util.List-">
 <!--   -->
 </a>
@@ -1037,6 +1038,35 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dd><a href="../mockit/Verifications.html#withCapture--"><code>Verifications.withCapture()</code></a>, 
 <a href="../mockit/Verifications.html#withCapture-T-"><code>Verifications.withCapture(Object)</code></a>, 
 <a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#withCapture">Tutorial</a></dd>
+</dl>
+</li>
+</ul>
+<a name="withEqual-java.lang.Object-">
+<!--   -->
+</a><a name="withEqual-T-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withEqual</h4>
+<pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withEqual(T&nbsp;arg)</pre>
+<div class="block">When passed as argument for an expectation, creates a new matcher that will check if the given value is
+ <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang"><code>equal</code></a> to the corresponding argument received by a matching invocation.
+ <p/>
+ The matcher is added to the end of the list of argument matchers for the invocation being recorded/verified.
+ It cannot be reused for a different parameter.
+ <p/>
+ Usually, this particular method should <em>not</em> be used. Instead, simply pass the desired argument value
+ directly, without any matcher.
+ Only when specifying values for a <em>varargs</em> method it's useful, and even then only when some other argument
+ matcher is also used.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>arg</code> - the expected argument value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the given argument</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#withMethods">Tutorial</a></dd>
 </dl>
 </li>
 </ul>
@@ -1077,35 +1107,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dd><code>delta</code> - the tolerance around the center value, for a range of [value - delta, value + delta]</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the given <code>value</code></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#withMethods">Tutorial</a></dd>
-</dl>
-</li>
-</ul>
-<a name="withEqual-java.lang.Object-">
-<!--   -->
-</a><a name="withEqual-T-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>withEqual</h4>
-<pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withEqual(T&nbsp;arg)</pre>
-<div class="block">When passed as argument for an expectation, creates a new matcher that will check if the given value is
- <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang"><code>equal</code></a> to the corresponding argument received by a matching invocation.
- <p/>
- The matcher is added to the end of the list of argument matchers for the invocation being recorded/verified.
- It cannot be reused for a different parameter.
- <p/>
- Usually, this particular method should <em>not</em> be used. Instead, simply pass the desired argument value
- directly, without any matcher.
- Only when specifying values for a <em>varargs</em> method it's useful, and even then only when some other argument
- matcher is also used.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>arg</code> - the expected argument value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the given argument</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#withMethods">Tutorial</a></dd>
 </dl>
@@ -1154,31 +1155,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 </dl>
 </li>
 </ul>
-<a name="withMatch-java.lang.CharSequence-">
-<!--   -->
-</a><a name="withMatch-T-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>withMatch</h4>
-<pre>protected final&nbsp;&lt;T extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;&nbsp;T&nbsp;withMatch(T&nbsp;regex)</pre>
-<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase matches
- the given <a href="http://download.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex"><code>regular expression</code></a>.
- <p/>
- Note that this can be used for any string comparison, including case insensitive ones (with <code>"(?i)"</code> in the
- regex).</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>regex</code> - an arbitrary (non-null) regular expression against which textual argument values will be matched</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the given regex</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html?is-external=true#compile-java.lang.String-int-" title="class or interface in java.util.regex"><code>Pattern.compile(String, int)</code></a>, 
-<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#withMethods">Tutorial</a></dd>
-</dl>
-</li>
-</ul>
 <a name="withNotEqual-java.lang.Object-">
 <!--   -->
 </a><a name="withNotEqual-T-">
@@ -1200,23 +1176,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 </dl>
 </li>
 </ul>
-<a name="withNotNull--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>withNotNull</h4>
-<pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withNotNull()</pre>
-<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is not
- <code>null</code>.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>always <code>null</code></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#withMethods">Tutorial</a></dd>
-</dl>
-</li>
-</ul>
 <a name="withNull--">
 <!--   -->
 </a>
@@ -1233,22 +1192,18 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 </dl>
 </li>
 </ul>
-<a name="withPrefix-java.lang.CharSequence-">
-<!--   -->
-</a><a name="withPrefix-T-">
+<a name="withNotNull--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>withPrefix</h4>
-<pre>protected final&nbsp;&lt;T extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;&nbsp;T&nbsp;withPrefix(T&nbsp;text)</pre>
-<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase starts
- with the given text.</div>
+<h4>withNotNull</h4>
+<pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withNotNull()</pre>
+<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is not
+ <code>null</code>.</div>
 <dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>text</code> - an arbitrary non-null textual value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the given text</dd>
+<dd>always <code>null</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#withMethods">Tutorial</a></dd>
 </dl>
@@ -1296,12 +1251,33 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 </dl>
 </li>
 </ul>
+<a name="withPrefix-java.lang.CharSequence-">
+<!--   -->
+</a><a name="withPrefix-T-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withPrefix</h4>
+<pre>protected final&nbsp;&lt;T extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;&nbsp;T&nbsp;withPrefix(T&nbsp;text)</pre>
+<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase starts
+ with the given text.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>text</code> - an arbitrary non-null textual value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the given text</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#withMethods">Tutorial</a></dd>
+</dl>
+</li>
+</ul>
 <a name="withSuffix-java.lang.CharSequence-">
 <!--   -->
 </a><a name="withSuffix-T-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>withSuffix</h4>
 <pre>protected final&nbsp;&lt;T extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;&nbsp;T&nbsp;withSuffix(T&nbsp;text)</pre>
@@ -1314,6 +1290,31 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dd>the given text</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#withMethods">Tutorial</a></dd>
+</dl>
+</li>
+</ul>
+<a name="withMatch-java.lang.CharSequence-">
+<!--   -->
+</a><a name="withMatch-T-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>withMatch</h4>
+<pre>protected final&nbsp;&lt;T extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;&nbsp;T&nbsp;withMatch(T&nbsp;regex)</pre>
+<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase matches
+ the given <a href="http://download.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex"><code>regular expression</code></a>.
+ <p/>
+ Note that this can be used for any string comparison, including case insensitive ones (with <code>"(?i)"</code> in the
+ regex).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>regex</code> - an arbitrary (non-null) regular expression against which textual argument values will be matched</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the given regex</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="http://download.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html?is-external=true#compile-java.lang.String-int-" title="class or interface in java.util.regex"><code>Pattern.compile(String, int)</code></a>, 
+<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#withMethods">Tutorial</a></dd>
 </dl>
 </li>
 </ul>
@@ -1336,6 +1337,7 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
 </div>

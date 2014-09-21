@@ -35,6 +35,7 @@
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
 </div>
@@ -128,11 +129,15 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
  instance); if no instance is necessary (perhaps because only static methods or constructors will be called), then
  this final field can receive the <code>null</code> reference.
  Mock parameters, on the other hand, will always receive a new mocked instance whenever the test method is executed by
- the test runner.</div>
+ the test runner.
+ <p/>
+ By default, mocking will cascade into the return types of all non-void methods belonging to the mocked type.
+ If needed, this <a href="../mockit/Mocked.html#cascading--"><code>cascading()</code></a> process can be explicitly disabled on a per-mocked type basis.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Mocked.html#value--"><code>value()</code></a>, 
 <a href="../mockit/Mocked.html#stubOutClassInitialization--"><code>stubOutClassInitialization()</code></a>, 
+<a href="../mockit/Mocked.html#cascading--"><code>cascading()</code></a>, 
 <a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#declaration">Tutorial</a></dd>
 </dl>
 </li>
@@ -155,11 +160,18 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Mocked.html#cascading--">cascading</a></span></code>
+<div class="block">Indicates whether the mocked type is <em>cascading</em> or not, ie, whether its non-void methods should return
+ mocked instances or <code>null</code>; <code>true</code> by default.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Mocked.html#stubOutClassInitialization--">stubOutClassInitialization</a></span></code>
 <div class="block">Indicates whether <em>static initialization code</em> in the mocked class should be stubbed out or not.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Mocked.html#value--">value</a></span></code>
 <div class="block">One or more <em>mock filters</em>.</div>
@@ -180,41 +192,10 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <!--   -->
 </a>
 <h3>Element Detail</h3>
-<a name="stubOutClassInitialization--">
+<a name="value--">
 <!--   -->
 </a>
 <ul class="blockList">
-<li class="blockList">
-<h4>stubOutClassInitialization</h4>
-<pre>public abstract&nbsp;boolean&nbsp;stubOutClassInitialization</pre>
-<div class="block">Indicates whether <em>static initialization code</em> in the mocked class should be stubbed out or not.
- Static initialization includes the execution of assignments to static fields of the class and the execution of
- static initialization blocks, if any.
- (Note that <code>static final</code> fields initialized with <em>compile-time</em> constants are not assigned at
- runtime, remaining unaffected whether the class is stubbed out or not.)
- <p/>
- By default, static initialization code in a mocked class is <em>not</em> stubbed out.
- The JVM will only perform static initialization of a class <em>once</em>, so stubbing out the initialization code
- can have unexpected consequences.
- Static initialization will occur the first time the class is instantiated, has a static method called on it, or
- has a static field whose value is defined at runtime accessed; these are the only events which prompt the JVM to
- initialize a class.
- If the original class initialization code was stubbed out, then it will not be there to be executed at the time of
- static initialization, potentially leaving static fields <code>null</code> and later causing
- <code>NullPointerException</code>'s to occur.</div>
-<dl>
-<dt>Default:</dt>
-<dd>false</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="value--">
-<!--   -->
-</a>
-<ul class="blockListLast">
 <li class="blockList">
 <h4>value</h4>
 <pre>public abstract&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value</pre>
@@ -246,6 +227,69 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 </ul>
 </li>
 </ul>
+<ul class="blockList">
+<li class="blockList"><a name="stubOutClassInitialization--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>stubOutClassInitialization</h4>
+<pre>public abstract&nbsp;boolean&nbsp;stubOutClassInitialization</pre>
+<div class="block">Indicates whether <em>static initialization code</em> in the mocked class should be stubbed out or not.
+ Static initialization includes the execution of assignments to static fields of the class and the execution of
+ static initialization blocks, if any.
+ (Note that <code>static final</code> fields initialized with <em>compile-time</em> constants are not assigned at
+ runtime, remaining unaffected whether the class is stubbed out or not.)
+ <p/>
+ By default, static initialization code in a mocked class is <em>not</em> stubbed out.
+ The JVM will only perform static initialization of a class <em>once</em>, so stubbing out the initialization code
+ can have unexpected consequences.
+ Static initialization will occur the first time the class is instantiated, has a static method called on it, or
+ has a static field whose value is defined at runtime accessed; these are the only events which prompt the JVM to
+ initialize a class.
+ If the original class initialization code was stubbed out, then it will not be there to be executed at the time of
+ static initialization, potentially leaving static fields <code>null</code> and later causing
+ <code>NullPointerException</code>'s to occur.</div>
+<dl>
+<dt>Default:</dt>
+<dd>false</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="cascading--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>cascading</h4>
+<pre>public abstract&nbsp;boolean&nbsp;cascading</pre>
+<div class="block">Indicates whether the mocked type is <em>cascading</em> or not, ie, whether its non-void methods should return
+ mocked instances or <code>null</code>; <code>true</code> by default.
+ <p/>
+ A non-<code>void</code> mocked method which returns a reference type will produce, if and when called, a
+ <em>cascaded</em> mocked instance according to its return type.
+ Methods returning <code>String</code>, primitive wrappers, or collection types, however, are <em>not</em> cascaded,
+ producing non-mocked default values instead (in either case, a <em>recorded</em> return value for the method will
+ always produce the recorded value).
+ This cascaded mocking process means that mocked methods will never return <code>null</code>, unless <code>null</code> is
+ explicitly recorded as the result.
+ <p/>
+ If a mock field/parameter is explicitly declared with the same type (or, alternatively, a subtype) of some
+ cascaded type, then the instance originally assigned to the mock field/parameter will be used as the cascaded
+ instance.
+ This allows expectations on intermediate cascaded instances to be recorded/verified when needed, without having
+ to specify the full method call chain from the "root" instance to the "leaf" instance of interest.</div>
+<dl>
+<dt>Default:</dt>
+<dd>true</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 </div>
@@ -263,6 +307,7 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
 </div>
