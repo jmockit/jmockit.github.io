@@ -58,11 +58,7 @@ import java.util.*;
     </tr>
     <tr>
       <td class='line'>14</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l14s0'>   private static int <span class='static uncovered' title='Reads: 2 Writes: 2'>nextOrderNo</span> = 1;</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithDuplicateItem: 93</li>
-        </ol>
-      </td>
+      <td><pre class='prettyprint covered' id='l14s0'>   private static int <span class='static uncovered' title='Reads: 2 Writes: 2'>nextOrderNo</span> = 1;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -89,12 +85,12 @@ import java.util.*;
       <td class='line'>19</td><td class='count'>7</td>
       <td><pre class='prettyprint jmp'>      <span id='l19s0' title='Executions: 7' class='covered cp' onclick='showHide(this,0)'>if (items.isEmpty())</span> <span id='l19s1' title='Executions: 2' class='covered cp' onclick='showHide(this,1)'>{</span></pre>
         <ol style='display:none'>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithDuplicateItem: 93</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemUnitPrice: 83</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithEmptyItemList: 67</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemQuantity: 75</li>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
           <li>orderMngr.web.submitOrder.OrderEntryPage_MockupsAPI_Test#submitOrderWithMissingData: 108</li>
         </ol>
         <ol style='display:none'>
@@ -121,11 +117,11 @@ import java.util.*;
       <td class='line'>23</td><td class='count'>5</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l23s0'>      validateOrderItems(items);</pre>
         <ol style='display:none'>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithDuplicateItem: 93</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemUnitPrice: 83</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemQuantity: 75</li>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
         </ol>
       </td>
     </tr>
@@ -134,8 +130,8 @@ import java.util.*;
       <td class='line'>25</td><td class='count'>2</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l25s0'>      Order order = new Order(nextOrderNo++, customerId);</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
           <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
+          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
         </ol>
       </td>
     </tr>
@@ -143,8 +139,8 @@ import java.util.*;
       <td class='line'>26</td><td class='count'>2</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l26s0'>      order.getItems().addAll(items);</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
           <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
+          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
         </ol>
       </td>
     </tr>
@@ -153,8 +149,8 @@ import java.util.*;
       <td class='line'>28</td><td class='count'>2</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l28s0'>      new OrderRepository().create(order);</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
           <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
+          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
         </ol>
       </td>
     </tr>
@@ -163,8 +159,8 @@ import java.util.*;
       <td class='line'>30</td><td class='count'>2</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l30s0'>      return order;</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
           <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
+          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
         </ol>
       </td>
     </tr>
@@ -197,18 +193,18 @@ import java.util.*;
       <td class='line'>35</td><td class='count'>5</td>
       <td><pre class='prettyprint jmp'>      <span id='l35s0' title='Executions: 5' class='covered cp' onclick='showHide(this,0)'>for (OrderItem item</span> : <span id='l35s1' title='Executions: 8' class='covered cp' onclick='showHide(this,1)'>items)</span> </pre>
         <ol style='display:none'>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithDuplicateItem: 93</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemUnitPrice: 83</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemQuantity: 75</li>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
         </ol>
         <ol style='display:none'>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33x2</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithDuplicateItem: 93x2</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemUnitPrice: 83</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38x2</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemQuantity: 75</li>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33x2</li>
         </ol>
       </td>
     </tr>
@@ -216,17 +212,17 @@ import java.util.*;
       <td class='line'>36</td><td class='count'>8</td>
       <td><pre class='prettyprint jmp'>         <span id='l36s0' title='Executions: 8' class='covered cp' onclick='showHide(this,0)'>if (item.getQuantity() &lt;= 0</span> || <span id='l36s1' title='Executions: 7' class='covered cp' onclick='showHide(this,1)'>item.getUnitPrice().compareTo(BigDecimal.ZERO) &lt;= 0)</span> <span id='l36s2' title='Executions: 0' class='uncovered'>{</span></pre>
         <ol style='display:none'>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33x2</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithDuplicateItem: 93x2</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemUnitPrice: 83</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38x2</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemQuantity: 75</li>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33x2</li>
         </ol>
         <ol style='display:none'>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33x2</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithDuplicateItem: 93x2</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithInvalidItemUnitPrice: 83</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38x2</li>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33x2</li>
         </ol>
       </td>
     </tr>
@@ -247,9 +243,9 @@ import java.util.*;
       <td class='line'>39</td><td class='count'>6</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l39s0'>      }</pre>
         <ol style='display:none'>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33x2</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithDuplicateItem: 93x2</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38x2</li>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33x2</li>
         </ol>
       </td>
     </tr>
@@ -258,9 +254,9 @@ import java.util.*;
       <td class='line'>41</td><td class='count'>3</td>
       <td><pre class='prettyprint jmp'>      <span id='l41s0' title='Executions: 3' class='covered cp' onclick='showHide(this,0)'>if (new HashSet&lt;>(items).size() &lt; items.size())</span> <span id='l41s1' title='Executions: 1' class='covered cp' onclick='showHide(this,1)'>{</span></pre>
         <ol style='display:none'>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithDuplicateItem: 93</li>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
         </ol>
         <ol style='display:none'>
           <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrderWithDuplicateItem: 93</li>
@@ -283,8 +279,8 @@ import java.util.*;
       <td class='line'>44</td><td class='count'>2</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l44s0'>   }</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
           <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
+          <li>orderMngr.domain.order.OrderFactory_MockupsAPI_Test#createOrder: 38</li>
         </ol>
       </td>
     </tr>
