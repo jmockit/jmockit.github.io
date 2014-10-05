@@ -27,12 +27,7 @@
    <a href="#">Behavior-based testing</a>
 </h1>
 <ol class="contents">
-   <li>
-      <a href="#mocked">Mocked types and instances</a>
-      <ol>
-         <li><a href="#mockedInstances">Mocked instances</a></li>
-      </ol>
-   </li>
+   <li><a href="#mocked">Mocked types and instances</a></li>
    <li><a href="#expectation">Expectations</a></li>
    <li><a href="#model">The <em>record-replay-verify</em> model</a></li>
    <li>
@@ -54,7 +49,7 @@
       <a href="#argumentMatching">Flexible matching of argument values</a>
       <ol>
          <li><a href="#withMethods">Using the "with" methods for argument matching</a></li>
-         <li><a href="#matcherFields">Using the "any" <em>fields</em> for argument matching</a></li>
+         <li><a href="#matcherFields">Using the "any" fields for argument matching</a></li>
          <li><a href="#nullAsMatcher">Using the <code>null</code> value to match any object reference</a></li>
          <li><a href="#varargs">Matching values passed through a <em>varargs</em> parameter</a></li>
       </ol>
@@ -75,6 +70,7 @@
    </li>
    <li><a href="#withCapture">Capturing invocation arguments for verification</a></li>
    <li><a href="#delegates">Delegates: specifying custom results</a></li>
+   <li><a href="#cascading">Cascading mocks</a></li>
    <li><a href="#deencapsulation">Accessing private members</a></li>
    <li>
       <a href="#partial">Partial mocking</a>
@@ -83,7 +79,6 @@
          <li><a href="#dynamicPartial">Dynamic partial mocking</a></li>
       </ol>
    </li>
-   <li><a href="#cascading">Cascading mocks</a></li>
    <li>
       <a href="#capturing">Capturing implementation classes and instances</a>
       <ol>
@@ -123,7 +118,6 @@
       <area shape="rect" coords="2,215,90,248" href="../api1x/mockit/Tested.html">
       <area shape="rect" coords="108,215,223,248" href="../api1x/mockit/Injectable.html">
       <area shape="rect" coords="363,215,457,248" href="../api1x/mockit/Mocked.html">
-      <area shape="rect" coords="593,215,707,248" href="../api1x/mockit/Cascading.html">
       <area shape="rect" coords="726,215,838,248" href="../api1x/mockit/Capturing.html">
    </map>
    <img src="BehaviorBasedAPI.png" usemap="#figure1">
@@ -179,67 +173,65 @@
    implicitly specified for the test.
 </p>
 <p>
-   The following example test serves as a basic illustration for the declaration of mock fields and mock parameters.
+   The following example test skeleton serves as a basic illustration for the declaration of mock fields and mock
+   parameters, as well as the way in which they are typically used in test code.
    In this tutorial, we use many code snippets like this, where the parts in bold font are the current focus of
    explanation.
 </p>
 <pre><code>// "Dependency" is mocked for all tests in this test class.
 // The "mockInstance" field holds a mocked instance automatically created for use in each test.
-@Mocked <strong>Dependency</strong> mockInstance;
+@Mocked <strong>Dependency mockInstance</strong>;
 
 @Test
-public void doBusinessOperationXyz(@Mocked final AnotherDependency anotherMock)
+public void doBusinessOperationXyz(@Mocked final <strong>AnotherDependency anotherMock</strong>)
 {
    ...
    new NonStrictExpectations() {{ // an "expectation block"
       ...
-      // A recorded expectation, with a specified value to return:
-      <strong>mockInstance.mockedMethod(...);</strong> <em>result</em> = 123;
+      // Record an expectation, with a given value to be returned:
+      <strong>mockInstance</strong>.mockedMethod(...); result = 123;
       ...
+   }};
+   ...
+   // Call the code under test.
+   ...
+   new Verifications() {{ // a "verification block"
+      // Verifies an expected invocation:
+      <strong>anotherMock</strong>.save(any); times = 1;
    }};
    ...
 }
 </code></pre>
 <p>
    For a mock parameter declared in a test method, an instance of the declared type will be automatically created by
-   JMockit and passed by the JUnit/TestNG test runner when it executes the test method.
-   Therefore, the parameter value will never be <code>null</code>.
-</p>
-<p>
+   JMockit and passed by the JUnit/TestNG test runner when it executes the test method;
+   therefore, the parameter value will never be <code>null</code>.
    For a mock field, an instance of the declared type will be automatically created by JMockit and assigned to the
-   field, unless it's a <code>final</code> field.
-   In such case, a value should be created and assigned to the field explicitly in test code.
-   This value can be <code>null</code>, though, which is perfectly valid for a mocked class if only constructors and
-   static methods are going to be called on it.
+   field, provided it's not <code>final</code>.
 </p>
 <p>
-   As we will shortly see, there are a few different annotations used to declare mock fields/parameters, and ways in
-   which the default mocking behavior can be modified to suit the needs of a particular test.
-   In most cases, such variations are specified through the following mocking annotations:
-   <code class="annotation">@Mocked</code> with its optional attributes, <code class="annotation">@Injectable</code>,
-   and <code class="annotation">@Capturing</code>.
+   There are a few different annotations available for the declaration of mock fields and parameters, and ways in which
+   the default mocking behavior can be modified to suit the needs of a particular test.
+   Other sections of this chapter go into the details, but the basics are:
+   <a href="../api1x/mockit/Mocked.html">@Mocked</a> is the central mocking annotation, having a few optional attributes
+   which are useful in particular situations; <a href="../api1x/mockit/Injectable.html">@Injectable</a> is another
+   mocking annotation, which constrains mocking to the instance methods of a single mocked instance; and
+   <a href="../api1x/mockit/Capturing.html">@Capturing</a> is yet another mocking annotation, which extends mocking to
+   the classes implementing a mocked interface, or the subclasses extending a mocked class.
+   When <code class="annotation">@Injectable</code> or <code class="annotation">@Capturing</code> is applied to a mock
+   field or mock parameter, <code class="annotation">@Mocked</code> is implied so it doesn't need to (but can) be
+   applied as well.
 </p>
-
-<h3 id="mockedInstances">
-   <a href="#mockedInstances">Mocked instances</a>
-</h3>
 <p>
    The mocked instances created by JMockit can be used normally in test code (for the recording and verification of
    expectations), and/or passed to the code under test. Or they may simply go unused.
    Differently from other mocking APIs, these <em>mocked</em> objects don't have to be the ones used by the unit under
    test when it calls instance methods on its dependencies.
-   By default, JMockit does not care on which object a mocked instance method is called.
-   This is what allows the transparent mocking of instances created directly inside code under test, when said code
-   invokes constructors on brand new instances using the <code>new</code> operator.
-   The classes instantiated must be covered by mocked types declared in test code, that's all.
-</p>
-<p>
-   Finally, note that the <em>mocked instances</em> created by JMockit are similar to the traditional
-   <em>mock objects</em> created by other mocking tools, but they are not the same.
-   Every instance of a mocked type - whether created by JMockit or not - <em>is</em> mocked (by <em>default</em>, as
-   single-instance mocking is also supported), for as long as that type remains mocked.
-   With a more traditional mocking API, only the mock objects/instances created by the mocking tool are actually mocked.
-   Most of the time, this makes little or no difference when writing tests, but it is something to keep in mind.
+   By default (ie, when <code class="annotation">@Injectable</code> is not used), JMockit does not care on which object
+   a mocked instance method is called.
+   This allows the transparent mocking of instances created directly inside code under test, when said code invokes
+   constructors on brand new instances using the <code>new</code> operator;
+   the classes instantiated must be covered by mocked types declared in test code, that's all.
 </p>
 
 <h2 id="expectation">
@@ -277,7 +269,7 @@ public void doBusinessOperationXyz(@Mocked final Dependency mockInstance)
    new NonStrictExpectations() {{
       ...
       // An expectation for an instance method:
-      <strong>mockInstance.someMethod(1, "test");</strong> <em>result</em> = "mocked";
+      <strong>mockInstance.someMethod(1, "test");</strong> result = "mocked";
       ...
    }};
 
@@ -312,8 +304,8 @@ public void someTestMethod()
 <p>
    First, we have a preparation phase, where objects and data items needed for the test are created or obtained from
    somewhere else.
-   Then, the unit under test is exercised. Finally, the results from exercising the tested unit are compared with the
-   expected results.
+   Then, the unit under test is exercised.
+   Finally, the results from exercising the tested unit are compared with the expected results.
 </p>
 <p>
    This model of three phases is also known as the <em>Arrange, Act, Assert syntax</em>, or "AAA" for short.
@@ -423,8 +415,8 @@ public class SomeTest
    <a href="#strictness"><em>Strict</em> and <em>non-strict</em> expectations</a>
 </h2>
 <p>
-   Expectations recorded inside a <code>new <strong>Expectations</strong>() {...}</code> block are <em>strict</em> by
-   default.
+   Expectations recorded inside a <code>new <a href="../api1x/mockit/Expectations.html">Expectations</a>() {...}</code>
+   block are <em>strict</em> by default.
    What this means is that the invocations they specify are <em>expected</em> to occur during the <em>replay</em> phase,
    and in the <em>same</em> order as they were recorded;
    additionally, <em>only</em> these invocations are allowed to occur.
@@ -432,7 +424,7 @@ public class SomeTest
 </p>
 <p>
    On the other hand, when we want to record <em>non-strict</em> (or <em>loose</em>) expectations, the
-   <code class="type">mockit.NonStrictExpectations</code> subclass can be used.
+   <a href="../api1x/mockit/NonStrictExpectations.html">mockit.NonStrictExpectations</a> subclass can be used.
    Inside a non-strict expectation block, all invocations to mocked types will be <em>allowed</em> to occur during the
    replay phase, not <em>expected</em>.
    That is, by default they may or may not occur during replay without causing the test to fail on their own.
@@ -486,7 +478,7 @@ public class SomeTest
 </h2>
 <p>
    For a given method with non-<code>void</code> return type, a return value can be recorded through an assignment to
-   the <code>result</code> field.
+   the <a href="../api1x/mockit/Expectations.html#result">result</a> field.
    When the method gets called in the replay phase, the specified return value will be returned to the caller (which
    normally is the unit under test).
    The assignment to <code>result</code> should appear right after the invocation that identifies the recorded
@@ -504,11 +496,10 @@ public class SomeTest
    The recording of multiple return values and/or exceptions/errors to be thrown can be freely mixed for the same
    expectation.
    In the case of recording multiple consecutive <em>return values</em> for a given expectation, a single call to the
-   <code>returns(Object, Object...)</code> method can be made.
+   <a href="../api1x/mockit/Expectations.html#returns-java.lang.Object-java.lang.Object...-">returns(Object...)</a>
+   method can be made.
    Also, a single assignment to the <code>result</code> field will achieve the same effect, if the value assigned to it
    is a <em>list</em> or <em>array</em> containing the consecutive values.
-   For more details about this ability, see the corresponding
-   <a href="../api1x/mockit/Expectations.html#returns-java.lang.Object-java.lang.Object...-">API documentation</a>.
 </p>
 <p>
    The following example test records both types of results for the methods of a mocked
@@ -587,8 +578,7 @@ public void doSomethingHandlesSomeCheckedException(@Mocked final DependencyAbc a
    be safely ignored, whether the mocked instance is <em>passed into</em> tested code or <em>created inside</em> it.
    But what if we need to verify that invocations occur on a <em>specific</em> instance, between the several/many ones
    that happen to be used by code under test?
-   JMockit provides a couple of ways to constrain the matching of expectations on specific mocked instances, as we
-   shall see.
+   JMockit provides a couple of ways to constrain the matching of expectations to specific mocked instances.
 </p>
 
 <h3 id="injectable">
@@ -600,7 +590,7 @@ public void doSomethingHandlesSomeCheckedException(@Mocked final DependencyAbc a
    instances, so that any instance method invoked on them gets handled according to our mocking specifications.
    However, what if we need <em>only one</em> (or a few) of those instances to be mocked, while invocations made on
    other instances continue to execute the original, "real" implementation?
-   This is where the <code class="annotation">@Injectable</code> annotation can help.
+   This is where the <a href="../api1x/mockit/Injectable.html">@Injectable</a> annotation can help.
    (It has other uses too, which we'll address later.)
 </p>
 <p>
@@ -679,8 +669,8 @@ public void concatenateInputStreams(
    <a href="#onInstance">The <code>onInstance(m)</code> constraint</a>
 </h3>
 <p>
-   We can use the <code><strong>onInstance</strong>(mockObject)</code> method when recording an expectation, as the next
-   example shows.
+   We can use the <a href="../api1x/mockit/Expectations.html#onInstance-java.lang.Object-">onInstance(mockObject)</a>
+   method when recording an expectation, as the next example shows.
 </p>
 <pre><code>@Test
 public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>)
@@ -820,7 +810,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 </p>
 
 <h3 id="matcherFields">
-   <a href="#matcherFields">Using the "any" <em>fields</em> for argument matching</a>
+   <a href="#matcherFields">Using the "any" fields for argument matching</a>
 </h3>
 <p>
    The most common argument matching constraint tends also to be the <em>least</em> restrictive one: to match
@@ -880,8 +870,8 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 }
 </code></pre>
 <p>
-   To specifically verify that a given parameter receives the <code>null</code> reference, the <code>withNull()</code>
-   matcher can be used.
+   To specifically verify that a given parameter receives the <code>null</code> reference, the
+   <a href="../api1x/mockit/Expectations.html#withNull--">withNull()</a> matcher can be used.
 </p>
 
 <h3 id="varargs">
@@ -919,8 +909,10 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 <p>
    The number of invocations expected and/or allowed to match a given expectation can be specified through
    <em>invocation count constraints</em>.
-   The mocking API provides three special fields just for that: <strong><code>times</code></strong>,
-   <strong><code>minTimes</code></strong>, and <strong><code>maxTimes</code></strong>.
+   The mocking API provides three special fields just for that:
+   <a href="../api1x/mockit/Expectations.html#times">times</a>,
+   <a href="../api1x/mockit/Expectations.html#minTimes">minTimes</a>, and
+   <a href="../api1x/mockit/Expectations.html#maxTimes">maxTimes</a>.
    These fields can be used either when recording or when verifying expectations.
    In either case, the method or constructor associated with the expectation will be constrained to receive a number of
    invocations that falls in the specified range.
@@ -965,7 +957,6 @@ public void someOtherTestMethod(@Mocked final DependencyAbc abc)
    Any non-negative integer value is valid for any of the invocation count constraints.
    If <code><em>times</em> = <strong>0</strong></code> or <code><em>maxTimes</em> = <strong>0</strong></code> is
    specified, the first invocation matching the expectation to occur during replay (if any) will cause the test to fail.
-   For more, see the <a href="../api1x/mockit/Expectations.html#times">API documentation</a>.
 </p>
 
 <h2 id="verification">
@@ -980,9 +971,9 @@ public void someOtherTestMethod(@Mocked final DependencyAbc abc)
    invocation inside a verification block.
 </p>
 <p>
-   Inside a <code>new Verifications() {...}</code> block we can use the same API that's available in a
-   <code>new NonStrictExpectations() {...}</code> block, with the exception of methods and fields used to record
-   return values and thrown exceptions/errors.
+   Inside a <code>new <a href="../api1x/mockit/Verifications.html">Verifications</a>() {...}</code> block we can use the
+   same API that's available in a <code>new NonStrictExpectations() {...}</code> block, with the exception of methods
+   and fields used to record return values and thrown exceptions/errors.
    That is, we can freely use the <code>anyXyz</code> fields, the <code>withXyz(...)</code> argument matching methods,
    and the <code>times</code>, <code>minTimes</code>, and <code>maxTimes</code> invocation count constraint fields.
    An example test follows.
@@ -1024,7 +1015,8 @@ public void verifyInvocationsExplicitlyAtEndOfTest(@Mocked final Dependency mock
    The actual relative order in which <code>aMethod()</code> and <code>anotherMethod()</code> were called during the
    replay phase is not verified, but only that each method was executed at least once.
    If you want to verify the relative order of invocations, then a
-   <code>new <strong>VerificationsInOrder</strong>() {...}</code> block must be used instead.
+   <code>new <a href="../api1x/mockit/VerificationsInOrder.html">VerificationsInOrder</a>() {...}</code> block must be
+   used instead.
    Inside this block, simply write invocations to one or more mocked types in the order they are expected to have
    occurred.
 </p>
@@ -1134,8 +1126,9 @@ public void verifyFirstAndLastCallsWithOthersInBetweenInAnyOrder()
    Sometimes it may be important to have <em>all</em> invocations to the mocked types involved in a test verified.
    This is automatically the case when recording strict expectations, since any unexpected invocation causes the test to
    fail.
-   When non-strict expectations are explicitly verified, though, a <code>new FullVerifications() {...}</code> block can
-   be used to make sure that no invocations are left unverified.
+   When non-strict expectations are explicitly verified, though, a
+   <code>new <a href="../api1x/mockit/FullVerifications.html">FullVerifications</a>() {...}</code> block can be used to
+   make sure that no invocations are left unverified.
 </p>
 <pre><code>@Test
 public void verifyAllInvocations(@Mocked final Dependency mock)
@@ -1194,8 +1187,9 @@ public void verifyAllInvocationsInOrder(@Mocked final Dependency mock)
    method inside the block, in the proper order with respect to other invocations.
 </p>
 <p>
-   You may now be thinking that writing a <code class="type">FullVerificationsInOrder</code> block ends up being the
-   same as writing an <code class="type">Expectations</code> block where all expectations are strict.
+   You may now be thinking that writing a
+   <a href="../api1x/mockit/FullVerificationsInOrder.html">FullVerificationsInOrder</a> block ends up being the same as
+   writing an <code class="type">Expectations</code> block where all expectations are strict.
    So, have we come full circle? Almost, but not quite.
    For non-strict expectations, the default invocation count constraint corresponds to a
    <code><em>minTimes</em> = 1</code> assignment, which leaves room for multiple invocations to the same method or
@@ -1214,8 +1208,10 @@ public void verifyAllInvocationsInOrder(@Mocked final Dependency mock)
    <code>new FullVerificationsInOrder() {}</code> block.
    Now, what if we have a test with two (or more) mocked types but we only want to fully verify invocations to one of
    them (or to any subset of mocked types when more than two)?
-   The answer is to use the <strong><code>FullVerifications(Object... mockedTypesAndInstancesToVerify)</code></strong>
-   constructor, where only the given mocked instances and mocked types (ie, class objects/literals) are considered.
+   The answer is to use the
+   <a href="../api1x/mockit/FullVerifications.html#FullVerifications-java.lang.Object...-">
+      FullVerifications(mockedTypesAndInstancesToVerify)</a> constructor, where only the given mocked instances and
+   mocked types (ie, class objects/literals) are considered.
    The following test provides an example.
 </p>
 <pre><code>@Test
@@ -1438,6 +1434,63 @@ public void delegatingConstructorInvocations(@Mocked Collaborator anyCollaborato
    new Collaborator(4);
 }
 </code></pre>
+
+<h2 id="cascading">
+   <a href="#cascading">Cascading mocks</a>
+</h2>
+<p>
+   When using complex APIs where functionality is distributed through many different objects, it is not uncommon to see
+   chained invocations of the form <code>obj1.getObj2(...).getYetAnotherObj().doSomething(...)</code>.
+   In such cases it may be necessary to mock all objects/classes in the chain, starting with <code>obj1</code>.
+</p>
+<p>
+   All three mocking annotations provide this ability by default.
+   The following test shows a basic example, using the <code>java.net</code> and <code>java.nio</code> APIs.
+</p>
+<pre><code>@Test
+public void recordAndVerifyExpectationsOnCascadedMocks(
+   @Mocked Socket anySocket, @Mocked final SocketChannel cascadedSocketChannel)
+   throws Exception
+{
+   new NonStrictExpectations() {{
+      // "anySocket" matches any new Socket object to be created during the test,
+      // while "anySocket.getChannel()" automatically returns a cascaded instance.
+      cascadedSocketChannel.isConnected(); result = false;
+   }};
+
+   // Inside production code:
+   Socket s = new Socket();
+
+   if (!s.getChannel().isConnected()) {
+      SocketAddress sa = new InetSocketAddress("remoteHost", 123);
+      s.getChannel().connect(sa);
+   }
+
+   InetAddress adr1 = s.getInetAddress();
+   InetAddress adr2 = s.getLocalAddress();
+   ...
+
+   new Verifications() {{
+      cascadedSocketChannel.connect((SocketAddress) withNotNull());
+   }};
+}
+</code></pre>
+<p>
+   In the test above, any calls to eligible methods in the mocked <code class="type">Socket</code> class will return a
+   <em>cascaded mock</em> object whenever they occur during the test.
+   The cascaded mock will allow further cascading, so a <code>null</code> reference will never be obtained from methods
+   which return object references (except for non-eligible return types <code>Object</code> or <code>String</code> which
+   will return <code>null</code>, or collection types which will return a non-mocked empty collection).
+</p>
+<p>
+   By default, a new cascaded instance is created from each different mocked method (in the example above, the two
+   different methods with the same <code>InetAddress</code> return type will return different cascaded instances);
+   the same method will always return the same cascaded instance, though.
+   Such instances have <code class="annotation">@Injectable</code> semantics, so as to not affect other instances of the
+   same type that may exist during the test.
+   If necessary, this default mocked instance can be replaced with a non-mocked one or with a different mocked instance;
+   for that, simply assign the desired instance to the <code>result</code> field in a recorded expectation.
+</p>
 
 <h2 id="deencapsulation">
    <a href="#deencapsulation">Accessing private members</a>
@@ -1670,63 +1723,6 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    <code class="annotation">@Mocked</code> annotation and any of its attributes.
    We could even combine static and dynamic partial mocking for the same mocked class, although that wouldn't probably
    be of much use.
-</p>
-
-<h2 id="cascading">
-   <a href="#cascading">Cascading mocks</a>
-</h2>
-<p>
-   When using complex APIs where functionality is distributed through many different objects, it is not uncommon to see
-   chained invocations of the form <code>obj1.getObj2(...).getYetAnotherObj().doSomething(...)</code>.
-   In such cases it may be necessary to mock all objects/classes in the chain, starting with <code>obj1</code>.
-</p>
-<p>
-   All three mocking annotations provide this ability by default.
-   The following test shows a basic example, using the <code>java.net</code> and <code>java.nio</code> APIs.
-</p>
-<pre><code>@Test
-public void recordAndVerifyExpectationsOnCascadedMocks(
-   @Mocked Socket anySocket, @Mocked final SocketChannel cascadedSocketChannel)
-   throws Exception
-{
-   new NonStrictExpectations() {{
-      // "anySocket" matches any new Socket object to be created during the test,
-      // while "anySocket.getChannel()" automatically returns a cascaded instance.
-      cascadedSocketChannel.isConnected(); result = false;
-   }};
-
-   // Inside production code:
-   Socket s = new Socket();
-
-   if (!s.getChannel().isConnected()) {
-      SocketAddress sa = new InetSocketAddress("remoteHost", 123);
-      s.getChannel().connect(sa);
-   }
-
-   InetAddress adr1 = s.getInetAddress();
-   InetAddress adr2 = s.getLocalAddress();
-   ...
-
-   new Verifications() {{
-      cascadedSocketChannel.connect((SocketAddress) withNotNull());
-   }};
-}
-</code></pre>
-<p>
-   In the test above, any calls to eligible methods in the mocked <code class="type">Socket</code> class will return a
-   <em>cascaded mock</em> object whenever they occur during the test.
-   The cascaded mock will allow further cascading, so a <code>null</code> reference will never be obtained from methods
-   which return object references (except for non-eligible return types <code>Object</code> or <code>String</code> which
-   will return <code>null</code>, or collection types which will return a non-mocked empty collection).
-</p>
-<p>
-   By default, a new cascaded instance is created from each different mocked method (in the example above, the two
-   different methods with the same <code>InetAddress</code> return type will return different cascaded instances);
-   the same method will always return the same cascaded instance, though.
-   Such instances have <code class="annotation">@Injectable</code> semantics, so as to not affect other instances of the
-   same type that may exist during the test.
-   If necessary, this default mocked instance can be replaced with a non-mocked one or with a different mocked instance;
-   for that, simply assign the desired instance to the <code>result</code> field in a recorded expectation.
 </p>
 
 <h2 id="capturing">
