@@ -38,7 +38,7 @@
    The toolkit is provided as a versioned zip file that contains everything (jars, sources, documentation, and Maven
    configuration files), and also as a set of Maven artifacts deployed to the
    <a href="http://repo.maven.apache.org/maven2/org/jmockit/">Maven Central</a> repository.
-   The mocking APIs and other tools are documented through a <a href="tutorial.html">tutorial</a>,
+   The mocking APIs and the code coverage tool are documented through a <a href="tutorial.html">tutorial</a>,
    <a href="api1x/overview-summary.html">API documentation</a>, and several
    <a href="samples.html">sample test suites</a>.
 </p>
@@ -57,21 +57,23 @@
    </li>
    <li>
       Unpack the zip file to any directory.
-      This will create the "<code>jmockit</code>" directory containing the library jars, source files, samples,
-      API javadocs, and additional documentation.
-      To build the project with Maven (3.0 or newer), simply use the "<code>jmockit/main/pom.xml</code>" and
-      "<code>jmockit/coverage/pom.xml</code>" files from the full distribution, or from a SVN checkout.
+      This will create two sub-directories, one for the <code>jmockit1.org</code> GitHub repository (with source files,
+      sample test suites, and pre-packaged jar files), and the other for the <code>jmockit.github.io</code> GitHub
+      Pages repository (with HTML files for the tutorial, the API documentation, and other pages).
+      To build the project with Maven (3.0 or newer), simply use the "<code>jmockit1.org/main/pom.xml</code>" and
+      "<code>jmockit1.org/coverage/pom.xml</code>" files from the full distribution, or from a GitHub fork.
    </li>
    <li>
-      Add the library file <strong><code>jmockit.jar</code></strong> to your classpath (in your Java IDE project, Ant
-      build file, and so on, as required).
+      Either add the library file <strong><code>jmockit.jar</code></strong> to your classpath (in your Java IDE project,
+      Ant build file, etc.), or the <code>org/jmockit/jmockit/1.x</code> dependency to your Maven <code>pom.xml</code>
+      file.
    </li>
    <li>
       Depending on the choice of test framework (JUnit or TestNG):
       <ul>
          <li>
-            When using <strong>JUnit 4.5+</strong>, verify that <code>jmockit.jar</code> appears <em>before</em> the
-            JUnit jar file in the classpath.
+            When using <strong>JUnit 4.5+</strong>, verify that <code>jmockit.jar</code> (or the equivalent Maven
+            dependency) appears <em>before</em> JUnit in the classpath.
             Alternatively, annotate test classes with
             <code><span class="annotation">@RunWith</span>(<span class="type">JMockit</span>.class)</code>.
             <br/>
@@ -81,15 +83,16 @@
             the latter ones lack the "<code>attach</code>" native library.
          </li>
          <li>
-            When using <strong>TestNG 6.2+</strong>, simply add <code>jmockit.jar</code> to the classpath.
+            When using <strong>TestNG 6.2+</strong>, simply add <code>jmockit.jar</code> (or the equivalent Maven
+            dependency) to the classpath.
          </li>
       </ul>
    </li>
    <li>
       Optionally, configure your IDE to find API source code and Javadoc comments in this same <code>jmockit.jar</code>
-      file.
+      file (or the <code>jmockit-1.x-sources.jar</code> and <code>jmockit-1.x-javadoc.jar</code> Maven artifacts).
       <a href="api1x/overview-summary.html">API documentation</a> is also available in the
-      "<code>jmockit/www/javadoc</code>" directory, as well as online.
+      "<code>jmockit.github.io/api1x/</code>" directory, as well as online.
    </li>
 </ol>
 <p>
@@ -102,20 +105,22 @@
    <a href="#mockingAPIs">Using the mocking APIs</a>
 </h2>
 <p>
-   The JMockit mocking APIs can be used in tests written with any of the popular testing frameworks:
-   JUnit 4 (version 4.5 or newer) and TestNG (version 6.2 or newer).
-   Lets now see how mocking is done with the available JMockit APIs, which are all imported from the
-   <code>mockit</code> package.
+   The JMockit mocking APIs can be used in tests written with JUnit 4 (version 4.5 or newer) or TestNG (version 6.2 or
+   newer).
+   Lets now see how mocking is done with the available APIs, which are imported from the "<code>mockit</code>" package.
 </p>
 
 <h3 id="mockObject">
    <a href="#mockObject">Creating a "mock object"</a>
 </h3>
 <p>
-   In a test class, declare a <em>mock field</em> of the type you wish to mock, annotating it with a JMockit annotation
-   such as <code class="annotation">@Mocked</code> or <code class="annotation">@Injectable</code>.
-   When mocking a class, the latter annotation means that <em>only</em> the instance assigned to the mock field will
-   have mock behavior; otherwise, <em>all</em> instances of the mocked class will be mocked by default.
+   In a test class, declare a <em>mock field</em> of the type you wish to mock, and annotate it with
+   <code class="annotation">@Mocked</code>, <code class="annotation">@Injectable</code>, or
+   <code class="annotation">@Capturing</code>.
+   The last two annotations imply the first, which may then be omitted.
+   <code class="annotation">@Mocked</code> has a few optional attributes, and can be used together with the other ones.
+   When mocking a class, <code class="annotation">@Injectable</code> means that <em>only</em> the instance assigned to
+   the mock field will have mock behavior; otherwise, <em>all</em> instances of the mocked class will be mocked.
 </p>
 <pre><code>import org.junit.*;
 import mockit.*;
@@ -146,7 +151,7 @@ public class MyFirstJMockitTest
 }
 </code></pre>
 <p>
-   The template test class above shows something unusual: the second test method declares a parameter!
+   The test class above shows something unusual: the second test method declares a parameter!
    Normally, JUnit/TestNG test methods are not allowed to have parameters.
    When using JMockit, however, such <em>mock parameters</em> are allowed.
    In general, it's best to use mock fields of the test class only when the mocked types are needed by most or all tests
@@ -161,8 +166,8 @@ public class MyFirstJMockitTest
    <a href="#testMethod">What exactly goes inside a test method?</a>
 </h3>
 <p>
-   The following template shows the basic structure of a JMockit test method, when using the
-   <em>Expectations & Verifications API</em> for <em>behavior-based</em> testing:
+   The following template shows the basic structure of a JMockit test method, when using the <em>Expectations API</em>
+   for <em>behavior-based</em> testing:
 </p>
 <pre><code>@Test
 public void aTestMethod(<em>&lt;any number of mock parameters></em>)
@@ -194,7 +199,7 @@ public void aTestMethod(<em>&lt;any number of mock parameters></em>)
 </h3>
 <p>
    For the "record" phase of a test, we can write one or more <em>expectation blocks</em>, inside which invocations to
-   mocked types/instances are recorded.
+   mocked methods/constructors are recorded.
 </p>
 <p>
 <pre><code>@Test
@@ -357,7 +362,7 @@ public void stateBasedTestMethod()
    The <a href="api1x/index.html">API documentation</a> provides a detailed specification for all elements of the
    mocking APIs.
    Finally, there are hundreds of JUnit <a href="samples.html">sample tests</a> available under the
-   "<code>jmockit/samples</code>" folder, which use nearly everything that is available in the APIs.
+   "<code>jmockit1.org/samples</code>" folder, which use nearly everything that is available in the APIs.
 </p>
 
 <div class="footer">
