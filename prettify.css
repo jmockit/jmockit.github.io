@@ -20,8 +20,8 @@
 body {
    background-color: #444; color: #eee;
    font-family: 'PT Sans', sans-serif;
-   font-size: 1.05em;
-   min-width: 843px; max-width: 45em; margin: 0 auto;
+   font-size: 1.0em;
+   min-width: 843px; max-width: 50em; margin: 0 auto;
    padding: 1.5em;
 }
 a {

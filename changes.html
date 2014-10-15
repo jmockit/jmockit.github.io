@@ -36,6 +36,41 @@
 <p>Version <a href="https://github.com/jmockit/jmockit1/commits/master">1.13</a> (Oct 26, 2014):</p>
 <ul>
    <li>
+      <strong>Added</strong> the new class <em><code class="type">StrictExpectations</code></em> as a sibling to
+      <code class="type">NonStrictExpectations</code>.
+      The shared base class, <code class="type">Expectations</code>, no longer records <em>strict</em> expectations when
+      used on its own; instead, its expectations are just like the ones from
+      <code class="type">NonStrictExpectations</code>, but with a default minimum invocation count of <code>1</code>
+      (one), as if recorded with a "<code>minTimes = 1</code>" constraint.
+      This change in API semantics is meant to bring the following benefits:
+      <ol>
+         <li>
+            More intuitive semantics when using the <code class="type">Expectations</code> class.
+            New users usually don't expect "<code>new Expectations() {{ ... }}</code>" blocks to be strict, but they
+            tend to expect such recorded expectations to require <em>at least one</em> matching invocation from the code
+            under test.
+         </li>
+         <li>
+            Recording of strict expectations will not occur by mistake anymore, as it will require the intentional
+            selection of the explicitly-named <code class="type">StrictExpectations</code> subclass.
+         </li>
+         <li>
+            Use of the longer-named <code class="type">NonStrictExpectations</code> subclass will become much less
+            common.
+            Essentially, this subclass is now mostly useful in <em>test setup</em> methods only
+            (<code class="annotation">@Before</code>, <code class="annotation">@BeforeMethod</code>), since such
+            shared expectations will often not be used by <em>all</em> tests in the test class (hence they should be
+            "<code>minTimes = 0</code>" by default).
+         </li>
+      </ol>
+      Existing tests can continue to use <code class="type">NonStrictExpectations</code> as before, but it's recommended
+      to replace such uses with <code class="type">Expectations</code>, when they occur in test methods; when they
+      occur in test <em>setup</em> methods, however, use of the non-strict subclass should be kept, unless one prefers
+      to add an explicit "<code>minTimes = 0</code>" constraint to each recorded expectation.
+      Tests that do want to record strict expectations, however, should change "<code>new Expectations...</code>" blocks
+      to the equivalent "<code>new StrictExpectations...</code>" form.
+   </li>
+   <li>
       Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/43">#43</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/70">#70</a>,
