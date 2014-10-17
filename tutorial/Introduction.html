@@ -381,40 +381,23 @@ public final class MyBusinessService_ExpectationsAPI_Test
 }
 </code></pre>
 <p>
-   Other mocking APIs usually require a call to some mock creation method, which always returns a new object which
-   later needs to be passed to the code under test.
-   In JMockit, such instances may be passed to code under test, but don't have to be.
-   In fact, no instance may be used at all, like in the case of <code>final Database unused = null;</code> used in the
-   example tests.
+   In a behavior-oriented mocking API like JMockit Expectations, each test can be divided in three consecutive execution
+   steps: <em>record</em>, <em>replay</em>, and <em>verify</em>.
+   Recordings occur from inside an <em>expectation recording block</em>, while verifications occur from inside an
+   <em>expectation verification block</em>; replays are invocations from inside the code under test.
+   Note, however, that only invocations to <em>mocked</em> methods count; methods (or constructors) belonging to types
+   or instances with no associated mock field or mock parameter are not mocked, and therefore cannot be recorded, nor
+   verified, nor replayed.
 </p>
 <p>
-   With behavior-oriented mocking APIs (including JMockit Expectations, jMock, EasyMock, and Mockito), each test can be
-   divided in three consecutive execution steps: <em>record</em>, <em>replay</em>, and <em>verify</em>.
-   Each API needs a way to know from which step it is being called from.
-   For JMockit, recordings occur from inside an <em>expectation recording block</em>, verifications from inside an
-   <em>expectation verification block</em>, and replays from anywhere else.
-   For EasyMock, a call to <code>replay(mock)</code> is needed for each mock used in the test, for it to be switched
-   from "record" phase to "replay" phase.
-   For jMock, there is also a phase switching method, which takes the form of a call to the
-   <code>Mockery#checking(...)</code> method with an instance of an <code class="type">org.jmock.Expectations</code>
-   subclass.
-   Mockito has no phase switching methods, relying on calls to special API methods (<code>when</code>,
-   <code>verify</code>, etc.) to be made in combination with the calls to mock objects.
-</p>
-<p>
-   Another way in which behavior-oriented mocking APIs differ is in how they ensure that necessary verifications are
-   made before the end of a test.
-   JMockit automatically verifies all expectations before the end of the test, when they have <em>implicit</em>
-   constraints associated to them (such as being recorded strictly, or having an associated <code>times = n</code>
-   invocation count constraint); no extra effort from the developer is required.
-   For EasyMock, however, it is necessary to explicitly call <code>verify(mock)</code> for each mock used in the test,
-   or the <code>verifyAll()</code> method if applicable.
-   jMock also automatically performs an equivalent verification at the end of each test, as long as you specify
-   <code class="annotation">@RunWith</code><code>(JMock.class)</code> for the test class.
-   Mockito does not support any form of automatic verification; you always need to call a <code>verify(...)</code>
-   method or some other special verification method, before the test completes; more than that, no constraints can be
-   specified when recording expectations, so it may be necessary to have repeated invocations to a mock object, when it
-   needs to both return a value and be verified as having occurred.
+   As the example test above shows, recording and verifying expectations is achieved simply by invoking the desired
+   methods (as well as constructors, even if not shown here) from inside a recording or verification block.
+   Matching of method arguments can be specified through API fields such as "<code>any</code>" and
+   "<code>anyString</code>", or through API methods such as "<code>withNotNull()</code>".
+   Values to return (or exceptions to throw) from matching invocations during replay are specified during recording
+   through the "<code>result</code>" field.
+   Invocation count constraints can be specified, either when recording or when verifying, through API field assignments
+   like "<code>times = 1</code>".
 </p>
 
 <h3 id="mockups">
