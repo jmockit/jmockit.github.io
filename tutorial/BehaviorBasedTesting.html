@@ -48,8 +48,8 @@
    <li>
       <a href="#argumentMatching">Flexible matching of argument values</a>
       <ol>
-         <li><a href="#withMethods">Using the "with" methods for argument matching</a></li>
          <li><a href="#matcherFields">Using the "any" fields for argument matching</a></li>
+         <li><a href="#withMethods">Using the "with" methods for argument matching</a></li>
          <li><a href="#nullAsMatcher">Using the <code>null</code> value to match any object reference</a></li>
          <li><a href="#varargs">Matching values passed through a <em>varargs</em> parameter</a></li>
       </ol>
@@ -99,11 +99,14 @@
 </ol>
 
 <p>
-   In the JMockit toolkit, the <code>Expectations</code> API provides rich support for the creation of
+   In the JMockit toolkit, the <strong>Expectations</strong> API provides rich support for the creation of
    <em>behavior-based</em> unit tests.
-   The focus when doing this kind of testing is on the <em>interactions</em> between the unit under test and the other
-   units it depends upon.
-   Such units of behavior are the classes, methods, and constructors defined in production code.
+   The focus when doing this kind of testing is on the behavior of the unit the test, as expressed through its
+   <em>interactions</em> with other units it depends upon.
+   Typically, a <em>unit</em> of behavior is embodied in a single class, but it's also fine to consider a whole set of
+   strongly-related classes as a single unit for the purposes of unit testing (as is usually the case when we have a
+   central public class with one or more helper classes, possibly package-private); in general, individual methods
+   should not be regarded as separate units on their own.
 </p>
 <div style="text-align: center;" title="Click on types to open API documentation">
    <map name="figure1">
@@ -139,15 +142,15 @@
    b) for practical reasons cannot be easily, quickly, or reliably executed in a unit test environment (because they
    write to a database, send emails, and so on).
    When coding the tests for a particular unit, we simply assume that its dependencies behave according to expectations.
-   If they don't, it is the responsibility of their own tests to catch it.
+   If they don't, it is the responsibility of their own tests to catch the unexpected behavior.
 </p>
 
 <h2 id="mocked">
    <a href="#mocked">Mocked types and instances</a>
 </h2>
 <p>
-   Methods and constructors invoked from the unit under test, and which belong to a dependency/collaborator of said
-   unit, are the usual targets for <em>mocking</em>.
+   Methods and constructors invoked from the unit under test, and which belong to a dependency of said unit, are the
+   usual targets for <em>mocking</em>.
    Mocking provides the mechanism that we need in order to isolate the tested unit from (some of) its dependencies.
    We specify which particular dependencies are to be mocked for a given test (or tests) by declaring suitable <em>mock
    fields</em> and/or <em>mock parameters</em>; mock fields are declared as annotated instance fields of the test class,
@@ -571,41 +574,45 @@ public void doSomethingHandlesSomeCheckedException(@Mocked final DependencyAbc a
 </h2>
 <p>
    Previously, we explained that an expectation recorded on a mocked instance, such as
-   <code><strong>abc</strong>.intReturningMethod(); <em>result</em> = 3;</code> would actually match invocations to
-   <code>DependencyAbc#intReturningMethod()</code> on <em>any</em> instance of the mocked
+   "<code><strong>abc</strong>.someMethod();</code>" would actually match invocations to
+   <code>DependencyAbc#someMethod()</code> on <em>any</em> instance of the mocked
    <code class="type">DependencyAbc</code> class.
    In most cases, tested code uses a <em>single</em> instance of a given dependency, so this won't really matter and can
-   be safely ignored, whether the mocked instance is <em>passed into</em> tested code or <em>created inside</em> it.
-   But what if we need to verify that invocations occur on a <em>specific</em> instance, between the several/many ones
-   that happen to be used by code under test?
-   JMockit provides a couple of ways to constrain the matching of expectations to specific mocked instances.
+   be safely ignored, whether the mocked instance is <em>passed into</em> the code under test or <em>created inside</em>
+   it.
+   But what if we need to verify that invocations occur on a <em>specific</em> instance, between several ones that
+   happen to be used in the code under test?
+   Also, what if only one or a few instances of the mocked class should actually be mocked, with other instances of the
+   same class remaining unmocked?
+   (This second case tends to occur more often when classes from the standard Java libraries, or from other third-party
+   libraries, are mocked.)
+   JMockit provides a mocking annotation, <code class="annotation">@Injectable</code>, which will only mock <em>one</em>
+   instance of the mocked type, leaving others unaffected.
+   Additionally, it provides a couple ways to constrain the matching of expectations to specific
+   <code class="annotation">@Mocked</code> instances, while still mocking <em>all</em> instances of the mocked class.
 </p>
 
 <h3 id="injectable">
    <a href="#injectable">Injectable mocked instances</a>
 </h3>
 <p>
-   Suppose we need to test code which works with multiple instances of a given class.
-   If we declare said class to be mocked, then all of its instances will be equally affected: they all become mocked
-   instances, so that any instance method invoked on them gets handled according to our mocking specifications.
-   However, what if we need <em>only one</em> (or a few) of those instances to be mocked, while invocations made on
-   other instances continue to execute the original, "real" implementation?
-   This is where the <a href="../api1x/mockit/Injectable.html">@Injectable</a> annotation can help.
-   (It has other uses too, which we'll address later.)
+   Suppose we need to test code which works with multiple instances of a given class, some of which we want to mock.
+   If an instance to be mocked can be <em>passed</em> or <em>injected</em> into the code under test, then we can declare
+   an <a href="../api1x/mockit/Injectable.html">@Injectable</a> mock field or mock parameter for it.
+   The <code class="annotation">@Injectable</code> instance created by JMockit will be an "exclusive" mocked instance;
+   any other instance of the same mocked type, unless obtained from a separate mock field/parameter, will remain as a
+   regular, non-mocked instance.
 </p>
 <p>
-   By simply declaring a mock field or mock parameter as <code class="annotation">@Injectable</code>, we get an
-   "exclusive" mocked instance; any other instance of the same mocked type, unless associated with a separate mock
-   field/parameter, will remain as a regular, non-mocked instance.
-   Since an injectable mocked instance is used to preserve the original implementation on other instances, it follows
-   that <code>static</code> methods and constructors are <em>also</em> excluded from being mocked.
+   Note also that, since having an injectable mocked instance is supposed to affect the behavior of only that instance,
+   <code>static</code> methods and constructors are <em>also</em> excluded from being mocked.
    After all, a <code>static</code> method is not associated with any instance of the class, while a constructor is
    only associated with a newly created (and therefore different) instance.
 </p>
 <p>
    For an example, lets say we have the following class to be tested.
 </p>
-<pre><code>public static final class ConcatenatingInputStream extends InputStream
+<pre><code>public final class ConcatenatingInputStream extends InputStream
 {
    private final Queue&lt;InputStream> sequentialInputs;
    private InputStream currentInput;
@@ -661,16 +668,18 @@ public void concatenateInputStreams(
    actually defined in the base <code class="type">InputStream</code> class.
    If <code class="type">InputStream</code> was mocked "normally", the <code>read(byte[])</code> method would always be
    mocked, regardless of the instance on which it is called.
-   (Well, we could still write a test without injectable instances if <em>only</em> the overriding <code>read()</code>
-   method was called by the test.)
 </p>
 
 <h3 id="onInstance">
    <a href="#onInstance">The <code>onInstance(m)</code> constraint</a>
 </h3>
 <p>
-   We can use the <a href="../api1x/mockit/Expectations.html#onInstance-java.lang.Object-">onInstance(mockObject)</a>
-   method when recording an expectation, as the next example shows.
+   When using <code class="annotation">@Mocked</code> or <code class="annotation">@Capturing</code> (and not
+   <code class="annotation">@Injectable</code> on the same mock field/parameter), we can still match replay invocations
+   to expectations recorded on specific mocked instances.
+   For that, we use the
+   <a href="../api1x/mockit/Expectations.html#onInstance-java.lang.Object-">onInstance(mockObject)</a> method when
+   recording the expectation, as the next example shows.
 </p>
 <pre><code>@Test
 public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>)
@@ -710,11 +719,50 @@ public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>
    <a href="#futureInstancesByConstructor">Instances created with a given constructor</a>
 </h3>
 <p>
-   Specifically for <em>future</em> instances that will later get created by code under test, JMockit provides a
-   mechanism through which we can match invocations on them: by recording an expectation on a specific <em>constructor
-   invocation</em> (a "<code>new</code>" expression) of the mocked class, with the mock field/parameter value as the
-   <code>result</code> of the invocation.
+   Specifically for <em>future</em> instances that will later get created by code under test, JMockit provides a couple
+   mechanisms through which we can match invocations on them.
+   Both mechanisms require the recording of an expectation on a specific <em>constructor invocation</em> (a
+   "<code>new</code>" expression) of the mocked class.
+</p>
+<p>
+   The first mechanism involves simply using the new instance obtained from the recorded constructor expectation, when
+   recording expectations on instance methods.
    Lets see an example.
+</p>
+<pre><code>@Test
+public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyCollaborator)
+{
+   // Record different behaviors for each set of instances:
+   new NonStrictExpectations() {{
+      // One set, instances created with "a value":
+      Collaborator col1 = new Collaborator("a value");
+      col1.doSomething(anyInt); result = 123;
+
+      // Another set, instances created with "another value":
+      Collaborator col2 = new Collaborator("another value");
+      col2.doSomething(anyInt); result = new InvalidStateException();
+   }};
+
+   // Code under test:
+   new Collaborator("a value").doSomething(5); // will return 123
+   ...
+   new Collaborator("another value").doSomething(0); // will throw the exception
+   ...
+}
+</code></pre>
+<p>
+   In the above test, we declare a single mock field or mock parameter of the desired class, using
+   <code class="annotation">@Mocked</code>.
+   This mock field/parameter, however, is <em>not</em> used when recording expectations; instead, we use the instances
+   created on <em>instantiation recordings</em> to record further expectations on instance methods.
+   The future instances created with matching constructor invocations will map to those recorded instances.
+   Also, note that it's not necessarily a one-to-one mapping, but a many-to-one mapping, from potentially many future
+   instances to a single instance used for recorded expectations.
+</p>
+<p>
+   The second mechanism lets us record a <em>replacement instance</em> for those future instances that match a recorded
+   constructor invocation.
+   With this alternative mechanism, we can rewrite the test as follows.
 </p>
 <pre><code>@Test
 public void newCollaboratorsWithDifferentBehaviors(
@@ -737,6 +785,11 @@ public void newCollaboratorsWithDifferentBehaviors(
    ...
 }
 </code></pre>
+<p>
+   Both versions of the test are equivalent.
+   The second one also allows, when combined with <em>partial</em> mocking, for real (non-mocked) instances to be used
+   as replacements.
+</p>
 
 <h2 id="argumentMatching">
    <a href="#argumentMatching">Flexible matching of argument values</a>
@@ -750,17 +803,53 @@ public void newCollaboratorsWithDifferentBehaviors(
    For arguments that are regular objects (not primitives or arrays), the <code>equals(Object)</code> method is used for
    equality checking.
    For parameters of array type, equality checking extends to individual elements; therefore, two different array
-   instances having the same length in each dimension and equal corresponding elements are considered to be equal.
+   instances having the same length in each dimension and equal corresponding elements are considered equal.
 </p>
 <p>
    In a given test, we often don't know exactly what those argument values will be, or they simply aren't essential for
    what is being tested.
    So, to allow a recorded or verified invocation to match a whole set of replayed invocations with different argument
    values, we can specify flexible <em>argument matching constraints</em> instead of actual argument values.
-   This is done by using <code>withXyz(...)</code> methods and/or <code>anyXyz</code> <em>fields</em>.
-   The "with" methods and "any" fields are all defined in <code class="type">mockit.Invocations</code>, which is the
-   base class for all the expectation/verification classes used in tests.
-   Therefore, they can be used in expectation as well as verification blocks.
+   This is done by using <code>anyXyz</code> <em>fields</em> and/or <code>withXyz(...)</code> methods.
+   The "any" fields and "with" methods are all defined in <code class="type">mockit.Invocations</code>, which is the
+   base class for all the expectation/verification classes used in tests;
+   therefore, they can be used in expectation as well as verification blocks.
+</p>
+
+<h3 id="matcherFields">
+   <a href="#matcherFields">Using the "any" fields for argument matching</a>
+</h3>
+<p>
+   The most common argument matching constraint tends also to be the <em>least</em> restrictive one: to match
+   invocations with <em>any</em> value for a given parameter (of the proper parameter type, of course).
+   For such cases we have a whole set of special <em>argument matching fields</em>, one for each primitive type (and the
+   corresponding wrapper class), one for strings, and a "universal" one of type <code>Object</code>.
+   The test below demonstrates some uses.
+</p>
+<pre><code>@Test
+public void someTestMethod(@Mocked final DependencyAbc abc)
+{
+   final DataItem item = new DataItem(...);
+
+   new NonStrictExpectations() {{
+      // Will match "voidMethod(String, List)" invocations where the first argument is
+      // any string and the second any list.
+      abc.voidMethod(<strong>anyString, (List&lt;?>) any</strong>);
+   }};
+
+   new UnitUnderTest().doSomething(item);
+
+   new Verifications() {{
+      // Matches invocations to the specified method with any value of type long or Long.
+      abc.anotherVoidMethod(<strong>anyLong</strong>);
+   }};
+}
+</code></pre>
+<p>
+   Uses of "<code>any</code>" fields must appear at the actual argument positions in the invocation statement, never
+   before.
+   You can still have regular argument values for other parameters in the same invocation, though.
+   For more details, see the <a href="../api1x/mockit/Expectations.html#anyInt">API documentation</a>.
 </p>
 
 <h3 id="withMethods">
@@ -807,42 +896,6 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    Besides the several predefined argument matching constraints available in the API, JMockit allows the user to provide
    custom constraints, through the <a href="../api1x/mockit/Expectations.html#with-mockit.Delegate-">with(Delegate)</a>
    and <a href="../api1x/mockit/Expectations.html#withArgThat-org.hamcrest.Matcher-">withArgThat(Matcher)</a> methods.
-</p>
-
-<h3 id="matcherFields">
-   <a href="#matcherFields">Using the "any" fields for argument matching</a>
-</h3>
-<p>
-   The most common argument matching constraint tends also to be the <em>least</em> restrictive one: to match
-   invocations with <em>any</em> value for a given parameter (of the proper parameter type, of course).
-   For such cases we have a whole set of special <em>argument matching fields</em>, one for each primitive type (and the
-   corresponding wrapper class), one for strings, and a "universal" one of type <code>Object</code>.
-   The test below demonstrates some uses.
-</p>
-<pre><code>@Test
-public void someTestMethod(@Mocked final DependencyAbc abc)
-{
-   final DataItem item = new DataItem(...);
-
-   new NonStrictExpectations() {{
-      // Will match "voidMethod(String, List)" invocations where the first argument is
-      // any string and the second any list.
-      abc.voidMethod(<strong>anyString, (List&lt;?>) any</strong>);
-   }};
-
-   new UnitUnderTest().doSomething(item);
-
-   new Verifications() {{
-      // Matches invocations to the specified method with any value of type long or Long.
-      abc.anotherVoidMethod(<strong>anyLong</strong>);
-   }};
-}
-</code></pre>
-<p>
-   The same requirement of having calls to "with" methods inside the invocation statement applies in the case of
-   accesses to "any" fields: they must appear at the actual argument positions in the invocation statement, not before.
-   Again, see the <a href="../api1x/mockit/Expectations.html#anyInt">API documentation</a> for
-   more details on argument matching fields.
 </p>
 
 <h3 id="nullAsMatcher">
@@ -1918,7 +1971,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    As the next example shows, the objects that are created and assigned to such fields (by JMockit or explicit test
    code) can be used in any number of test methods.
    The complete source code for this example can be found under
-   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/LoginService">jmockit/samples/LoginService</a>.
+   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/LoginService">samples/LoginService</a>.
 </p>
 <pre><code>public final class LoginServiceTest
 {
@@ -2013,27 +2066,22 @@ public void setAccountToLoggedInWhenPasswordMatches() throws Exception
    <a href="#otherTopics">Other topics</a>
 </h2>
 <p>
-   The following are more advanced scenarios and API elements, which tend to occur less often.
+   The following sections describe scenarios which tend to occur less often.
 </p>
 
 <h3 id="multipleInterfaces">
    <a href="#multipleInterfaces">Mocking multiple interfaces at the same time</a>
 </h3>
 <p>
-   (Feel free to skip over this section, as it is an advanced topic for rarer cases.)
-   Suppose the unit under test needs to be given an object which implements two or more interfaces.
-   Can we get a mocked instance which satisfies this requirement?
-   One way to do it would be to create a test-specific interface which extends all the interfaces required by the tested
-   unit, and then use that as the mocked type.
-   There is a better way though, which does not require the definition of a new interface, as the following example
-   tests show.
+   Suppose the unit under test needs to be given a mocked object implementing two or more interfaces.
+   The following example tests show how it can be done.
 </p>
-<pre><code>public interface Dependency // an arbitrary custom interface
+<pre><code>public interface Dependency
 {
    String doSomething(boolean b);
 }
 
-public final class MultiMocksTest<strong>&lt;MultiMock extends Dependency & Runnable></strong>
+public class MultiMocksTest<strong>&lt;MultiMock extends Dependency & Runnable></strong>
 {
    @Mocked <strong>MultiMock multiMock</strong>;
 
@@ -2055,10 +2103,11 @@ public final class MultiMocksTest<strong>&lt;MultiMock extends Dependency & Runn
       @Mocked final <strong>M mock</strong>)
    {
       new Expectations() {{
-         mock.doSomething(true); result = ""
+         mock.doSomething(true); result = "abc";
       }};
 
-      assertEquals("", mock.doSomething(true));
+      assertEquals("abc", mock.doSomething(true));
+      assertTrue(mock instanceof Serializable);
    }
 }
 </code></pre>
