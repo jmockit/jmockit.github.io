@@ -130,8 +130,7 @@
    </tr>
    <tr>
       <td class="feature">
-         <a href="tutorial/BehaviorBasedTesting.html#declaration">Declarative mocks for test methods (mock
-             parameters)</a>
+         <a href="tutorial/BehaviorBasedTesting.html#mocked">Declarative mocks for test methods (mock parameters)</a>
       </td>
       <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td>√</td>
    </tr>
@@ -243,20 +242,17 @@
 
 <h3 id="Recording_strict_expectations">Recording strict expectations</h3>
 <p>
-   Invocations that <em>must</em> occur when the unit under test is exercised can be recorded as <em>strict</em>
-   expectations.
-   When invocations are <em>allowed</em> but <em>not</em> required to occur, they can be recorded as non-strict
-   expectations.
-   Some mocking APIs only support the recording of non-strict expectations, while supporting the <em>verification</em>
-   of expectations to compensate the lack of support for the recording of strict expectations.
+   Invocations that <em>must</em> occur only as specified can be explicitly recorded using <em>strict</em> expectations.
+   Some mocking APIs only support the recording of expectations that are <em>not</em> strict, while also supporting the
+   explicit verification of matching invocations <em>after</em> the call to the class under test.
+   JMockit supports both models in a seamless API.
 </p>
 
 <h3 id="Explicit_verification">Explicit verification</h3>
 <p>
    Strict expectations are always verified implicitly and automatically.
-   Non-strict ones, however, are not.
-   Some toolkits provide a way to explicitly verify invocations that belong to non-strict expectations, after the unit
-   under test was exercised.
+   For those that are not recorded strictly (regular or non-strict expectations), invocations can be explicitly verified
+   after the unit under test was exercised.
 </p>
 
 <h3 id="No_method_call_to_switch_from_record_to_replay">No method call to switch from record to replay</h3>
@@ -298,7 +294,7 @@
    Approach 1 is used by <a href="http://www.unitils.org/tutorial.html#Testing_with_mock_objects">Unitils Mock</a>.
    Approach 2 is provided by EasyMock and Mockito, and therefore also available when using PowerMock.
    JMockit supports approaches 2 and 3, through the
-   <a href="tutorial/BehaviorBasedTesting.html#withCapture">withCapture()</a> method and the
+   <a href="tutorial/BehaviorBasedTesting.html#withCapture">withCapture()</a> method and
    <a href="tutorial/BehaviorBasedTesting.html#delegates">Delegate</a> objects, respectively.
 </p>
 
