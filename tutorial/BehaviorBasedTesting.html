@@ -31,7 +31,7 @@
    <li><a href="#expectation">Expectations</a></li>
    <li><a href="#model">The <em>record-replay-verify</em> model</a></li>
    <li>
-      <a href="#strictness"><em>Strict</em> and <em>non-strict</em> expectations</a>
+      <a href="#strictness">Regular, <em>strict</em>, and <em>non-strict</em> expectations</a>
       <ol>
          <li><a href="#strictMocks">Strict and non-strict <em>mocks</em></a></li>
       </ol>
@@ -110,6 +110,7 @@
 </p>
 <div style="text-align: center;" title="Click on types to open API documentation">
    <map name="figure1">
+      <area shape="rect" coords="2,2,177,35" href="../api1x/mockit/StrictExpectations.html">
       <area shape="rect" coords="38,84,172,117" href="../api1x/mockit/Expectations.html">
       <area shape="rect" coords="2,166,208,199" href="../api1x/mockit/NonStrictExpectations.html">
       <area shape="rect" coords="453,84,585,117" href="../api1x/mockit/Verifications.html">
@@ -189,7 +190,7 @@
 public void doBusinessOperationXyz(@Mocked final <strong>AnotherDependency anotherMock</strong>)
 {
    ...
-   new NonStrictExpectations() {{ // an "expectation block"
+   new Expectations() {{ // an "expectation block"
       ...
       // Record an expectation, with a given value to be returned:
       <strong>mockInstance</strong>.mockedMethod(...); result = 123;
@@ -269,7 +270,7 @@ public void doBusinessOperationXyz(@Mocked final <strong>AnotherDependency anoth
 public void doBusinessOperationXyz(@Mocked final Dependency mockInstance)
 {
    ...
-   new NonStrictExpectations() {{
+   new Expectations() {{
       ...
       // An expectation for an instance method:
       <strong>mockInstance.someMethod(1, "test");</strong> result = "mocked";
@@ -386,13 +387,13 @@ public class SomeTest
    {
       // Preparation code not specific to JMockit, if any.
 
-      <strong>new NonStrictExpectations()</strong> {{ // also an expectation block
+      <strong>new Expectations()</strong> {{
          // One or more invocations to mocked types, causing expectations to be recorded.
       }};
 
       // Unit under test is exercised.
 
-      <strong>new VerificationsInOrder()</strong> {{ // also a verification block
+      <strong>new VerificationsInOrder()</strong> {{ // an <em>ordered</em> verification block
          // One or more invocations to mocked types, causing expectations to be verified
          // in the specified order.
       }};
@@ -415,28 +416,33 @@ public class SomeTest
 <img src="code-folding.png" style="border: 1px solid #888; box-shadow: 4px 4px 4px #666;">
 
 <h2 id="strictness">
-   <a href="#strictness"><em>Strict</em> and <em>non-strict</em> expectations</a>
+   <a href="#strictness">Regular, <em>strict</em>, and <em>non-strict</em> expectations</a>
 </h2>
 <p>
-   Expectations recorded inside a <code>new <a href="../api1x/mockit/Expectations.html">Expectations</a>() {...}</code>
-   block are <em>strict</em> by default.
-   What this means is that the invocations they specify are <em>expected</em> to occur during the <em>replay</em> phase,
-   and in the <em>same</em> order as they were recorded;
-   additionally, <em>only</em> these invocations are allowed to occur.
-   Any <em>unexpected</em> invocations that were not recorded will automatically cause the test to fail.
+   Expectations recorded inside a
+   "<code>new <a href="../api1x/mockit/Expectations.html">Expectations</a>() {...}</code>" block are the regular ones.
+   What this means is that the invocations they specify are <em>expected</em> to occur <em>at least once</em> during the
+   <em>replay</em> phase; they may occur more than once, though, and in a different order relative to other recorded
+   expectations; additionally, invocations that don't match any recorded expectation are allowed to occur in any number
+   and in any order.
+   If no invocation matches a given recorded expectation, a "missing invocation" error gets thrown at the end of the
+   test, causing it to fail (this is only the default behavior, though, as it can be overridden).
 </p>
 <p>
-   On the other hand, when we want to record <em>non-strict</em> (or <em>loose</em>) expectations, the
-   <a href="../api1x/mockit/NonStrictExpectations.html">mockit.NonStrictExpectations</a> subclass can be used.
+   The API also supports the concept of <em>strict</em> expectations: those that, when recorded, only allow invocations
+   during replay that exactly match the recordings (within explicitly specified allowances, when needed), both in the
+   number of matching invocations (<em>exactly one</em>, by default) and in the order they occur.
+   Invocations that occur during replay but fail to match a recorded strict expectation are regarded as
+   <em>unexpected</em>, causing an immediate "unexpected invocation" error, and consequently failing the test.
+   This is achieved by using the <a href="../api1x/mockit/StrictExpectations.html">StrictExpectations</a> subclass.
+</p>
+<p>
+   Finally, we can record <em>non-strict</em> (or <em>loose</em>) expectations, through the
+   <a href="../api1x/mockit/NonStrictExpectations.html">NonStrictExpectations</a> subclass.
    Inside a non-strict expectation block, all invocations to mocked types will be <em>allowed</em> to occur during the
-   replay phase, not <em>expected</em>.
-   That is, by default they may or may not occur during replay without causing the test to fail on their own.
-   Also, they don't have to occur in the same order as they were recorded.
-</p>
-<p>
-   By default, a strict expectation will match exactly one invocation in the replay phase.
-   An expectation recorded as non-strict, on the other hand, will by default be allowed to match any number of
-   invocations in the replay phase.
+   replay phase, in any number (including zero) and in any order.
+   The recording of non-strict expectations is recommended for test setup methods only, such as a JUnit
+   <code class="annotation">@Before</code> method or the TestNG equivalent.
 </p>
 <p>
    Note that in the case of strict expectations, all invocations occurring during replay that match recorded
@@ -449,18 +455,16 @@ public class SomeTest
    subclasses.
 </p>
 <p>
-   We can mix strict and non-strict expectations in the same test by writing multiple expectation blocks, some strict
-   (using <code class="type">Expectations</code>), others non-strict (using
+   We can mix expectations of different levels of strictness in the same test by writing multiple expectation blocks,
+   some regular (using <code class="type">Expectations</code>), others strict (using
+   <code class="type">StrictExpectations</code>), others non-strict (using
    <code class="type">NonStrictExpectations</code>).
-   Normally, for any given test, a given mocked type introduced by a mock field or mock parameter will appear either in
-   strict expectation blocks <em>or</em> in non-strict ones, not both.
+   Normally, a given mock field or mock parameter will appear in expectation blocks of a single kind, though.
 </p>
 <p>
-   So, how do we choose between strict and non-strict expectations for a given test?
-   There is really no general-purpose answer to this question.
-   It will depend on the particulars of the unit under test, and on personal preferences.
-   The most common preference in recent years has been for non-strict expectations, combined with explicit verification
-   after the code under test is exercised.
+   Most tests will simply make use of "regular" expectations.
+   Usage of strict expectations is probably more a matter of personal preference, while the usage of non-strict
+   expectations tends to occur only in setup methods.
 </p>
 
 <h3 id="strictMocks">
@@ -469,11 +473,9 @@ public class SomeTest
 <p>
    Note that we do not specify that a given mocked type/instance should be <em>strict</em> or <em>non-strict</em>.
    Instead, the strictness for a given mock field/parameter is determined by how it is used in the test.
-   Once the first strict expectation is recorded in a <code>new Expectations() {...}</code> block, the associated mocked
-   type/instance is considered to be strict for the whole test.
-   If instead we record a non-strict expectation, it is considered to be non-strict in the test.
-   Finally, note that when <em>no</em> expectations are recorded in the test for a given mocked type/instance, it is
-   automatically assumed to be fully non-strict.
+   Once the first strict expectation is recorded in a "<code>new StrictExpectations() {...}</code>" block, the
+   associated mocked type/instance is considered to be strict for the whole test; otherwise, it will be <em>not</em>
+   strict.
 </p>
 
 <h2 id="results">
@@ -684,7 +686,7 @@ public void concatenateInputStreams(
 <pre><code>@Test
 public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>)
 {
-   new NonStrictExpectations() {{
+   new Expectations() {{
       <strong>onInstance(mock)</strong>.getValue(); result = 12;
    }};
 
@@ -733,7 +735,7 @@ public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>
 public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyCollaborator)
 {
    // Record different behaviors for each set of instances:
-   new NonStrictExpectations() {{
+   new Expectations() {{
       // One set, instances created with "a value":
       Collaborator col1 = new Collaborator("a value");
       col1.doSomething(anyInt); result = 123;
@@ -768,7 +770,7 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyColla
 public void newCollaboratorsWithDifferentBehaviors(
    @Mocked final Collaborator col1, @Mocked final Collaborator col2)
 {
-   new NonStrictExpectations() {{
+   new Expectations() {{
       // Map separate sets of future instances to separate mock parameters:
       new Collaborator("a value"); result = col1;
       new Collaborator("another value"); result = col2;
@@ -831,7 +833,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 {
    final DataItem item = new DataItem(...);
 
-   new NonStrictExpectations() {{
+   new Expectations() {{
       // Will match "voidMethod(String, List)" invocations where the first argument is
       // any string and the second any list.
       abc.voidMethod(<strong>anyString, (List&lt;?>) any</strong>);
@@ -870,7 +872,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 {
    final DataItem item = new DataItem(...);
 
-   new NonStrictExpectations() {{
+   new Expectations() {{
       // Will match "voidMethod(String, List)" invocations with the first argument
       // equal to "str" and the second not null.
       abc.voidMethod(<strong>"str", (List&lt;?>) withNotNull()</strong>);
@@ -916,7 +918,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 public void someTestMethod(@Mocked final DependencyAbc abc)
 {
    ...
-   new NonStrictExpectations() {{
+   new Expectations() {{
       abc.voidMethod(anyString, <strong>null</strong>);
    }};
    ...
@@ -977,7 +979,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 public void someTestMethod(@Mocked final DependencyAbc abc)
 {
    new Expectations() {{
-      // By default, one invocation is expected, i.e. "times = 1":
+      // By default, at least one invocation is expected, i.e. "minTimes = 1":
       new DependencyAbc();
 
       // At least two invocations are expected:
@@ -1016,17 +1018,15 @@ public void someOtherTestMethod(@Mocked final DependencyAbc abc)
    <a href="#verification">Explicit verification</a>
 </h2>
 <p>
-   Strict expectations are verified implicitly, so there is no point in re-verifying them in a explicit verification
-   block.
-   Non-strict expectations, on the other hand, are usually verified through explicit invocations to mocked types in a
-   verification block.
-   As we'll see later, a recorded non-strict expectation can still be verified implicitly, without the need to write an
-   invocation inside a verification block.
+   Besides specifying invocation count constraints on recorded expectations, we can also verify matching invocations
+   explicitly in a <em>verification</em> block, <em>after</em> the call to the code under test.
+   This is valid for regular and non-strict expectations, but not for strict expectations, since they are always
+   verified <em>implicitly</em>; there is no point in re-verifying them in a explicit verification block.
 </p>
 <p>
-   Inside a <code>new <a href="../api1x/mockit/Verifications.html">Verifications</a>() {...}</code> block we can use the
-   same API that's available in a <code>new NonStrictExpectations() {...}</code> block, with the exception of methods
-   and fields used to record return values and thrown exceptions/errors.
+   Inside a "<code>new <a href="../api1x/mockit/Verifications.html">Verifications</a>() {...}</code>" block we can use
+   the same API that's available in a "<code>new Expectations() {...}</code>" block, with the exception of methods and
+   fields used to record return values and thrown exceptions/errors.
    That is, we can freely use the <code>anyXyz</code> fields, the <code>withXyz(...)</code> argument matching methods,
    and the <code>times</code>, <code>minTimes</code>, and <code>maxTimes</code> invocation count constraint fields.
    An example test follows.
@@ -1055,7 +1055,7 @@ public void verifyInvocationsExplicitlyAtEndOfTest(@Mocked final Dependency mock
    <a href="#neverHappened">Verifying that an invocation never happened</a>
 </h3>
 <p>
-   To do this inside a verification block, add a <code>times = 0</code> assignment right after the
+   To do this inside a verification block, add a "<code>times = 0</code>" assignment right after the
    invocation that is expected to not have happened during the replay phase.
    If one or more matching invocations did happen, the test will fail.
 </p>
@@ -1068,7 +1068,7 @@ public void verifyInvocationsExplicitlyAtEndOfTest(@Mocked final Dependency mock
    The actual relative order in which <code>aMethod()</code> and <code>anotherMethod()</code> were called during the
    replay phase is not verified, but only that each method was executed at least once.
    If you want to verify the relative order of invocations, then a
-   <code>new <a href="../api1x/mockit/VerificationsInOrder.html">VerificationsInOrder</a>() {...}</code> block must be
+   "<code>new <a href="../api1x/mockit/VerificationsInOrder.html">VerificationsInOrder</a>() {...}</code>" block must be
    used instead.
    Inside this block, simply write invocations to one or more mocked types in the order they are expected to have
    occurred.
@@ -1179,9 +1179,9 @@ public void verifyFirstAndLastCallsWithOthersInBetweenInAnyOrder()
    Sometimes it may be important to have <em>all</em> invocations to the mocked types involved in a test verified.
    This is automatically the case when recording strict expectations, since any unexpected invocation causes the test to
    fail.
-   When non-strict expectations are explicitly verified, though, a
-   <code>new <a href="../api1x/mockit/FullVerifications.html">FullVerifications</a>() {...}</code> block can be used to
-   make sure that no invocations are left unverified.
+   When regular or non-strict expectations are explicitly verified, though, a
+   "<code>new <a href="../api1x/mockit/FullVerifications.html">FullVerifications</a>() {...}</code>" block can be used
+   to make sure that no invocations are left unverified.
 </p>
 <pre><code>@Test
 public void verifyAllInvocations(@Mocked final Dependency mock)
@@ -1201,8 +1201,8 @@ public void verifyAllInvocations(@Mocked final Dependency mock)
 }
 </code></pre>
 <p>
-   Note that if a lower limit (a minimum invocation count constraint) is specified for an otherwise non-strict
-   expectation, then this constraint will always be implicitly verified at the end of the test.
+   Note that if a lower limit (a minimum invocation count constraint) is specified for an expectation, then this
+   constraint will always be implicitly verified at the end of the test.
    Therefore, explicitly verifying such an expectation inside the full verification block is not necessary.
 </p>
 
@@ -1239,26 +1239,14 @@ public void verifyAllInvocationsInOrder(@Mocked final Dependency mock)
    In the <code>verifyAllInvocationsInOrder</code> test, however, we had to write two separate invocations to that
    method inside the block, in the proper order with respect to other invocations.
 </p>
-<p>
-   You may now be thinking that writing a
-   <a href="../api1x/mockit/FullVerificationsInOrder.html">FullVerificationsInOrder</a> block ends up being the same as
-   writing an <code class="type">Expectations</code> block where all expectations are strict.
-   So, have we come full circle? Almost, but not quite.
-   For non-strict expectations, the default invocation count constraint corresponds to a
-   <code><em>minTimes</em> = 1</code> assignment, which leaves room for multiple invocations to the same method or
-   constructor in the replay phase.
-   So, in the above test for example, if the <code>setSomethingElse(...)</code> method was invoked a second time during
-   the replay phase, the test would still pass (provided the second invocation occurred in the expected order, as
-   specified inside the verification block).
-</p>
 
 <h3 id="restrictedFullVerifications">
    <a href="#restrictedFullVerifications">Restricting the set of mocked types to be fully verified</a>
 </h3>
 <p>
    By default, <em>all</em> invocations to <em>all</em> mocked instances/types in effect for a given test must be
-   verified explicitly when using a <code>new FullVerifications() {}</code> or
-   <code>new FullVerificationsInOrder() {}</code> block.
+   verified explicitly when using a "<code>new FullVerifications() {}</code>" or
+   "<code>new FullVerificationsInOrder() {}</code>" block.
    Now, what if we have a test with two (or more) mocked types but we only want to fully verify invocations to one of
    them (or to any subset of mocked types when more than two)?
    The answer is to use the
@@ -1300,8 +1288,8 @@ public void verifyAllInvocationsToOnlyOneOfTwoMockedTypes(
    <a href="#emptyFullVerifications">Verifying that no invocations occurred</a>
 </h3>
 <p>
-   To verify that <em>no</em> invocations at all occurred on the non-strict mocked types/instances used in a test, add
-   an <em>empty</em> full verification block to it.
+   To verify that <em>no</em> invocations at all occurred on the mocked types/instances used in a test, add an
+   <em>empty</em> full verification block to it.
    As always, note that any expectations that were <em>recorded</em> as expected through a specified
    <code>times/minTimes</code> constraint are verified implicitly and therefore disregarded by the full verification
    block; in such a case the empty verification block will verify that no <em>other</em> invocations occurred.
@@ -1317,9 +1305,9 @@ public void verifyAllInvocationsToOnlyOneOfTwoMockedTypes(
 public void verifyNoInvocationsOnOneOfTwoMockedDependenciesBeyondThoseRecordedAsExpected(
    @Mocked final Dependency mock1, @Mocked final AnotherDependency mock2)
 {
-   new NonStrictExpectations() {{
+   new Expectations() {{
       // These two are recorded as expected:
-      mock1.setSomething(anyInt); minTimes = 1;
+      mock1.setSomething(anyInt);
       mock2.doSomething(); times = 1;
    }};
 
@@ -1347,7 +1335,7 @@ public void verifyNoInvocationsOnOneOfTwoMockedDependenciesBeyondThoseRecordedAs
 <pre><code>@Test
 public void readOnlyOperation(@Mocked final Dependency mock)
 {
-   new NonStrictExpectations() {{
+   new Expectations() {{
       mock.getData(); result = "test data";
    }};
 
@@ -1357,7 +1345,7 @@ public void readOnlyOperation(@Mocked final Dependency mock)
    ...
 
    <strong>new FullVerifications()</strong> {{
-      mock.getData(); <strong>minTimes = 0; // calls to getData are allowed</strong>
+      mock.getData(); <strong>minTimes = 0; // calls to getData() are allowed, others are not</strong>
    }};
 }
 </code></pre>
@@ -1436,12 +1424,12 @@ public void capturingArgumentsFromMultipleInvocations(@Mocked final Collaborator
    the various <code>anyXyz</code> fields.
    But what if a test needs to decide the result of a recorded invocation based on the arguments it will receive at
    replay time?
-   We can do it through a <a href="../api1x/mockit/Delegate.html">mockit.Delegate</a> instance, as exemplified below.
+   We can do it through a <a href="../api1x/mockit/Delegate.html">Delegate</a> instance, as exemplified below.
 </p>
 <pre><code>@Test
 public void delegatingInvocationsToACustomDelegate(@Mocked final DependencyAbc anyAbc)
 {
-   new NonStrictExpectations() {{
+   new Expectations() {{
       anyAbc.intReturningMethod(anyInt, null);
       result = <strong>new Delegate() {
          int aDelegateMethod(int i, String s)
@@ -1462,7 +1450,7 @@ public void delegatingInvocationsToACustomDelegate(@Mocked final DependencyAbc a
    As for the parameters of the delegate method, they should either match the parameters of the recorded method, or
    there should be none.
    In any case, the delegate method is allowed to have an additional parameter of type
-   <a href="../api1x/mockit/Invocation.html">mockit.Invocation</a> as its first parameter.
+   <a href="../api1x/mockit/Invocation.html">Invocation</a> as its first parameter.
    (The <code class="type">Invocation</code> object received during replay will provide access to the invoked instance
    and the actual invocation arguments, along with other abilities.)
    The return type of a delegate method doesn't have to be the same as the recorded method, although it should be
@@ -1505,7 +1493,7 @@ public void recordAndVerifyExpectationsOnCascadedMocks(
    @Mocked Socket anySocket, @Mocked final SocketChannel cascadedSocketChannel)
    throws Exception
 {
-   new NonStrictExpectations() {{
+   new Expectations() {{
       // "anySocket" matches any new Socket object to be created during the test,
       // while "anySocket.getChannel()" automatically returns a cascaded instance.
       cascadedSocketChannel.isConnected(); result = false;
@@ -1567,9 +1555,9 @@ public void recordAndVerifyExpectationsOnCascadedMocks(
 </p>
 <p>
    To handle these needs (rare though they may be) the
-   <a href="../api1x/mockit/Deencapsulation.html">mockit.Deencapsulation</a> class provides a set of Reflection-based
-   utility methods that allow a test to invoke non-accessible methods on a given object or class, to instantiate objects
-   through non-accessible constructors, and to get or set the values of fields in given objects or classes.
+   <a href="../api1x/mockit/Deencapsulation.html">Deencapsulation</a> class provides a set of Reflection-based utility
+   methods that allow a test to invoke non-accessible methods on a given object or class, to instantiate objects through
+   non-accessible constructors, and to get or set the values of fields in given objects or classes.
    The example test below showcases some of these utility methods.
 </p>
 <pre><code><strong>import static mockit.Deencapsulation.*</strong>;
@@ -1582,7 +1570,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    // Defines some necessary state on the unit under test:
    <strong>setField(tested, "someIntField", 123);</strong>
 
-   new NonStrictExpectations() {{
+   new Expectations() {{
       // Expectations still recorded, even if the invocations are done through Reflection:
       <strong>newInstance("some.package.AnotherDependency", true, "test");</strong> maxTimes = 1;
       <strong>invoke(abc, "intReturningMethod", 45, "");</strong> result = 1;
@@ -1635,7 +1623,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
       final Collaborator mock)
    {
       ...
-      new NonStrictExpectations() {{
+      new Expectations() {{
          mock.getValue(); result = 123;
       }};
       ...
@@ -1695,7 +1683,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    {
       final Collaborator anyInstance = new Collaborator();
 
-      new NonStrictExpectations(<strong>Collaborator.class</strong>) {{
+      new Expectations(<strong>Collaborator.class</strong>) {{
          anyInstance.getValue(); result = 123;
       }};
 
@@ -1717,7 +1705,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    {
       final Collaborator collaborator = new Collaborator(2);
 
-      new NonStrictExpectations(<strong>collaborator</strong>) {{
+      new Expectations(<strong>collaborator</strong>) {{
          collaborator.getValue(); result = 123;
          collaborator.simpleOperation(1, "", null); result = false;
 
@@ -1739,11 +1727,8 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 </code></pre>
 <p>
    As shown above, the
-   <a href="../api1x/mockit/NonStrictExpectations.html#NonStrictExpectations-java.lang.Object...-">
-      NonStrictExpectations(Object...)</a> constructor accepts one or more classes or objects to be partially mocked.
-   (The same occurs with
-   <a href="../api1x/mockit/Expectations.html#Expectations-java.lang.Object...-">Expectations(Object...)</a>, which
-   allows <em>strict</em> expectations on a partially mocked type.)
+   <a href="../api1x/mockit/Expectations.html#Expectations-java.lang.Object...-">Expectations(Object...)</a> constructor
+   accepts one or more classes or objects to be partially mocked.
    If a <code>Class</code> object is given, the methods <em>and</em> constructors defined in that class are considered
    for mocking, as well as the methods and constructors of its super-classes; <em>all</em> instances of the specified
    class will be regarded as mocked instances.
@@ -1829,9 +1814,7 @@ public final class TestedUnit
    @Test
    public void mockingImplementationClassesFromAGivenBaseType()
    {
-      new NonStrictExpectations() {{
-         anyService.doSomething(); returns(3, 4);
-      }};
+      new Expectations() {{ anyService.doSomething(); returns(3, 4); }};
 
       int result = new TestedUnit().businessOperation();
 
@@ -1872,7 +1855,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    @Capturing(maxInstances = 1) final Buffer firstNewBuffer,
    @Capturing final Buffer remainingNewBuffers)
 {
-   new NonStrictExpectations() {{
+   new Expectations() {{
       firstNewBuffer.position(); result = 10;
       remainingNewBuffers.position(); result = 20;
    }};
@@ -1996,7 +1979,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
 
    private void willMatchPassword(final boolean match)
    {
-      new NonStrictExpectations() {{ <strong>account</strong>.passwordMatches(anyString); result = match; }};
+      new Expectations() {{ <strong>account</strong>.passwordMatches(anyString); result = match; }};
    }
 
    @Test
@@ -2035,7 +2018,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    For example, instead of having the <code>willMatchPassword(boolean)</code> method we could have a reusable inner
    class:
 </p>
-<pre><code><strong>final</strong> class PasswordMatchingExpectations extends NonStrictExpectations
+<pre><code><strong>final</strong> class PasswordMatchingExpectations extends Expectations
 {
    PasswordMatchingExpectations(boolean match)
    {
@@ -2088,9 +2071,7 @@ public class MultiMocksTest<strong>&lt;MultiMock extends Dependency & Runnable><
    @Test
    public void mockFieldWithTwoInterfaces()
    {
-      new NonStrictExpectations() {{
-         multiMock.doSomething(false); result = "test";
-      }};
+      new Expectations() {{ multiMock.doSomething(false); result = "test"; }};
 
       multiMock.run();
       assertEquals("test", multiMock.doSomething(false));
@@ -2102,9 +2083,7 @@ public class MultiMocksTest<strong>&lt;MultiMock extends Dependency & Runnable><
    public <strong>&lt;M extends Dependency & Serializable></strong> void mockParameterWithTwoInterfaces(
       @Mocked final <strong>M mock</strong>)
    {
-      new Expectations() {{
-         mock.doSomething(true); result = "abc";
-      }};
+      new Expectations() {{ mock.doSomething(true); result = "abc"; }};
 
       assertEquals("abc", mock.doSomething(true));
       assertTrue(mock instanceof Serializable);
@@ -2124,21 +2103,21 @@ public class MultiMocksTest<strong>&lt;MultiMock extends Dependency & Runnable><
    <a href="#iteratedExpectations">Iterated expectations</a>
 </h3>
 <p>
-   When a sequence of consecutive invocations is recorded with strict expectations (the relative order between
-   invocations is irrelevant with <em>non-strict</em> expectations), the whole sequence is expected to occur exactly
-   <em>once</em> during the replay phase.
+   When a sequence of consecutive invocations is recorded with <em>strict</em> expectations (the relative order between
+   invocations is irrelevant otherwise), the whole sequence is expected to occur exactly <em>once</em> during the replay
+   phase.
    Consider, however, the case where the tested code executes those invocations in a loop (or any kind of iteration).
    Assuming that the number of iterations is known in the test, we can still record those expectations with a single
    invocation to each method/constructor called inside the loop (that is, without writing a loop or repeating the
    expectations inside the expectation block).
    The next test demonstrates this feature, using the
-   <a href="../api1x/mockit/Expectations.html#Expectations-java.lang.Integer-java.lang.Object...-">
-      Expectations(numberOfIterations)</a> constructor.
+   <a href="../api1x/mockit/StrictExpectations.html#StrictExpectations-java.lang.Integer-java.lang.Object...-">
+      StrictExpectations(numberOfIterations)</a> constructor.
 </p>
 <pre><code>@Test
 public void recordStrictInvocationsInIteratingBlock(@Mocked final Collaborator mock)
 {
-   new <strong>Expectations(2)</strong> {{
+   new <strong>StrictExpectations(2)</strong> {{
       mock.setSomething(anyInt);
       mock.save();
    }};
@@ -2151,7 +2130,8 @@ public void recordStrictInvocationsInIteratingBlock(@Mocked final Collaborator m
 }
 </code></pre>
 <p>
-   This ability to specify the number of iterations for a group of invocations also applies to non-strict expectations.
+   This ability to specify the number of iterations for a group of invocations also applies to regular and non-strict
+   expectations.
    However, in this case the specified number of iterations is merely used as a <em>multiplier</em> for the upper and
    lower limits of invocation count constraints (both implicit and explicit ones).
    Non-strict expectations with no specified invocation count constraint, therefore, are not affected.

@@ -331,7 +331,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
  <p/>
  For an expectation, this call will return the value specified through the
  times or minTimes field, if that was the case;
- if not, the value will be <code>0</code> for a non-strict expectation and <code>1</code> for a strict expectation.
+ if not, the value will be <code>1</code> for a regular or strict expectation, or <code>0</code> for a non-strict one.
  For a <code>@Mock</code> method, it will return the value specified for the <a href="../mockit/Mock.html#invocations--">invocations</a>
  or <a href="../mockit/Mock.html#minInvocations--">minInvocations</a> attribute, or <code>0</code> if none.</div>
 </li>
@@ -348,7 +348,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
  <p/>
  For an expectation, this call will return the value specified through the
  times or maxTimes field, if that was the case;
- if not, the value will be <code>-1</code> for a non-strict expectation and <code>1</code> for a strict expectation.
+ if not, the value will be <code>-1</code> for a regular or non-strict expectation, or <code>1</code> for a strict one.
  For a <code>@Mock</code> method, it will return the value specified for the <a href="../mockit/Mock.html#invocations--">invocations</a>
  or <a href="../mockit/Mock.html#maxInvocations--">maxInvocations</a> attribute, or <code>-1</code> if none.</div>
 </li>

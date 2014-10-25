@@ -100,7 +100,7 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
  <p/>
  Any type can be mocked, except for primitive and array types.
  A mocked instance of that type is automatically created and assigned to the mock field/parameter, for use when
- <a href="../mockit/NonStrictExpectations.html" title="class in mockit">recording</a> or <a href="../mockit/Verifications.html" title="class in mockit">verifying</a> expectations.
+ <a href="../mockit/Expectations.html" title="class in mockit">recording</a> or <a href="../mockit/Verifications.html" title="class in mockit">verifying</a> expectations.
  <p/>
  The effect of declaring a <code>@Mocked</code> type, by default, is that all new instances of that type, as well as those
  previously created, will also be mocked instances; this will last for the duration of each test where the associated

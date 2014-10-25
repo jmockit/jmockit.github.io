@@ -113,7 +113,7 @@
 <tr class="rowColor">
 <td class="colFirst"><a href="../mockit/Expectations.html" title="class in mockit">Expectations</a></td>
 <td class="colLast">
-<div class="block">Used to record <em>strict</em> expectations on <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> types and mocked instances.</div>
+<div class="block">Used to <em>record</em> expectations on <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> types and their instances.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -145,17 +145,23 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../mockit/NonStrictExpectations.html" title="class in mockit">NonStrictExpectations</a></td>
 <td class="colLast">
-<div class="block">Used to <em>record</em> non-strict expectations on <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> types and mocked instances.</div>
+<div class="block">Used to record <em>non-strict</em> expectations on <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> types and their instances.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../mockit/Verifications.html" title="class in mockit">Verifications</a></td>
+<td class="colFirst"><a href="../mockit/StrictExpectations.html" title="class in mockit">StrictExpectations</a></td>
 <td class="colLast">
-<div class="block">Used to <em>verify</em> a set of non-strict expectations on available <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> types and/or
- instances, against the invocations which actually occurred during the test.</div>
+<div class="block">Used to record <em>strict</em> expectations on <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> types and their instances.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../mockit/Verifications.html" title="class in mockit">Verifications</a></td>
+<td class="colLast">
+<div class="block">Used to <em>verify</em> a set of expectations on available <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> types and/or instances,
+ against the invocations which actually occurred during the test.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../mockit/VerificationsInOrder.html" title="class in mockit">VerificationsInOrder</a></td>
 <td class="colLast">
 <div class="block">Same as <a href="../mockit/Verifications.html" title="class in mockit"><code>Verifications</code></a>, but checking that invocations from code under test occurred in the same order as the
@@ -229,9 +235,9 @@
  The <a href="../mockit/Expectations.html" title="class in mockit"><code>Expectations</code></a> class provides an API for the traditional <em>record-replay</em> model of recording
  expected invocations which are later replayed and implicitly verified.
  This API makes use of the <a href="../mockit/Mocked.html" title="annotation in mockit"><code>Mocked</code></a> annotation.
- The <a href="../mockit/Verifications.html" title="class in mockit"><code>Verifications</code></a> class, when combined with the <a href="../mockit/NonStrictExpectations.html" title="class in mockit"><code>NonStrictExpectations</code></a> class, extends
- the record-replay model to a <em>record-replay-verify</em> model, where the record phase can be left empty, with
- expected invocations verified explicitly <em>after</em> exercising the code under test (ie, after the replay phase).
+ The <a href="../mockit/Verifications.html" title="class in mockit"><code>Verifications</code></a> class extends the record-replay model to a <em>record-replay-verify</em> model,
+ where the record phase can be left empty, with expected invocations verified explicitly <em>after</em> exercising the
+ code under test (ie, after the replay phase).
  <p/>
  The <a href="../mockit/MockUp.html" title="class in mockit"><code>MockUp&lt;T></code></a> generic class (where <code>T</code> is the mocked type) allows
  the definition of fake implementations for arbitrary classes.

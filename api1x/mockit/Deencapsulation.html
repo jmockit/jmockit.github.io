@@ -19,7 +19,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -113,7 +113,11 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
  constructors.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://jmockit.github.io/tutorial/ReflectionUtilities.html">Tutorial (general)</a>, 
+<dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-"><code>setField(Object, String, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#invoke-java.lang.Object-java.lang.String-java.lang.Object...-"><code>invoke(Object, String, Object...)</code></a>, 
+<a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Object...-"><code>newInstance(String, Object...)</code></a>, 
+<a href="http://jmockit.github.io/tutorial/ReflectionUtilities.html">Tutorial (general)</a>, 
 <a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#deencapsulation">Tutorial (expectations)</a></dd>
 </dl>
 </li>
@@ -258,13 +262,19 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 </td>
 </tr>
 <tr id="i15" class="rowColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newUninitializedInstance-java.lang.Class-">newUninitializedInstance</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate)</code>
+<div class="block">Creates a new instance of a given class, without invoking any constructor.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.Object-">setField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
         <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</code>
 <div class="block">Sets the value of a non-accessible static field on a given class.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-">setField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
         <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
@@ -272,14 +282,14 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <div class="block">Sets the value of a non-accessible static field on a given class.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.Object-">setField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
         <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</code>
 <div class="block">Sets the value of a non-accessible field on a given object.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-">setField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
         <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
@@ -328,6 +338,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.Class-"><code>getField(Object, Class)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a>, 
 <a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-"><code>setField(Object, String, Object)</code></a></dd>
 </dl>
 </li>
@@ -350,6 +361,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a>, 
 <a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.Object-"><code>setField(Object, Object)</code></a></dd>
 </dl>
 </li>
@@ -373,6 +385,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.Class-"><code>getField(Class, Class)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a>, 
 <a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a></dd>
 </dl>
 </li>
@@ -397,6 +410,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.Class-"><code>getField(Object, Class)</code></a>, 
 <a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.Object-"><code>setField(Class, Object)</code></a></dd>
 </dl>
 </li>
@@ -420,6 +434,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.Object-"><code>setField(Object, Object)</code></a>, 
 <a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a></dd>
 </dl>
 </li>
@@ -439,6 +454,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-"><code>setField(Object, String, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a>, 
 <a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a></dd>
 </dl>
 </li>
@@ -462,6 +478,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.Object-"><code>setField(Class, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-"><code>setField(Object, String, Object)</code></a>, 
 <a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a></dd>
 </dl>
 </li>
@@ -484,6 +501,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.Object-"><code>setField(Object, Object)</code></a>, 
 <a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.Class-"><code>getField(Class, Class)</code></a></dd>
 </dl>
 </li>
@@ -767,7 +785,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <a name="newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>newInnerInstance</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInnerInstance(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;innerClassToInstantiate,
@@ -789,6 +807,30 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.String-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(String, Object, Object...)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="newUninitializedInstance-java.lang.Class-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>newUninitializedInstance</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newUninitializedInstance(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate)</pre>
+<div class="block">Creates a new instance of a given class, without invoking any constructor.
+ If the class is <code>abstract</code>, a concrete subclass is created, with empty implementations for the
+ <code>abstract</code> methods.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - type to which the returned instance should be assignable</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>classToInstantiate</code> - the class to be instantiated</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a newly created instance of the specified class, with any instance fields left uninitialized</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Deencapsulation.html#newInstance-java.lang.Class-java.lang.Object...-"><code>newInstance(Class, Object...)</code></a>, 
+<a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a>, 
+<a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(Class, Object, Object...)</code></a></dd>
 </dl>
 </li>
 </ul>

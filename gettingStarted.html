@@ -205,7 +205,7 @@ public void aTestMethod(<em>&lt;any number of mock parameters></em>)
 <pre><code>@Test
 public void aTestMethod(@Mocked final MyCollaborator anyCollaborator)
 {
-   new <strong>NonStrictExpectations</strong>() {{
+   new <strong>Expectations</strong>() {{
       anyCollaborator.getData(); <b>result</b> = "my test data";
       anyCollaborator.doSomething(<b>anyInt</b>, "some expected value", <b>anyString</b>); <b>times</b> = 1;
    }};
@@ -220,14 +220,10 @@ public void aTestMethod(@Mocked final MyCollaborator anyCollaborator)
 }
 </code></pre>
 <p>
-   There are two classes that can be used to define "expectation blocks": <code class="type">Expectations</code>
-   and <code class="type">NonStrictExpectations</code>.
-   The difference is in the default behavior for the recorded expectations.
-   In the first case, all expectations associated to mocked types used in the block will be <em>strict</em> by default,
-   meaning that the invocations are <em>expected</em> to occur during the replay phase in the same order as they were
-   recorded, and that invocations not recorded are expected to <em>not</em> occur.
-   In the second case, expectations are always <em>non-strict</em>, meaning that the invocations to mocked types,
-   whether recorded or not, are <em>allowed</em> to occur in any order and in any number, including not at all.
+   Once mocked, all invocations to a mocked instance or to a mocked class are <em>allowed</em> by default, in any number
+   and in any order.
+   If an expectation is recorded, however, then <em>at least one</em> matching invocation is expected to occur from the
+   code under test; if there is none, a "missing invocation" error will be thrown at the end of the test.
 </p>
 <p>
    You may be wondering what are those field assignments in the example test above.
@@ -249,40 +245,34 @@ public void aTestMethod(@Mocked final MyCollaborator anyCollaborator)
    Arbitrary user-defined matchers can be provided through a call to the <code>with(Delegate)</code> method.
    Finally, it should be noted that, differently from most other mocking APIs, JMockit does <em>not</em> require a
    matcher for <em>every</em> parameter;
-   any subset of parameters can have matching constraints, with actual values or objects being provided for the
-   remaining ones.
+   any subset of parameters can have matching constraints, with regular values being provided for the remaining ones.
 </p>
 
 <h3 id="verify">
    <a href="#verify">Verifying expectations</a>
 </h3>
 <p>
-   When one or more types get mocked non-strictly in a test, we often end up with a non-empty verification phase.
-   (If, on the other hand, all mocked types used in the test have only strict expectations, then all invocations get
-   implicitly and automatically verified at the end of the test, with no explicit <em>verify</em> phase.)
-   To explicitly verify invocations to non-strict mocked types/instances, we can write one or more <em>verification
-   blocks</em> in the test.
-   This allows us to make sure that the invocations we care about actually occurred during the replay phase.
+   To <em>explicitly</em> verify invocations that occurred on mocked types and their instances, we can write one or more
+   <em>verification blocks</em> in the test.
+   This allows us to make sure that important invocations actually occurred during the replay phase.
 </p>
 <pre><code>@Test
 public void aTestMethod(@Injectable final MyCollaborator mock)
 {
-   // Non-strict expectations are recorded, if needed.
+   // Expectations are recorded, if needed.
    ...
 
    // Code under test is exercised.
    ...
 
    new <strong>Verifications</strong>() {{
-      // If no new instance of the mocked class should have been created with the
-      // no-args constructor, we can verify it:
-      new MyCollaborator(); <b>times</b> = 0;
-
-      // Here we verify the "MyCollaborator#doSomething()" method was executed
-      // at least once:
+      // Verify the "MyCollaborator#doSomething()" method was executed at least once:
       mock.doSomething();
 
-      // Another verification, which must have occurred no more than three times:
+      // Even constructor invocations can be verified:
+      new MyCollaborator(); <b>times</b> = 0; // verifies there were <em>no</em> matching invocations
+
+      // Another verification, which allows up to three matching invocations:
       mock.someOtherMethod(<b>anyBoolean</b>, <b>any</b>, withInstanceOf(Xyz.class)); <b>maxTimes</b> = 3;
    }};
 }

@@ -113,8 +113,8 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public abstract class <span class="typeNameLabel">Verifications</span>
 extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block">Used to <em>verify</em> a set of non-strict expectations on available <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> types and/or
- instances, against the invocations which actually occurred during the test.
+<div class="block">Used to <em>verify</em> a set of expectations on available <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> types and/or instances,
+ against the invocations which actually occurred during the test.
  As such, these verifications can only appear <em>after</em> having exercised the code under test.
  <p/>
  An expectation verification attempts to match a number of method or constructor invocations, that we expect have
@@ -136,8 +136,8 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
     <strong>mock2</strong>.anotherExpectedMethod(1, "test"); times = 2;
  }};
  </pre>
- The relative order between the invocations that match two or more verifications is not taken into
- consideration; when that is desired, the <a href="../mockit/VerificationsInOrder.html" title="class in mockit"><code>VerificationsInOrder</code></a> class should be used instead.
+ The relative order between the invocations that match two or more verifications is not taken into consideration; when
+ that is desired, the <a href="../mockit/VerificationsInOrder.html" title="class in mockit"><code>VerificationsInOrder</code></a> class should be used instead.
  <p/>
  Naturally, not all invocations that occurred during the execution of code under test need to be explicitly verified
  in a verification block.
@@ -148,7 +148,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><a href="../mockit/Verifications.html#Verifications--"><code>Verifications()</code></a>, 
 <a href="../mockit/Verifications.html#Verifications-int-"><code>Verifications(int)</code></a>, 
 <a href="../mockit/Verifications.html#withCapture--"><code>withCapture()</code></a>, 
-<a href="../mockit/NonStrictExpectations.html" title="class in mockit"><code>NonStrictExpectations</code></a>, 
+<a href="../mockit/Expectations.html" title="class in mockit"><code>Expectations</code></a>, 
 <a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#verification">Tutorial</a></dd>
 </dl>
 </li>
