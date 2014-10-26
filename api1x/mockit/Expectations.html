@@ -343,9 +343,8 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#Expectations--">Expectations</a></span>()</code>
-<div class="block">Registers a sequence of one or more strict expectations recorded on available mocked types and/or mocked
- instances, as written inside the instance initialization body of an anonymous subclass or the called constructor
- of a named subclass.</div>
+<div class="block">Registers one or more expectations recorded on available mocked types and/or mocked instances, as written inside
+ the instance initialization body of an anonymous subclass or the called constructor of a named subclass.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -957,9 +956,8 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <li class="blockList">
 <h4>Expectations</h4>
 <pre>protected&nbsp;Expectations()</pre>
-<div class="block">Registers a sequence of one or more strict expectations recorded on available mocked types and/or mocked
- instances, as written inside the instance initialization body of an anonymous subclass or the called constructor
- of a named subclass.</div>
+<div class="block">Registers one or more expectations recorded on available mocked types and/or mocked instances, as written inside
+ the instance initialization body of an anonymous subclass or the called constructor of a named subclass.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#Expectations-java.lang.Object...-"><code>Expectations(Object...)</code></a>, 
@@ -1016,8 +1014,8 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <div class="block">Same as <a href="../mockit/Expectations.html#Expectations-java.lang.Object...-"><code>Expectations(Object...)</code></a>, but considering that the invocations inside the block will occur in a
  given number of iterations.
  <p/>
- The effect of specifying a number of iterations larger than 1 (one) is equivalent to duplicating (like in "copy &
- paste") the whole sequence of expectations in the block.
+ The effect of specifying a number of iterations larger than 1 (one) is equivalent to multiplying by that number
+ the lower and upper invocation count limits for each invocation inside the expectation block.
  <p/>
  It's also valid to have multiple expectation blocks for the same test, each with an arbitrary number of
  iterations.</div>

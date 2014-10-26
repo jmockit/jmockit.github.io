@@ -843,9 +843,7 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
  object up to but not including <code>java.lang.Object</code>.
  The constructors of those classes will <em>not</em> be considered.
  During replay, invocations to instance methods will only match expectations recorded on the given instance
- (or instances, if more than one was given).
- <p/>
- <a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#dynamicPartial">In the Tutorial</a></div>
+ (or instances, if more than one was given).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be considered for
@@ -855,7 +853,8 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
  primitive/wrapper type, or a <a href="http://download.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html?is-external=true#isProxyClass-java.lang.Class-" title="class or interface in java.lang.reflect">proxy class</a> created for an
  interface, or if given a value/instance of such a type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/NonStrictExpectations.html#NonStrictExpectations-java.lang.Integer-java.lang.Object...-"><code>NonStrictExpectations(Integer, Object...)</code></a></dd>
+<dd><a href="../mockit/NonStrictExpectations.html#NonStrictExpectations-java.lang.Integer-java.lang.Object...-"><code>NonStrictExpectations(Integer, Object...)</code></a>, 
+<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#dynamicPartial">Tutorial</a></dd>
 </dl>
 </li>
 </ul>
@@ -874,9 +873,7 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
  the lower and upper invocation count limits for each invocation inside the expectation block.
  Note that by default the invocation count range for a non-strict expectation is [0, ∞), that is, a lower limit of
  0 (zero) and no upper limit, so the number of iterations will only be meaningful if a positive and finite limit is
- explicitly specified for the expectation.
- <p/>
- <a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#iteratedExpectations">In the Tutorial</a></div>
+ explicitly specified for the expectation.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>numberOfIterations</code> - the positive number of iterations for the whole set of invocations recorded inside the
@@ -884,7 +881,8 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
 <dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be considered for
  partial mocking</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/NonStrictExpectations.html#NonStrictExpectations--"><code>NonStrictExpectations()</code></a></dd>
+<dd><a href="../mockit/NonStrictExpectations.html#NonStrictExpectations--"><code>NonStrictExpectations()</code></a>, 
+<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#iteratedExpectations">Tutorial</a></dd>
 </dl>
 </li>
 </ul>

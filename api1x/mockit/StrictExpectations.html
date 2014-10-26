@@ -848,9 +848,7 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
  object up to but not including <code>java.lang.Object</code>.
  The constructors of those classes will <em>not</em> be considered.
  During replay, invocations to instance methods will only match expectations recorded on the given instance
- (or instances, if more than one was given).
- <p/>
- <a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#dynamicPartial">In the Tutorial</a></div>
+ (or instances, if more than one was given).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be considered for
@@ -860,7 +858,8 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
  primitive/wrapper type, or a <a href="http://download.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html?is-external=true#isProxyClass-java.lang.Class-" title="class or interface in java.lang.reflect">proxy class</a> created for an
  interface, or if given a value/instance of such a type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/StrictExpectations.html#StrictExpectations-java.lang.Integer-java.lang.Object...-"><code>StrictExpectations(Integer, Object...)</code></a></dd>
+<dd><a href="../mockit/StrictExpectations.html#StrictExpectations-java.lang.Integer-java.lang.Object...-"><code>StrictExpectations(Integer, Object...)</code></a>, 
+<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#dynamicPartial">Tutorial</a></dd>
 </dl>
 </li>
 </ul>
@@ -876,9 +875,7 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
  in a given number of iterations.
  <p/>
  The effect of specifying a number of iterations larger than 1 (one) is equivalent to duplicating the whole
- sequence of invocations in the expectation block.
- <p/>
- <a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#iteratedExpectations">In the Tutorial</a></div>
+ sequence of invocations in the expectation block.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>numberOfIterations</code> - the positive number of iterations for the whole sequence of invocations recorded inside
@@ -886,7 +883,8 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
 <dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be considered for
  partial mocking</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/StrictExpectations.html#StrictExpectations--"><code>StrictExpectations()</code></a></dd>
+<dd><a href="../mockit/StrictExpectations.html#StrictExpectations--"><code>StrictExpectations()</code></a>, 
+<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html#iteratedExpectations">Tutorial</a></dd>
 </dl>
 </li>
 </ul>
