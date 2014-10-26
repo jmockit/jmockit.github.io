@@ -357,7 +357,8 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    As an example, the following Ant task could be used:
 </p>
 <pre><code>&lt;java fork="yes" dir="myBaseDir" jar="jmockit-coverage.jar">
-   &lt;arg line="-Dcoverage-output=html module1-outDir anotherOutDir"/>
+   &lt;jvmarg line="-Djmockit-coverage-output=html"/>
+   &lt;arg line="module1-outDir anotherOutDir"/>
 &lt;/java>
 </code></pre>
 <p>
