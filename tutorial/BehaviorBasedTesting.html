@@ -68,7 +68,14 @@
          <li><a href="#unspecifiedInvocations">Verifying unspecified invocations that should not happen</a></li>
       </ol>
    </li>
-   <li><a href="#withCapture">Capturing invocation arguments for verification</a></li>
+   <li>
+      <a href="#withCapture">Capturing invocation arguments for verification</a>
+      <ol>
+         <li><a href="#singleInvocationCapture">Capturing arguments from a single invocation</a></li>
+         <li><a href="#multipleInvocationCapture">Capturing arguments from multiple invocations</a></li>
+         <li><a href="#capturingNewInstances">Capturing new instances</a></li>
+      </ol>
+   </li>
    <li><a href="#delegates">Delegates: specifying custom results</a></li>
    <li><a href="#cascading">Cascading mocks</a></li>
    <li><a href="#deencapsulation">Accessing private members</a></li>
@@ -1360,8 +1367,21 @@ public void readOnlyOperation(@Mocked final Dependency mock)
    <a href="#withCapture">Capturing invocation arguments for verification</a>
 </h2>
 <p>
-   Invocation arguments can be captured for later verification through a pair of special "<code>withCapture(...)</code>"
-   methods, as the following example tests demonstrate.
+   Invocation arguments can be captured for later verification through a set of special "<code>withCapture(...)</code>"
+   methods.
+   There are three different cases, each with its own specific capturing method:
+   1) verification of arguments passed to a mocked method, in a single invocation: <code>T withCapture()</code>;
+   2) verification of arguments passed to a mocked method, in multiple invocations:
+   <code>T withCapture(List&lt;T>)</code>; and
+   3) verification of arguments passed to a mocked constructor: <code>List&lt;T> withCapture(T)</code>.
+</p>
+
+<h3 id="singleInvocationCapture">
+   <a href="#singleInvocationCapture">Capturing arguments from a single invocation</a>
+</h3>
+<p>
+   To capture arguments from a single invocation to a mocked method or constructor, we use "<code>withCapture()</code>",
+   as the following example test demonstrates.
 </p>
 <pre><code>@Test
 public void capturingArgumentsFromSingleInvocation(@Mocked final Collaborator mock)
@@ -1387,10 +1407,14 @@ public void capturingArgumentsFromSingleInvocation(@Mocked final Collaborator mo
    It is particularly useful with parameters of a complex type (think a JPA <code class="annotation">@Entity</code>),
    which may contain several items whose values need to be checked.
 </p>
+
+<h3 id="multipleInvocationCapture">
+   <a href="#multipleInvocationCapture">Capturing arguments from multiple invocations</a>
+</h3>
 <p>
-   If <em>multiple</em> matching invocations are expected, and we want to capture values for all of them, then the
-   <a href="../api1x/mockit/Verifications.html#withCapture-java.util.List-">withCapture(List)</a> method should be used
-   instead, as in the example below.
+   If <em>multiple</em> invocations to a mocked method or constructor are expected, and we want to capture values for
+   all of them, then the <a href="../api1x/mockit/Verifications.html#withCapture-java.util.List-">withCapture(List)</a>
+   method should be used instead, as in the example below.
 </p>
 <pre><code>@Test
 public void capturingArgumentsFromMultipleInvocations(@Mocked final Collaborator mock)
@@ -1413,6 +1437,34 @@ public void capturingArgumentsFromMultipleInvocations(@Mocked final Collaborator
    Differently from <code>withCapture()</code>, the <code>withCapture(List)</code> overload can also be used in
    expectation recording blocks.
 </p>
+
+<h3 id="capturingNewInstances">
+   <a href="#capturingNewInstances">Capturing new instances</a>
+</h3>
+<p>
+   Finally, we can capture the new instances of a mocked class that got created during the test.
+</p>
+<pre><code>@Test
+public void capturingNewInstances(@Mocked Person mockedPerson)
+{
+   // From the code under test:
+   dao.create(new Person("Paul", 10));
+   dao.create(new Person("Mary", 15));
+   dao.create(new Person("Joe", 20));
+
+   new Verifications() {{
+      // Captures the new instances created with a specific constructor.
+      List&lt;Person> personsInstantiated = withCapture(new Person(anyString, anyInt));
+
+      // Now captures the instances of the same type passed to a method.
+      List&lt;Person> personsCreated = new ArrayList<>();
+      dao.create(withCapture(personsCreated));
+
+      // Finally, verifies both lists are the same.
+      assertEquals(personsInstantiated, personsCreated);
+   }};
+}
+</code></pre>
 
 <h2 id="delegates">
    <a href="#delegates">Delegates: specifying custom results</a>
