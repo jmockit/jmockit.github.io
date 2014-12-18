@@ -35,7 +35,6 @@
 <li><a href="../overview-summary.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
-<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
 </div>
@@ -187,28 +186,20 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../mockit/Cascading.html" title="annotation in mockit">Cascading</a></td>
-<td class="colLast">Deprecated
-<div class="block"><span class="deprecationComment">All <code>@Mocked</code>/<code>@Injectable</code>/<code>@Capturing</code> types are now
- <a href="../mockit/Mocked.html#cascading--">cascading</a> by default; existing uses of this annotation should therefore be replaced
- with <code>@Mocked</code> or removed where another mocking annotation is already applied.</span></div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><a href="../mockit/Injectable.html" title="annotation in mockit">Injectable</a></td>
 <td class="colLast">
 <div class="block">Indicates that the value of a mock field or mock parameter will be an isolated <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> instance,
  intended to be passed or <em>injected</em> into the code under test.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../mockit/Mock.html" title="annotation in mockit">Mock</a></td>
 <td class="colLast">
 <div class="block">Used inside a <a href="../mockit/MockUp.html" title="class in mockit">mock-up</a> class to indicate a <em>mock method</em> whose implementation will
  temporarily replace the implementation of a matching "real" method.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../mockit/Mocked.html" title="annotation in mockit">Mocked</a></td>
 <td class="colLast">
 <div class="block">Indicates an instance field of a test class as being a <em>mock field</em>, or a parameter of a test method as a
@@ -216,7 +207,7 @@
  instances are <em>mocked instances</em>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../mockit/Tested.html" title="annotation in mockit">Tested</a></td>
 <td class="colLast">
 <div class="block">Indicates a class to be tested, with optional automatic instantiation and/or automatic injection of dependencies.</div>
@@ -234,15 +225,15 @@
  <p/>
  The <a href="../mockit/Expectations.html" title="class in mockit"><code>Expectations</code></a> class provides an API for the traditional <em>record-replay</em> model of recording
  expected invocations which are later replayed and implicitly verified.
- This API makes use of the <a href="../mockit/Mocked.html" title="annotation in mockit"><code>Mocked</code></a> annotation.
+ This API makes use of the <a href="../mockit/Mocked.html" title="annotation in mockit">@Mocked</a> annotation.
  The <a href="../mockit/Verifications.html" title="class in mockit"><code>Verifications</code></a> class extends the record-replay model to a <em>record-replay-verify</em> model,
- where the record phase can be left empty, with expected invocations verified explicitly <em>after</em> exercising the
- code under test (ie, after the replay phase).
+ where expectations that were not recorded can be verified explicitly <em>after</em> exercising the code under test
+ (ie, after the replay phase).
  <p/>
  The <a href="../mockit/MockUp.html" title="class in mockit"><code>MockUp&lt;T></code></a> generic class (where <code>T</code> is the mocked type) allows
  the definition of fake implementations for arbitrary classes.
  <p/>
- For a description with examples of the <em>Expectations & Verifications</em> API, see the
+ For a description with examples of the <em>Expectations</em> API, see the
  "<a href="http://jmockit.github.io/tutorial/BehaviorBasedTesting.html">Writing behavior-based tests</a>" chapter in
  the Tutorial.
  For the <em>Mockups</em> API, see the "<a href="http://jmockit.github.io/tutorial/StateBasedTesting.html">Writing
@@ -260,7 +251,6 @@
 <li><a href="../overview-summary.html">Overview</a></li>
 <li class="navBarCell1Rev">Package</li>
 <li>Class</li>
-<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
 </div>
