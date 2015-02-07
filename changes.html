@@ -36,7 +36,11 @@
 <p>Version <a href="https://github.com/jmockit/jmockit1/commits/master">1.15</a> (Feb 22, 2015):</p>
 <ul>
    <li>
-      Issues closed:
+      <strong>Dropped</strong> support for versions of TestNG older than 6.2.
+      See issue <a href="https://github.com/jmockit/jmockit1/issues/133">#133</a>.
+   </li>
+   <li>
+      Other issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/73">#73</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/118">#118</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/119">#119</a>,
@@ -44,7 +48,8 @@
       <a href="https://github.com/jmockit/jmockit1/issues/121">#121</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/124">#124</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/126">#126</a>,
-      <a href="https://github.com/jmockit/jmockit1/issues/129">#129</a>.
+      <a href="https://github.com/jmockit/jmockit1/issues/129">#129</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/130">#130</a>.
    </li>
 </ul>
 
@@ -61,15 +66,30 @@
       <code class="annotation">@Mocked</code><code>(<strong>cascading = false</strong>)</code>.
    </li>
    <li>
-      Issues closed:
+      <strong>Enhancement</strong>: Conditionals and loops will now trigger an exception when found inside an
+      expectation recording block, to prevent API misuse and to encourage simpler tests.
+      See issue <a href="https://github.com/jmockit/jmockit1/issues/97">#97</a>.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: Added support for the <code class="annotation">@Autowired</code> and
+      <code class="annotation">@Value</code> annotations of the Spring DI framework.
+      In addition, all annotated dependencies (using <code class="annotation">@Inject</code>,
+      <code class="annotation">@Resource</code>, or <code class="annotation">@Autowired</code>) in a
+      <code class="annotation">@Tested</code> object will now <em>require</em> a corresponding
+      <code class="annotation">@Injectable</code>; this is done for the following reasons: a) consistency with DI
+      frameworks; b) preventing <code class="type">NullPointerExceptions</code>'s from uninitialized dependencies;
+      c) encouraging cohesive classes with few dependencies; and d) encouraging the creation of at least one test for
+      each injected dependency.
+      See issue <a href="https://github.com/jmockit/jmockit1/issues/103">#103</a>.
+   </li>
+   <li>
+      Other issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/9">#9</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/11">#11</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/26">#26</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/94">#94</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/96">#96</a>,
-      <a href="https://github.com/jmockit/jmockit1/issues/97">#97</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/98">#98</a>,
-      <a href="https://github.com/jmockit/jmockit1/issues/103">#103</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/107">#107</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/107">#110</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/116">#116</a>.
