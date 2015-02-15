@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  ~ Copyright (c) 2006-2014 Rogério Liesenfeld
+  ~ Copyright (c) 2006-2015 Rogério Liesenfeld
   ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
   -->
 <html>
@@ -77,7 +77,13 @@
       </ol>
    </li>
    <li><a href="#delegates">Delegates: specifying custom results</a></li>
-   <li><a href="#cascading">Cascading mocks</a></li>
+   <li>
+      <a href="#cascading">Cascading mocks</a>
+      <ol>
+         <li><a href="#staticFactories">Cascading static factory methods</a></li>
+         <li><a href="#fluent">Cascading self-returning methods</a></li>
+      </ol>
+   </li>
    <li><a href="#deencapsulation">Accessing private members</a></li>
    <li>
       <a href="#partial">Partial mocking</a>
@@ -1537,53 +1543,131 @@ public void delegatingConstructorInvocations(@Mocked Collaborator anyCollaborato
    In such cases it may be necessary to mock all objects/classes in the chain, starting with <code>obj1</code>.
 </p>
 <p>
-   All three mocking annotations provide this ability by default.
+   All three mocking annotations provide this ability.
    The following test shows a basic example, using the <code>java.net</code> and <code>java.nio</code> APIs.
 </p>
 <pre><code>@Test
 public void recordAndVerifyExpectationsOnCascadedMocks(
-   @Mocked Socket anySocket, @Mocked final SocketChannel cascadedSocketChannel)
-   throws Exception
+   @Mocked Socket anySocket, // will match any new Socket object created during the test
+   @Mocked final SocketChannel cascadedChannel // will match cascaded instances
+) throws Exception
 {
    new Expectations() {{
-      // "anySocket" matches any new Socket object to be created during the test,
-      // while "anySocket.getChannel()" automatically returns a cascaded instance.
-      cascadedSocketChannel.isConnected(); result = false;
+      // Calls to Socket#getChannel() will automatically return a cascaded SocketChannel;
+      // such an instance will be the same as the second mock parameter, allowing us to
+      // use it for expectations that will match all cascaded channel instances:
+      cascadedChannel.isConnected(); result = false;
    }};
 
    // Inside production code:
-   Socket s = new Socket();
+   Socket sk = new Socket(); // mocked as "anySocket"
+   SocketChannel ch = sk.getChannel(); // mocked as "cascadedChannel"
 
-   if (!s.getChannel().isConnected()) {
+   if (!ch.isConnected()) {
       SocketAddress sa = new InetSocketAddress("remoteHost", 123);
-      s.getChannel().connect(sa);
+      ch.connect(sa);
    }
 
-   InetAddress adr1 = s.getInetAddress();
-   InetAddress adr2 = s.getLocalAddress();
+   InetAddress adr1 = sk.getInetAddress();  // returns a newly created InetAddress instance
+   InetAddress adr2 = sk.getLocalAddress(); // returns another new instance
    ...
 
-   new Verifications() {{
-      cascadedSocketChannel.connect((SocketAddress) withNotNull());
-   }};
+   // Back in test code:
+   new Verifications() {{ cascadedChannel.connect((SocketAddress) withNotNull()); }};
 }
 </code></pre>
 <p>
-   In the test above, any calls to eligible methods in the mocked <code class="type">Socket</code> class will return a
+   In the test above, calls to eligible methods in the mocked <code class="type">Socket</code> class will return a
    <em>cascaded mock</em> object whenever they occur during the test.
    The cascaded mock will allow further cascading, so a <code>null</code> reference will never be obtained from methods
    which return object references (except for non-eligible return types <code>Object</code> or <code>String</code> which
    will return <code>null</code>, or collection types which will return a non-mocked empty collection).
 </p>
 <p>
-   By default, a new cascaded instance is created from each different mocked method (in the example above, the two
-   different methods with the same <code>InetAddress</code> return type will return different cascaded instances);
-   the same method will always return the same cascaded instance, though.
-   Such instances have <code class="annotation">@Injectable</code> semantics, so as to not affect other instances of the
-   same type that may exist during the test.
-   If necessary, this default mocked instance can be replaced with a non-mocked one or with a different mocked instance;
-   for that, simply assign the desired instance to the <code>result</code> field in a recorded expectation.
+   Unless there is an available mocked instance from a mock field/parameter (such as
+   <code>cascadedChannel</code> above), a <em>new</em> cascaded instance will get created from the first call to each
+   mocked method.
+   In the example above, the two different methods with the same <code>InetAddress</code> return type will create and
+   return <em>different</em> cascaded instances; the same method will always return the same cascaded instance, though.
 </p>
+<p>
+   New cascaded instances are created with <code class="annotation">@Injectable</code> semantics, so as to not affect
+   other instances of the same type that may exist during the test.
+</p>
+<p>
+   Finally, it's worth noting that, if necessary, cascaded instances can be replaced with non-mocked ones, with a
+   different mocked instance, or not be returned at all; for that, record an expectation which assigns the
+   <code>result</code> field with the desired instance to be returned, or with <code>null</code> if no such instance
+   is desired.
+</p>
+
+<h3 id="staticFactories">
+   <a href="#staticFactories">Cascading static factory methods</a>
+</h3>
+<p>
+   Cascading is extremely useful in scenarios where a mocked class contains <code>static</code> <em>factory
+   methods</em>.
+   In the following example test, lets say we want to mock the <code>javax.faces.context.FacesContext</code> class from
+   JSF (Java EE).
+</p>
+<pre><code>@Test
+public void postErrorMessageToUIForInvalidInputFields(@Mocked final FacesContext jsf)
+{
+   // Set up invalid inputs, somehow.
+
+   // Code under test which validates input fields from a JSF page, adding
+   // error messages to the JSF context in case of validation failures.
+   FacesContext ctx = FacesContext.getCurrentInstance();
+
+   if (<em>some input is invalid</em>) {
+      ctx.addMessage(null, new FacesMessage("Input xyz is invalid: blah blah..."));
+   }
+   ...
+
+   // Test code: verify appropriate error message was added to context.
+   new Verifications() {{
+      FacesMessage msg;
+      jsf.addMessage(null, msg = withCapture());
+      assertTrue(msg.getSummary().contains("blah blah"));
+   }};
+}
+</code></pre>
+<p>
+   What's interesting in the test above is that we never have to worry about
+   <code>FacesContext.getCurrentInstance()</code>, as the "<code>jsf</code>" mocked instance gets automatically
+   returned.
+</p>
+
+<h3 id="fluent">
+   <a href="#fluent">Cascading self-returning methods</a>
+</h3>
+<p>
+   Another scenario where cascading tends to help is when code under test uses a
+   "<a href="http://martinfowler.com/bliki/FluentInterface.html">fluent interface</a>", where a "builder" object returns
+   itself from most of its methods.
+   So, we end up with a method call chain which produces some final object or state.
+   In the example test below we mock the <code>java.lang.ProcessBuilder</code> class.
+</p>
+<pre><code>@Test
+public void createOSProcessToCopyTempFiles(@Mocked final ProcessBuilder pb) throws Exception
+{
+   // Code under test creates a new process to execute an OS-specific command.
+   String cmdLine = "copy /Y *.txt D:\\TEMP";
+   File wrkDir = new File("C:\\TEMP");
+   Process copy = new ProcessBuilder().command(cmdLine).directory(wrkDir).inheritIO().start();
+   int exit = copy.waitFor();
+   ...
+
+   // Verify the desired process was created with the correct command.
+   new Verifications() {{ pb.command(withSubstring("copy")).start(); }};
+}
+</code></pre>
+<P>
+   Above, methods <code>command(...)</code>, <code>directory(...)</code>, and <code>inheritIO()</code> configure the
+   process to be created, while <code>start()</code> finally creates it.
+   The mocked process builder object automatically returns itself ("<code>pb</code>") from these calls, while also
+   returning a new mocked <code>Process</code> from the call to <code>start()</code>.
+</P>
 
 <h2 id="deencapsulation">
    <a href="#deencapsulation">Accessing private members</a>
