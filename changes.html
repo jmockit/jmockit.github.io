@@ -29,15 +29,21 @@
 
 <h1>Development history</h1>
 
-<h2 id="next">
-   <a href="#next">Next release</a>
+<h2 id="current">
+   <a href="#current">Current release</a>
 </h2>
 
-<h3 id="1.15">Version <a href="1.15">1.15</a> (Feb 17, 2015):</h3>
+<h3 id="1.15">Version <a href="1.15">1.15</a> (Feb 15, 2015):</h3>
 <ul>
    <li>
       <strong>Dropped</strong> support for versions of TestNG older than 6.2.
       See issue <a href="https://github.com/jmockit/jmockit1/issues/133">#133</a>.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the "<strong><code>cascading</code></strong>" attribute of
+      <code class="annotation">@Mocked</code>.
+      Existing tests using "<code>@Mocked(cascading = false)</code>" should simply omit the attribute, or record an
+      expectation with "<code>result = null"</code> for the cascaded method in question.
    </li>
    <li>
       Other issues closed:
@@ -54,8 +60,8 @@
    </li>
 </ul>
 
-<h2 id="current">
-   <a href="#current">Current release</a>
+<h2 id="previous">
+   <a href="#previous">Previous releases</a>
 </h2>
 
 <h3 id="1.14">Version <a href="#1.14">1.14</a> (Dec 19, 2014):</h3>
@@ -96,10 +102,6 @@
       <a href="https://github.com/jmockit/jmockit1/issues/116">#116</a>.
    </li>
 </ul>
-
-<h2 id="previous">
-   <a href="#previous">Previous releases</a>
-</h2>
 
 <h3 id="1.13">Version <a href="#1.13">1.13</a> (Oct 26, 2014):</h3>
 <ul>
