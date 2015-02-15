@@ -91,7 +91,7 @@ import static orderMngr.service.Database.*;
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>21</td><td class='count'>2</td>
-      <td><pre class='prettyprint jmp'>      <span id='l21s0' title='Executions: 2' class='covered cp' onclick='showHide(this,0)'>for (OrderItem item : order.getItems())</span> <span id='l21s1' title='Executions: 2' class='covered cp' onclick='showHide(this,1)'>{</span></pre>
+      <td><pre class='prettyprint jmp'>      <span id='l21s0' title='Executions: 2' class='covered cp' onclick='showHide(this,0)'>for (OrderItem item</span> : <span id='l21s1' title='Executions: 2' class='covered cp' onclick='showHide(this,1)'>order.getItems())</span> {</pre>
         <ol style='display:none'>
           <li>orderMngr.domain.order.OrderRepositoryTest#createOrder: 32</li>
           <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#createOrder: 61</li>
@@ -251,11 +251,15 @@ import static orderMngr.service.Database.*;
     </tr>
     <tr>
       <td class='line'>46</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l46s0'>      catch (SQLException e) {</pre></td>
+      <td><pre class='prettyprint uncovered' id='l46s0'>      catch (SQLException e) {</pre>
+        <ol style='display:none'></ol>
+      </td>
     </tr>
     <tr>
       <td class='line'>47</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l47s0'>         throw new RuntimeException(e);</pre></td>
+      <td><pre class='prettyprint uncovered' id='l47s0'>         throw new RuntimeException(e);</pre>
+        <ol style='display:none'></ol>
+      </td>
     </tr>
     <tr>
       <td class='line'>48</td><td>&nbsp;</td>
@@ -298,11 +302,7 @@ import static orderMngr.service.Database.*;
     </tr>
     <tr>
       <td class='line'>56</td><td class='count'>2</td>
-      <td><pre class='prettyprint jmp'>         <span id='l56s0' title='Executions: 2' class='covered cp' onclick='showHide(this,0)'>if (result.next())</span> <span id='l56s1' title='Executions: 2' class='covered cp' onclick='showHide(this,1)'>{</span></pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 58</li>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169</li>
-        </ol>
+      <td><pre class='prettyprint jmp'>         <span id='l56s0' title='Executions: 2' class='covered cp' onclick='showHide(this,0)'>if (result.next())</span> {</pre>
         <ol style='display:none'>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 58</li>
           <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169</li>
@@ -352,7 +352,9 @@ import static orderMngr.service.Database.*;
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>63</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l63s0'>         return null;</pre></td>
+      <td><pre class='prettyprint uncovered' id='l63s0'>         return null;</pre>
+        <ol style='display:none'></ol>
+      </td>
     </tr>
     <tr>
       <td class='line'>64</td><td>&nbsp;</td>
@@ -434,14 +436,10 @@ import static orderMngr.service.Database.*;
     </tr>
     <tr>
       <td class='line'>78</td><td class='count'>4</td>
-      <td><pre class='prettyprint jmp'>         <span id='l78s0' title='Executions: 4' class='covered cp' onclick='showHide(this,0)'>while (result.next())</span> <span id='l78s1' title='Executions: 2' class='covered cp' onclick='showHide(this,1)'>{</span></pre>
+      <td><pre class='prettyprint jmp'>         <span id='l78s0' title='Executions: 4' class='covered cp' onclick='showHide(this,0)'>while (result.next())</span> {</pre>
         <ol style='display:none'>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 58x2</li>
           <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 58</li>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169</li>
         </ol>
       </td>
     </tr>
@@ -587,14 +585,10 @@ import static orderMngr.service.Database.*;
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>100</td><td class='count'>4</td>
-      <td><pre class='prettyprint jmp'>         <span id='l100s0' title='Executions: 4' class='covered cp' onclick='showHide(this,0)'>while (result.next())</span> <span id='l100s1' title='Executions: 2' class='covered cp' onclick='showHide(this,1)'>{</span></pre>
+      <td><pre class='prettyprint jmp'>         <span id='l100s0' title='Executions: 4' class='covered cp' onclick='showHide(this,0)'>while (result.next())</span> {</pre>
         <ol style='display:none'>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByCustomer: 85x2</li>
           <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByCustomer: 182x2</li>
-        </ol>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFindersTest#findOrderByCustomer: 85</li>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByCustomer: 182</li>
         </ol>
       </td>
     </tr>
@@ -659,11 +653,15 @@ import static orderMngr.service.Database.*;
     </tr>
     <tr>
       <td class='line'>109</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l109s0'>      catch (SQLException e) {</pre></td>
+      <td><pre class='prettyprint uncovered' id='l109s0'>      catch (SQLException e) {</pre>
+        <ol style='display:none'></ol>
+      </td>
     </tr>
     <tr>
       <td class='line'>110</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l110s0'>         throw new RuntimeException(e);</pre></td>
+      <td><pre class='prettyprint uncovered' id='l110s0'>         throw new RuntimeException(e);</pre>
+        <ol style='display:none'></ol>
+      </td>
     </tr>
     <tr>
       <td class='line'>111</td><td>&nbsp;</td>
