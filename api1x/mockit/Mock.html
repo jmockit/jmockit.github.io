@@ -35,8 +35,12 @@
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
-<div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
+<div class="aboutLanguage">
+            <a href=http://jmockit.org target=_top>
+               <img src=../resources/logo.png style=padding:4px;vertical-align:middle>JMockit Home</a>
+         </div>
 </div>
 <div class="subNav">
 <ul class="navList">
@@ -90,9 +94,9 @@
 <li class="blockList">
 <hr>
 <br>
-<pre><a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Inherited.html?is-external=true" title="class or interface in java.lang.annotation">@Inherited</a>
- <a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
- <a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#METHOD" title="class or interface in java.lang.annotation">METHOD</a>)
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html?is-external=true" title="class or interface in java.lang.annotation">@Inherited</a>
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#METHOD" title="class or interface in java.lang.annotation">METHOD</a>)
 public @interface <span class="memberNameLabel">Mock</span></pre>
 <div class="block">Used inside a <a href="../mockit/MockUp.html" title="class in mockit">mock-up</a> class to indicate a <em>mock method</em> whose implementation will
  temporarily replace the implementation of a matching "real" method.
@@ -204,10 +208,33 @@ public @interface <span class="memberNameLabel">Mock</span></pre>
 </li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="maxInvocations--">
+<li class="blockList"><a name="minInvocations--">
 <!--   -->
 </a>
 <ul class="blockList">
+<li class="blockList">
+<h4>minInvocations</h4>
+<pre>public abstract&nbsp;int&nbsp;minInvocations</pre>
+<div class="block">Minimum number of expected invocations of the mock method, starting from 0 (zero, which is the default).</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Mock.html#invocations--"><code>invocations</code></a>, 
+<a href="../mockit/Mock.html#maxInvocations--"><code>maxInvocations</code></a>, 
+<a href="http://jmockit.org/tutorial/StateBasedTesting.html#constraints">Tutorial</a></dd>
+</dl>
+<dl>
+<dt>Default:</dt>
+<dd>0</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="maxInvocations--">
+<!--   -->
+</a>
+<ul class="blockListLast">
 <li class="blockList">
 <h4>maxInvocations</h4>
 <pre>public abstract&nbsp;int&nbsp;maxInvocations</pre>
@@ -223,29 +250,6 @@ public @interface <span class="memberNameLabel">Mock</span></pre>
 <dl>
 <dt>Default:</dt>
 <dd>-1</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="minInvocations--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>minInvocations</h4>
-<pre>public abstract&nbsp;int&nbsp;minInvocations</pre>
-<div class="block">Minimum number of expected invocations of the mock method, starting from 0 (zero, which is the default).</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Mock.html#invocations--"><code>invocations</code></a>, 
-<a href="../mockit/Mock.html#maxInvocations--"><code>maxInvocations</code></a>, 
-<a href="http://jmockit.org/tutorial/StateBasedTesting.html#constraints">Tutorial</a></dd>
-</dl>
-<dl>
-<dt>Default:</dt>
-<dd>0</dd>
 </dl>
 </li>
 </ul>
@@ -268,8 +272,12 @@ public @interface <span class="memberNameLabel">Mock</span></pre>
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
-<div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
+<div class="aboutLanguage">
+            <a href=http://jmockit.org target=_top>
+               <img src=../resources/logo.png style=padding:4px;vertical-align:middle>JMockit Home</a>
+         </div>
 </div>
 <div class="subNav">
 <ul class="navList">

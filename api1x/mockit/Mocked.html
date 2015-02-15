@@ -35,8 +35,12 @@
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
-<div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
+<div class="aboutLanguage">
+            <a href=http://jmockit.org target=_top>
+               <img src=../resources/logo.png style=padding:4px;vertical-align:middle>JMockit Home</a>
+         </div>
 </div>
 <div class="subNav">
 <ul class="navList">
@@ -90,20 +94,26 @@
 <li class="blockList">
 <hr>
 <br>
-<pre><a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
- <a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>={<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#FIELD" title="class or interface in java.lang.annotation">FIELD</a>,<a href="http://download.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#PARAMETER" title="class or interface in java.lang.annotation">PARAMETER</a>})
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>={<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#FIELD" title="class or interface in java.lang.annotation">FIELD</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#PARAMETER" title="class or interface in java.lang.annotation">PARAMETER</a>})
 public @interface <span class="memberNameLabel">Mocked</span></pre>
 <div class="block">Indicates an instance field of a test class as being a <em>mock field</em>, or a parameter of a test method as a
  <em>mock parameter</em>; in either case, the declared type of the field/parameter is a <em>mocked type</em>, whose
  instances are <em>mocked instances</em>.
  <p/>
+ Mocked types can also be introduced by other annotations: <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a>,
+ <a href="../mockit/Capturing.html" title="annotation in mockit"><code>@Capturing</code></a>.
+ Their effect is to <em>extend</em> and/or <em>constrain</em> the mocking capabilities here specified.
+ <p/>
  Any type can be mocked, except for primitive and array types.
  A mocked instance of that type is automatically created and assigned to the mock field/parameter, for use when
- <a href="../mockit/Expectations.html" title="class in mockit">recording</a> or <a href="../mockit/Verifications.html" title="class in mockit">verifying</a> expectations.
+ <a href="../mockit/Expectations.html" title="class in mockit">recording</a> and/or <a href="../mockit/Verifications.html" title="class in mockit">verifying</a> expectations.
+ For a mock <em>field</em>, the test itself can provide the instance by declaring the field as <code>final</code> and
+ assigning it the desired instance (or <code>null</code>).
  <p/>
- The effect of declaring a <code>@Mocked</code> type, by default, is that all new instances of that type, as well as those
- previously created, will also be mocked instances; this will last for the duration of each test where the associated
- mock field/parameter is in scope.
+ The effect of declaring a <code>@Mocked</code> type, <em>by default</em>, is that all new instances of that type, as well
+ as those previously created, will also be mocked instances; this will last for the duration of each test where the
+ associated mock field/parameter is in scope.
  Also, all methods of the mocked type will be mocked, unless a subset is <a href="../mockit/Mocked.html#value--">explicitly specified</a>.
  <p/>
  When the mocked type is a class, all super-classes up to but not including <code>java.lang.Object</code> are also mocked.
@@ -116,26 +126,23 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
  While a method or constructor is mocked, an invocation does not result in the execution of the original code, but in
  a (generated) call into JMockit, which then responds with either a default or a <em>recorded</em>
  <a href="../mockit/Expectations.html#result">result</a> (or with a constraint violation, if the
- invocation is deemed to be unexpected - which depends on a few factors discussed elsewhere).
+ invocation is deemed to be unexpected).
+ <p/>
+ Mocking will automatically <em>cascade</em> into the return types of all non-void methods belonging to the mocked
+ type, except for non-eligible ones (primitive wrappers, <code>String</code>, and collections/maps).
+ When needed, such cascaded returns can be overridden by explicitly recording a return value for the mocked method.
+ If there is a mock field/parameter with the same type (or a subtype) of some cascaded type, then the original
+ instance from that mock field/parameter will be used as the cascaded instance, rather than a new one being created;
+ this applies to all cascading levels, and even to the type of the mock field/parameter itself (ie, if a method in
+ class/interface "<code>A</code>" has return type <code>A</code>, then it will return itself by default).
+ Finally, when new cascaded instances are created, <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a> semantics apply.
  <p/>
  Static <em>class initializers</em> (including assignments to <code>static</code> fields) of a mocked class are not
- affected, unless <a href="../mockit/Mocked.html#stubOutClassInitialization--">specified otherwise</a>.
- <p/>
- Normally, a new mocked instance gets created and assigned to a declared mock field/parameter automatically.
- Alternatively, and only in the case of a mock <em>field</em>, the test itself can provide the instance by declaring
- the field as <code>final</code> and explicitly assigning it with the desired instance (which will still be a mocked
- instance); if no instance is necessary (perhaps because only static methods or constructors will be called), then
- this final field can receive the <code>null</code> reference.
- Mock parameters, on the other hand, will always receive a new mocked instance whenever the test method is executed by
- the test runner.
- <p/>
- By default, mocking will cascade into the return types of all non-void methods belonging to the mocked type.
- If needed, this <a href="../mockit/Mocked.html#cascading--"><code>cascading()</code></a> process can be explicitly disabled on a per-mocked type basis.</div>
+ affected, unless <a href="../mockit/Mocked.html#stubOutClassInitialization--">specified otherwise</a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Mocked.html#value--"><code>value()</code></a>, 
 <a href="../mockit/Mocked.html#stubOutClassInitialization--"><code>stubOutClassInitialization()</code></a>, 
-<a href="../mockit/Mocked.html#cascading--"><code>cascading()</code></a>, 
 <a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#declaration">Tutorial</a></dd>
 </dl>
 </li>
@@ -159,8 +166,10 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Mocked.html#cascading--">cascading</a></span></code>
-<div class="block">Indicates whether the mocked type is <em>cascading</em> or not, ie, whether its non-void methods should return
- mocked instances or <code>null</code>; <code>true</code> by default.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Simply remove existing uses of this attribute. If really needed, an expectation can be recorded with
+ "<code>result = null</code>", in order to disable cascading from a particular method.</span></div>
+</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -170,7 +179,7 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Mocked.html#value--">value</a></span></code>
 <div class="block">One or more <em>mock filters</em>.</div>
 </td>
@@ -190,32 +199,36 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <!--   -->
 </a>
 <h3>Element Detail</h3>
-<a name="cascading--">
+<a name="value--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>cascading</h4>
-<pre>public abstract&nbsp;boolean&nbsp;cascading</pre>
-<div class="block">Indicates whether the mocked type is <em>cascading</em> or not, ie, whether its non-void methods should return
- mocked instances or <code>null</code>; <code>true</code> by default.
+<h4>value</h4>
+<pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value</pre>
+<div class="block">One or more <em>mock filters</em>.
+ Given a target class for mocking, only those methods and constructors which match at least one filter will be
+ mocked.
  <p/>
- A non-<code>void</code> mocked method which returns a reference type will produce, if and when called, a
- <em>cascaded</em> mocked instance according to its return type.
- Methods returning <code>String</code>, primitive wrappers, or collection types, however, are <em>not</em> cascaded,
- producing non-mocked default values instead (in either case, a <em>recorded</em> return value for the method will
- always produce the recorded value).
- This cascaded mocking process means that mocked methods will never return <code>null</code>, unless <code>null</code> is
- explicitly recorded as the result.
+ Each mock filter must follow the syntax <strong><code>[nameRegex][(paramTypeName...)]</code></strong>, where
+ <code>nameRegex</code> is a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex">regular expression</a> for matching method names, and
+ <code>paramTypeName</code> is the name of a primitive or reference parameter type (actually, any suffix of the type
+ name is enough, like "String" instead of the full class name "java.lang.String").
+ If <code>nameRegex</code> is omitted the filter matches only constructors.
+ If <code>(paramTypeName...)</code> is omitted the filter matches methods with any parameters.
  <p/>
- If a mock field/parameter is explicitly declared with the same type (or, alternatively, a subtype) of some
- cascaded type, then the instance originally assigned to the mock field/parameter will be used as the cascaded
- instance.
- This allows expectations on intermediate cascaded instances to be recorded/verified when needed, without having
- to specify the full method call chain from the "root" instance to the "leaf" instance of interest.</div>
+ If no filters are specified, then all methods and constructors declared in the target class are mocked.
+ <p/>
+ A filter containing just the empty string matches <em>no</em> methods or constructors of the target class;
+ this can be used to obtain a mocked instance where no executable code is actually mocked.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Mocked.html#stubOutClassInitialization--"><code>stubOutClassInitialization()</code></a>, 
+<a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#staticPartial">Tutorial</a></dd>
+</dl>
 <dl>
 <dt>Default:</dt>
-<dd>true</dd>
+<dd>{}</dd>
 </dl>
 </li>
 </ul>
@@ -253,36 +266,21 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 </li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="value--">
+<li class="blockList"><a name="cascading--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>value</h4>
-<pre>public abstract&nbsp;<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value</pre>
-<div class="block">One or more <em>mock filters</em>.
- Given a target class for mocking, only those methods and constructors which match at least one filter will be
- mocked.
- <p/>
- Each mock filter must follow the syntax <strong><code>[nameRegex][(paramTypeName...)]</code></strong>, where
- <code>nameRegex</code> is a <a href="http://download.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex">regular expression</a> for matching method names, and
- <code>paramTypeName</code> is the name of a primitive or reference parameter type (actually, any suffix of the type
- name is enough, like "String" instead of the full class name "java.lang.String").
- If <code>nameRegex</code> is omitted the filter matches only constructors.
- If <code>(paramTypeName...)</code> is omitted the filter matches methods with any parameters.
- <p/>
- If no filters are specified, then all methods and constructors declared in the target class are mocked.
- <p/>
- A filter containing just the empty string matches <em>no</em> methods or constructors of the target class;
- this can be used to obtain a mocked instance where no executable code is actually mocked.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Mocked.html#stubOutClassInitialization--"><code>stubOutClassInitialization()</code></a>, 
-<a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#staticPartial">Tutorial</a></dd>
-</dl>
+<h4>cascading</h4>
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public abstract&nbsp;boolean&nbsp;cascading</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Simply remove existing uses of this attribute. If really needed, an expectation can be recorded with
+ "<code>result = null</code>", in order to disable cascading from a particular method.</span></div>
+<div class="block">Indicates whether the mocked type is <em>cascading</em> or not, ie, whether its non-void methods should return
+ mocked instances or <code>null</code>; <code>true</code> by default.</div>
 <dl>
 <dt>Default:</dt>
-<dd>{}</dd>
+<dd>true</dd>
 </dl>
 </li>
 </ul>
@@ -305,8 +303,12 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
-<div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
+<div class="aboutLanguage">
+            <a href=http://jmockit.org target=_top>
+               <img src=../resources/logo.png style=padding:4px;vertical-align:middle>JMockit Home</a>
+         </div>
 </div>
 <div class="subNav">
 <ul class="navList">

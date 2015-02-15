@@ -41,8 +41,12 @@ var activeTableTab = "activeTableTab";
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
-<div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
+<div class="aboutLanguage">
+            <a href=http://jmockit.org target=_top>
+               <img src=../resources/logo.png style=padding:4px;vertical-align:middle>JMockit Home</a>
+         </div>
 </div>
 <div class="subNav">
 <ul class="navList">
@@ -94,7 +98,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
 <li>mockit.Deencapsulation</li>
@@ -107,7 +111,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public final class <span class="typeNameLabel">Deencapsulation</span>
-extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">Provides utility methods that enable access to ("de-encapsulate") otherwise non-accessible fields, methods, and
  constructors.</div>
 <dl>
@@ -139,160 +143,160 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.Class-">getField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
-        <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;fieldType)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.Class-">getField</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;fieldType)</code>
 <div class="block">Gets the value of a non-accessible static field defined in a given class, <em>assuming</em> there is only one
  field declared in the given class whose type can receive values of the specified field type.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-">getField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
-        <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-">getField</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</code>
 <div class="block">Gets the value of a non-accessible static field defined in a given class.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.Class-">getField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
-        <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;fieldType)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.Class-">getField</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;fieldType)</code>
 <div class="block">Gets the value of a non-accessible (eg <code>private</code>) field from a given object, <em>assuming</em> there is only
  one field declared in the class of the given object whose type can receive values of the specified field type.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-">getField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
-        <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-">getField</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</code>
 <div class="block">Gets the value of a non-accessible (eg <code>private</code>) field from a given object.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#invoke-java.lang.Class-java.lang.String-java.lang.Class:A-java.lang.Object...-">invoke</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticMethod,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;methodArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#invoke-java.lang.Class-java.lang.String-java.lang.Class:A-java.lang.Object...-">invoke</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticMethod,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;methodArgs)</code>
 <div class="block">Invokes a non-accessible (eg <code>private</code>) <code>static</code> method with the given arguments.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#invoke-java.lang.Class-java.lang.String-java.lang.Object...-">invoke</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticMethod,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#invoke-java.lang.Class-java.lang.String-java.lang.Object...-">invoke</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticMethod,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
 <div class="block">Invokes a non-accessible (eg <code>private</code>) <code>static</code> method with the given arguments.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#invoke-java.lang.Object-java.lang.String-java.lang.Class:A-java.lang.Object...-">invoke</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithMethod,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;methodArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#invoke-java.lang.Object-java.lang.String-java.lang.Class:A-java.lang.Object...-">invoke</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithMethod,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;methodArgs)</code>
 <div class="block">Invokes a non-accessible (eg <code>private</code>) instance method from a given class with the given arguments.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#invoke-java.lang.Object-java.lang.String-java.lang.Object...-">invoke</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithMethod,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#invoke-java.lang.Object-java.lang.String-java.lang.Object...-">invoke</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithMethod,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
 <div class="block">Invokes a non-accessible (eg <code>private</code>) instance method from a given class with the given arguments.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#invoke-java.lang.String-java.lang.String-java.lang.Object...-">invoke</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;classWithStaticMethod,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
-      <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#invoke-java.lang.String-java.lang.String-java.lang.Object...-">invoke</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;classWithStaticMethod,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
 <div class="block">Invokes a non-accessible (eg <code>private</code>) <code>static</code> method with the given arguments.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-">newInnerInstance</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;innerClassToInstantiate,
-                <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;outerClassInstance,
-                <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-">newInnerInstance</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;innerClassToInstantiate,
+                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;outerClassInstance,
+                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
 <div class="block">The same as <a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a>, but for instantiating an inner class of some other
  class, and where all other (if any) initialization arguments are known to be non-null.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.String-java.lang.Object-java.lang.Object...-">newInnerInstance</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;innerClassSimpleName,
-                <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;outerClassInstance,
-                <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.String-java.lang.Object-java.lang.Object...-">newInnerInstance</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;innerClassSimpleName,
+                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;outerClassInstance,
+                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
 <div class="block">The same as <a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a>, but for instantiating an inner non-accessible class
  of some other class, and where all other (if any) initialization arguments are known to be non-null.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInstance-java.lang.Class-java.lang.Class:A-java.lang.Object...-">newInstance</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate,
-           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
-           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;initArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInstance-java.lang.Class-java.lang.Class:A-java.lang.Object...-">newInstance</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate,
+           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
+           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;initArgs)</code>
 <div class="block">Creates a new instance of a given class, invoking the constructor which has the specified parameter types.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInstance-java.lang.Class-java.lang.Object...-">newInstance</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate,
-           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInstance-java.lang.Class-java.lang.Object...-">newInstance</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate,
+           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
 <div class="block">Creates a new instance of a given class, invoking the constructor which has parameters matching the number, order,
  and types of the given non-null arguments.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-">newInstance</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
-           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
-           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;initArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-">newInstance</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
+           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
+           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;initArgs)</code>
 <div class="block">Creates a new instance of a given non-accessible class, invoking the constructor which has the specified parameter
  types.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Object...-">newInstance</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
-           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Object...-">newInstance</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
+           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</code>
 <div class="block">Creates a new instance of a given non-accessible class, invoking the constructor which has parameters matching the
  number, order, and types of the given non-null arguments.</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newUninitializedInstance-java.lang.Class-">newUninitializedInstance</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#newUninitializedInstance-java.lang.Class-">newUninitializedInstance</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate)</code>
 <div class="block">Creates a new instance of a given class, without invoking any constructor.</div>
 </td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.Object-">setField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
-        <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.Object-">setField</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</code>
 <div class="block">Sets the value of a non-accessible static field on a given class.</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-">setField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
-        <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
-        <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-">setField</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</code>
 <div class="block">Sets the value of a non-accessible static field on a given class.</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.Object-">setField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
-        <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.Object-">setField</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</code>
 <div class="block">Sets the value of a non-accessible field on a given object.</div>
 </td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-">setField</a></span>(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
-        <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
-        <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-">setField</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
+        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</code>
 <div class="block">Sets the value of a non-accessible field on a given object.</div>
 </td>
 </tr>
@@ -301,8 +305,8 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -318,52 +322,27 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getField-java.lang.Class-java.lang.Class-">
+<a name="getField-java.lang.Object-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getField</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;getField(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
-                             <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;fieldType)</pre>
-<div class="block">Gets the value of a non-accessible static field defined in a given class, <em>assuming</em> there is only one
- field declared in the given class whose type can receive values of the specified field type.</div>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;getField(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
+                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</pre>
+<div class="block">Gets the value of a non-accessible (eg <code>private</code>) field from a given object.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - interface or class type to which the returned value should be assignable</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>classWithStaticField</code> - the class from which to get the field value</dd>
-<dd><code>fieldType</code> - the declared type of the field, or a sub-type of the declared field type</dd>
+<dd><code>objectWithField</code> - the instance from which to get the field value</dd>
+<dd><code>fieldName</code> - the name of the field to get</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a>, 
-<a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.Class-"><code>getField(Object, Class)</code></a>, 
-<a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.Object-"><code>setField(Class, Object)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="getField-java.lang.Class-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getField</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;getField(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
-                             <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</pre>
-<div class="block">Gets the value of a non-accessible static field defined in a given class.</div>
-<dl>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - interface or class type to which the returned value should be assignable</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>classWithStaticField</code> - the class from which to get the field value</dd>
-<dd><code>fieldName</code> - the name of the static field to get</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.Class-"><code>getField(Class, Class)</code></a>, 
-<a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a>, 
-<a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a></dd>
+<dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.Class-"><code>getField(Object, Class)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-"><code>setField(Object, String, Object)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -373,8 +352,8 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <ul class="blockList">
 <li class="blockList">
 <h4>getField</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;getField(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
-                             <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;fieldType)</pre>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;getField(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
+                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;fieldType)</pre>
 <div class="block">Gets the value of a non-accessible (eg <code>private</code>) field from a given object, <em>assuming</em> there is only
  one field declared in the class of the given object whose type can receive values of the specified field type.</div>
 <dl>
@@ -382,7 +361,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><code>objectWithField</code> - the instance from which to get the field value</dd>
 <dd><code>fieldType</code> - the declared type of the field, or a sub-type of the declared field type</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a>, 
 <a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a>, 
@@ -390,80 +369,143 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 </dl>
 </li>
 </ul>
-<a name="getField-java.lang.Object-java.lang.String-">
+<a name="getField-java.lang.Class-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getField</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;getField(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
-                             <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</pre>
-<div class="block">Gets the value of a non-accessible (eg <code>private</code>) field from a given object.</div>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;getField(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
+                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</pre>
+<div class="block">Gets the value of a non-accessible static field defined in a given class.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - interface or class type to which the returned value should be assignable</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>objectWithField</code> - the instance from which to get the field value</dd>
-<dd><code>fieldName</code> - the name of the field to get</dd>
+<dd><code>classWithStaticField</code> - the class from which to get the field value</dd>
+<dd><code>fieldName</code> - the name of the static field to get</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.Class-"><code>getField(Object, Class)</code></a>, 
-<a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a>, 
-<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-"><code>setField(Object, String, Object)</code></a></dd>
+<dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.Class-"><code>getField(Class, Class)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="invoke-java.lang.Class-java.lang.String-java.lang.Class:A-java.lang.Object...-">
+<a name="getField-java.lang.Class-java.lang.Class-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>invoke</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;invoke(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticMethod,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;methodArgs)</pre>
-<div class="block">Invokes a non-accessible (eg <code>private</code>) <code>static</code> method with the given arguments.</div>
+<h4>getField</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;getField(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
+                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;fieldType)</pre>
+<div class="block">Gets the value of a non-accessible static field defined in a given class, <em>assuming</em> there is only one
+ field declared in the given class whose type can receive values of the specified field type.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - type to which the returned value should be assignable</dd>
+<dd><code>T</code> - interface or class type to which the returned value should be assignable</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>classWithStaticMethod</code> - the class on which the invocation is to be done</dd>
-<dd><code>methodName</code> - the name of the static method to invoke</dd>
-<dd><code>parameterTypes</code> - the types of the parameters as declared in the desired method</dd>
-<dd><code>methodArgs</code> - zero or more parameter values for the invocation</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the return value from the invoked method</dd>
+<dd><code>classWithStaticField</code> - the class from which to get the field value</dd>
+<dd><code>fieldType</code> - the declared type of the field, or a sub-type of the declared field type</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#invoke-java.lang.String-java.lang.String-java.lang.Object...-"><code>invoke(String, String, Object...)</code></a></dd>
+<dd><a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.Class-"><code>getField(Object, Class)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.Object-"><code>setField(Class, Object)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a name="invoke-java.lang.Class-java.lang.String-java.lang.Object...-">
+<a name="setField-java.lang.Object-java.lang.String-java.lang.Object-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>invoke</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;invoke(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticMethod,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
-<div class="block">Invokes a non-accessible (eg <code>private</code>) <code>static</code> method with the given arguments.</div>
+<h4>setField</h4>
+<pre>public static&nbsp;void&nbsp;setField(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
+                            <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
+                            <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</pre>
+<div class="block">Sets the value of a non-accessible field on a given object.</div>
 <dl>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - type to which the returned value should be assignable</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>classWithStaticMethod</code> - the class on which the invocation is to be done</dd>
-<dd><code>methodName</code> - the name of the static method to invoke</dd>
-<dd><code>nonNullArgs</code> - zero or more non-null parameter values for the invocation; if a null value needs to be passed,
- the <code>Class</code> object for the corresponding parameter type must be passed instead</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the return value from the invoked method</dd>
+<dd><code>objectWithField</code> - the instance on which to set the field value</dd>
+<dd><code>fieldName</code> - the name of the field to set</dd>
+<dd><code>fieldValue</code> - the value to set the field to</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#invoke-java.lang.String-java.lang.String-java.lang.Object...-"><code>invoke(String, String, Object...)</code></a></dd>
+<dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.Object-"><code>setField(Object, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="setField-java.lang.Object-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setField</h4>
+<pre>public static&nbsp;void&nbsp;setField(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
+                            <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</pre>
+<div class="block">Sets the value of a non-accessible field on a given object.
+ The field is looked up by the type of the given field value instead of by name.</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-"><code>setField(Object, String, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="setField-java.lang.Class-java.lang.String-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setField</h4>
+<pre>public static&nbsp;void&nbsp;setField(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
+                            <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
+                            <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</pre>
+<div class="block">Sets the value of a non-accessible static field on a given class.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>classWithStaticField</code> - the class on which the static field is defined</dd>
+<dd><code>fieldName</code> - the name of the field to set</dd>
+<dd><code>fieldValue</code> - the value to set the field to</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.Object-"><code>setField(Class, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-"><code>setField(Object, String, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="setField-java.lang.Class-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setField</h4>
+<pre>public static&nbsp;void&nbsp;setField(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
+                            <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</pre>
+<div class="block">Sets the value of a non-accessible static field on a given class.
+ The field is looked up by the type of the given field value instead of by name.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>classWithStaticField</code> - the class on which the static field is defined</dd>
+<dd><code>fieldValue</code> - the value to set the field to</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.Object-"><code>setField(Object, Object)</code></a>, 
+<a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.Class-"><code>getField(Class, Class)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -473,10 +515,10 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <ul class="blockList">
 <li class="blockList">
 <h4>invoke</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;invoke(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithMethod,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;methodArgs)</pre>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;invoke(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithMethod,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;methodArgs)</pre>
 <div class="block">Invokes a non-accessible (eg <code>private</code>) instance method from a given class with the given arguments.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
@@ -499,9 +541,9 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <ul class="blockList">
 <li class="blockList">
 <h4>invoke</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;invoke(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithMethod,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;invoke(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithMethod,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
 <div class="block">Invokes a non-accessible (eg <code>private</code>) instance method from a given class with the given arguments.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
@@ -514,9 +556,62 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the return value from the invoked method</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#invoke-java.lang.Class-java.lang.String-java.lang.Object...-"><code>invoke(Class, String, Object...)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="invoke-java.lang.Class-java.lang.String-java.lang.Class:A-java.lang.Object...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>invoke</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;invoke(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticMethod,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;methodArgs)</pre>
+<div class="block">Invokes a non-accessible (eg <code>private</code>) <code>static</code> method with the given arguments.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - type to which the returned value should be assignable</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>classWithStaticMethod</code> - the class on which the invocation is to be done</dd>
+<dd><code>methodName</code> - the name of the static method to invoke</dd>
+<dd><code>parameterTypes</code> - the types of the parameters as declared in the desired method</dd>
+<dd><code>methodArgs</code> - zero or more parameter values for the invocation</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the return value from the invoked method</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Deencapsulation.html#invoke-java.lang.String-java.lang.String-java.lang.Object...-"><code>invoke(String, String, Object...)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="invoke-java.lang.Class-java.lang.String-java.lang.Object...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>invoke</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;invoke(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticMethod,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
+<div class="block">Invokes a non-accessible (eg <code>private</code>) <code>static</code> method with the given arguments.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - type to which the returned value should be assignable</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>classWithStaticMethod</code> - the class on which the invocation is to be done</dd>
+<dd><code>methodName</code> - the name of the static method to invoke</dd>
+<dd><code>nonNullArgs</code> - zero or more non-null parameter values for the invocation; if a null value needs to be passed,
+ the <code>Class</code> object for the corresponding parameter type must be passed instead</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the return value from the invoked method</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Deencapsulation.html#invoke-java.lang.String-java.lang.String-java.lang.Object...-"><code>invoke(String, String, Object...)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -526,9 +621,9 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <ul class="blockList">
 <li class="blockList">
 <h4>invoke</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;invoke(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;classWithStaticMethod,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
-                           <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;invoke(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;classWithStaticMethod,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;methodName,
+                           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
 <div class="block">Invokes a non-accessible (eg <code>private</code>) <code>static</code> method with the given arguments.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
@@ -542,122 +637,9 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the return value from the invoked method</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#invoke-java.lang.Class-java.lang.String-java.lang.Object...-"><code>invoke(Class, String, Object...)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>newInnerInstance</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInnerInstance(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;innerClassToInstantiate,
-                                     <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;outerClassInstance,
-                                     <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
-<div class="block">The same as <a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a>, but for instantiating an inner class of some other
- class, and where all other (if any) initialization arguments are known to be non-null.</div>
-<dl>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - type to which the returned instance should be assignable</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>innerClassToInstantiate</code> - the inner class to be instantiated</dd>
-<dd><code>outerClassInstance</code> - the outer class instance to which the inner class instance will belong</dd>
-<dd><code>nonNullArgs</code> - zero or more non-null parameter values for the invocation; if a null value needs to be passed,
- the <code>Class</code> object for the corresponding parameter type must be passed instead</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a newly created instance of the specified inner class, initialized with the given arguments</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.String-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(String, Object, Object...)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="newInnerInstance-java.lang.String-java.lang.Object-java.lang.Object...-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>newInnerInstance</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInnerInstance(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;innerClassSimpleName,
-                                     <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;outerClassInstance,
-                                     <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
-<div class="block">The same as <a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a>, but for instantiating an inner non-accessible class
- of some other class, and where all other (if any) initialization arguments are known to be non-null.</div>
-<dl>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - type to which the returned instance should be assignable</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>innerClassSimpleName</code> - the inner class simple name, that is, the part after the "$" character in its full
- name</dd>
-<dd><code>outerClassInstance</code> - the outer class instance to which the inner class instance will belong</dd>
-<dd><code>nonNullArgs</code> - zero or more non-null parameter values for the invocation; if a null value needs to be passed,
- the <code>Class</code> object for the corresponding parameter type must be passed instead</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a newly created instance of the specified inner class, initialized with the given arguments</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(Class, Object, Object...)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="newInstance-java.lang.Class-java.lang.Class:A-java.lang.Object...-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>newInstance</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInstance(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate,
-                                <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
-                                <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;initArgs)</pre>
-<div class="block">Creates a new instance of a given class, invoking the constructor which has the specified parameter types.</div>
-<dl>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - type to which the returned instance should be assignable</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>classToInstantiate</code> - the class to be instantiated</dd>
-<dd><code>parameterTypes</code> - the formal parameter types for the desired constructor, possibly empty</dd>
-<dd><code>initArgs</code> - the invocation arguments for the constructor, which must be consistent with the specified
- parameter types</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a newly created instance of the specified class, initialized through the specified constructor and
- arguments</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#newInstance-java.lang.Class-java.lang.Object...-"><code>newInstance(Class, Object...)</code></a>, 
-<a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(Class, Object, Object...)</code></a>, 
-<a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="newInstance-java.lang.Class-java.lang.Object...-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>newInstance</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInstance(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate,
-                                <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
-<div class="block">Creates a new instance of a given class, invoking the constructor which has parameters matching the number, order,
- and types of the given non-null arguments.</div>
-<dl>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - type to which the returned instance should be assignable</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>nonNullArgs</code> - zero or more non-null parameter values for the invocation; if a null value needs to be passed,
- the <code>Class</code> object for the corresponding parameter type must be passed instead</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a newly created instance of the specified class, initialized with the given arguments</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter, or if no constructor was found
- that matched the given argument types</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(Class, Object, Object...)</code></a>, 
-<a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Object...-"><code>newInstance(String, Object...)</code></a>, 
-<a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -667,9 +649,9 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <ul class="blockList">
 <li class="blockList">
 <h4>newInstance</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInstance(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
-                                <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
-                                <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;initArgs)</pre>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInstance(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
+                                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
+                                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;initArgs)</pre>
 <div class="block">Creates a new instance of a given non-accessible class, invoking the constructor which has the specified parameter
  types.</div>
 <dl>
@@ -690,14 +672,42 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 </dl>
 </li>
 </ul>
+<a name="newInstance-java.lang.Class-java.lang.Class:A-java.lang.Object...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newInstance</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInstance(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate,
+                                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;parameterTypes,
+                                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;initArgs)</pre>
+<div class="block">Creates a new instance of a given class, invoking the constructor which has the specified parameter types.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - type to which the returned instance should be assignable</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>classToInstantiate</code> - the class to be instantiated</dd>
+<dd><code>parameterTypes</code> - the formal parameter types for the desired constructor, possibly empty</dd>
+<dd><code>initArgs</code> - the invocation arguments for the constructor, which must be consistent with the specified
+ parameter types</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a newly created instance of the specified class, initialized through the specified constructor and
+ arguments</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Deencapsulation.html#newInstance-java.lang.Class-java.lang.Object...-"><code>newInstance(Class, Object...)</code></a>, 
+<a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(Class, Object, Object...)</code></a>, 
+<a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a></dd>
+</dl>
+</li>
+</ul>
 <a name="newInstance-java.lang.String-java.lang.Object...-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>newInstance</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInstance(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
-                                <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInstance(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
+                                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
 <div class="block">Creates a new instance of a given non-accessible class, invoking the constructor which has parameters matching the
  number, order, and types of the given non-null arguments.</div>
 <dl>
@@ -709,7 +719,7 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a newly created instance of the specified class, initialized with the given arguments</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter, or if no constructor was found
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter, or if no constructor was found
  that matched the given argument types</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.String-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(String, Object, Object...)</code></a>, 
@@ -718,13 +728,98 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 </dl>
 </li>
 </ul>
-<a name="newUninitializedInstance-java.lang.Class-">
+<a name="newInstance-java.lang.Class-java.lang.Object...-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
+<h4>newInstance</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInstance(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate,
+                                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
+<div class="block">Creates a new instance of a given class, invoking the constructor which has parameters matching the number, order,
+ and types of the given non-null arguments.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - type to which the returned instance should be assignable</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>nonNullArgs</code> - zero or more non-null parameter values for the invocation; if a null value needs to be passed,
+ the <code>Class</code> object for the corresponding parameter type must be passed instead</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a newly created instance of the specified class, initialized with the given arguments</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter, or if no constructor was found
+ that matched the given argument types</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(Class, Object, Object...)</code></a>, 
+<a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Object...-"><code>newInstance(String, Object...)</code></a>, 
+<a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="newInnerInstance-java.lang.String-java.lang.Object-java.lang.Object...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newInnerInstance</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInnerInstance(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;innerClassSimpleName,
+                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;outerClassInstance,
+                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
+<div class="block">The same as <a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a>, but for instantiating an inner non-accessible class
+ of some other class, and where all other (if any) initialization arguments are known to be non-null.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - type to which the returned instance should be assignable</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>innerClassSimpleName</code> - the inner class simple name, that is, the part after the "$" character in its full
+ name</dd>
+<dd><code>outerClassInstance</code> - the outer class instance to which the inner class instance will belong</dd>
+<dd><code>nonNullArgs</code> - zero or more non-null parameter values for the invocation; if a null value needs to be passed,
+ the <code>Class</code> object for the corresponding parameter type must be passed instead</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a newly created instance of the specified inner class, initialized with the given arguments</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(Class, Object, Object...)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newInnerInstance</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newInnerInstance(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;innerClassToInstantiate,
+                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;outerClassInstance,
+                                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;nonNullArgs)</pre>
+<div class="block">The same as <a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a>, but for instantiating an inner class of some other
+ class, and where all other (if any) initialization arguments are known to be non-null.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - type to which the returned instance should be assignable</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>innerClassToInstantiate</code> - the inner class to be instantiated</dd>
+<dd><code>outerClassInstance</code> - the outer class instance to which the inner class instance will belong</dd>
+<dd><code>nonNullArgs</code> - zero or more non-null parameter values for the invocation; if a null value needs to be passed,
+ the <code>Class</code> object for the corresponding parameter type must be passed instead</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a newly created instance of the specified inner class, initialized with the given arguments</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if a null reference was provided for a parameter</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.String-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(String, Object, Object...)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="newUninitializedInstance-java.lang.Class-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
 <h4>newUninitializedInstance</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newUninitializedInstance(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate)</pre>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newUninitializedInstance(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate)</pre>
 <div class="block">Creates a new instance of a given class, without invoking any constructor.
  If the class is <code>abstract</code>, a concrete subclass is created, with empty implementations for the
  <code>abstract</code> methods.</div>
@@ -739,97 +834,6 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <dd><a href="../mockit/Deencapsulation.html#newInstance-java.lang.Class-java.lang.Object...-"><code>newInstance(Class, Object...)</code></a>, 
 <a href="../mockit/Deencapsulation.html#newInstance-java.lang.String-java.lang.Class:A-java.lang.Object...-"><code>newInstance(String, Class[], Object...)</code></a>, 
 <a href="../mockit/Deencapsulation.html#newInnerInstance-java.lang.Class-java.lang.Object-java.lang.Object...-"><code>newInnerInstance(Class, Object, Object...)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="setField-java.lang.Class-java.lang.Object-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setField</h4>
-<pre>public static&nbsp;void&nbsp;setField(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
-                            <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</pre>
-<div class="block">Sets the value of a non-accessible static field on a given class.
- The field is looked up by the type of the given field value instead of by name.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>classWithStaticField</code> - the class on which the static field is defined</dd>
-<dd><code>fieldValue</code> - the value to set the field to</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a>, 
-<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.Object-"><code>setField(Object, Object)</code></a>, 
-<a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.Class-"><code>getField(Class, Class)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="setField-java.lang.Class-java.lang.String-java.lang.Object-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setField</h4>
-<pre>public static&nbsp;void&nbsp;setField(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classWithStaticField,
-                            <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
-                            <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</pre>
-<div class="block">Sets the value of a non-accessible static field on a given class.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>classWithStaticField</code> - the class on which the static field is defined</dd>
-<dd><code>fieldName</code> - the name of the field to set</dd>
-<dd><code>fieldValue</code> - the value to set the field to</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.Object-"><code>setField(Class, Object)</code></a>, 
-<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-"><code>setField(Object, String, Object)</code></a>, 
-<a href="../mockit/Deencapsulation.html#getField-java.lang.Class-java.lang.String-"><code>getField(Class, String)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="setField-java.lang.Object-java.lang.Object-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setField</h4>
-<pre>public static&nbsp;void&nbsp;setField(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
-                            <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</pre>
-<div class="block">Sets the value of a non-accessible field on a given object.
- The field is looked up by the type of the given field value instead of by name.</div>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either the desired field is not found, or more than one is</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.String-java.lang.Object-"><code>setField(Object, String, Object)</code></a>, 
-<a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a>, 
-<a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="setField-java.lang.Object-java.lang.String-java.lang.Object-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>setField</h4>
-<pre>public static&nbsp;void&nbsp;setField(<a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;objectWithField,
-                            <a href="http://download.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
-                            <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;fieldValue)</pre>
-<div class="block">Sets the value of a non-accessible field on a given object.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>objectWithField</code> - the instance on which to set the field value</dd>
-<dd><code>fieldName</code> - the name of the field to set</dd>
-<dd><code>fieldValue</code> - the value to set the field to</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the desired field is not found</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Deencapsulation.html#setField-java.lang.Class-java.lang.String-java.lang.Object-"><code>setField(Class, String, Object)</code></a>, 
-<a href="../mockit/Deencapsulation.html#setField-java.lang.Object-java.lang.Object-"><code>setField(Object, Object)</code></a>, 
-<a href="../mockit/Deencapsulation.html#getField-java.lang.Object-java.lang.String-"><code>getField(Object, String)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -852,8 +856,12 @@ extends <a href="http://download.oracle.com/javase/7/docs/api/java/lang/Object.h
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
-<div class="aboutLanguage"><a href=http://jmockit.org target=_top><img src=resources/logo.png>JMockit Home</a></div>
+<div class="aboutLanguage">
+            <a href=http://jmockit.org target=_top>
+               <img src=../resources/logo.png style=padding:4px;vertical-align:middle>JMockit Home</a>
+         </div>
 </div>
 <div class="subNav">
 <ul class="navList">
