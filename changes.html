@@ -33,8 +33,17 @@
    <a href="#next">Next release</a>
 </h2>
 
-<h3 id="1.16">Version <a href="1.16">1.16</a> (beta2 on Mar 1, final on Mar 15, 2015):</h3>
+<h3 id="1.16">Version <a href="1.16">1.16</a> (beta3 on Mar 8, final on Mar 15, 2015):</h3>
 <ul>
+   <li>
+      <strong>New feature</strong>: The code coverage tool now finds <em>redundant</em> tests, listing them in the
+      HTML report.
+      A test is deemed to be redundant when it does not cover any additional line segments or paths that haven't yet
+      been covered by previous tests in the test run.
+      Each such test can, in principle, be removed from the test suite without weakening it, provided some other test
+      for the same scenario includes the assertions from the redundant test.<br/>
+      This is (likely) the <em>first</em> practical coverage tool to make this feature available.
+   </li>
    <li>
       Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/122">#122</a>,
@@ -43,7 +52,8 @@
       <a href="https://github.com/jmockit/jmockit1/issues/140">#140</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/141">#141</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/142">#142</a>,
-      <a href="https://github.com/jmockit/jmockit1/issues/144">#144</a>.
+      <a href="https://github.com/jmockit/jmockit1/issues/144">#144</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/146">#146</a>.
    </li>
 </ul>
 
