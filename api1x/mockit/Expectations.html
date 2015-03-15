@@ -190,8 +190,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <p/>
  Invocations occurring during replay, whether they matched recorded expectations or not, can be explicitly verified
  <em>after</em> exercising the code under test.
- To that end, we use a set of complementary base classes: <a href="../mockit/Verifications.html" title="class in mockit"><code>Verifications</code></a>,
- <a href="../mockit/VerificationsInOrder.html" title="class in mockit"><code>VerificationsInOrder</code></a>, <a href="../mockit/FullVerifications.html" title="class in mockit"><code>FullVerifications</code></a>, and <a href="../mockit/FullVerificationsInOrder.html" title="class in mockit"><code>FullVerificationsInOrder</code></a>.
+ To that end, we use a set of complementary base classes: <a href="../mockit/Verifications.html" title="class in mockit"><code>Verifications</code></a>, <a href="../mockit/VerificationsInOrder.html" title="class in mockit"><code>VerificationsInOrder</code></a>,
+ <a href="../mockit/FullVerifications.html" title="class in mockit"><code>FullVerifications</code></a>, and <a href="../mockit/FullVerificationsInOrder.html" title="class in mockit"><code>FullVerificationsInOrder</code></a>.
  Similar to expectation blocks, these classes allow us to create <em>verification</em> blocks.
  <p/>
  Finally, note that this class has two specialized subclasses: <a href="../mockit/StrictExpectations.html" title="class in mockit"><code>StrictExpectations</code></a> and
@@ -550,9 +550,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  If no result is recorded for a given expectation, then all matching invocations will return the appropriate
  default value according to the method return type:
  <ul>
- <li><code>String</code>: returns <code>null</code>.</li>
- <li>Primitive or primitive wrapper: the standard default value is returned (ie <code>false</code> for
- <code>boolean/Boolean</code>, <code>'\0'</code> for <code>char/Character</code>, <code>0</code> for <code>int/Integer</code>, and so on).
+ <li>Most <code>java.lang</code> types (<code>String</code>, <code>Object</code>, etc.): returns <code>null</code>.</li>
+ <li><code>java.math</code> types (<code>BigDecimal</code>, etc.): returns <code>null</code>.</li>
+ <li>Primitive/wrapper types: returns the standard default value (<code>false</code> for <code>boolean/Boolean</code>,
+ <code>0</code> for <code>int/Integer</code>, and so on).
  </li>
  <li><code>java.util.List</code>, <code>java.util.Collection</code>, or <code>java.lang.Iterable</code>: returns
  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collections.html?is-external=true#EMPTY_LIST" title="class or interface in java.util"><code>Collections.EMPTY_LIST</code></a>.</li>
@@ -561,8 +562,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <li><code>java.util.SortedSet</code>: returns an unmodifiable empty sorted set.</li>
  <li><code>java.util.Map</code>: returns <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collections.html?is-external=true#EMPTY_MAP" title="class or interface in java.util"><code>Collections.EMPTY_MAP</code></a>.</li>
  <li><code>java.util.SortedMap</code>: returns an unmodifiable empty sorted map.</li>
- <li>A reference type, except for the collection types above: returns <code>null</code>.</li>
- <li>An array type: returns an array with zero elements (empty) in each dimension.</li>
+ <li><code>java.util.Optional</code>: returns <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true#empty--" title="class or interface in java.util"><code>Optional.empty()</code></a>.</li>
+ <li>Other reference types: returns a mocked instance through cascading.</li>
+ <li>Array types: returns an array with zero elements (empty) in each dimension.</li>
  </ul>
  <p/>
  When an expectation is recorded for a method which actually <em>returns</em> an exception or error (as opposed to
@@ -580,8 +582,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><code>Iterator</code></a>, and the return type is single-valued, then the assigned multi-valued result is taken as a
  sequence of <em>consecutive results</em> for the expectation.
  <p/>
- Results that depend on some programming logic can be provided through a <a href="../mockit/Delegate.html" title="interface in mockit">Delegate</a> object
- assigned to the field.
+ Results that depend on some programming logic can be provided through a <a href="../mockit/Delegate.html" title="interface in mockit">Delegate</a> object assigned to
+ the field.
  This applies to <code>void</code> and non-<code>void</code> methods, as well as to constructors.
  <p/>
  Finally, when recording an expectation on a <em>constructor</em> of a mocked class, an arbitrary instance of said
