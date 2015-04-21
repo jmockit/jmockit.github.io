@@ -124,8 +124,7 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
  Any invocation that doesn't match a recorded expectation will cause an <code>UnexpectedInvocation</code> error to be
  thrown, failing the test.
  <p/>
- Strict expectations do not allow the use of <a href="../mockit/Verifications.html" title="class in mockit">verification blocks</a> for explicit
- verification.
+ Strict expectations do not allow the use of <a href="../mockit/Verifications.html" title="class in mockit">verification blocks</a> for explicit verification.
  Instead, one or more strict expectation blocks are meant to fully specify <em>all</em> the invocations to mocked
  types/instances that are expected and allowed to occur from the code under test.</div>
 <dl>
@@ -282,9 +281,7 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
 <td class="colFirst"><code>protected </code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/StrictExpectations.html#StrictExpectations-java.lang.Object...-">StrictExpectations</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;classesOrObjectsToBePartiallyMocked)</code>
 <div class="block">Same as <a href="../mockit/StrictExpectations.html#StrictExpectations--"><code>StrictExpectations()</code></a>, except that one or more classes will be partially mocked according to the
- expectations recorded in the expectation block; this feature is known as <em>dynamic</em> partial mocking, in
- contrast with <em>static</em> partial mocking as specified with the <a href="../mockit/Mocked.html#value--"><code>Mocked.value()</code></a> annotation
- attribute.</div>
+ expectations recorded in the expectation block.</div>
 </td>
 </tr>
 </table>
@@ -835,34 +832,28 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
 <h4>StrictExpectations</h4>
 <pre>protected&nbsp;StrictExpectations(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;classesOrObjectsToBePartiallyMocked)</pre>
 <div class="block">Same as <a href="../mockit/StrictExpectations.html#StrictExpectations--"><code>StrictExpectations()</code></a>, except that one or more classes will be partially mocked according to the
- expectations recorded in the expectation block; this feature is known as <em>dynamic</em> partial mocking, in
- contrast with <em>static</em> partial mocking as specified with the <a href="../mockit/Mocked.html#value--"><code>Mocked.value()</code></a> annotation
- attribute.
+ expectations recorded in the expectation block.
  <p/>
  The classes to be partially mocked are those directly specified through their <code>Class</code> objects as well as
  those to which any given objects belong.
  During replay, any invocations to one of these classes or objects will execute real production code, unless a
  matching expectation was recorded.
  <p/>
- For a given <code>Class</code> object, all constructors and methods will be considered for mocking, from the specified
- class up to but not including <code>java.lang.Object</code>.
- <p/>
- For a given <em>object</em>, all methods will be considered for mocking, from the concrete class of the given
- object up to but not including <code>java.lang.Object</code>.
- The constructors of those classes will <em>not</em> be considered.
- During replay, invocations to instance methods will only match expectations recorded on the given instance
- (or instances, if more than one was given).</div>
+ For a given <code>Class</code> object, all constructors and methods can be mocked, from the specified class up to but
+ not including <code>java.lang.Object</code>.
+ For a given <em>object</em>, only methods can be mocked, not constructors; also, during replay, invocations to
+ instance methods will only match expectations recorded on the given instance (or instances, if more than one was
+ given).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be considered for
- partial mocking</dd>
+<dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be partially mocked</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if given a class literal for an interface, an annotation, an array, a
  primitive/wrapper type, or a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html?is-external=true#isProxyClass-java.lang.Class-" title="class or interface in java.lang.reflect">proxy class</a> created for an
  interface, or if given a value/instance of such a type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/StrictExpectations.html#StrictExpectations-java.lang.Integer-java.lang.Object...-"><code>StrictExpectations(Integer, Object...)</code></a>, 
-<a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#dynamicPartial">Tutorial</a></dd>
+<a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#partial">Tutorial</a></dd>
 </dl>
 </li>
 </ul>
@@ -883,8 +874,7 @@ extends <a href="../mockit/Expectations.html" title="class in mockit">Expectatio
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>numberOfIterations</code> - the positive number of iterations for the whole sequence of invocations recorded inside
  the block; when not specified, 1 (one) iteration is assumed</dd>
-<dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be considered for
- partial mocking</dd>
+<dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be partially mocked</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/StrictExpectations.html#StrictExpectations--"><code>StrictExpectations()</code></a>, 
 <a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#iteratedExpectations">Tutorial</a></dd>

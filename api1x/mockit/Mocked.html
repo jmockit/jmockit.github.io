@@ -114,7 +114,7 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
  The effect of declaring a <code>@Mocked</code> type, <em>by default</em>, is that all new instances of that type, as well
  as those previously created, will also be mocked instances; this will last for the duration of each test where the
  associated mock field/parameter is in scope.
- Also, all methods of the mocked type will be mocked, unless a subset is <a href="../mockit/Mocked.html#value--">explicitly specified</a>.
+ Also, all methods of the mocked type will be mocked.
  <p/>
  When the mocked type is a class, all super-classes up to but not including <code>java.lang.Object</code> are also mocked.
  Additionally, <em>static methods</em> and <em>constructors</em> are mocked as well, just like instance methods.
@@ -141,8 +141,7 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
  affected, unless <a href="../mockit/Mocked.html#stubOutClassInitialization--">specified otherwise</a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Mocked.html#value--"><code>value()</code></a>, 
-<a href="../mockit/Mocked.html#stubOutClassInitialization--"><code>stubOutClassInitialization()</code></a>, 
+<dd><a href="../mockit/Mocked.html#stubOutClassInitialization--"><code>stubOutClassInitialization()</code></a>, 
 <a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#declaration">Tutorial</a></dd>
 </dl>
 </li>
@@ -172,7 +171,10 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Mocked.html#value--">value</a></span></code>
-<div class="block">One or more <em>mock filters</em>.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Simply remove any mock filters, or if partial mocking is still needed, use
+ <a href="../mockit/Expectations.html#Expectations-java.lang.Object...-">Expectations(Object...)</a> or a <a href="../mockit/MockUp.html" title="class in mockit">MockUp</a>.</span></div>
+</div>
 </td>
 </tr>
 </table>
@@ -196,7 +198,10 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>value</h4>
-<pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value</pre>
+<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Simply remove any mock filters, or if partial mocking is still needed, use
+ <a href="../mockit/Expectations.html#Expectations-java.lang.Object...-">Expectations(Object...)</a> or a <a href="../mockit/MockUp.html" title="class in mockit">MockUp</a>.</span></div>
 <div class="block">One or more <em>mock filters</em>.
  Given a target class for mocking, only those methods and constructors which match at least one filter will be
  mocked.
@@ -214,8 +219,7 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
  this can be used to obtain a mocked instance where no executable code is actually mocked.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Mocked.html#stubOutClassInitialization--"><code>stubOutClassInitialization()</code></a>, 
-<a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#staticPartial">Tutorial</a></dd>
+<dd><a href="../mockit/Mocked.html#stubOutClassInitialization--"><code>stubOutClassInitialization()</code></a></dd>
 </dl>
 <dl>
 <dt>Default:</dt>

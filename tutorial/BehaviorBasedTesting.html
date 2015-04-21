@@ -85,13 +85,7 @@
       </ol>
    </li>
    <li><a href="#deencapsulation">Accessing private members</a></li>
-   <li>
-      <a href="#partial">Partial mocking</a>
-      <ol>
-         <li><a href="#staticPartial">Static partial mocking</a></li>
-         <li><a href="#dynamicPartial">Dynamic partial mocking</a></li>
-      </ol>
-   </li>
+   <li><a href="#partial">Partial mocking</a></li>
    <li>
       <a href="#capturing">Capturing implementation classes and instances</a>
       <ol>
@@ -1736,71 +1730,12 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    constructors to be mocked.
    Methods/constructors not mocked in an otherwise mocked type will execute normally when called.
 </p>
-
-<h3 id="staticPartial">
-   <a href="#staticPartial">Static partial mocking</a>
-</h3>
 <p>
-   Methods and constructors to be mocked can be explicitly specified through the
-   <code><span class="annotation">@Mocked</span>(<strong>value</strong> = {"filter1", "filter2", ...})</code>
-   annotation attribute. (Note that "<code>value</code>" is the <em>default</em> Java annotation attribute, so it can be
-   omitted when no other attributes are specified.)
-   Each filter value is composed of an optional regular expression (<code>java.util.regex</code>) that matches method
-   names, followed by an also optional parenthesized list of parameter type names.
-   The following example test shows several ways to use these mocking filters.
-</p>
-<pre><code>public class StaticPartialMockingTest
-{
-   @Mocked(<strong>"nanoTime"</strong>) final System system = null;
-
-   @Test
-   public void staticPartialMocking(
-      @Mocked(<strong>{"(int)", "doInternal()", "[gs]etValue", "complexOperation(Object,String)"}</strong>)
-      final Collaborator mock)
-   {
-      ...
-      new Expectations() {{
-         mock.getValue(); result = 123;
-      }};
-      ...
-   }
-}
-</code></pre>
-<p>
-   To select constructors, we leave the first part of the filter (which corresponds to method names) empty and specify
-   the parameter type names between parentheses.
-   Commas are used to separate parameters, when more than one.
-   A parameter type name can be fully qualified or a <em>unique suffix</em> of the full name.
-   In practice, this means that it's almost never necessary to specify package names for a reference type.
-</p>
-<p>
-   Specifying parameter types in a filter for a <em>method</em> is also perfectly valid, but usually unnecessary.
-   It might only be required when the method is overloaded.
-</p>
-<p>
-   Finally, notice that when the mocked type is a class, a mocking filter will match methods/constructors defined
-   anywhere in the class hierarchy, from the mocked class up to (but not including)
-   <code class="type">java.lang.Object</code>.
-</p>
-
-<h3 id="dynamicPartial">
-   <a href="#dynamicPartial">Dynamic partial mocking</a>
-</h3>
-<p>
-   Static partial mocking has the inconvenience that we need to explicitly specify the methods/constructors to be
-   mocked, and do so inside strings instead of in Java code.
-   As such, it's not "refactoring friendly".
-</p>
-<p>
-   An alternative is to let JMockit dynamically decide whether to execute the real implementation of a
-   method/constructor, as it gets called from code under test.
-   This decision can be made based on which expectations were recorded and which were not, on a given partially mocked
-   class or object.
-   Therefore, we refer to this feature as <em>dynamic</em> partial mocking, since the decision of what gets mocked is
-   made at runtime, as invocations to mocked types get matched against recorded expectations.
+   When a class or object is partially mocked, JMockit decides whether to execute the real implementation of a method or
+   constructor as it gets called from the code under test, based on which expectations were recorded and which were not.
    The following example tests will demonstrate it.
 </p>
-<pre><code>public class DynamicPartialMockingTest
+<pre><code>public class PartialMockingTest
 {
    static class Collaborator
    {
@@ -1815,7 +1750,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    }
 
    @Test
-   public void partialMockingOfAClassAndAllItsInstances()
+   public void partiallyMockingAClassAndItsInstances()
    {
       final Collaborator anyInstance = new Collaborator();
 
@@ -1823,12 +1758,12 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
          anyInstance.getValue(); result = 123;
       }};
 
-      // Mocked:
+      // Not mocked, as no constructor expectations were recorded:
       Collaborator c1 = new Collaborator();
-      assertEquals(123, c1.getValue());
-
-      // Also mocked:
       Collaborator c2 = new Collaborator(150);
+
+      // Mocked, as a matching method expectation was recorded:
+      assertEquals(123, c1.getValue());
       assertEquals(123, c2.getValue());
 
       // Not mocked:
@@ -1837,7 +1772,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    }
 
    @Test
-   public void partialMockingOfASingleInstance()
+   public void partiallyMockingASingleInstance()
    {
       final Collaborator collaborator = new Collaborator(2);
 
@@ -1865,38 +1800,46 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    As shown above, the
    <a href="../api1x/mockit/Expectations.html#Expectations-java.lang.Object...-">Expectations(Object...)</a> constructor
    accepts one or more classes or objects to be partially mocked.
-   If a <code>Class</code> object is given, the methods <em>and</em> constructors defined in that class are considered
-   for mocking, as well as the methods and constructors of its super-classes; <em>all</em> instances of the specified
-   class will be regarded as mocked instances.
+   If a <code>Class</code> object is given, all methods <em>and</em> constructors defined in that class can be mocked,
+   as well as the methods and constructors of its super-classes; <em>all</em> instances of the specified class will be
+   regarded as mocked instances.
    If, on the other hand, a regular <em>instance</em> is given, then <em>only</em> methods, not constructors, in the
-   class hierarchy are considered for mocking; even more, only <em>that</em> particular instance will be mocked.
+   class hierarchy can be mocked; even more, only <em>that</em> particular instance will be mocked.
 </p>
 <p>
    Notice that in these two example tests there is no mock field or mock parameter.
-   Dynamic mocking effectively provides yet another way to specify mocked types.
+   The partial mocking constructor effectively provides yet another way to specify mocked types.
    It also lets us turn objects stored in <em>local variables</em> into mocked instances.
    Such objects can be created with any amount of state in internal instance fields; they will keep that state when
    mocked.
 </p>
 <p>
-   As we saw, dynamic mocking is based on a simple rule for deciding whether an invocation at replay time should execute
-   the real implementation or not: if it matches a recorded expectation, it gets mocked; otherwise, the real
-   implementation gets executed.
-   Although simple, this rule can produce surprising results, in particular when <em>strict</em> expectations are
-   recorded.
-   For example, if you record a strict expectation on a dynamically mocked object with a maximum invocation count of
-   <em>n</em> (either the default of <code>1</code> or a value specified with <code>times</code> or
-   <code>maxTimes</code>), then only the first <em>n</em> invocations during replay will match the expectation;
-   the next invocation, if it occurs, will cause the real method implementation to be executed, instead of causing the
-   test to fail with an "unexpected invocation" error.
+   It should be noted that, when we request a class or instance to be partially mocked, it can also have invocations
+   <em>verified</em> on it, even if the verified methods/constructors were not recorded.
+   For example, consider the following test.
 </p>
+<pre><code>   @Test
+   public void partiallyMockingAnObjectJustForVerifications()
+   {
+      final Collaborator collaborator = new Collaborator(123);
+
+      new Expectations(collaborator) {};
+
+      // No expectations were recorded, so nothing will be mocked.
+      int value = collaborator.getValue(); // value == 123
+      collaborator.simpleOperation(45, "testing", new Date());
+      ...
+
+      // Unmocked methods can still be verified:
+      new Verifications() {{ c1.simpleOperation(anyInt, anyString, (Date) any); }};
+   }
+</code></pre>
 <p>
-   It's also valid to pass the mocked instances automatically created for mock fields or parameters into those
-   expectation block constructors.
-   In this case, the declaration of such dynamically mocked mock fields/parameters can make use of the
-   <code class="annotation">@Mocked</code> annotation and any of its attributes.
-   We could even combine static and dynamic partial mocking for the same mocked class, although that wouldn't probably
-   be of much use.
+   Finally, a simpler way to apply partial mocking to a tested class is to have a field in the test class annotated as
+   both <code class="annotation">@Tested</code> (see <a href="#tested">section below</a>) and
+   <code class="annotation">@Mocked</code>.
+   In this case, the tested object is not passed to the <code class="type">Expectations</code> constructor, but we still
+   need to record expectations on any methods requiring mocked results.
 </p>
 
 <h2 id="capturing">
@@ -2025,9 +1968,8 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
 <p>
    A non-<code>final</code> instance field annotated as such in the test class will be considered for automatic
    instantiation and injection, just before the execution of a test method.
-   If at this time the field still holds the <code>null</code> reference, JMockit will try to create an instance using
-   a suitable constructor of the tested class, and make sure its internal dependencies get properly injected (when
-   applicable).
+   If at this time the field still holds the <code>null</code> reference, an instance will be created using a suitable
+   constructor of the tested class, while making sure its internal dependencies get properly injected (when applicable).
    If the field has already been initialized (not <code>null</code>), then nothing will be done.
 </p>
 <p>
