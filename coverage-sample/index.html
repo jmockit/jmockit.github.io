@@ -133,9 +133,22 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
       <td class='pt' style='background-color:#36c900' title='Fields: 15/19'>79%</td>
     </tr>
   </table>
+  <br/>Redundant tests:
+  <ol title="Tests are regarded as redundant when they don't cover any additional line segments or paths that haven't already been covered by a previous test.
+Note this means the list of redundant tests depends on the order of test execution.
+Such a test can be removed without weakening the test suite, as long as another test for the same scenario performs its assertions.">
+    <li>PartialMockingTest.useAMockUp</li>
+    <li>OrderRepository_MockupsAPI_Test.updateOrder</li>
+    <li>OrderRepository_MockupsAPI_Test.createOrder</li>
+    <li>OrderRepository_MockupsAPI_Test.removeOrder</li>
+    <li>OrderRepository_MockupsAPI_Test.findOrderByCustomer</li>
+    <li>OrderEntryPage_MockupsAPI_Test.submitOrder</li>
+    <li>OrderEntryPage_MockupsAPI_Test.submitOrderWithMissingData</li>
+    <li>OrderEntryPage_MockupsAPI_Test.removeItemWithInvalidIndex</li>
+  </ol>
   <p>
     <a href='http://jmockit.org'><img src='logo.png'></a>
-    Generated on Sun Mar 15 12:28:48 BRT 2015
+    Generated on Sat Apr 25 14:36:53 BRT 2015
   </p>
 </body>
 </html>
