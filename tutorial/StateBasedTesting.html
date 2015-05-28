@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  ~ Copyright (c) 2006-2014 Rogério Liesenfeld
+  ~ Copyright (c) 2006-2015 Rogério Liesenfeld
   ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
   -->
 <html>
@@ -602,14 +602,6 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
    executed, even though some methods (<code>login</code> and <code>logout</code>) are mocked.
    This example is contrived; in practice, the ability to proceed into real implementations would not normally be useful
    for <em>testing</em> per se, not directly at least.
-</p>
-<p>
-   Although not shown here, a call to <code>proceed()</code> can be also be done inside a
-   "<code><strong>$init</strong>(Invocation inv, ...)</code>" mock method, to execute the real implementation of a
-   mocked constructor.
-   Additionally, for mocked methods/constructors having parameters, we can <em>replace</em> the argument values passed
-   to the real implementation by passing the replacement values in a <code>proceed(&lt;arg1>, &lt;arg2>, ...)</code>
-   call.
 </p>
 <p>
    You may have noticed that use of <code>Invocation#proceed(...)</code> in a mock method effectively behaves like
