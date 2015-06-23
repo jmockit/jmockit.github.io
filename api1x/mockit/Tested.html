@@ -35,7 +35,6 @@
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
-<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage">
             <a href=http://jmockit.org target=_top>
@@ -197,35 +196,10 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
 <!--   -->
 </a>
 <h3>Element Detail</h3>
-<a name="fullyInitialized--">
+<a name="availableDuringSetup--">
 <!--   -->
 </a>
 <ul class="blockList">
-<li class="blockList">
-<h4>fullyInitialized</h4>
-<pre>public abstract&nbsp;boolean&nbsp;fullyInitialized</pre>
-<div class="block">Indicates that each and every field of the tested object should be assigned a value, either an
- <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a> or a real (unmocked) instance of the field type.
- <p/>
- For each field of a reference type that would otherwise remain <code>null</code>, an attempt is made to automatically
- create and recursively initialize a suitable real instance.
- For this attempt to succeed, the type of the field must either be a concrete class having a public no-args
- constructor, or a known interface for which a real instance can be created.
- Currently, the <code>javax.persistence.EntityManagerFactory</code> and <code>javax.persistence.EntityManager</code>
- interfaces are supported.</div>
-<dl>
-<dt>Default:</dt>
-<dd>false</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="availableDuringSetup--">
-<!--   -->
-</a>
-<ul class="blockListLast">
 <li class="blockList">
 <h4>availableDuringSetup</h4>
 <pre>public abstract&nbsp;boolean&nbsp;availableDuringSetup</pre>
@@ -239,6 +213,31 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
  <p/>
  In order to be made available during test setup, a tested object won't be injected from <code>@Injectable</code>
  test method parameters, only from injectable fields.</div>
+<dl>
+<dt>Default:</dt>
+<dd>false</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="fullyInitialized--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>fullyInitialized</h4>
+<pre>public abstract&nbsp;boolean&nbsp;fullyInitialized</pre>
+<div class="block">Indicates that each and every field of the tested object should be assigned a value, either an
+ <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a> or a real (unmocked) instance of the field type.
+ <p/>
+ For each field of a reference type that would otherwise remain <code>null</code>, an attempt is made to automatically
+ create and recursively initialize a suitable real instance.
+ For this attempt to succeed, the type of the field must either be a concrete class having a public no-args
+ constructor, or a known interface for which a real instance can be created.
+ Currently, the <code>javax.persistence.EntityManagerFactory</code> and <code>javax.persistence.EntityManager</code>
+ interfaces are supported.</div>
 <dl>
 <dt>Default:</dt>
 <dd>false</dd>
@@ -264,7 +263,6 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
-<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage">
             <a href=http://jmockit.org target=_top>

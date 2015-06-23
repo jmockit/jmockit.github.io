@@ -35,7 +35,6 @@
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
-<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage">
             <a href=http://jmockit.org target=_top>
@@ -168,15 +167,6 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <div class="block">Indicates whether <em>static initialization code</em> in the mocked class should be stubbed out or not.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Mocked.html#value--">value</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Simply remove any mock filters, or if partial mocking is still needed, use
- <a href="../mockit/Expectations.html#Expectations-java.lang.Object...-">Expectations(Object...)</a> or a <a href="../mockit/MockUp.html" title="class in mockit">MockUp</a>.</span></div>
-</div>
-</td>
-</tr>
 </table>
 </li>
 </ul>
@@ -192,45 +182,7 @@ public @interface <span class="memberNameLabel">Mocked</span></pre>
 <!--   -->
 </a>
 <h3>Element Detail</h3>
-<a name="value--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>value</h4>
-<pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Simply remove any mock filters, or if partial mocking is still needed, use
- <a href="../mockit/Expectations.html#Expectations-java.lang.Object...-">Expectations(Object...)</a> or a <a href="../mockit/MockUp.html" title="class in mockit">MockUp</a>.</span></div>
-<div class="block">One or more <em>mock filters</em>.
- Given a target class for mocking, only those methods and constructors which match at least one filter will be
- mocked.
- <p/>
- Each mock filter must follow the syntax <strong><code>[nameRegex][(paramTypeName...)]</code></strong>, where
- <code>nameRegex</code> is a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex">regular expression</a> for matching method names, and
- <code>paramTypeName</code> is the name of a primitive or reference parameter type (actually, any suffix of the type
- name is enough, like "String" instead of the full class name "java.lang.String").
- If <code>nameRegex</code> is omitted the filter matches only constructors.
- If <code>(paramTypeName...)</code> is omitted the filter matches methods with any parameters.
- <p/>
- If no filters are specified, then all methods and constructors declared in the target class are mocked.
- <p/>
- A filter containing just the empty string matches <em>no</em> methods or constructors of the target class;
- this can be used to obtain a mocked instance where no executable code is actually mocked.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Mocked.html#stubOutClassInitialization--"><code>stubOutClassInitialization()</code></a></dd>
-</dl>
-<dl>
-<dt>Default:</dt>
-<dd>{}</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="stubOutClassInitialization--">
+<a name="stubOutClassInitialization--">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -277,7 +229,6 @@ public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang
 <li><a href="../overview-summary.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
-<li><a href="../deprecated-list.html">Deprecated</a></li>
 </ul>
 <div class="aboutLanguage">
             <a href=http://jmockit.org target=_top>
