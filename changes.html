@@ -29,6 +29,21 @@
 
 <h1>Development history</h1>
 
+<h2 id="next">
+   <a href="#next">Next release</a>
+</h2>
+
+<h3 id="1.19">Version <a href="1.19">1.19</a> (Sep 20, 2015):</h3>
+<ul>
+   <li>
+      <strong>Removed</strong> the "<strong><code>value</code></strong>" attribute of
+      <code class="annotation">@Mocked</code>, which was deprecated in release 1.17.
+      Existing tests using "<code>@Mocked({"someMethod", "anotherMethod", ...})</code>" should simply omit the
+      attribute, or use partial mocking as applied with <code>new Expectations(objToPartiallyMock) { ... }</code>, or
+      apply a <code class="type">MockUp&lt;T></code> class.
+   </li>
+</ul>
+
 <h2 id="current">
    <a href="#current">Current release</a>
 </h2>
