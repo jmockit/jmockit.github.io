@@ -78,7 +78,8 @@
       <strong>Deprecated</strong> the "<strong><code>value</code></strong>" attribute of
       <code class="annotation">@Mocked</code>, which is used for "static" partial mocking.
       Existing uses should be replaced with "dynamic" partial mocking, by passing the instance or class to partially
-      mock in a call to the <code>Expectations(Object...)</code> constructor.
+      mock in a call to the <code>Expectations(Object...)</code> constructor, or by applying a
+      <code class="type">MockUp&lt;T></code> class.
    </li>
    <li>
       Issues closed:
