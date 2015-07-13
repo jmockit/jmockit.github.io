@@ -120,8 +120,7 @@ var activeTableTab = "activeTableTab";
 <pre>public abstract class <span class="typeNameLabel">MockUp&lt;T&gt;</span>
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">A base class used in the creation of a <em>mock-up</em> for a class or interface.
- Such mock-ups can be used in <em>state-based</em> unit tests or as <em>fake</em> implementations for use in
- integration tests.
+ Such mock-ups can be used as <em>fake</em> implementations for use in integration or unit tests.
  <pre>
 
  // Define and apply one or more mock-ups:
@@ -368,6 +367,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <p/>
  In any case, for a given mock-up instance this method will always return the same mock instance.</div>
 <dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if called from a mock method for a static method</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/StateBasedTesting.html#interfaces">Tutorial</a></dd>
 </dl>

@@ -5,7 +5,7 @@
   -->
 <html>
 <head>
-   <title>JMockit - Tutorial - Behavior-based testing</title>
+   <title>JMockit - Tutorial - Mocking</title>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
    <link rel="stylesheet" type="text/css" href="../prettify.css"/>
    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
@@ -24,7 +24,7 @@
 </h1>
 
 <h1 id="top">
-   <a href="#">Behavior-based testing</a>
+   <a href="#">Mocking</a>
 </h1>
 <ol class="contents">
    <li><a href="#mocked">Mocked types and instances</a></li>
@@ -106,14 +106,24 @@
 </ol>
 
 <p>
-   In the JMockit toolkit, the <strong>Expectations</strong> API provides rich support for the creation of
-   <em>behavior-based</em> unit tests.
-   The focus when doing this kind of testing is on the behavior of the unit the test, as expressed through its
-   <em>interactions</em> with other units it depends upon.
-   Typically, a <em>unit</em> of behavior is embodied in a single class, but it's also fine to consider a whole set of
+   In the JMockit toolkit, the <strong>Expectations</strong> API provides rich support for the use of <em>mocking</em>
+   in automated developer tests.
+   When mocking is used, a test focuses on the behavior of the code the test, as expressed through its
+   <em>interactions</em> with other types it depends upon.
+   Mocking is typically used in the construction of <em>isolated</em> unit tests, where a <em>unit</em> under test
+   is exercised in isolation from the implementation of other units it depends.
+   Typically, a unit of behavior is embodied in a single class, but it's also fine to consider a whole set of
    strongly-related classes as a single unit for the purposes of unit testing (as is usually the case when we have a
    central public class with one or more helper classes, possibly package-private); in general, individual methods
    should not be regarded as separate units on their own.
+</p>
+<p>
+   <em>Strict</em> unit testing, however, is not a recommended approach; one should not attempt to mock every single
+   dependency.
+   Mocking is best used in moderation; whenever possible, favor integration tests over isolated unit tests.
+   This said, mocking is occasionally also useful in the creation of integration tests, when some particular
+   dependency cannot have its real implementation easily used, or when attempting to create tests for corner cases where
+   a well-placed mocked interaction can greatly facilitate the test.
 </p>
 <div style="text-align: center;" title="Click on types to open API documentation">
    <map name="figure1">
@@ -134,32 +144,18 @@
    <img src="BehaviorBasedAPI.png" usemap="#figure1">
 </div>
 <p>
-   An interaction between two units always takes the form of a method or constructor <em>invocation</em>.
-   The set of invocations from a unit under test to its dependencies, together with the argument and
-   return values passed between them, define the behavior of interest for the tests of that particular unit.
+   An interaction between two classes always takes the form of a method or constructor <em>invocation</em>.
+   The set of invocations from a tested class to its dependencies, together with the argument and return values passed
+   between them, define the behavior of interest for the tests of that particular class.
    In addition, a given test may need to verify the relative order of execution between multiple invocations.
-</p>
-<p>
-   Note that a <em>unit</em> test only exercises the code of the <em>tested</em> unit.
-   The implementation code behind dependencies is <em>not</em> meant to be exercised, since it's not part of the unit
-   under test.
-   So, the goal of <em>unit testing</em> is to test logical units of behavior <em>in isolation</em> from the actual
-   behavior of its dependencies.
-   Now, we typically do not want nor need to isolate a given unit from <em>all</em> its dependencies, but only from
-   those that a) already have (or will have) their own unit tests in the same test suite; or
-   b) for practical reasons cannot be easily, quickly, or reliably executed in a unit test environment (because they
-   write to a database, send emails, and so on).
-   When coding the tests for a particular unit, we simply assume that its dependencies behave according to expectations.
-   If they don't, it is the responsibility of their own tests to catch the unexpected behavior.
 </p>
 
 <h2 id="mocked">
    <a href="#mocked">Mocked types and instances</a>
 </h2>
 <p>
-   Methods and constructors invoked from the unit under test, and which belong to a dependency of said unit, are the
-   usual targets for <em>mocking</em>.
-   Mocking provides the mechanism that we need in order to isolate the tested unit from (some of) its dependencies.
+   Methods and constructors invoked from the code under test on a dependency are the targets for mocking.
+   Mocking provides the mechanism that we need in order to isolate the tested code from (some of) its dependencies.
    We specify which particular dependencies are to be mocked for a given test (or tests) by declaring suitable <em>mock
    fields</em> and/or <em>mock parameters</em>; mock fields are declared as annotated instance fields of the test class,
    while mock parameters are declared as annotated parameters of a test method.
@@ -236,7 +232,7 @@ public void doBusinessOperationXyz(@Mocked final <strong>AnotherDependency anoth
 <p>
    The mocked instances created by JMockit can be used normally in test code (for the recording and verification of
    expectations), and/or passed to the code under test. Or they may simply go unused.
-   Differently from other mocking APIs, these <em>mocked</em> objects don't have to be the ones used by the unit under
+   Differently from other mocking APIs, these <em>mocked</em> objects don't have to be the ones used by the code under
    test when it calls instance methods on its dependencies.
    By default (ie, when <code class="annotation">@Injectable</code> is not used), JMockit does not care on which object
    a mocked instance method is called.
@@ -284,7 +280,7 @@ public void doBusinessOperationXyz(@Mocked final Dependency mockInstance)
       ...
    }};
 
-   // A call to the unit under test occurs here, leading to mock invocations
+   // A call to code under test occurs here, leading to mock invocations
    // that may or may not match specified expectations.
 }
 </code></pre>
@@ -303,20 +299,20 @@ public void doBusinessOperationXyz(@Mocked final Dependency mockInstance)
 <pre><code>@Test
 public void someTestMethod()
 {
-   // 1. Preparation: whatever is required before the unit under test can be exercised.
+   // 1. Preparation: whatever is required before the code under test can be exercised.
    ...
-   // 2. The unit under test is exercised, usually by calling a public method.
+   // 2. The code under test is exercised, usually by calling a public method.
    ...
-   // 3. Verification: whatever needs to be checked to make sure the exercised unit
-   //    did its job.
+   // 3. Verification: whatever needs to be checked to make sure the code exercised by
+   //    the test did its job.
    ...
 }
 </code></pre>
 <p>
    First, we have a preparation phase, where objects and data items needed for the test are created or obtained from
    somewhere else.
-   Then, the unit under test is exercised.
-   Finally, the results from exercising the tested unit are compared with the expected results.
+   Then, code under test is exercised.
+   Finally, the results from exercising the tested code are compared with the expected results.
 </p>
 <p>
    This model of three phases is also known as the <em>Arrange, Act, Assert syntax</em>, or "AAA" for short.
@@ -334,7 +330,7 @@ public void someTestMethod()
    </li>
    <li>
       The <strong><em>replay</em></strong> phase, during which the mock invocations of interest have a chance to be
-      executed, as the unit under test is exercised.
+      executed, as the code under test is exercised.
       The invocations to mocked methods/constructors previously recorded will now be <em>replayed</em>.
       Often there isn't a one-to-one mapping between invocations recorded and replayed, though.
    </li>
@@ -411,7 +407,7 @@ public class SomeTest
 </code></pre>
 <p>
    There are other variations to the above templates, but the essence is that the expectation blocks belong to the
-   <em>record</em> phase and come before the unit under test is exercised, while the verification blocks belong to the
+   <em>record</em> phase and come before the code under test is exercised, while the verification blocks belong to the
    <em>verify</em> phase.
    A test method can contain any number of expectation blocks, including none. The same is true for verification blocks.
 </p>
@@ -491,8 +487,7 @@ public class SomeTest
 <p>
    For a given method with non-<code>void</code> return type, a return value can be recorded through an assignment to
    the <a href="../api1x/mockit/Expectations.html#result">result</a> field.
-   When the method gets called in the replay phase, the specified return value will be returned to the caller (which
-   normally is the unit under test).
+   When the method gets called in the replay phase, the specified return value will be returned to the caller.
    The assignment to <code>result</code> should appear right after the invocation that identifies the recorded
    expectation, inside an expectation block.
 </p>
@@ -697,7 +692,7 @@ public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>
       <strong>onInstance(mock)</strong>.getValue(); result = 12;
    }};
 
-   // Exercise unit under test with mocked instance passed from the test:
+   // Exercise code under test with mocked instance passed from the test:
    int result = <strong>mock</strong>.getValue();
    assertEquals(12, result);
 
@@ -709,9 +704,9 @@ public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>
 }
 </code></pre>
 <p>
-   The test above will only pass if the unit under test (here embedded in the test method itself, for brevity)
-   invokes <code>getValue()</code> on the exact same instance on which the recording invocation was made.
-   This is typically useful when the unit under test makes calls on two or more different instances of the same type,
+   The test above will only pass if the tested code (here embedded in the test method itself, for brevity) invokes
+   <code>getValue()</code> on the exact same instance on which the recording invocation was made.
+   This is typically useful when the code under test makes calls on two or more different instances of the same type,
    and the test wants to verify that each invocation occurred on the proper instance.
 </p>
 <p>
@@ -965,7 +960,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 <p>
    So far, we saw that besides an associated method or constructor, an expectation can have invocation results and
    argument matchers.
-   Given that the unit under test can call the same method or constructor multiple times with different or identical
+   Given that code under test can call the same method or constructor multiple times with different or identical
    arguments, we sometimes need a way to account for all those separate invocations.
 </p>
 <p>
@@ -1667,16 +1662,16 @@ public void createOSProcessToCopyTempFiles(@Mocked final ProcessBuilder pb) thro
    <a href="#deencapsulation">Accessing private members</a>
 </h2>
 <p>
-   Normally, behavior-based tests for a given unit are written against the <code>public/protected/default</code>
-   interface of the unit's dependencies.
+   Normally, mocking-based tests are written against the <code>public/protected/default</code> interface of one or
+   more dependencies.
    Sometimes, however, the method being tested may call <code>private</code> methods defined in the same class, and
    accounting for the behavior of those methods in the test may be undesirable (perhaps because it is too complex or
    simply not important for the test).
 </p>
 <p>
-   A different situation arises when a test wants to verify not only the behavior, but also the state of the unit under
-   test after it is exercised, and the relevant state is stored in non-accessible fields.
-   Some tests may also need to set some necessary state in non-accessible fields of the unit under test before it is
+   A different situation arises when a test wants to verify not only the behavior, but also the state of tested objects
+   after they are exercised, and the relevant state is stored in non-accessible fields.
+   Some tests may also need to set some necessary state in non-accessible fields of a tested object before it gets
    exercised.
 </p>
 <p>
@@ -1695,9 +1690,9 @@ public void createOSProcessToCopyTempFiles(@Mocked final ProcessBuilder pb) thro
 @Test
 public void someTestMethod(@Mocked final DependencyAbc abc)
 {
-   final UnitUnderTest tested = new UnitUnderTest();
+   final CodeUnderTest tested = new CodeUnderTest();
 
-   // Defines some necessary state on the unit under test:
+   // Defines some necessary state on the tested object:
    <strong>setField(tested, "someIntField", 123);</strong>
 
    new Expectations() {{
@@ -2075,10 +2070,10 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
 </code></pre>
 <p>
    The tests in this example test class exercise the <code>LoginService#login(String accountId, String password)</code>
-   method (our <em>unit under test</em>).
+   method.
    This method first attempts to look up an existing user account from the given login name ("accountId", which is
    expected to be unique among all accounts).
-   Since several different tests are needed to fully exercise this unit, a non-strict invocation to the
+   Since several different tests are needed to fully exercise this method, a non-strict invocation to the
    <code>UserAccount#find(String accountId)</code> method is recorded for all tests in the class, with a specific login
    name ("john") and the mocked account as the value to be returned.
    Remember, any given test can use multiple expectation and/or verification blocks.
@@ -2134,7 +2129,7 @@ public void setAccountToLoggedInWhenPasswordMatches() throws Exception
    <a href="#multipleInterfaces">Mocking multiple interfaces at the same time</a>
 </h3>
 <p>
-   Suppose the unit under test needs to be given a mocked object implementing two or more interfaces.
+   Suppose the tested code needs to be given a mocked object implementing two or more interfaces.
    The following example tests show how it can be done.
 </p>
 <pre><code>public interface Dependency

@@ -72,7 +72,7 @@
 <div class="header">
 <h1 title="Package" class="title">Package&nbsp;mockit</h1>
 <div class="docSummary">
-<div class="block">Provides the classes and annotations used when writing tests with the JMockit mocking APIs.</div>
+<div class="block">Provides the classes and annotations used when writing tests with the JMockit mocking and faking APIs.</div>
 </div>
 <p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
@@ -224,11 +224,11 @@
 <!--   -->
 </a>
 <h2 title="Package mockit Description">Package mockit Description</h2>
-<div class="block">Provides the classes and annotations used when writing tests with the JMockit mocking APIs.
+<div class="block">Provides the classes and annotations used when writing tests with the JMockit mocking and faking APIs.
  <p/>
- The <a href="../mockit/Expectations.html" title="class in mockit"><code>Expectations</code></a> class provides an API for the traditional <em>record-replay</em> model of recording
- expected invocations which are later replayed and implicitly verified.
- This API makes use of the <a href="../mockit/Mocked.html" title="annotation in mockit">@Mocked</a> annotation.
+ The <a href="../mockit/Expectations.html" title="class in mockit"><code>Expectations</code></a> class provides an API for the <em>record-replay</em> model of recording expected
+ invocations which are later replayed and implicitly verified.
+ This API makes use of the <a href="../mockit/Mocked.html" title="annotation in mockit">@Mocked</a> annotation (among others).
  The <a href="../mockit/Verifications.html" title="class in mockit"><code>Verifications</code></a> class extends the record-replay model to a <em>record-replay-verify</em> model,
  where expectations that were not recorded can be verified explicitly <em>after</em> exercising the code under test
  (ie, after the replay phase).
@@ -237,9 +237,8 @@
  the definition of fake implementations for arbitrary classes or interfaces.
  <p/>
  For a description with examples of the <em>Expectations</em> API, see the
- "<a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html">Behavior-based testing</a>" chapter in the Tutorial.
- For the <em>Mockups</em> API, see the "<a href="http://jmockit.org/tutorial/StateBasedTesting.html">Fakes and
- state-based testing</a>" chapter.</div>
+ "<a href="http://jmockit.org/tutorial/Mocking.html">Mocking</a>" chapter in the Tutorial.
+ For the <em>Mockups</em> API, see the "<a href="http://jmockit.org/tutorial/Faking.html">Faking</a>" chapter.</div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar.bottom">

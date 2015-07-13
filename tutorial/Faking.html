@@ -5,7 +5,7 @@
   -->
 <html>
 <head>
-   <title>JMockit - Tutorial - Fakes and state-based testing</title>
+   <title>JMockit - Tutorial - Faking</title>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
    <link rel="stylesheet" type="text/css" href="../prettify.css"/>
    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
@@ -17,14 +17,14 @@
    <a href="../index.html">JMockit</a>
    <span>The Mock <span>Anything</span> Toolkit for Java</span>
    <span class="navigation">
-      <a href="BehaviorBasedTesting.html"><img src="go-previous.png" title="Previous chapter"></a>
+      <a href="Mocking.html"><img src="go-previous.png" title="Previous chapter"></a>
       <a href="ReflectionUtilities.html"><img src="go-next.png" title="Next chapter"></a>
       <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
    </span>
 </h1>
 
 <h1 id="top">
-   <a href="#">Fakes and state-based testing</a>
+   <a href="#">Faking</a>
 </h1>
 
 <ol class="contents">
@@ -53,8 +53,13 @@
 </ol>
 
 <p>
-   In the JMockit toolkit, the <strong>Mockups API</strong> provides support for the creation of <em>state-based</em>
-   tests and for the creation of <em>fake</em> implementations.
+   In the JMockit toolkit, the <strong>Mockups API</strong> provides support for the creation of <em>fake</em>
+   implementations, or "<em>mock-ups</em>".
+   Fakes are different from the mocking API in that, rather than specifying in a test the invocations we expect a
+   dependency will receive when used by code under test, we modify the implementation of the dependency so that it
+   suits the needs of the test.
+   Typically, a mock-up targets a few methods and/or constructors in the class to be faked, while leaving most other
+   methods and constructors unmodified.
 </p>
 <div style="text-align: center;" title="Click on types to open API documentation">
    <map name="figure1">
@@ -62,26 +67,14 @@
       <area shape="rect" coords="138,1,215,34" href="../api1x/mockit/Mock.html">
       <area shape="rect" coords="222,1,342,34" href="../api1x/mockit/Invocation.html">
    </map>
-   <img src="StateBasedAPI.png" usemap="#figure1">
+   <img src="MockUpsAPI.png" usemap="#figure1">
 </div>
 <p>
-   In <em>state-oriented mocking</em>, the focus is not on the interactions between a tested class and its dependencies,
-   but on the data items received by and returned from those dependencies.
-   Rather than writing a test from the perspective of the <em>tested</em> class, we write it from the perspective of the
-   <em>used</em> classes, regardless of who uses them.
-   In stated-based tests, regular state verification is typically performed through JUnit/TestNG assertions written at
-   the end of a test method.
-   State-oriented mocking, then, allows such tests to perform assertions on the parameter values received by mocked
-   dependencies.
-   These assertions will get executed at the time a mocked method/constructor of a dependency is invoked by the tested
-   class.
-</p>
-<p>
-   As for fake implementations, they can be particularly useful in <em>integration</em> tests which depend on external
-   entities or resources such as the network, the file system, etc.
-   The <em>faking</em> of dependencies which access such external entities allows us to run the same integration
-   test in two "modes":
-   1) a "real" mode, where all code (tested unit <em>and</em> its dependencies) is exercised normally; and
+   Fake implementations can be particularly useful in <em>integration</em> tests which depend on external entities or
+   resources such as the network, the file system, etc.
+   The <em>faking</em> of dependencies which access such external entities allows us to run the same integration test in
+   two "modes":
+   1) a "real" mode, where all code (tested code <em>and</em> its dependencies) is exercised normally; and
    2) an "emulated" mode, where the "problematic" dependencies have their implementations replaced with fake ones, so
    that the test can succeed even with no network connection, no file system, or whatever external dependency it would
    need otherwise.
@@ -90,11 +83,11 @@
 </p>
 <p>
    For the remaining of this chapter, lets say we want to write tests for an application that uses the
-   <a href="http://download.oracle.com/javase/6/docs/api/javax/security/auth/login/LoginContext.html">
+   <a href="http://download.oracle.com/javase/7/docs/api/javax/security/auth/login/LoginContext.html">
       javax.security.auth.login.LoginContext</a> class (from the standard JAAS API) in order to authenticate users.
    In this case, we don't want our tests to actually execute any of the real JAAS code, since it may depend on external
    configuration and might not easily work in a developer testing environment.
-   Therefore, an application class depending on <code class="type">LoginContext</code> will be our "unit under test",
+   Therefore, an application class depending on <code class="type">LoginContext</code> will be the "code under test",
    while the <code class="type">LoginContext</code> class (the dependency) will have at least some of its methods and
    constructors "mocked" for any given test which involves authentication logic.
 </p>
@@ -303,7 +296,7 @@ public void settingUpMocksUsingAnAnonymousMockClass() throws Exception
    Most of the time a mock class targets a real class directly.
    But what if we need a mock object that implements a certain interface, to be passed to code under test?
    The following example test shows how it is done for the interface
-   <a href="http://download.oracle.com/javase/6/docs/api/javax/security/auth/callback/CallbackHandler.html">
+   <a href="http://download.oracle.com/javase/7/docs/api/javax/security/auth/callback/CallbackHandler.html">
       javax.security.auth.callback.CallbackHandler</a>.
 </p>
 <pre><code>@Test
@@ -384,15 +377,12 @@ public <strong>&lt;T extends Service></strong> void mockingImplementationClasses
 </h2>
 <p>
    All example tests shown so far only used JUnit/TestNG "asserts" to verify invocation arguments.
-   This is the part of the API that extends conventional state-based testing to the data items
-   exchanged between objects.
-   Sometimes, though, we may want to verify if a given method/constructor in a dependency is invoked
-   at all by the unit under test.
-   We may also want to verify exactly how many invocations a given mock received during the
-   execution of a test, or specify that the test should fail if more/less than a certain number of
-   invocations occurs.
-   For this, we can specify <em>declarative constraints</em> on the <em>invocation count</em> of a
-   given mock, as the following example shows.
+   Sometimes, though, we may want to verify if a given method/constructor in a dependency is invoked at all by the code
+   under test.
+   We may also want to verify exactly how many invocations a given mock received during the execution of a test, or
+   specify that the test should fail if more/less than a certain number of invocations occurs.
+   For this, we can specify <em>declarative constraints</em> on the <em>invocation count</em> of a given mock, as the
+   following example shows.
 </p>
 <pre><code>@Test
 public void specifyingInvocationCountConstraints() throws Exception
@@ -928,7 +918,7 @@ public final class TestSuite
 </p>
 
 <div id="bottom" class="navigation">
-   <a href="BehaviorBasedTesting.html"><img src="go-previous.png" title="Previous chapter"></a>
+   <a href="Mocking.html"><img src="go-previous.png" title="Previous chapter"></a>
    <a href="ReflectionUtilities.html"><img src="go-next.png" title="Next chapter"></a>
    <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
 </div>

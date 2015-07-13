@@ -282,7 +282,7 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    <li>
       <code>[jmockit-]coverage-<strong>classes</strong></code>:
       Either an OS-like regular expression (with the typical "<code>*</code>" and "<code>?</code>" wildcards), or a
-      <a href="http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html">java.util.regex</a>-conformable
+      <a href="http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html">java.util.regex</a>-conformable
       regular expression.
       The given expression will be used to select the classes (by fully qualified name) from production code which
       should be considered for coverage.
@@ -570,7 +570,7 @@ jmockit-coverage-${jmockit.version}.jar</strong>
    Once the target process is running with the JMockit Coverage Java agent, the user should connect to it with a JMX
    client which can access arbitrary "MBeans".
    Usually, the standard
-   <a href="http://download.oracle.com/javase/6/docs/technotes/guides/management/jconsole.html">JConsole</a> tool
+   <a href="http://download.oracle.com/javase/7/docs/technotes/guides/management/jconsole.html">JConsole</a> tool
    available in a Java 6+ JDK will be used.
    The JMockit Coverage MBean provides several configuration properties (the same ones which can be set with
    "<code>-D</code>" on the command line), and one operation through which the desired output can be generated.

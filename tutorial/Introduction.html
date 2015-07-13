@@ -17,7 +17,7 @@
    <a href="../index.html">JMockit</a>
    <span>The Mock <span>Anything</span> Toolkit for Java</span>
    <span class="navigation">
-      <a href="BehaviorBasedTesting.html"><img src="go-next.png" title="Next chapter"></a>
+      <a href="Mocking.html"><img src="go-next.png" title="Next chapter"></a>
       <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
    </span>
 </h1>
@@ -48,10 +48,9 @@
 
 <p>
    In this tutorial we will examine the two available mocking APIs, always with the help of example tests.
-   The main API, intended for behavior-oriented <em>unit</em> tests, is the
-   <a href="BehaviorBasedTesting.html">Expectations</a> API.
-   The other one is the <a href="StateBasedTesting.html">Mockups</a> API, intended for state-oriented tests, and for
-   integration tests which rely on <em>fake</em> implementations to avoid dealing with difficult external services.
+   The main API, intended for tests which use mocked dependencies, is the <a href="Mocking.html">Expectations</a> API.
+   The other one is the <a href="Faking.html">Mockups</a> API, intended for state-oriented tests, and for integration
+   tests which rely on <em>fake</em> implementations to avoid dealing with difficult external services.
 </p>
 <p>
    Even though the tutorial is fairly complete, it does not attempt to cover the entire published APIs in detail.
@@ -68,7 +67,7 @@
 </p>
 
 <h2 id="isolation">
-   <a href="#isolation">Developer testing and test isolation</a>
+   <a href="#isolation">Automated developer testing and test isolation</a>
 </h2>
 <p>
    Software tests written by the developers themselves, to test their own code, are often very important for successful
@@ -78,7 +77,7 @@
    of these testing frameworks.
 </p>
 <p>
-   Developer tests can be divided in two main categories:
+   Automated developer tests can be divided in two main categories:
 </p>
 <ol>
    <li>
@@ -134,7 +133,7 @@
 <p>
    Existing tools for testing with mock objects include <a href="http://easymock.org">EasyMock</a> and
    <a href="http://jmock.org">jMock</a>, both of which are based on
-   <a href="http://download.oracle.com/javase/6/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>,
+   <a href="http://download.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>,
    which can create at runtime an implementation for a given Java interface.
    It's also possible to create proxies for concrete classes through CGLIB-based subclass generation.
    Each tool has a rich API for expressing <em>expectations</em> that are verified as methods are called on mock
@@ -170,8 +169,8 @@
    The conventional solutions for achieving isolation with mock objects impose certain design restrictions on the code
    under test.
    JMockit was created as an alternative with no such restrictions, by leveraging the facilities in the
-   <a href="http://download.oracle.com/javase/6/docs/api/java/lang/instrument/package-summary.html"
-   >java.lang.instrument</a> Java 6 package (in addition to making use of - to a lesser degree - reflection, dynamic
+   <a href="http://download.oracle.com/javase/7/docs/api/java/lang/instrument/package-summary.html"
+   >java.lang.instrument</a> Java 6+ package (in addition to making use of - to a lesser degree - reflection, dynamic
    proxies, and custom class loading).
 </p>
 <p>
@@ -573,7 +572,7 @@ public final class MyBusinessService_MockupsAPI_Test
 </p>
 
 <div id="bottom" class="navigation">
-   <a href="BehaviorBasedTesting.html"><img src="go-next.png" title="Next chapter"></a>
+   <a href="Mocking.html"><img src="go-next.png" title="Next chapter"></a>
    <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
 </div>
 <div class="footer">
