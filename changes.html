@@ -33,7 +33,7 @@
    <a href="#next">Next release</a>
 </h2>
 
-<h3 id="1.19">Version <a href="1.19">1.19</a> (Sep 20, 2015):</h3>
+<h3 id="1.19">Version <a href="1.19">1.19</a> (Aug 23, 2015):</h3>
 <ul>
    <li>
       <strong>Removed</strong> the "<strong><code>value</code></strong>" attribute of
@@ -41,6 +41,10 @@
       Existing tests using "<code>@Mocked({"someMethod", "anotherMethod", ...})</code>" should simply omit the
       attribute, or use partial mocking as applied with <code>new Expectations(objToPartiallyMock) { ... }</code>, or
       apply a <code class="type">MockUp&lt;T></code> class.
+   </li>
+   <li>
+      <strong>Enhancement</strong>: the coverage tool now supports classes loaded from a custom class loader.
+      See issue <a href="https://github.com/jmockit/jmockit1/issues/149">#149</a>.
    </li>
 </ul>
 
