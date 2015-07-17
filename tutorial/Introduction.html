@@ -26,7 +26,7 @@
    <a href="#">Introduction</a>
 </h1>
 <ol class="contents">
-   <li><a href="#isolation">Developer testing and test isolation</a></li>
+   <li><a href="#isolation">Automated developer testing and test isolation</a></li>
    <li><a href="#mocks">Testing with mock objects</a></li>
    <li><a href="#tools">Tools for testing with mock objects</a></li>
    <li><a href="#issues">Issues with conventional mock objects</a></li>
@@ -47,10 +47,10 @@
 </ol>
 
 <p>
-   In this tutorial we will examine the two available mocking APIs, always with the help of example tests.
+   In this tutorial we examine the APIs available in JMockit, with the help of example tests.
    The main API, intended for tests which use mocked dependencies, is the <a href="Mocking.html">Expectations</a> API.
-   The other one is the <a href="Faking.html">Mockups</a> API, intended for state-oriented tests, and for integration
-   tests which rely on <em>fake</em> implementations to avoid dealing with difficult external services.
+   The other one is the <a href="Faking.html">Mockups</a> API, intended for tests which rely on <em>fake</em>
+   implementations to avoid dealing with difficult external components.
 </p>
 <p>
    Even though the tutorial is fairly complete, it does not attempt to cover the entire published APIs in detail.
@@ -63,7 +63,7 @@
 </p>
 <p>
    Additional chapters cover the <a href="ReflectionUtilities.html">Reflection-based utility methods</a> (which can be
-   used with either mocking API or on they own), and the <a href="CodeCoverage.html">code coverage tool</a>.
+   used with the APIs or on they own), and the <a href="CodeCoverage.html">code coverage tool</a>.
 </p>
 
 <h2 id="isolation">
