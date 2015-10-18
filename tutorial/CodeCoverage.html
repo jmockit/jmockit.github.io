@@ -443,6 +443,27 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    &lt;condition>&lt;available file="<strong>coverage.check.failed</strong>"/>&lt;/condition>
 &lt;/fail>
 </code></pre>
+<p>
+   Or the following in a Maven pom.xml file:
+</p>
+<pre><code>&lt;plugin>
+   &lt;artifactId>maven-enforcer-plugin&lt;/artifactId>
+   &lt;executions>
+      &lt;execution>
+         &lt;id>coverage.check&lt;/id>
+         &lt;goals>&lt;goal>enforce&lt;/goal>&lt;/goals>
+         &lt;phase>test&lt;/phase>
+         &lt;configuration>
+            &lt;rules>
+               &lt;requireFilesDontExist>
+                  &lt;files>&lt;file>coverage.check.failed&lt;/file>&lt;/files>
+               &lt;/requireFilesDontExist>
+            &lt;/rules>
+         &lt;/configuration>
+      &lt;/execution>
+   &lt;/executions>
+&lt;/plugin>
+</code></pre>
 
 <h2 id="maven">
    <a href="#maven">Activating coverage in a Maven project</a>
