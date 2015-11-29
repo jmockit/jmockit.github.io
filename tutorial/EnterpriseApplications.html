@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2006-2015 Rogério Liesenfeld
+  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
+  -->
+<html>
+<head>
+   <title>JMockit - Tutorial - Integration testing</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <link rel="stylesheet" type="text/css" href="../prettify.css"/>
+   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+   <script type="text/javascript" src="../highlight.pack.js"></script>
+   <script type="text/javascript">hljs.initHighlightingOnLoad()</script>
+</head>
+<body>
+<h1 class="header">
+   <a href="../index.html">JMockit</a>
+   <span>The Mock <span>Anything</span> Toolkit for Java</span>
+   <span class="navigation">
+      <a href="CodeCoverage.html"><img src="go-previous.png" title="Previous chapter"></a>
+      <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+   </span>
+</h1>
+
+<h1 id="top">
+   <a href="#">Testing enterprise applications</a>
+</h1>
+<ol class="contents">
+   <li><a href="#scenarios">Scenario-based testing</a></li>
+   <li>
+      <a href="#anExample">An example</a>
+      <ol>
+         <li><a href="#javaEE">Using Java EE</a></li>
+         <li><a href="#spring">Using the Spring framework</a></li>
+      </ol>
+   </li>
+</ol>
+
+<p>
+   An <a href="https://en.wikipedia.org/wiki/Enterprise_software">enterprise</a>
+   <a href="http://c2.com/cgi/wiki?EnterpriseApplication">application</a> targets a particular business domain, usually
+   having a GUI for multiple concurrent users and an application database for many entity types; also, it often
+   integrates with other applications inside or outside the organization.
+   In Java, the Java EE APIs and/or the Spring framework are typically used when building such applications.
+</p>
+<p>
+   In this chapter we describe an approach to test Java enterprise applications by writing
+   <a href="https://en.wikipedia.org/wiki/Scenario_testing"><em>scenario-based</em> tests</a>, where each test exercises
+   a single well-defined
+   <a href="http://www.requirementdriventesting.com/software-test-methodology-rdtrule1">business scenario</a> (also
+   known as a "<a href="http://tynerblain.com/blog/2007/04/10/what-are-use-case-scenarios">use case</a>" or
+   "<a href="http://agilemodeling.com/artifacts/usageScenario.htm">usage</a>" scenario).
+   With a typical layered architecture, such a test calls a public method from a component in the highest layer
+   (normally, the <em>presentation</em> or "UI" layer), which then calls down to lower layers.
+</p>
+
+<h2 id="scenarios">
+   <a href="#scenarios">Scenario-based testing</a>
+</h2>
+<p>
+
+</p>
+
+<h2 id="anExample">
+   <a href="#anExample">An example</a>
+</h2>
+<p>
+</p>
+
+<h3 id="javaEE">
+   <a href="#javaEE">Using Java EE</a>
+</h3>
+<p>
+</p>
+
+<h3 id="spring">
+   <a href="#spring">Using the Spring framework</a>
+</h3>
+<p>
+</p>
+
+<div id="bottom" class="navigation">
+   <a href="CodeCoverage.html"><img src="go-previous.png" title="Previous chapter"></a>
+   <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
+</div>
+<div class="footer">
+   Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
+   <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
+</div>
+</body>
+</html>
