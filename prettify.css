@@ -83,7 +83,6 @@ img { border: none; }
 .header a { font-family: serif; font-size: 150%; color: #bee916; }
 .header > span { font-size: 50%; padding-left: 2em; position: relative; top: -1ex; }
 .header .navigation { margin-top: 3ex; }
-.header span span { text-shadow: 0 0 3px white; }
 
 .footer {
    text-align: center;
