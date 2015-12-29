@@ -729,8 +729,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>newUninitializedInstance</h4>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;newUninitializedInstance(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends T&gt;&nbsp;classToInstantiate)</pre>
 <div class="block">Creates a new instance of a given class, without invoking any constructor.
- If the class is <code>abstract</code>, a concrete subclass is created, with empty implementations for the
- <code>abstract</code> methods.</div>
+ If the given class is <code>abstract</code> or an <code>interface</code>, then a concrete class is created, with empty
+ implementations for the <code>abstract</code>/<code>interface</code> methods.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - type to which the returned instance should be assignable</dd>
