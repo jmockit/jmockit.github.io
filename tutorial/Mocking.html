@@ -1842,10 +1842,6 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
 </h2>
 <p>
    Our discussion of this feature will be based on the (contrived) code below.
-   Realistic examples can be found in the
-   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/tutorial">Tutorial</a> and
-   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/TimingFramework">Timing Framework</a>
-   sample test suites, available in the full JMockit distribution.
 </p>
 <pre><code>public interface Service { int doSomething(); }
 final class ServiceImpl implements Service { public int doSomething() { return 1; } }
@@ -2026,8 +2022,6 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    The simplest form of test code reuse with JMockit is the declaration of mock fields at the test class level.
    As the next example shows, the objects that are created and assigned to such fields (by JMockit or explicit test
    code) can be used in any number of test methods.
-   The complete source code for this example can be found under
-   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/LoginService">samples/LoginService</a>.
 </p>
 <pre><code>public final class LoginServiceTest
 {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  ~ Copyright (c) 2006-2015 Rogério Liesenfeld
+  ~ Copyright (c) 2006 Rogério Liesenfeld
   ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
   -->
 <html>
@@ -20,14 +20,12 @@
    <span>An automated testing toolkit for Java</span>
 </h1>
 <table class="navBar"><tr>
-   <th><a href="gettingStarted.html">Getting&nbsp;started</a></th>
    <th><a href="about.html">About</a></th>
+   <th><a href="gettingStarted.html">Getting&nbsp;started</a></th>
    <th><a href="tutorial.html">Tutorial</a></th>
-   <th><a href="samples.html">Samples</a></th>
-   <th><a href="api1x/index.html">API</a></th>
+   <th><a href="api1x/index.html">API documentation</a></th>
    <th><a href="http://github.com/jmockit/jmockit1">Source</a></th>
    <th><a href="http://github.com/jmockit/jmockit1/issues">Issues</a></th>
-   <th><a href="community.html">Community</a></th>
    <th><a href="changes.html">History</a></th>
 </tr></table>
 
@@ -35,13 +33,13 @@
    <a href="#">Getting started with JMockit</a>
 </h1>
 <p>
-   The toolkit is provided as a versioned zip file that contains everything (jars, sources, documentation, Maven
-   configuration files), and also as a set of Maven artifacts deployed to the
+   The toolkit is provided as a versioned zip file (with jars, sources, documentation, and Maven configuration files),
+   and also as a set of Maven artifacts deployed to the
    <a href="http://repo.maven.apache.org/maven2/org/jmockit/">Maven Central</a> repository.
-   It requires <strong>Java 6</strong> or newer for test execution.
-   The mocking APIs and the code coverage tool are documented through a <a href="tutorial.html">tutorial</a>,
-   <a href="api1x/overview-summary.html">API documentation</a>, and several
-   <a href="samples.html">sample test suites</a>.
+   It requires <strong>Java 6</strong> or newer for test execution; tests must use JUnit or TestNG.
+   The mocking/faking library has extensive <a href="api1x/overview-summary.html">API documentation</a>; additionally,
+   the APIs are described, with examples, in a <a href="tutorial.html">tutorial</a> which also covers the code coverage
+   tool and other parts of the toolkit.
 </p>
 
 <h2 id="fullDistribution">
@@ -58,8 +56,8 @@
    </li>
    <li>
       Unpack the zip file to any directory.
-      This will create two sub-directories, one for the <code>jmockit1.org</code> GitHub repository (with source files,
-      sample test suites, and pre-packaged jar files), and the other for the <code>jmockit.github.io</code> GitHub
+      This will create two sub-directories, one for the <code>jmockit1.org</code> GitHub repository (with source files
+      and pre-packaged jar files), and the other for the <code>jmockit.github.io</code> GitHub
       Pages repository (with HTML files for the tutorial, the API documentation, and other pages).
       To build the project with Maven (3.2 or newer), simply use the "<code>jmockit1.org/main/pom.xml</code>" and
       "<code>jmockit1.org/coverage/pom.xml</code>" files from the full distribution, or from a GitHub fork.
@@ -343,8 +341,6 @@ public void fakingExample()
    The <a href="tutorial.html">JMockit Tutorial</a> contains an extensive discussion of nearly all methods, fields,
    annotations, etc., with many examples.
    The <a href="api1x/index.html">API documentation</a> provides a detailed specification for all API elements.
-   Finally, there are hundreds of JUnit <a href="samples.html">sample tests</a> available under the
-   "<code>jmockit1.org/samples</code>" folder, which use nearly everything that is available in the APIs.
 </p>
 
 <div class="footer">
