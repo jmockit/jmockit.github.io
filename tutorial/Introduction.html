@@ -363,14 +363,14 @@ public final class MyBusinessService_ExpectationsAPI_Test
       new MyBusinessService(data).doBusinessOperationXyz();
 
 (2)   new Verifications() {{ Database.persist(data); }};
-(4)   new Verifications() {{ email.send(); times = 1; }};
+(4)   new Verifications() {{ anyEmail.send(); times = 1; }};
    }
 
    @Test(expected = EmailException.class)
    public void doBusinessOperationXyzWithInvalidEmailAddress() throws Exception
    {
       new Expectations() {{
-(3)      email.addTo((String) withNotNull()); result = new EmailException();
+(3)      anyEmail.addTo((String) withNotNull()); result = new EmailException();
       }};
 
       EntityX data = new EntityX(5, "abc", "someone@somewhere.com");
