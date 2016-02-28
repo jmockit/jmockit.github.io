@@ -14,7 +14,7 @@
     <tr>
       <td class='line'></td><td>&nbsp;</td>
       <td class='comment' onclick='showHideLines(this)'><div>/*
- * Copyright (c) 2006-2012 Rogério Liesenfeld
+ * Copyright (c) 2006 Rogério Liesenfeld
  * This file is subject to the terms of the MIT license (see LICENSE.txt).
  */</div><span>/*...*/</span></td>
     </tr>
@@ -66,7 +66,7 @@ import javax.persistence.*;
       <td class='line'>21</td><td class='count'>17</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l21s0'>   @OneToMany</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 32</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByCustomer: 70, 85</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 31, 58</li>
           <li>orderMngr.domain.order.OrderRepositoryTest#updateOrder: 48</li>
@@ -79,7 +79,7 @@ import javax.persistence.*;
     </tr>
     <tr>
       <td class='line'>22</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>   private List&lt;OrderItem> <span class='instance covered' title='Reads: 12 Writes: 17'>items</span> = new LinkedList&lt;OrderItem>();</pre></td>
+      <td><pre class='prettyprint'>   private final List&lt;OrderItem> items = new LinkedList&lt;>();</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -97,7 +97,7 @@ import javax.persistence.*;
       <td class='line'>27</td><td class='count'>17</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l27s0'>   {</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 32</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByCustomer: 70, 85</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 31, 58</li>
           <li>orderMngr.domain.order.OrderRepositoryTest#updateOrder: 48</li>
@@ -112,7 +112,7 @@ import javax.persistence.*;
       <td class='line'>28</td><td class='count'>17</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l28s0'>      this.number = number;</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 32</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByCustomer: 70, 85</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 31, 58</li>
           <li>orderMngr.domain.order.OrderRepositoryTest#updateOrder: 48</li>
@@ -127,7 +127,7 @@ import javax.persistence.*;
       <td class='line'>29</td><td class='count'>17</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l29s0'>      this.customerId = customerId;</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 32</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByCustomer: 70, 85</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 31, 58</li>
           <li>orderMngr.domain.order.OrderRepositoryTest#updateOrder: 48</li>
@@ -142,7 +142,7 @@ import javax.persistence.*;
       <td class='line'>30</td><td class='count'>17</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l30s0'>   }</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33</li>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 32</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByCustomer: 70, 85</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 31, 58</li>
           <li>orderMngr.domain.order.OrderRepositoryTest#updateOrder: 48</li>
@@ -169,7 +169,7 @@ import javax.persistence.*;
       <td class='line'>33</td><td class='count'>11</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l33s0'>   public String getCustomerId() { return customerId; }</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 37</li>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 36</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 36</li>
           <li>orderMngr.domain.order.OrderRepositoryTest#updateOrder: 50, 52</li>
           <li>orderMngr.domain.order.OrderRepositoryTest#createOrder: 32, 34</li>
@@ -184,7 +184,7 @@ import javax.persistence.*;
       <td class='line'>34</td><td class='count'>12</td>
       <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l34s0'>   public List&lt;OrderItem> getItems() { return items; }</pre>
         <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 33, 38</li>
+          <li>orderMngr.domain.order.OrderFactoryTest#createOrder: 32, 37</li>
           <li>orderMngr.domain.order.OrderFindersTest#findOrderByNumber: 33, 58, 62, 63</li>
           <li>orderMngr.domain.order.OrderRepositoryTest#createOrder: 30, 32</li>
           <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#createOrder: 35, 61</li>

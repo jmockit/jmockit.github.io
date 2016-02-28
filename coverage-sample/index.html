@@ -65,7 +65,7 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
             <td class='file class'><a target='_blank' href='orderMngr/domain/order/Order.html'>Order.java</a>                     </td>
             <td style='background-color:#4cb300' title='Line segments: 14/20'>70%</td>
             <td style='background-color:#7f8000' title='Paths: 5/10'>50%</td>
-            <td style='background-color:#00ff00' title='Fields: 3/3'>100%</td>
+            <td style='background-color:#00ff00' title='Fields: 2/2'>100%</td>
           </tr>
           <tr>
             <td class='file class'><a target='_blank' href='orderMngr/domain/order/OrderFactory.html'>OrderFactory.java</a>              </td>
@@ -90,7 +90,7 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
   </td>
       <td class='pt' style='background-color:#22dd00' title='Line segments: 105/121'>87%</td>
       <td class='pt' style='background-color:#55aa00' title='Paths: 32/48'>67%</td>
-      <td class='pt' style='background-color:#4cb300' title='Fields: 7/10'>70%</td>
+      <td class='pt' style='background-color:#55aa00' title='Fields: 6/9'>67%</td>
     </tr>
     <tr>
       <td class='package'>orderMngr.service</td>
@@ -130,12 +130,25 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
       <td>Total</td><td>&nbsp;</td>
       <td class='pt' style='background-color:#3cc300' title='Line segments: 140/183'>77%</td>
       <td class='pt' style='background-color:#55aa00' title='Paths: 50/75'>67%</td>
-      <td class='pt' style='background-color:#36c900' title='Fields: 15/19'>79%</td>
+      <td class='pt' style='background-color:#39c600' title='Fields: 14/18'>78%</td>
     </tr>
   </table>
+  <br/>Redundant tests:
+  <ol title="Tests are regarded as redundant when they don't cover any additional line segments or paths that haven't already been covered by a previous test.
+Note this means the list of redundant tests depends on the order of test execution.
+Such a test can be removed without weakening the test suite, as long as another test for the same scenario performs its assertions.">
+    <li>PartialMockingTest.useAMockUp</li>
+    <li>OrderRepository_MockupsAPI_Test.updateOrder</li>
+    <li>OrderRepository_MockupsAPI_Test.createOrder</li>
+    <li>OrderRepository_MockupsAPI_Test.removeOrder</li>
+    <li>OrderRepository_MockupsAPI_Test.findOrderByCustomer</li>
+    <li>OrderEntryPage_MockupsAPI_Test.submitOrder</li>
+    <li>OrderEntryPage_MockupsAPI_Test.submitOrderWithMissingData</li>
+    <li>OrderEntryPage_MockupsAPI_Test.removeItemWithInvalidIndex</li>
+  </ol>
   <p>
     <a href='http://jmockit.org'><img src='logo.png'></a>
-    Generated on Sat Jun 20 11:28:33 BRT 2015
+    Generated on Sun Feb 28 13:06:59 BRT 2016
   </p>
 </body>
 </html>
