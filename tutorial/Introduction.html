@@ -117,8 +117,8 @@
    With JMockit, the original implementations of existing methods/constructors are temporarily replaced with mock
    implementations, usually for the duration of a single test.
    This mocking approach is completely generic, so that not only <code>public</code> instance methods, but also
-   <code>final</code>, <code>static</code>, and <code>private</code> methods, as well as constructors, can have their
-   implementations replaced, and therefore are also "mockable".
+   <code>final</code> and <code>static</code> methods, as well as constructors, can have their implementations replaced,
+   and therefore are also "mockable".
 </p>
 <p>
    Mocks are most useful for unit tests, but can also be used for integration tests.
@@ -210,15 +210,6 @@
       In practice, many APIs contain <code>static</code> methods as entry points or as factory methods.
       Being able to occasionally mock them is a matter of pragmatism, avoiding costly workarounds such as the creation
       of wrappers that would otherwise not exist.
-   </li>
-   <li>
-      All "mockable" methods must be public for mock classes that implement an interface, or at least non-private for
-      mock subclasses.
-      Usually <code>private</code> methods don't need and should not be mocked, but in certain situations it may be
-      useful.
-      For example, when a private method which performs some complex or costly operation is already covered by other
-      tests, it might just be easier to mock it out for a new test, rather than carefully preparing inputs or recording
-      additional expectations so that the complex operation works.
    </li>
    <li>
       Classes to be tested need to provide some way for tests to give them mock instances for their dependencies.

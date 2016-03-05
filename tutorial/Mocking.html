@@ -84,7 +84,6 @@
          <li><a href="#fluent">Cascading self-returning methods</a></li>
       </ol>
    </li>
-   <li><a href="#deencapsulation">Accessing private members</a></li>
    <li><a href="#partial">Partial mocking</a></li>
    <li>
       <a href="#capturing">Capturing implementation classes and instances</a>
@@ -164,14 +163,12 @@
    <code>abstract</code> and <code>final</code> ones), an annotation, or an <code>enum</code>.
 </p>
 <p>
-   By default, <em>all</em> methods of the mocked type will be mocked for the duration of the test.
+   By default, <em>all</em> non-<code>private</code> methods (including any that are <code>static</code>,
+   <code>final</code>, or <code>native</code>) of the mocked type will be mocked for the duration of the test.
    If the declared mocked type is a class, then all of its super-classes up to but not including
    <code class="type">java.lang.Object</code> will also be mocked, recursively.
    Therefore, inherited methods will automatically be mocked as well.
-   Again in the case of a class, all of its <em>constructors</em> will also get mocked.
-   Even more, whatever Java language modifiers happen to be applied to the methods/constructors of a mocked class, they
-   will still get mocked: <code>private</code>, <code>static</code>, <code>final</code>, <code>native</code>, it doesn't
-   really matter.
+   Also in the case of a class, all of its non-<code>private</code> <em>constructors</em> will get mocked.
 </p>
 <p>
    When a method or constructor is mocked, its original implementation code won't be executed for invocations occurring
@@ -1658,63 +1655,6 @@ public void createOSProcessToCopyTempFiles(@Mocked final ProcessBuilder pb) thro
    returning a new mocked <code>Process</code> from the call to <code>start()</code>.
 </P>
 
-<h2 id="deencapsulation">
-   <a href="#deencapsulation">Accessing private members</a>
-</h2>
-<p>
-   Normally, mocking-based tests are written against the <code>public/protected/default</code> interface of one or
-   more dependencies.
-   Sometimes, however, the method being tested may call <code>private</code> methods defined in the same class, and
-   accounting for the behavior of those methods in the test may be undesirable (perhaps because it is too complex or
-   simply not important for the test).
-</p>
-<p>
-   A different situation arises when a test wants to verify not only the behavior, but also the state of tested objects
-   after they are exercised, and the relevant state is stored in non-accessible fields.
-   Some tests may also need to set some necessary state in non-accessible fields of a tested object before it gets
-   exercised.
-</p>
-<p>
-   A third kind of situation would be the eventual need to instantiate non-accessible classes from a given test.
-   Such a need should be rare, though.
-</p>
-<p>
-   To handle these needs (rare though they may be) the
-   <a href="../api1x/mockit/Deencapsulation.html">Deencapsulation</a> class provides a set of Reflection-based utility
-   methods that allow a test to invoke non-accessible methods on a given object or class, to instantiate objects through
-   non-accessible constructors, and to get or set the values of fields in given objects or classes.
-   The example test below showcases some of these utility methods.
-</p>
-<pre><code><strong>import static mockit.Deencapsulation.*</strong>;
-
-@Test
-public void someTestMethod(@Mocked final DependencyAbc abc)
-{
-   final CodeUnderTest tested = new CodeUnderTest();
-
-   // Defines some necessary state on the tested object:
-   <strong>setField(tested, "someIntField", 123);</strong>
-
-   new Expectations() {{
-      // Expectations still recorded, even if the invocations are done through Reflection:
-      <strong>newInstance("some.package.AnotherDependency", true, "test");</strong> maxTimes = 1;
-      <strong>invoke(abc, "intReturningMethod", 45, "");</strong> result = 1;
-      // other expectations recorded...
-   }};
-
-   tested.doSomething();
-
-   String result = <strong>getField(tested, "result");</strong>
-   assertEquals("expected result", result);
-}
-</code></pre>
-<p>
-   These <code>static</code> utility methods can be used anywhere in a test, including inside expectation and
-   verification blocks.
-   This allows invocations to private methods and constructors to be verified in a verification block, just like they
-   can be recorded in an expectation block.
-</p>
-
 <h2 id="partial">
    <a href="#partial">Partial mocking</a>
 </h2>
@@ -2044,7 +1984,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
       new Verifications() {{ <strong>account</strong>.setLoggedIn(true); }};
    }
 
-   private void willMatchPassword(final boolean match)
+   void willMatchPassword(final boolean match)
    {
       new Expectations() {{ <strong>account</strong>.passwordMatches(anyString); result = match; }};
    }
