@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  ~ Copyright (c) 2006-2015 Rogério Liesenfeld
+  ~ Copyright (c) 2006 Rogério Liesenfeld
   ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
   -->
 <html>
@@ -31,7 +31,7 @@
    <li><a href="#expectation">Expectations</a></li>
    <li><a href="#model">The <em>record-replay-verify</em> model</a></li>
    <li>
-      <a href="#strictness">Regular, <em>strict</em>, and <em>non-strict</em> expectations</a>
+      <a href="#strictness">Regular versus <em>strict</em> expectations</a>
       <ol>
          <li><a href="#strictMocks">Strict and non-strict <em>mocks</em></a></li>
       </ol>
@@ -126,9 +126,8 @@
 </p>
 <div style="text-align: center;" title="Click on types to open API documentation">
    <map name="figure1">
-      <area shape="rect" coords="2,2,177,35" href="../api1x/mockit/StrictExpectations.html">
-      <area shape="rect" coords="38,84,172,117" href="../api1x/mockit/Expectations.html">
-      <area shape="rect" coords="2,166,208,199" href="../api1x/mockit/NonStrictExpectations.html">
+      <area shape="rect" coords="39,84,172,117" href="../api1x/mockit/Expectations.html">
+      <area shape="rect" coords="18,167,193,199" href="../api1x/mockit/StrictExpectations.html">
       <area shape="rect" coords="453,84,585,117" href="../api1x/mockit/Verifications.html">
       <area shape="rect" coords="227,166,421,199" href="../api1x/mockit/VerificationsInOrder.html">
       <area shape="rect" coords="440,166,598,199" href="../api1x/mockit/FullVerifications.html">
@@ -416,7 +415,7 @@ public class SomeTest
 <img src="code-folding.png" style="border: 1px solid #888; box-shadow: 4px 4px 4px #666;">
 
 <h2 id="strictness">
-   <a href="#strictness">Regular, <em>strict</em>, and <em>non-strict</em> expectations</a>
+   <a href="#strictness">Regular versus <em>strict</em> expectations</a>
 </h2>
 <p>
    Expectations recorded inside a
@@ -437,41 +436,28 @@ public class SomeTest
    This is achieved by using the <a href="../api1x/mockit/StrictExpectations.html">StrictExpectations</a> subclass.
 </p>
 <p>
-   Finally, we can record <em>non-strict</em> (or <em>loose</em>) expectations, through the
-   <a href="../api1x/mockit/NonStrictExpectations.html">NonStrictExpectations</a> subclass.
-   Inside a non-strict expectation block, all invocations to mocked types will be <em>allowed</em> to occur during the
-   replay phase, in any number (including zero) and in any order.
-   The recording of non-strict expectations is recommended for test setup methods only, such as a JUnit
-   <code class="annotation">@Before</code> method or the TestNG equivalent.
-</p>
-<p>
    Note that in the case of strict expectations, all invocations occurring during replay that match recorded
    expectations are <em>implicitly</em> verified.
    Any remaining invocations that don't match an expectation are considered unexpected, causing the test to fail.
    The test will also fail if any recorded strict expectation is missed, ie, if no matching invocations occur during
    replay.
-   By default, none of these constraints apply to non-strict expectations, which are usually <em>explicitly</em>
-   verified through verification blocks written with <code class="type">mockit.Verifications</code> or one of its
-   subclasses.
 </p>
 <p>
    We can mix expectations of different levels of strictness in the same test by writing multiple expectation blocks,
    some regular (using <code class="type">Expectations</code>), others strict (using
-   <code class="type">StrictExpectations</code>), others non-strict (using
-   <code class="type">NonStrictExpectations</code>).
+   <code class="type">StrictExpectations</code>).
    Normally, a given mock field or mock parameter will appear in expectation blocks of a single kind, though.
 </p>
 <p>
    Most tests will simply make use of "regular" expectations.
-   Usage of strict expectations is probably more a matter of personal preference, while the usage of non-strict
-   expectations tends to occur only in setup methods.
+   Usage of strict expectations is probably more a matter of personal preference.
 </p>
 
 <h3 id="strictMocks">
    <a href="#strictMocks">Strict and non-strict <em>mocks</em></a>
 </h3>
 <p>
-   Note that we do not specify that a given mocked type/instance should be <em>strict</em> or <em>non-strict</em>.
+   Note that we do not specify that a given mocked type/instance should be <em>strict</em> or not.
    Instead, the strictness for a given mock field/parameter is determined by how it is used in the test.
    Once the first strict expectation is recorded in a "<code>new StrictExpectations() {...}</code>" block, the
    associated mocked type/instance is considered to be strict for the whole test; otherwise, it will be <em>not</em>
@@ -1019,8 +1005,8 @@ public void someOtherTestMethod(@Mocked final DependencyAbc abc)
 <p>
    Besides specifying invocation count constraints on recorded expectations, we can also verify matching invocations
    explicitly in a <em>verification</em> block, <em>after</em> the call to the code under test.
-   This is valid for regular and non-strict expectations, but not for strict expectations, since they are always
-   verified <em>implicitly</em>; there is no point in re-verifying them in a explicit verification block.
+   This is valid for regular expectations, but not for strict expectations, since they are always verified
+   <em>implicitly</em>; there is no point in re-verifying them in a explicit verification block.
 </p>
 <p>
    Inside a "<code>new <a href="../api1x/mockit/Verifications.html">Verifications</a>() {...}</code>" block we can use
@@ -1178,7 +1164,7 @@ public void verifyFirstAndLastCallsWithOthersInBetweenInAnyOrder()
    Sometimes it may be important to have <em>all</em> invocations to the mocked types involved in a test verified.
    This is automatically the case when recording strict expectations, since any unexpected invocation causes the test to
    fail.
-   When regular or non-strict expectations are explicitly verified, though, a
+   When regular expectations are explicitly verified, though, a
    "<code>new <a href="../api1x/mockit/FullVerifications.html">FullVerifications</a>() {...}</code>" block can be used
    to make sure that no invocations are left unverified.
 </p>
@@ -1971,7 +1957,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    @Before
    public void init()
    {
-      new NonStrictExpectations() {{ UserAccount.find("john"); result = <strong>account</strong>; }};
+      new Expectations() {{ UserAccount.find("john"); result = <strong>account</strong>; minTimes = 0; }};
    }
 
    @Test
@@ -2007,7 +1993,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    method.
    This method first attempts to look up an existing user account from the given login name ("accountId", which is
    expected to be unique among all accounts).
-   Since several different tests are needed to fully exercise this method, a non-strict invocation to the
+   Since several different tests are needed to fully exercise this method, an invocation to the
    <code>UserAccount#find(String accountId)</code> method is recorded for all tests in the class, with a specific login
    name ("john") and the mocked account as the value to be returned.
    Remember, any given test can use multiple expectation and/or verification blocks.
@@ -2137,11 +2123,9 @@ public void recordStrictInvocationsInIteratingBlock(@Mocked final Collaborator m
 }
 </code></pre>
 <p>
-   This ability to specify the number of iterations for a group of invocations also applies to regular and non-strict
-   expectations.
+   This ability to specify the number of iterations for a group of invocations also applies to regular expectations.
    However, in this case the specified number of iterations is merely used as a <em>multiplier</em> for the upper and
    lower limits of invocation count constraints (both implicit and explicit ones).
-   Non-strict expectations with no specified invocation count constraint, therefore, are not affected.
 </p>
 
 <h3 id="iterations">
