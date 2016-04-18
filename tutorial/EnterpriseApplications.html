@@ -26,7 +26,6 @@
    <a href="#">Testing enterprise applications</a>
 </h1>
 <ol class="contents">
-   <li><a href="#scenarios">Scenario-based testing</a></li>
    <li>
       <a href="#anExample">An example</a>
       <ol>
@@ -44,21 +43,13 @@
    In Java, the Java EE APIs and/or the Spring framework are typically used when building such applications.
 </p>
 <p>
-   In this chapter we describe an approach to test Java enterprise applications by writing
-   <a href="https://en.wikipedia.org/wiki/Scenario_testing"><em>scenario-based</em> tests</a>, where each test exercises
-   a single well-defined
+   In this chapter we describe an approach to test Java enterprise applications by writing out-of-container
+   <em>integration</em> tests, where each test exercises a single step in a well-defined
    <a href="http://www.requirementdriventesting.com/software-test-methodology-rdtrule1">business scenario</a> (also
    known as a "<a href="http://tynerblain.com/blog/2007/04/10/what-are-use-case-scenarios">use case</a>" or
    "<a href="http://agilemodeling.com/artifacts/usageScenario.htm">usage</a>" scenario).
    With a typical layered architecture, such a test calls a public method from a component in the highest layer
    (normally, the <em>presentation</em> or "UI" layer), which then calls down to lower layers.
-</p>
-
-<h2 id="scenarios">
-   <a href="#scenarios">Scenario-based testing</a>
-</h2>
-<p>
-
 </p>
 
 <h2 id="anExample">
