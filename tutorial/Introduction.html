@@ -30,13 +30,7 @@
    <li><a href="#mocks">Testing with mock objects</a></li>
    <li><a href="#tools">Tools for testing with mock objects</a></li>
    <li><a href="#issues">Issues with conventional mock objects</a></li>
-   <li>
-      <a href="#anExample">An example</a>
-      <ol>
-         <li><a href="#expectations">Using the Expectations API</a></li>
-         <li><a href="#mockups">Using the Mockups API</a></li>
-      </ol>
-   </li>
+   <li><a href="#anExample">An example</a></li>
    <li>
       <a href="#runningTests">Running tests with JMockit</a>
       <ol>
@@ -48,9 +42,10 @@
 
 <p>
    In this tutorial we examine the APIs available in JMockit, with the help of example tests.
-   The main API, intended for tests which use mocked dependencies, is the <a href="Mocking.html">Expectations</a> API.
-   The other one is the <a href="Faking.html">Mockups</a> API, intended for tests which rely on <em>fake</em>
-   implementations to avoid dealing with difficult external components.
+   The main API, intended for tests which use mocked dependencies, is the <a href="Mocking.html">mocking</a> API
+   (also known as the "Expectations" API).
+   The other one is the <a href="Faking.html">faking</a> API (aka the "Mockups" API), intended for tests which can
+   benefit from the use of <em>fake</em> implementations that avoid the full cost of heavy external components.
 </p>
 <p>
    Even though the tutorial is fairly complete, it does not attempt to cover the entire published APIs in detail.
@@ -239,7 +234,6 @@
    <a href="#anExample">An example</a>
 </h2>
 <p>
-   Before we delve into the details of each mocking API in the following chapters, lets examine a quick example.
    Consider a business service class which provides a business operation with the following steps:
 </p>
 <ol>
@@ -256,7 +250,7 @@
 <p>
    Therefore, the service class has two separate dependencies, one for persistence and another for e-mail.
    In order to unit test the business operation while verifying proper interaction with these collaborators, we will use
-   the available mocking APIs.
+   the mocking API.
    Complete source code for a working solution - with all tests - is
    <a href="http://github.com/jmockit/jmockit1/blob/master/samples/tutorial">available online</a>.
 </p>
@@ -313,18 +307,9 @@ public final class MyBusinessService
 <p>
    So, how can we unit test the "doBusinessOperationXyz" method without making any changes to the existing application
    code?
-   JMockit provides two different mocking APIs, each capable enough for our needs.
-   We will see what tests written with each one of them looks like in the following sections.
-   In every situation, a JUnit test case will verify the invocations of interest made from the unit under test to its
-   external dependencies.
+   In the following JUnit test class, each test will verify the invocations of interest made from the unit under test to
+   its external dependencies.
    These invocations are the ones at points <code>(1)</code>-<code>(4)</code> indicated above.
-</p>
-
-<h3 id="expectations">
-   <a href="#expectations">Using the Expectations API</a>
-</h3>
-<p>
-   First, lets see the <strong>Expectations</strong> API.
 </p>
 <pre><code>package jmockit.tutorial.domain;
 
@@ -334,7 +319,7 @@ import jmockit.tutorial.persistence.*;
 import org.junit.*;
 import mockit.*;
 
-public final class MyBusinessService_ExpectationsAPI_Test
+public final class MyBusinessServiceTest
 {
    @Mocked(stubOutClassInitialization = true) final Database unused = null;
    @Mocked SimpleEmail anyEmail;
@@ -369,8 +354,8 @@ public final class MyBusinessService_ExpectationsAPI_Test
 }
 </code></pre>
 <p>
-   In a behavior-oriented mocking API like JMockit Expectations, each test can be divided in three consecutive execution
-   steps: <em>record</em>, <em>replay</em>, and <em>verify</em>.
+   In a behavior-oriented mocking API like this, each test can be divided in three consecutive execution steps:
+   <em>record</em>, <em>replay</em>, and <em>verify</em>.
    Recordings occur from inside an <em>expectation recording block</em>, while verifications occur from inside an
    <em>expectation verification block</em>; replays are invocations from inside the code under test.
    Note, however, that only invocations to <em>mocked</em> methods count; methods (or constructors) belonging to types
@@ -386,94 +371,6 @@ public final class MyBusinessService_ExpectationsAPI_Test
    through the "<code>result</code>" field.
    Invocation count constraints can be specified, either when recording or when verifying, through API field assignments
    like "<code>times = 1</code>".
-</p>
-
-<h3 id="mockups">
-   <a href="#mockups">Using the Mockups API</a>
-</h3>
-<p>
-   Next, lets see what tests written with the <strong>Mockups</strong> API look like.
-</p>
-<pre><code>package jmockit.tutorial.domain;
-
-import java.util.*;
-import org.apache.commons.mail.*;
-import jmockit.tutorial.persistence.*;
-
-import static org.junit.Assert.*;
-import org.junit.*;
-import mockit.*;
-
-public final class MyBusinessService_MockupsAPI_Test
-{
-   public static final class MockDatabase extends MockUp&lt;Database>
-   {
-      @Mock
-      public void $clinit() { /* do nothing */ }
-
-      @Mock(invocations = 1)
-(1)   public List&lt;EntityX> find(String ql, Object... args)
-      {
-         assertNotNull(ql);
-         assertTrue(args.length > 0);
-         return Arrays.asList(new EntityX(1, "AX5", "someone@somewhere.com"));
-      }
-
-      @Mock(maxInvocations = 1)
-(2)   public void persist(Object o) { assertNotNull(o); }
-   }
-
-   @BeforeClass
-   public static void mockUpPersistenceFacade()
-   {
-      // Applies the mock class by invoking its constructor:
-      new MockDatabase();
-   }
-
-   final EntityX data = new EntityX(5, "abc", "5453-1");
-
-   @Test
-   public void doBusinessOperationXyz() throws Exception
-   {
-      // Defines and applies a mock class in one operation:
-      new MockUp&lt;Email>() {
-         @Mock(invocations = 1)
-         Email addTo(Invocation inv, String email)
-         {
-            assertEquals(data.getCustomerEmail(), email);
-            return inv.getInvokedInstance();
-         }
-
-         @Mock(invocations = 1)
-(4)      String send() { return ""; }
-      };
-
-      new MyBusinessService(data).doBusinessOperationXyz();
-   }
-
-   @Test(expected = EmailException.class)
-   public void doBusinessOperationXyzWithInvalidEmailAddress() throws Exception
-   {
-      new MockUp&lt;Email>() {
-         @Mock
-(3)      Email addTo(String email) throws EmailException
-         {
-            assertNotNull(email);
-            throw new EmailException();
-         }
-      };
-
-      new MyBusinessService(data).doBusinessOperationXyz();
-   }
-}
-</code></pre>
-<p>
-   Here, instead of recording or verifying expectations through invocations to mocked types or instances, we directly
-   specify <em>mock implementations</em> for the methods and constructors of interest.
-</p>
-<p>
-   Typically, the majority of tests can be written with the Expectations API.
-   There are situations, however, where the Mockups API can be an useful complement to that.
 </p>
 
 <h2 id="runningTests">
