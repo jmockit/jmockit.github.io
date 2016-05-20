@@ -55,9 +55,6 @@
 <p>
    In the JMockit toolkit, the <strong>Mockups API</strong> provides support for the creation of <em>fake</em>
    implementations, or "<em>mock-ups</em>".
-   Fakes are different from the mocking API in that, rather than specifying in a test the invocations we expect a
-   dependency will receive when used by code under test, we modify the implementation of the dependency so that it
-   suits the needs of the test.
    Typically, a mock-up targets a few methods and/or constructors in the class to be faked, while leaving most other
    methods and constructors unmodified.
 </p>
@@ -72,14 +69,9 @@
 <p>
    Fake implementations can be particularly useful in <em>integration</em> tests which depend on external entities or
    resources such as the network, the file system, etc.
-   The <em>faking</em> of dependencies which access such external entities allows us to run the same integration test in
-   two "modes":
-   1) a "real" mode, where all code (tested code <em>and</em> its dependencies) is exercised normally; and
-   2) an "emulated" mode, where the "problematic" dependencies have their implementations replaced with fake ones, so
-   that the test can succeed even with no network connection, no file system, or whatever external dependency it would
-   need otherwise.
    The replacement of real implementations with fake ones is completely transparent to the code which uses those
-   dependencies, and can be switched on and off for different test runs.
+   dependencies, and can be switched on and off for the scope of a single test, all tests in a single test class, or
+   even for the entire test run.
 </p>
 <p>
    For the remaining of this chapter, lets say we want to write tests for an application that uses the
@@ -89,19 +81,19 @@
    configuration and might not easily work in a developer testing environment.
    Therefore, an application class depending on <code class="type">LoginContext</code> will be the "code under test",
    while the <code class="type">LoginContext</code> class (the dependency) will have at least some of its methods and
-   constructors "mocked" for any given test which involves authentication logic.
+   constructors faked for any given test which involves authentication logic.
 </p>
 
 <h2 id="mocks">
    <a href="#mocks">Mock methods and mock classes</a>
 </h2>
 <p>
-   In the context of the Mockups API, a <em>mock method</em> is any method in a <em>mock class</em> that gets annotated
-   with <code class="annotation">@Mock</code>.
+   In the context of the Mockups API, a <em>mock (or fake) method</em> is any method in a <em>mock (fake) class</em>
+   that gets annotated with <code class="annotation">@Mock</code>.
    For short, in this chapter we refer to annotated mock methods simply as "mocks"; in other contexts, the word "mock"
    may refer to an <em>instance</em> of a mocked class instead.
    A <em>mock class</em> is any class extending the <code class="type">mockit.MockUp&lt;T></code> generic base class,
-   where <code>&lt;T></code> is the type to be mocked.
+   where <code>&lt;T></code> is the type to be mocked up.
    The example below shows several mocks defined in a mock class for our example "real" class,
    <code class="type">javax.security.auth.login.LoginContext</code>.
 </p>
