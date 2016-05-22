@@ -33,8 +33,9 @@
 <p>
    JMockit is open source software licensed under the
    <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.
-   It includes mocking APIs and other tools for use in <em>developer testing</em>, that is, tests written by developers
-   using a testing framework such as <a href="http://junit.org">JUnit</a> or <a href="http://testng.org">TestNG</a>.
+   It includes APIs for mocking, faking, and integration testing, and a code coverage tool.
+   The library is meant to be used together with a testing framework such as <a href="http://junit.org">JUnit</a> or
+   <a href="http://testng.org">TestNG</a>.
 </p>
 <p>
    The toolkit was created mainly as an attempt to overcome certain limitations found in "conventional"
@@ -83,12 +84,10 @@
    given an interface to be mocked) and subclasses (through <a href="http://cglib.sourceforge.net">CGLIB</a>, when given
    a non-final class to be mocked).
    This particular mocking implementation technique, in which a subclass with overriding mock methods is created,
-   carries some penalties: <code>final</code> classes, constructors, and non-overridable methods simply <em>cannot</em>
-   be mocked; even worse, when mocking a non-final class which happens to contain <code>final</code> methods, these
-   tools will silently ignore them, often surprising users.
-   Most importantly, however, these limitations mean that dependencies of code under test (that is, the objects of other
-   classes on which a given class under test depends) must be controlled by the tests, so that mock instances can be
-   passed to the clients of those dependencies;
+   implies some penalties: <code>final</code> classes, constructors, and non-overridable methods simply cannot be
+   mocked.
+   Most importantly, however, these limitations mean that any dependency that a class under test may have on other
+   classes must be controlled by the tests, so that mock instances can be passed to the clients of those dependencies;
    that is, dependencies cannot simply be instantiated with the <code>new</code> operator in the client class.
 </p>
 <p>
@@ -144,13 +143,11 @@
    other OO languages (C++, C#, etc.) make all methods non-overridable by default.
 </p>
 <p>
-   Another benefit of making Java classes or methods <code>final</code> is that a good static analysis tool will be able
-   to provide more useful feedback.
-   The code inspections associated with the use of <code>final</code> in IntelliJ IDEA, for example, led me numerous
-   times to simplify and even eliminate unused parts of the code base, when developing large business applications.
-   (For the curious, some of the relevant inspections are: "Class structure: 'protected' member in 'final' class",
-   "Declaration redundancy: redundant throws declaration", and "Initialization issues: overridable method call during
-   object construction".)
+   Another benefit of making Java classes or methods <code>final</code> is that a static analysis tool will be able to
+   to provide feedback that otherwise it would not be able to.
+   For example, if a method declares to throw a checked exception but doesn't actually throw it from inside its
+   implementation, making the method or class final allows the analysis tool to emit a warning that the exception is
+   never thrown and can be removed from the <code>throws</code> clause.
 </p>
 <p>
    For an authoritative discussion on design for extension (which defends the judicious use of <code>final</code> for
@@ -164,20 +161,6 @@
    The site for this last book points to several interesting articles, including
    <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=142428">Java API Design Guidelines</a>.
 </p>
-<p>
-   Personally, I consider the choice by the Java language designers to make non-private instance methods overridable
-   <em>by default</em> a mistake, one which was probably influenced by a mentality typical until the 1990's that the
-   more you can inherit, the better.
-   Personal experience, however, shows two things that discredit that position: 1) in most cases, Java programmers
-   simply take the easy route and leave all classes and methods as non-final, without consideration for API design
-   questions (just like for languages with the "<code>virtual</code>" keyword, where most methods end up as
-   non-overridable simply because it was the default - the difference here, of course, being that this usually is the
-   right choice); 2) often, when a programmer decides to create a subclass for a non-final Java class, it is done only
-   as a "hack" intended to arbitrarily change the behavior of some method, without any consideration to object-oriented
-   design principles such as the <a href="http://www.objectmentor.com/resources/articles/lsp.pdf">Liskov Substitution
-   Principle</a> (LSP), or the recommendation to "<cite>Favor object composition over class inheritance</cite>"
-   (<a href="http://c2.com/cgi/wiki?DesignPatternsBook">Design Patterns</a>, page 20).
-</p>
 
 <h3 id="new">
    <a href="#new">Use of <code>new</code></a>
@@ -188,52 +171,23 @@
    However, when dependencies are obtained or injected through external means (such as a "Service Locator" or a DI
    framework) there is a tendency to make them stateless, and with a single global instance.
    Such a practice leads to code that is more procedural and less object oriented.
-   Of course, this criticism applies to dependencies whose interfaces have only one implementation in production code,
-   or when the selection of an implementation between many would not benefit from external configuration (for example,
-   people typically instantiate <code>List</code> implementations directly, even if they code to the abstract
-   interface only); situations where one implementation <em>must</em> be selected through external configuration tend to
-   be quite rare in practice.
-</p>
-<p>
-   Related to this issue, I think, there is a widely observed misunderstanding of just what the phrase "<cite>Program to
-   an interface, not an implementation</cite>" (from the famous "Design Patterns" book, page 18) actually means.
-   Many seem to think that one should <em>create</em> a new separate Java interface (or abstract class) for any concrete
-   class which is being created or doesn't yet implement one.
-   In reality, it was only meant as a recommendation to avoid declaring variables, fields, parameters, or return types
-   as the implementation type <em>when an abstract type already exists</em> (for example, don't declare variables of
-   type <code>ArrayList</code> if all you need is a <code>List</code>).
-   The "Effective Java" book mentioned above also discusses this topic, in "Item 52: Refer to objects by their
-   interfaces".
-</p>
-<p>
-   Another bad motivation to avoid the use of <code>new</code> may simply be an unreasonable fear of getting "too much"
-   garbage collection.
-   The truth, however, is that JVM implementations are (and have been for many years) very good at efficiently managing
-   short-lived objects.
-   Using single-instance classes as a rudimentary object caching mechanism is a terrible use of the Java platform.
-   From my experience, this practice not only leads to anti-OO code but also to big, un-cohesive, stateless classes with
-   many methods, the exact opposite of small, cohesive, and stateful classes which are what true objects are about.
 </p>
 
 <h3 id="static">
    <a href="#static">Use of <code>static</code></a>
 </h3>
 <p>
-   The use of classes containing only <code>static</code> methods is the best choice when none of the methods operate on
-   any state (for example, the <code>Math</code> class), or the actual state is stored in a separate context object,
-   such as the HTTP request context or the persistence context.
-   For this last situation, consider an application that has a persistence subsystem which provides access to a
-   relational database.
-   One possibility is to inject instances of work unit objects (an Hibernate <code>Session</code>, or a JPA
-   <code>EntityManager</code>) wherever they are needed, and use the persistence API directly.
-   A better approach, in my experience, is to use a <em>static facade</em> which encapsulates all access from the
-   application to the persistence subsystem.
-   The benefits of this are many, not the least of which is that it actually provides <em>more</em> flexibility than the
-   more direct, instance-based, approach, while providing a tight and easily accessible client API.
+   Methods that are <code>static</code> are not object-oriented, of course, but that doesn't mean they have no place in
+   an otherwise OO codebase.
+   Typically, we find the need for small utility methods that simply need to do some input/output transformation, such
+   as date/time computations.
+   Or perhaps some state is stored in a <code class="type">ThreadLocal</code> object and acted on by a set of static
+   manipulator methods.
 </p>
 <p>
-   Another recommended usage of static methods is presented in "Item 1: Consider static factory methods instead of
-   constructors", again in the "Effective Java" book.
+   More commonly, though, we often need to use third-party libraries which have static entry points; for example,
+   the <code>javax.faces.context.FacesContext.getCurrentInstance()</code> method from JSF.
+   For reference, see "Item 1: Consider static factory methods instead of constructors" in the "Effective Java" book.
 </p>
 
 <h2 id="testability">
