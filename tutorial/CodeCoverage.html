@@ -194,7 +194,6 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
       These files can be read and processed by external tools.
       The <code>mockit.coverage.data.CoverageData.readDataFromFile(File)</code> method will create a new
       <code class="type">CoverageData</code> instance with all the coverage data available in a given serialized file.
-      For more on this, refer to the API documentation available in <code>jmockit-coverage.jar</code>.
    </li>
 </ol>
 
@@ -219,8 +218,8 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    <a href="#configuration">Configuring the coverage tool</a>
 </h2>
 <p>
-   To enable the JMockit Coverage tool in a JUnit/TestNG test run, add both <code>jmockit.jar</code> and
-   <code>jmockit-coverage.jar</code> to the runtime classpath.
+   To enable the JMockit Coverage tool in a JUnit/TestNG test run, add <code>jmockit.jar</code> to the runtime
+   classpath, and specify at least one of the "<code>coverage-output|metrics|classes</code>" system properties.
    With JUnit, make sure that <code>jmockit.jar</code> appears first in the classpath.
    (For more details on <a href="Introduction.html#runningTests">running tests with JMockit</a>, see the corresponding
    section in the Tutorial.)
@@ -228,17 +227,14 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
 <p>
    When not using the JMockit mocking APIs, code coverage can still be activated without adding any jar to the
    classpath.
-   Instead, run with "<code>-javaagent:&lt;proper path>/<strong>jmockit-coverage</strong>.jar</code>" as a JVM
-   initialization parameter.
+   Instead, run with "<code>-javaagent:&lt;proper path>/jmockit.jar=coverage</code>" as a JVM initialization parameter.
 </p>
 <p>
    In most cases, the coverage tool does not require any additional configuration to be used.
    There are, however, several aspects of the tool's behavior which <em>can</em> optionally be configured for a given
    test run.
-   This is done by setting one or more of several "<code>jmockit-coverage-<em>xyz</em></code>"
-   <em>system properties</em> for the JVM instance running the test suite.
-   For convenience, the "<code>jmockit-</code>" prefix can be omitted, so "<code>coverage-<em>xyz</em></code>" is also
-   valid.
+   This is done by setting one or more of several "<code>coverage-<em>xyz</em></code>" <em>system properties</em> for
+   the JVM instance running the test suite.
 </p>
 <p>
    Note that you should be able to easily specify these properties inside an Ant target, a Maven <code>surefire</code>
@@ -354,11 +350,11 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    Assuming that two or more <code>coverage.ser</code> files are available in separate directories, an aggregate report
    can be generated from them by executing the <code>mockit.coverage.CodeCoverage.main</code> method (a regular Java
    "main" method).
-   To facilitate this, the <code>jmockit-coverage.jar</code> file is <em>executable</em>.
+   To facilitate this, the <code>jmockit.jar</code> file is <em>executable</em>.
    As an example, the following Ant task could be used:
 </p>
-<pre><code>&lt;java fork="yes" dir="myBaseDir" jar="jmockit-coverage.jar">
-   &lt;jvmarg line="-Djmockit-coverage-output=html"/>
+<pre><code>&lt;java fork="yes" dir="myBaseDir" jar="jmockit.jar">
+   &lt;jvmarg line="-Dcoverage-output=html"/>
    &lt;arg line="module1-outDir anotherOutDir"/>
 &lt;/java>
 </code></pre>
@@ -470,7 +466,7 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    <a href="#maven">Activating coverage in a Maven project</a>
 </h2>
 <p>
-   If you run tests with Maven's "test" goal, you will need the following dependencies in the <code>pom.xml</code> file
+   If you run tests with Maven's "test" goal, you will need the "jmockit" dependency in the <code>pom.xml</code> file
    (assuming the "<code>jmockit.version</code>" property has been properly defined):
 </p>
 <pre><code>&lt;dependency>
@@ -479,16 +475,11 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    &lt;version><strong>${jmockit.version}</strong>&lt;/version>
    &lt;scope>test&lt;/scope>
 &lt;/dependency>
-&lt;dependency>
-   &lt;groupId><strong>org.jmockit</strong>&lt;/groupId>
-   &lt;artifactId><strong>jmockit-coverage</strong>&lt;/artifactId>
-   &lt;version><strong>${jmockit.version}</strong>&lt;/version>
-   &lt;scope>runtime&lt;/scope>
-&lt;/dependency>
 </code></pre>
 <p>
    In Maven 2/3, the <code>surefire</code> plugin is the one usually responsible for actually running tests.
-   To configure the coverage tool, specify values for the appropriate "<code>coverage-xyz</code>" system properties.
+   To activate and configure the coverage tool, specify values for the appropriate "<code>coverage-xyz</code>" system
+   properties.
    For example, the output directory for generated files can be specified through the <code>coverage-outputDir</code>
    property.
 </p>
@@ -503,17 +494,17 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
 &lt;/plugin>
 </code></pre>
 <p>
-   Finally, if the tests don't actually use the JMockit mocking APIs, it's still possible to use the coverage tool.
-   In this case, the only dependency needed is the one on "<code>jmockit-coverage</code>".
-   Additionally, it's necessary to configure the <code>surefire</code> plugin as follows:
+   Finally, if the tests don't actually use the JMockit mocking APIs, it's still possible to use the coverage tool
+   even without the "jmockit" dependency.
+   The only thing that is necessary is to configure the <code>surefire</code> plugin as follows:
 </p>
 <pre><code>&lt;plugin>
    &lt;artifactId>maven-surefire-plugin&lt;/artifactId>
    &lt;configuration>
       &lt;argLine>
-<strong>-javaagent:"${settings.localRepository}"/org/jmockit/jmockit-coverage/${jmockit.version}/
-jmockit-coverage-${jmockit.version}.jar</strong>
-         &lt;!-- coverage properties, if any are needed -->
+<strong>-javaagent:"${settings.localRepository}"/org/jmockit/jmockit/${jmockit.version}/
+jmockit-${jmockit.version}.jar=coverage</strong>
+         &lt;!-- coverage properties -->
       &lt;/argLine>
    &lt;/configuration>
 &lt;/plugin>
