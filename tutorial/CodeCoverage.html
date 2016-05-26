@@ -574,19 +574,21 @@ jmockit-coverage-${jmockit.version}.jar</strong>
    <a href="#standalone">Standalone mode</a>
 </h2>
 <p>
-   In previous sections we described the most typical way to use the coverage tool, by enabling it during a JUnit/TestNG
-   test run to measure <em>test</em> coverage.
-   The tool can also be used in a more general context, though: the <em>standalone</em> mode, where it can attach to
-   <em>any</em> Java 6+ process to measure line and path coverage metrics on specified classes, regardless of which code
-   is making calls into said classes.
+   Normally, the coverage tool is used during a JUnit/TestNG test run to measure <em>test</em> coverage.
+   It can also be used in <em>standalone</em> mode, by attaching to an arbitrary Java 6+ process to measure line and
+   path coverage metrics on specified classes.
 </p>
 <p>
-   To activate standalone mode, the target JVM instance must be started with the
-   "<code>-javaagent:&lt;proper/path/>jmockit-coverage.jar</code>" command line argument.
-   That's it; none of the JMockit toolkit jars need to be present in the classpath of the target process.
+   There are two ways to activate standalone mode.
+   The first is to start the target JVM instance with the
+   "<code>-javaagent:&lt;proper/path/>jmockit.jar=coverage</code>" command line argument.
    Initial configuration settings for the coverage tool can be specified through the "<code>coverage-xyz</code>" system
    properties previously described, but this is entirely optional; the configuration properties can be modified later
    through a dedicated UI.
+   The second way is to run the <code>main</code> method inside <code>jmockit.jar</code>, by running
+   "<code>java -jar jmockit.jar &lt;nnn></code>" in the command line, where "<code>&lt;nnn></code>" is the number of the
+   local process which is running the target JVM instance: this causes the JMockit coverage agent to be loaded into the
+   target JVM.
 </p>
 <p>
    Once the target process is running with the JMockit Coverage Java agent, the user can connect to it with a JMX
