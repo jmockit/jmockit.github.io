@@ -30,20 +30,20 @@
 <ol class="contents">
    <li><a href="#mocks">Mock methods and mock classes</a></li>
    <li>
-      <a href="#setUp">Setting up mocks for a test</a>
+      <a href="#setUp">Applying mock-ups for a test</a>
       <ol>
-         <li><a href="#mockableMethods">Kinds of methods which can have mocks</a></li>
+         <li><a href="#mockableMethods">Kinds of methods which can be faked</a></li>
          <li><a href="#inline">In-line mock classes</a></li>
       </ol>
    </li>
-   <li><a href="#interfaces">Mocking interfaces</a></li>
-   <li><a href="#implementationClasses">Mocking unspecified implementation classes</a></li>
+   <li><a href="#interfaces">Faking an interface</a></li>
+   <li><a href="#implementationClasses">Faking unspecified implementation classes</a></li>
    <li><a href="#constraints">Invocation count constraints</a></li>
-   <li><a href="#initializers">Mocking class initializers</a></li>
+   <li><a href="#initializers">Faking class initializers</a></li>
    <li><a href="#invocation">Accessing the invocation context</a></li>
    <li><a href="#proceed">Proceeding into the real implementation</a></li>
    <li>
-      <a href="#reuse">Reusing mocks between tests</a>
+      <a href="#reuse">Reusing mock-ups between tests</a>
       <ol>
          <li><a href="#beforeAfter">Using before/after methods</a></li>
          <li><a href="#reusableMocks">Reusable mock classes</a></li>
@@ -117,26 +117,18 @@
    When a mock class is applied to a real class, the latter gets the implementation of those methods and constructors
    which have corresponding mocks temporarily replaced with the implementations of the matching mock methods, as
    defined in the mock class.
-   In other words, the real class becomes "mocked" for the duration of the test which applied the mock class, and will
-   respond accordingly whenever it receives invocations during test execution.
+   In other words, the real class becomes "mocked-up" (or "faked") for the duration of the test which applied the mock
+   class, and will respond accordingly whenever it receives invocations during test execution.
    At runtime, what really happens is that the execution of a mocked method/constructor is intercepted and redirected to
    the corresponding mock method, which then executes and returns (unless an exception/error is thrown) to the original
    caller, without this one noticing that a different method was actually executed.
    Normally, the "caller" class is the one under test, while the mocked class is a dependency.
 </p>
 <p>
-   Mock classes are often defined as nested (<code>static</code>), inner (non-<code>static</code>), or even more often
-   as <em>anonymous</em> classes inside a JUnit/TestNG test class.
+   Mock classes are often defined as nested (<code>static</code>), inner (non-<code>static</code>), or even as
+   <em>anonymous</em> classes inside a JUnit/TestNG test class.
    There is nothing preventing mock classes from being top-level, though.
    That would be useful if the mock class is to be reused in multiple test classes.
-   As we'll see later, often the most convenient way to implement mock classes is by making them <em>anonymous</em>
-   and <em>local</em> to an individual test method.
-</p>
-<p>
-   A new mock class is created when we have a "real class" defined in production code which needs to be mocked for a
-   given test.
-   It should define at least one mock method, with any number of additional methods and constructors;
-   it can also define any number of fields.
 </p>
 <p>
    Each <code class="annotation">@Mock</code> method must have a corresponding "real method/constructor" with the
@@ -161,21 +153,20 @@
 </p>
 
 <h2 id="setUp">
-   <a href="#setUp">Setting up mocks for a test</a>
+   <a href="#setUp">Applying mock-ups for a test</a>
 </h2>
 <p>
    A given mock class must be applied to a corresponding real class to have any effect.
-   We call this "setting up" the mock class.
    This is usually done inside an individual test method or inside a <code class="annotation">@BeforeMethod</code>
    (TestNG) or <code class="annotation">@Before</code> (JUnit 4) method.
-   Once a mock class is set up, all executions of the mocked methods and constructors of the real class get
+   Once a mock class is applied, all executions of the mocked methods and constructors of the real class get
    automatically redirected to the corresponding mock methods.
 </p>
 <p>
-   To set up the <code class="type">MockLoginContext</code> mock class above, we simply instantiate it:
+   To apply the <code class="type">MockLoginContext</code> mock class above, we simply instantiate it:
 </p>
 <pre><code>@Test
-public void settingUpAMockClass() throws Exception
+public void applyingAMockClass() throws Exception
 {
    <strong>new MockLoginContext()</strong>);
 
@@ -186,7 +177,7 @@ public void settingUpAMockClass() throws Exception
 }
 </code></pre>
 <p>
-   Since the mock class is set up inside a test method, the mocking of <code class="type">LoginContext</code> by
+   Since the mock class is applied inside a test method, the faking of <code class="type">LoginContext</code> by
    <code class="type">MockLoginContext</code> will be in effect only for that particular test.
 </p>
 <p>
@@ -237,23 +228,20 @@ public void settingUpAnotherMockClass() throws Exception
 </p>
 
 <h3 id="mockableMethods">
-   <a href="#mockableMethods">Kinds of methods which can have mocks</a>
+   <a href="#mockableMethods">Kinds of methods which can be faked</a>
 </h3>
 <p>
-   So far, we have only mocked public instance methods with public instance mock methods.
-   In reality, any other kind of method in a real class can be mocked: methods with <code>private</code>,
+   So far, we have only faked public instance methods with public instance mock methods.
+   In reality, any other kind of method in a real class can be faked: methods with <code>private</code>,
    <code>protected</code> or "package-private" accessibility, <code>static</code> methods, <code>final</code> methods,
    and <code>native</code> methods.
-   (Also <code>synchronized</code> and <code>strictfp</code> methods, but these modifiers only affect the method
-   implementation, not its interface.)
-   Even more, a <code>static</code> method in the real class can be mocked by an <em>instance</em> mock method, and
-   vice-versa (an instance real method with a <code>static</code> mock); the same applies for the <code>final</code>
-   modifier.
+   Even more, a <code>static</code> method in the real class can be faked by an <em>instance</em> mock method, and
+   vice-versa (an instance real method with a <code>static</code> mock).
 </p>
 <p>
-   Methods to be mocked need to have an implementation, though not necessarily in bytecode (in the case of
+   Methods to be faked need to have an implementation, though not necessarily in bytecode (in the case of
    <code>native</code> methods).
-   Therefore, an <code>abstract</code> method cannot be mocked directly, and the same applies to the methods of a Java
+   Therefore, an <code>abstract</code> method cannot be faked directly, and the same applies to the methods of a Java
    <code>interface</code>.
    (That said, as shown later the Mockups API can automatically create a proxy class that implements an interface.)
 </p>
@@ -262,7 +250,7 @@ public void settingUpAnotherMockClass() throws Exception
    <a href="#inline">In-line mock classes</a>
 </h3>
 <p>
-   Typically, a specific group of mock methods for a given real class will only be useful for a single test.
+   Sometimes, we need to fake a class only for a single test.
    In such a situation we can create an <em>anonymous mock class</em> inside an individual test method, as demonstrated
    by the next example.
 </p>
@@ -282,7 +270,7 @@ public void settingUpMocksUsingAnAnonymousMockClass() throws Exception
 </p>
 
 <h2 id="interfaces">
-   <a href="#interfaces">Mocking interfaces</a>
+   <a href="#interfaces">Faking an interface</a>
 </h2>
 <p>
    Most of the time a mock class targets a real class directly.
@@ -292,7 +280,7 @@ public void settingUpMocksUsingAnAnonymousMockClass() throws Exception
       javax.security.auth.callback.CallbackHandler</a>.
 </p>
 <pre><code>@Test
-public void mockingAnInterface() throws Exception
+public void fakingAnInterface() throws Exception
 {
    CallbackHandler callbackHandler = new MockUp&lt;CallbackHandler>() {
       @Mock
@@ -307,12 +295,12 @@ public void mockingAnInterface() throws Exception
 }
 </code></pre>
 <p>
-   The <a href="../api1x/mockit/MockUp.html#getMockInstance()"><code>MockUp#getMockInstance()</code></a> method
-   returns a proxy object that implements the desired interface.
+   The <a href="../api1x/mockit/MockUp.html#getMockInstance()"><code>MockUp#getMockInstance()</code></a> method returns
+   a proxy object that implements the desired interface.
 </p>
 
 <h2 id="implementationClasses">
-   <a href="#implementationClasses">Mocking unspecified implementation classes</a>
+   <a href="#implementationClasses">Faking unspecified implementation classes</a>
 </h2>
 <p>
    To demonstrate this feature, lets consider the following code under test.
@@ -340,15 +328,15 @@ public final class TestedUnit
 <p>
    Given a base type (be it an <code>interface</code>, an <code>abstract</code> class, or any sort of base class), we
    can write a test which only knows about the base type but where all implementing/extending implementation classes get
-   mocked.
+   faked.
    To do so, we create a mock-up whose mocked type refers only to the known base type, and does so through a
    <em>type variable</em>.
-   Not only will implementation classes already loaded by the JVM get mocked, but also any additional classes that
+   Not only will implementation classes already loaded by the JVM get faked, but also any additional classes that
    happen to get loaded by the JVM during later test execution.
    This ability is demonstrated below.
 </p>
 <pre><code>@Test
-public <strong>&lt;T extends Service></strong> void mockingImplementationClassesFromAGivenBaseType()
+public <strong>&lt;T extends Service></strong> void fakingImplementationClassesFromAGivenBaseType()
 {
    new MockUp<strong>&lt;T></strong>() {
       @Mock int doSomething() { return 7; }
@@ -371,10 +359,10 @@ public <strong>&lt;T extends Service></strong> void mockingImplementationClasses
    All example tests shown so far only used JUnit/TestNG "asserts" to verify invocation arguments.
    Sometimes, though, we may want to verify if a given method/constructor in a dependency is invoked at all by the code
    under test.
-   We may also want to verify exactly how many invocations a given mock received during the execution of a test, or
-   specify that the test should fail if more/less than a certain number of invocations occurs.
-   For this, we can specify <em>declarative constraints</em> on the <em>invocation count</em> of a given mock, as the
-   following example shows.
+   We may also want to verify exactly how many invocations a given mock method received during the execution of a test,
+   or specify that the test should fail if more/less than a certain number of invocations occurs.
+   For this, we can specify <em>declarative constraints</em> on the <em>invocation count</em> of a given mock method, as
+   the following example shows.
 </p>
 <pre><code>@Test
 public void specifyingInvocationCountConstraints() throws Exception
@@ -396,26 +384,26 @@ public void specifyingInvocationCountConstraints() throws Exception
 <p>
    In this test we used all three attributes of the <code class="annotation">@Mock</code> annotation related to
    invocation counts.
-   The first mock specifies that the <code>LoginContext(String)</code> constructor must be invoked
+   The first mock method specifies that the <code>LoginContext(String)</code> constructor must be invoked
    <em>at least once</em> during the test.
    The second one specifies that the <code>login()</code> method must be invoked <em>exactly once</em>, while the third
    declares that <code>logout()</code> <em>can</em> be invoked, but not more than once.
 </p>
 <p>
    It is also valid to specify both <code>minInvocations</code> and <code>maxInvocations</code> on
-   the same mock, in order to constrain the invocation count to a given range.
+   the same mock method, in order to constrain the invocation count to a given range.
 </p>
 
 <h2 id="initializers">
-   <a href="#initializers">Mocking class initializers</a>
+   <a href="#initializers">Faking class initializers</a>
 </h2>
 <p>
-   When a class in production code performs some work in one or more <em>static initialization blocks</em>, we may
-   need to mock it out so it doesn't interfere with test execution.
+   When a class performs some work in one or more <em>static initialization blocks</em>, we may need to stub it out so
+   it doesn't interfere with test execution.
    We can define a special mock method for that, as shown below.
 </p>
 <pre><code>@Test
-public void mockingStaticInitializers()
+public void fakingStaticInitializers()
 {
    new MockUp&lt;ClassWithStaticInitializers>() {
       @Mock
@@ -429,12 +417,12 @@ public void mockingStaticInitializers()
 }
 </code></pre>
 <p>
-   Special care must be taken when the static initialization code of a class is mocked out.
+   Special care must be taken when the static initialization code of a class is faked.
    Note that this includes not only any "<code>static</code>" blocks in the class, but also any assignments to
    <code>static</code> fields (excluding those resolved at compile time, which do not produce executable bytecode).
    Since the JVM only attempts to initialize a class <em>once</em>, restoring the static initialization code of a
-   mocked out class will have no effect.
-   So, if you mock out the static initialization of a class that hasn't been initialized by the JVM yet, the original
+   faked class will have no effect.
+   So, if you fake away the static initialization of a class that hasn't been initialized by the JVM yet, the original
    class initialization code will <em>never</em> be executed in the test run.
    This will cause any static fields that are assigned with expressions computed at runtime to instead remain
    initialized with the <em>default</em> values for their types.
@@ -596,13 +584,13 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
 </p>
 
 <h2 id="reuse">
-   <a href="#reuse">Reusing mocks between tests</a>
+   <a href="#reuse">Reusing mock-ups between tests</a>
 </h2>
 <p>
    Most tests will probably only use dedicated mock classes, specifically created for each particular test.
    There will be times, though, when the same mock class can be reused by multiple test methods, either in a single test
    class or across the entire test suite.
-   We will now see different ways to set up mocks so they are shared by a whole group of tests, as well as ways to
+   We will now see different ways to apply mock-ups so they are shared by a whole group of tests, as well as ways to
    define reusable mock classes.
 </p>
 
@@ -631,14 +619,14 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
 <pre><code>public class MyTestClass
 {
    @Before
-   public void setUpSharedMocks()
+   public void applySharedMocks()
    {
       new MockUp&lt;LoginContext>() {
          // shared mocks here...
       };
    }
 
-   // test methods that will share the mocks set up above...
+   // test methods that will share the mocks applied above...
 }
 </code></pre>
 <p>
