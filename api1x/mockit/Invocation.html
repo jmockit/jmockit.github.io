@@ -19,7 +19,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -123,11 +123,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <a href="../mockit/Invocation.html#getInvokedArguments--"><code>getInvokedArguments()</code></a>, 
 <a href="../mockit/Invocation.html#getInvocationCount--"><code>getInvocationCount()</code></a>, 
 <a href="../mockit/Invocation.html#getInvocationIndex--"><code>getInvocationIndex()</code></a>, 
-<a href="../mockit/Invocation.html#getMinInvocations--"><code>getMinInvocations()</code></a>, 
-<a href="../mockit/Invocation.html#getMaxInvocations--"><code>getMaxInvocations()</code></a>, 
 <a href="../mockit/Invocation.html#proceed-java.lang.Object...-"><code>proceed(Object...)</code></a>, 
-<a href="http://jmockit.org/tutorial/Mocking.html#delegates">Tutorial (expectations)</a>, 
-<a href="http://jmockit.org/tutorial/Faking.html#invocation">Tutorial (mockups)</a></dd>
+<a href="http://jmockit.org/tutorial/Mocking.html#delegates">Tutorial (mocking)</a>, 
+<a href="http://jmockit.org/tutorial/Faking.html#invocation">Tutorial (faking)</a></dd>
 </dl>
 </li>
 </ul>
@@ -205,19 +203,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Invocation.html#getMaxInvocations--">getMaxInvocations</a></span>()</code>
-<div class="block">Returns the current value of the maximum invocation count for the matching expectation or mock method
- (<code>-1</code> indicates that it's unlimited).</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Invocation.html#getMinInvocations--">getMinInvocations</a></span>()</code>
-<div class="block">Returns the current value of the minimum invocation count associated with the matching expectation or mock method.</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Invocation.html#proceed-java.lang.Object...-">proceed</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;replacementArguments)</code>
 <div class="block">Allows execution to proceed into the real implementation of the mocked method/constructor.</div>
@@ -320,39 +305,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <pre>public final&nbsp;&lt;M extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Member.html?is-external=true" title="class or interface in java.lang.reflect">Member</a>&gt;&nbsp;M&nbsp;getInvokedMember()</pre>
 <div class="block">Returns the <code>Method</code> or <code>Constructor</code> object corresponding to the mocked method or constructor,
  respectively.</div>
-</li>
-</ul>
-<a name="getMaxInvocations--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getMaxInvocations</h4>
-<pre>public final&nbsp;int&nbsp;getMaxInvocations()</pre>
-<div class="block">Returns the current value of the maximum invocation count for the matching expectation or mock method
- (<code>-1</code> indicates that it's unlimited).
- <p/>
- For an expectation, this call will return the value specified through the
- times or maxTimes field, if that was the case;
- if not, the value will be <code>-1</code> for a regular or non-strict expectation, or <code>1</code> for a strict one.
- For a <code>@Mock</code> method, it will return the value specified for the <a href="../mockit/Mock.html#invocations--">invocations</a>
- or <a href="../mockit/Mock.html#maxInvocations--">maxInvocations</a> attribute, or <code>-1</code> if none.</div>
-</li>
-</ul>
-<a name="getMinInvocations--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getMinInvocations</h4>
-<pre>public final&nbsp;int&nbsp;getMinInvocations()</pre>
-<div class="block">Returns the current value of the minimum invocation count associated with the matching expectation or mock method.
- <p/>
- For an expectation, this call will return the value specified through the
- times or minTimes field, if that was the case;
- if not, the value will be <code>1</code> for a regular or strict expectation, or <code>0</code> for a non-strict one.
- For a <code>@Mock</code> method, it will return the value specified for the <a href="../mockit/Mock.html#invocations--">invocations</a>
- or <a href="../mockit/Mock.html#minInvocations--">minInvocations</a> attribute, or <code>0</code> if none.</div>
 </li>
 </ul>
 <a name="proceed-java.lang.Object...-">

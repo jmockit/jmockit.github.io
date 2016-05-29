@@ -27,12 +27,19 @@
 
 <h1>Development history</h1>
 
-<h2 id="next">
-   <a href="#next">Next release</a>
+<h2 id="current">
+   <a href="#current">Current release</a>
 </h2>
 
 <h3 id="1.24">Version <a href="#1.24">1.24</a> (May 29, 2016):</h3>
 <ul>
+   <li>
+      The <strong>JMockit Coverage</strong> tool is no longer delivered in a separate jar (ie,
+      "<code>jmockit-coverage.jar</code> or the equivalent Maven artifact).
+      It is now embedded in <code>jmockit.jar</code>, but only gets activated in a test run when at least one of the
+      following system properties is set: <code>coverage-output</code>, <code>coverage-metrics</code>, or
+      <code>coverage-classes</code>.
+   </li>
    <li>
       <strong>Deprecated</strong> the methods <code>getMinInvocations()</code> and <code>getMaxInvocations()</code> of
       class <code class="type">mockit.Invocation</code>.
@@ -40,12 +47,14 @@
    <li>
       Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/276">#276</a>,
-      <a href="https://github.com/jmockit/jmockit1/issues/278">#278</a>.
+      <a href="https://github.com/jmockit/jmockit1/issues/277">#277</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/278">#278</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/280">#280</a>.
    </li>
 </ul>
 
-<h2 id="current">
-   <a href="#current">Current release</a>
+<h2 id="previous">
+   <a href="#previous">Previous releases</a>
 </h2>
 
 <h3 id="1.23">Version <a href="#1.23">1.23</a> (Apr 24, 2016):</h3>
@@ -73,10 +82,6 @@
       <a href="https://github.com/jmockit/jmockit1/issues/271">#271</a>.
    </li>
 </ul>
-
-<h2 id="previous">
-   <a href="#previous">Previous releases</a>
-</h2>
 
 <h3 id="1.22">Version <a href="#1.22">1.22</a> (Feb 28, 2016):</h3>
 <ul>
