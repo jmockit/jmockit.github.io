@@ -480,15 +480,21 @@ An <a href="../coverage-sample/index.html">example coverage report</a> showing a
    In Maven 2/3, the <code>surefire</code> plugin is the one usually responsible for actually running tests.
    To activate and configure the coverage tool, specify values for the appropriate "<code>coverage-xyz</code>" system
    properties.
-   For example, the output directory for generated files can be specified through the <code>coverage-outputDir</code>
-   property.
 </p>
 <pre><code>&lt;plugin>
    &lt;artifactId>maven-surefire-plugin&lt;/artifactId>
    &lt;configuration>
       &lt;systemPropertyVariables>
-         <strong>&lt;coverage-outputDir>target/my-coverage-report&lt;/coverage-outputDir></strong>
-         &lt;!-- other properties, if needed -->
+         &lt;!-- At least one of the following needs to be set: -->
+         &lt;coverage-output>html&lt;/coverage-output>     &lt;!-- or: html-nocp, serial, serial-append -->
+         &lt;coverage-metrics>all&lt;/coverage-metrics>    &lt;!-- or: line, path, data -->
+         &lt;coverage-classes>loaded&lt;/coverage-classes> &lt;!-- or a "*" expression for class names -->
+
+         &lt;!-- Other properties, if needed: -->
+         &lt;coverage-outputDir>my-dir&lt;/coverage-outputDir>       &lt;!-- default: target/coverage-report -->
+         &lt;coverage-srcDirs>sources&lt;/coverage-srcDirs>          &lt;!-- default: all "src" directories -->
+         &lt;coverage-excludes>some.package.*&lt;/coverage-excludes> &lt;!-- default: empty -->
+         &lt;coverage-check>80&lt;/coverage-check>                   &lt;!-- default: no checks -->
       &lt;/systemPropertyVariables>
    &lt;/configuration>
 &lt;/plugin>
@@ -534,31 +540,27 @@ jmockit-${jmockit.version}.jar=coverage</strong>
 </code></pre>
 
 <h2 id="switching">
-   <a href="#switching">Turning coverage output off</a>
+   <a href="#switching">Turning coverage off</a>
 </h2>
 <p>
-   Sometimes we want to turn coverage output off for a particular test run, without having to remove the coverage jar
-   from the classpath.
-   This can be done in two different ways.
+   To temporarily turn coverage off for a particular test run, we can set the
+   <strong><code>coverage-output</code></strong> system property to an unknown output format, such as
+   "<code>-Dcoverage-output=<strong>none</strong></code>".
+   The same effect will be achieved by setting "<code>-Dcoverage-metrics=<strong>none</strong></code>" or
+   "<code>-Dcoverage-classes=<strong>none</strong></code>".
 </p>
 <p>
-   For one, we can manipulate the <em>read-only attribute</em> of the relevant output file, when one has already been
-   generated.
+   Another, more interactive, way is to manipulate the <em>read-only attribute</em> of the relevant output file, when
+   one has already been generated.
    The particular file to be manipulated, always in the working directory, is "<code>coverage.ser</code>" for serialized
    output or "<code>coverage-report/index.html</code>" for HTML output.
    The file attribute is checked by JMockit at startup; when marked as read-only it cannot be overwritten, so JMockit
    avoids the attempt entirely.
-</p>
-<p>
    Note that the working directory can usually be selected separately for each test run configuration in the Java IDE.
    Also, a Java IDE usually provides an easy mechanism to toggle the read-only status of a file in the project:
    in IntelliJ IDEA it is done by double clicking the status bar, with the desired file opened in the editor;
    in Eclipse there is a "Read only" check box in the "Properties" screen (which can be opened by typing "Alt+Enter")
    for the text file selected in the editor.
-</p>
-<p>
-   Another way to switch coverage off is to simply set the <strong><code>coverage-output</code></strong> system property
-   to an unknown output format, such as "<code>-Dcoverage-output=<strong>none</strong></code>".
 </p>
 
 <h2 id="standalone">
