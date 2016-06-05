@@ -22,11 +22,9 @@
       <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
    </span>
 </h1>
-
 <h1 id="top">
    <a href="#">Faking</a>
 </h1>
-
 <ol class="contents">
    <li><a href="#mocks">Mock methods and mock classes</a></li>
    <li>
@@ -51,13 +49,6 @@
    </li>
    <li><a href="#widerScopes">Mock-ups at the test class/suite level</a></li>
 </ol>
-
-<p>
-   In the JMockit toolkit, the <strong>Mockups API</strong> provides support for the creation of <em>fake</em>
-   implementations, or "<em>mock-ups</em>".
-   Typically, a mock-up targets a few methods and/or constructors in the class to be faked, while leaving most other
-   methods and constructors unmodified.
-</p>
 <div style="text-align: center;" title="Click on types to open API documentation">
    <map name="figure1">
       <area shape="rect" coords="1,1,131,34" href="../api1x/mockit/MockUp.html">
@@ -66,6 +57,12 @@
    </map>
    <img src="FakingAPI.png" usemap="#figure1">
 </div>
+<p>
+   In the JMockit toolkit, the <strong>Mockups API</strong> provides support for the creation of <em>fake</em>
+   implementations, or "<em>mock-ups</em>".
+   Typically, a mock-up targets a few methods and/or constructors in the class to be faked, while leaving most other
+   methods and constructors unmodified.
+</p>
 <p>
    Fake implementations can be particularly useful in <em>integration</em> tests which depend on external entities or
    resources such as the network, the file system, etc.

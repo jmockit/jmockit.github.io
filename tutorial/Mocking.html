@@ -22,7 +22,6 @@
       <a href="../tutorial.html"><img src="go-home.png" title="Contents"></a>
    </span>
 </h1>
-
 <h1 id="top">
    <a href="#">Mocking</a>
 </h1>
@@ -103,7 +102,23 @@
       </ol>
    </li>
 </ol>
-
+<div style="text-align: center;" title="Click on types to open API documentation">
+   <map name="figure1">
+      <area shape="rect" coords="39,84,172,117" href="../api1x/mockit/Expectations.html">
+      <area shape="rect" coords="18,167,193,199" href="../api1x/mockit/StrictExpectations.html">
+      <area shape="rect" coords="453,84,585,117" href="../api1x/mockit/Verifications.html">
+      <area shape="rect" coords="227,166,421,199" href="../api1x/mockit/VerificationsInOrder.html">
+      <area shape="rect" coords="440,166,598,199" href="../api1x/mockit/FullVerifications.html">
+      <area shape="rect" coords="617,166,838,199" href="../api1x/mockit/FullVerificationsInOrder.html">
+      <area shape="rect" coords="736,2,838,35" href="../api1x/mockit/Delegate.html">
+      <area shape="rect" coords="719,51,838,84" href="../api1x/mockit/Invocation.html">
+      <area shape="rect" coords="2,215,90,248" href="../api1x/mockit/Tested.html">
+      <area shape="rect" coords="108,215,223,248" href="../api1x/mockit/Injectable.html">
+      <area shape="rect" coords="363,215,457,248" href="../api1x/mockit/Mocked.html">
+      <area shape="rect" coords="726,215,838,248" href="../api1x/mockit/Capturing.html">
+   </map>
+   <img src="MockingAPI.png" usemap="#figure1">
+</div>
 <p>
    In the JMockit toolkit, the <strong>Expectations</strong> API provides rich support for the use of <em>mocking</em>
    in automated developer tests.
@@ -124,23 +139,6 @@
    dependency cannot have its real implementation easily used, or when attempting to create tests for corner cases where
    a well-placed mocked interaction can greatly facilitate the test.
 </p>
-<div style="text-align: center;" title="Click on types to open API documentation">
-   <map name="figure1">
-      <area shape="rect" coords="39,84,172,117" href="../api1x/mockit/Expectations.html">
-      <area shape="rect" coords="18,167,193,199" href="../api1x/mockit/StrictExpectations.html">
-      <area shape="rect" coords="453,84,585,117" href="../api1x/mockit/Verifications.html">
-      <area shape="rect" coords="227,166,421,199" href="../api1x/mockit/VerificationsInOrder.html">
-      <area shape="rect" coords="440,166,598,199" href="../api1x/mockit/FullVerifications.html">
-      <area shape="rect" coords="617,166,838,199" href="../api1x/mockit/FullVerificationsInOrder.html">
-      <area shape="rect" coords="736,2,838,35" href="../api1x/mockit/Delegate.html">
-      <area shape="rect" coords="719,51,838,84" href="../api1x/mockit/Invocation.html">
-      <area shape="rect" coords="2,215,90,248" href="../api1x/mockit/Tested.html">
-      <area shape="rect" coords="108,215,223,248" href="../api1x/mockit/Injectable.html">
-      <area shape="rect" coords="363,215,457,248" href="../api1x/mockit/Mocked.html">
-      <area shape="rect" coords="726,215,838,248" href="../api1x/mockit/Capturing.html">
-   </map>
-   <img src="MockingAPI.png" usemap="#figure1">
-</div>
 <p>
    An interaction between two classes always takes the form of a method or constructor <em>invocation</em>.
    The set of invocations from a tested class to its dependencies, together with the argument and return values passed
