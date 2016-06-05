@@ -48,6 +48,7 @@
       </ol>
    </li>
    <li><a href="#widerScopes">Mock-ups at the test class/suite level</a></li>
+   <li><a href="#advice">Applying AOP-style advice</a></li>
 </ol>
 <div style="text-align: center;" title="Click on types to open API documentation">
    <map name="figure1">
@@ -584,9 +585,7 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
    <a href="#reuse">Reusing mock-ups between tests</a>
 </h2>
 <p>
-   Most tests will probably only use dedicated mock classes, specifically created for each particular test.
-   There will be times, though, when the same mock class can be reused by multiple test methods, either in a single test
-   class or across the entire test suite.
+   Often, a mock-up class needs to be reused by multiple tests, or even applied for the test run as a whole.
    We will now see different ways to apply mock-ups so they are shared by a whole group of tests, as well as ways to
    define reusable mock classes.
 </p>
@@ -646,8 +645,8 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
    classes inside specific test classes or methods.
 </p>
 <p>
-   The example tests for this section come from JMockit's own test suite. They exercise the following class, partially
-   reproduced here:
+   The example tests for this section come from JMockit's own test suite.
+   They exercise the following class, partially reproduced here:
 </p>
 <pre><code>public final class TextFile
 {
@@ -848,7 +847,7 @@ public void doesNotCloseTextReaderInCaseOfIOFailure() throws Exception
 public final class TestSuite
 {
    @BeforeClass
-   public static void setupMocks()
+   public static void applyMockUps()
    {
       new LoggingMocks();
 
@@ -892,6 +891,61 @@ public final class TestSuite
 </p>
 <p>
    For convenience, the entry in the properties file can be written without the "<code>jmockit-</code>" prefix.
+</p>
+
+<h2 id="advice">
+   <a href="#advice">Applying AOP-style advice</a>
+</h2>
+<p>
+   There is one more special <code class="annotation">@Mock</code> method that can appear in a mock-up class: the
+   "<code>$advice</code>" method.
+   If defined, this mock method will handle executions of each and every method in the target class (or classes, when
+   applying the mock-up over unspecified classes from a base type).
+   Differently from regular mock methods, this one needs to have a particular signature and return type:
+   <code>Object $advice(Invocation)</code>.
+</p>
+<p>
+   For demonstration, lets say we want to measure the execution times of all methods in a given class during test
+   execution, while still executing the original code of each method.
+</p>
+<pre><code>public final class MethodTiming extends MockUp&lt;Object>
+{
+   private final Map&lt;Method, Long> methodTimes = new HashMap<>();
+
+   public MethodTiming(Class&lt;?> targetClass) { super(targetClass); }
+
+   @Mock
+   public Object $advice(Invocation invocation)
+   {
+      long timeBefore = System.nanoTime();
+
+      try {
+         return invocation.proceed();
+      }
+      finally {
+         long timeAfter = System.nanoTime();
+         long dt = timeAfter - timeBefore;
+
+         Method executedMethod = invocation.getInvokedMember();
+         Long dtUntilLastExecution = methodTimes.get(executedMethod);
+         Long dtUntilNow = dtUntilLastExecution == null ? dt : dtUntilLastExecution + dt;
+         methodTimes.put(executedMethod, dtUntilNow);
+      }
+   }
+
+   public void displayMeasuredTimes()
+   {
+      // Dump the data in methodTimes to the console or a text file...
+   }
+}
+</code></pre>
+<p>
+   The mock-up above can be applied in a test class, either in a "before" or a "before class" method.
+   It will add up the execution times for all executions of all methods in a given class.
+   As shown in the implementation of the <code>$advice</code> method, it can obtain the
+   <code>java.lang.reflect.Method</code> that is being executed.
+   If desired, the current invocation count and/or the invocation arguments could be obtained through similar calls to
+   the <code>Invocation</code> object.
 </p>
 
 <div id="bottom" class="navigation">
