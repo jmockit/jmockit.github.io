@@ -825,11 +825,9 @@ public void doesNotCloseTextReaderInCaseOfIOFailure() throws Exception
    <a href="#widerScopes">Mock-ups at the test class/suite level</a>
 </h2>
 <p>
-   As we have seen, mock-up classes are usually applied for the duration of an individual test.
-   There may be times when we want to mock classes for the entire scope of a test class (that is, for all of its test
-   methods), or for the entire scope of a test suite (that is, for all of its test classes).
-   It is also possible to specify mock classes for an entire test run through external configuration, by setting a
-   JVM-wide system property or adding a <code>jmockit.properties</code> file to the runtime classpath.
+   Often, we need to apply mock-ups for the entire scope of a test class (all of its test methods), or for the entire
+   scope of a test suite (all of its test classes).
+   We may also want to apply them for an entire test run, and through external configuration rather than in test code.
 </p>
 
 <h3 id="programmatic">
@@ -933,9 +931,16 @@ public final class TestSuite
       }
    }
 
-   public void displayMeasuredTimes()
+   @Override
+   protected void onTearDown()
    {
-      // Dump the data in methodTimes to the console or a text file...
+      System.out.println("\nTotal timings for methods in " + mockedType + " (ms)");
+
+      for (Entry&lt;Method, Long> methodAndTime : methodTimes.entrySet()) {
+         long dtNanos = methodAndTime.getValue();
+         long dtMillis = dtNanos / 1000000L;
+         System.out.println('\t' + methodAndTime.getKey().getName() + " = " + dtMillis);
+      }
    }
 }
 </code></pre>
@@ -946,6 +951,8 @@ public final class TestSuite
    <code>java.lang.reflect.Method</code> that is being executed.
    If desired, the current invocation count and/or the invocation arguments could be obtained through similar calls to
    the <code>Invocation</code> object.
+   When the mock-up is (automatically) torn down, the <code>onTearDown()</code> method gets executed, dumping measured
+   timings to standard output.
 </p>
 
 <div id="bottom" class="navigation">
