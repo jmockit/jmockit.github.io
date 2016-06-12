@@ -29,9 +29,9 @@
       <a href="#anExample">An example</a>
       <ol>
          <li><a href="#javaEE">Using Java EE</a></li>
-         <li><a href="#spring">Using the Spring framework</a></li>
       </ol>
    </li>
+   <li><a href="#trade-offs">Trade-offs of the approach</a></li>
 </ol>
 <div style="text-align: center;" title="Click to open API documentation">
    <map name="figure1">
@@ -62,18 +62,249 @@
    <a href="#anExample">An example</a>
 </h2>
 <p>
+   For demonstration, we will use a Java EE version of the Spring Pet Clinic sample application.
+   The <a href="http://github.com/jmockit/jmockit1/blob/master/samples/petclinic">full code</a> is available in the
+   project repository.
+   The application codebase is organized in four layers: UI or presentation layer, application layer, domain layer, and
+   infrastructure layer.
+</p>
+<p>
+   The application's domain model (following the approach and terminology of <a href="">Domain Driven Design</a>) has
+   six domain entities: <code>Vet</code> (a veterinarian), <code>Specialty</code> (a vet's specialty), <code>Pet</code>,
+   <code>PetType</code>, <code>Owner</code> (a pet's owner), and <code>Visit</code> (a visit from a pet and its owner to
+   the clinic).
+   Besides entities, the domain model (and layer) of the application also includes <em>domain service</em> classes.
+   In this simple domain, we have only one such class for each entity type, named as <code>VetMaintenance</code>, etc.
+</p>
+<p>
+   In DDD, entities are added into and reconstituted or removed from persistent storage through "repository" components.
+   Given that we use a sophisticated ORM API (JPA), there is only one such repository, which is not domain or
+   application specific and therefore goes into the infrastructure layer: the <code>Database</code> class.
+   The application uses a relational database, specifically an in-memory HSqlDb database in the sample application, so
+   that it can be self-contained.
+</p>
+<p>
+   The application layer contains application service classes, which translate user input from the UI to calls into the
+   lower layers, and make output data available for display in the UI.
+   This is the layer at which database transactions are demarcated.
 </p>
 
 <h3 id="javaEE">
    <a href="#javaEE">Using Java EE</a>
 </h3>
 <p>
+   With Java EE 7, we use JPA for the domain entities, EJBs (stateless session beans) or simply
+   <code class="annotation">@Transactional</code> classes for domain services, and JSF
+   <code class="annotated">@ViewScoped</code> beans for the application services.
+   Code for the UI layer is not included in the sample, as it wouldn't be exercised by the integration test suite
+   anyway.
+   (In Java EE, this layer would be comprised of JSF facelets in the form of ".xhtml" files.)
+</p>
+<p>
+   For our first integration test class, let's consider the Vet screen, which simply displays a list of all vets with
+   their specialties.
+</p>
+<pre><code>public final class VetScreenTest
+{
+   @TestUtil VetData vetData;
+   @SUT VetScreen vetScreen;
+
+   @Test
+   public void findVets()
+   {
+      // Inserts input data (instances of Vet and Specialty) into the database.
+      Vet vet2 = <strong>vetData</strong>.create("Helen Leary", "radiology");
+      Vet vet0 = <strong>vetData</strong>.create("James Carter");
+      Vet vet1 = <strong>vetData</strong>.create("Linda Douglas", "surgery", "dentistry");
+      List&lt;Vet> vetsInOrderOfLastName = asList(vet0, vet1, vet2);
+
+      // Exercises the code under test (VetScreen, VetMaintenance, Vet, Specialty).
+      vetScreen.showVetList();
+      List&lt;Vet> vets = vetScreen.getVets();
+
+      // Verifies the output is as expected.
+      vets.retainAll(vetsInOrderOfLastName);
+      assertEquals(vetsInOrderOfLastName, vets); // checks the contents and ordering of the list
+
+      Vet vetWithSpecialties = vets.get(1); // this will be "vet1"...
+      assertEquals(2, vetWithSpecialties.getNrOfSpecialties()); // ...which we know has two specialties
+
+      <strong>vetData</strong>.refresh(vetWithSpecialties); // ensures the Vet contains data actually in the db
+      List&lt;Specialty> specialtiesInOrderOfName = vetWithSpecialties.getSpecialties();
+      assertEquals("dentistry", specialtiesInOrderOfName.get(0).getName()); // checks that specialties...
+      assertEquals("surgery", specialtiesInOrderOfName.get(1).getName()); // ...are in the correct order
+   }
+}
+</code></pre>
+<p>
+   The first thing to notice in the test above is that it starts at the topmost layer of the application, which is coded
+   in Java and therefore runs entirely in the JVM: the application layer.
+   So, the test is not concerned with any HTTP requests and responses, or how application URLs map to components in the
+   application layer; such details vary with the technology used for UI implementation (JSF, JSP, Struts, GWT, Spring
+   MVC, etc.), and are considered out of the scope of the integration tests.
+</p>
+<p>
+   The second thing to notice is the test code is very clean and focused on what it's trying to test.
+   It's written entirely in terms of the application and its business domain, without low-level concerns such as
+   deployment, database configuration, or transactions.
+</p>
+<p>
+   Finally, the third thing to notice is that no JMockit API at all appears in the test class.
+   All we have is the use of the <code class="annotation">@TestUtil</code> and <code class="annotation">@SUT</code>
+   annotations.
+   These are user-defined annotations, with arbitrary names chosen according to the preferences of the team.
+   In our sample code, they are defined as follows.
+</p>
+<pre><code>@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+@Tested(availableDuringSetup = true, fullyInitialized = true)
+public @interface TestUtil {} // a test utility object
+
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+@Tested(fullyInitialized = true)
+public @interface SUT {} // the System Under Test
+</code></pre>
+<p>
+   So, here we use JMockit's <code class="annotation">@Tested</code> annotation as a <em>meta-annotation</em>.
+   The use of "<code>fullyInitialized = true</code>" causes the dependencies of a tested class to be automatically
+   resolved through dependency injection (specifically, constructor injection followed by field injection, as
+   applicable).
+   The use of "<code>availableDuringSetup = true</code>" merely causes the tested object to be created <em>before</em>
+   any test setup methods (<code>@Before</code> in JUnit or <code>@BeforeMethod</code> in TestNG) are executed,
+   contrary to the default which is to create tested objects right before each test method executes, and after any
+   setup methods.
+   In this first example test class, this effect is not used, so the only benefit of using
+   "<code class="annotation">@TestUtil</code>" is to document the intent of the field in the test class.
+</p>
+<p>
+   As seen in the test, <code class="type">VetData</code> provides methods that create new test data needed by the test,
+   and other utility methods such as <code>refresh(an entity)</code> (which forces the persistent state of a given
+   entity to be freshly loaded from the database).
+   As the name implies, the test suite would have one such class for each entity type, to be used in one or more test
+   classes whenever they need persistent instances of said types.
+   More details are provided in the following section.
 </p>
 
-<h3 id="spring">
-   <a href="#spring">Using the Spring framework</a>
+<h3 id="infrastructure">
+   <a href="#infrastructure">Test infrastructure</a>
 </h3>
 <p>
+   Utility classes like <code class="type">VetData</code> look like the following.
+</p>
+<pre><code>public final class VetData extends TestDatabase
+{
+   public Vet create(String fullName, String... specialtyNames)
+   {
+      String[] names = fullName.split(" ");
+
+      Vet vet = new Vet();
+      vet.setFirstName(names[0]);
+      vet.setLastName(names[names.length - 1]);
+
+      for (String specialtyName : specialtyNames) {
+         Specialty specialty = new Specialty();
+         specialty.setName(specialtyName);
+
+         vet.getSpecialties().add(specialty);
+      }
+
+      <strong>db</strong>.save(vet);
+      return vet;
+   }
+
+   // other "create" methods taking different data items, if needed
+}
+</code></pre>
+<p>
+   Such classes are easy to write, as they simply use the existing entity classes, plus the methods made available in a
+   "<code>db</code>" field from the <code class="type">TestDatabase</code> base class.
+   This is a test infrastructure class which can be reused for different enterprise applications, as long as they use
+   JPA for persistence (and JMockit for integration testing).
+</p>
+<pre><code>public class TestDatabase
+{
+   @PersistenceContext private EntityManager em;
+   @Inject protected Database db;
+
+   @PostConstruct
+   private void beginTransactionIfNotYet()
+   {
+      EntityTransaction transaction = em.getTransaction();
+
+      if (!transaction.isActive()) {
+         transaction.begin();
+      }
+   }
+
+   @PreDestroy
+   private void endTransactionWithRollbackIfStillActive()
+   {
+      EntityTransaction transaction = em.getTransaction();
+
+      if (transaction.isActive()) {
+         transaction.rollback();
+      }
+   }
+
+   // Other utility methods: "refresh", "findOne", "assertCreated", etc.
+}
+</code></pre>
+<p>
+   The <code>Database</code> utility class (also available and used in production code) provides an easier to use API
+   than JPA's <code>EntityManager</code>, but its use is optional; tests could directly use the "<code>em</code>" field
+   instead of "<code>db</code>" (were it made <code>protected</code>, of course).
+   The <code>EntityManager em</code> field in the test database class gets injected with an instance automatically
+   created according to the <code>META-INF/persistence.xml</code> file that should be present in the test runtime
+   classpath (this would go into the "src/test" directory when using a Maven-compatible project structure; a
+   "production" version of the file can then be provided under "src/main").
+   A single default entity manager instance is created, and injected into whichever test or production classes (such as
+   the <code>Database</code> class) have a <code class="type">@PersistenceContext</code> field.
+   If multiple databases are needed, each would have a different entity manager, as configured by the optional
+   "<code>name</code>" attribute of this annotation, with the corresponding entry in the <code>persistence.xml</code>
+   file.
+</p>
+<p>
+   Another important responsibility of this base class is to demarcate the transaction in which each test runs, ensuring
+   that it exists before the test begins, and that it ends with a rollback after the test is completed (either with
+   success or failure).
+   This works because JMockit executes the <code class="annotation">@PostConstruct</code> and
+   <code class="annotation">@PreDestroy</code> methods (from the
+   standard <code>javax.annotation</code> API, also supported by the Spring framework) at the appropriate times.
+   Since each "test data" object is introduced to the test class in a
+   <code class="annotation">@Tested(availableDuringSetup = true)</code> field, it gets "constructed" before any setup or
+   test method, and "destroyed" after each test is finished.
+</p>
+
+<h2 id="trade-offs">
+   <a href="#trade-offs">Trade-offs of the approach</a>
+</h2>
+<p>
+   In this testing approach, the goal is to have integration tests covering all of the Java code in the codebase of an
+   enterprise application.
+   To avoid the difficulties inherent to having the code run inside a Java application server (such as Tomcat,
+   Glassfish, or JBoss Wildfly), these are <em>out-of-container</em> tests where all code (production as well as test
+   code) runs in the same JVM instance.
+</p>
+<p>
+   The tests are written against the API of the highest-level components of the application.
+   Therefore, UI code is <em>not</em> exercised, as it's typically not written in the Java language, but in a
+   technology-specific templating language such as JSF facelets, JSPs, or something supported by the Spring framework.
+   To exercise such UI components, which in a web application also often include JavaScript code, we would need to write
+   <em>functional</em> UI tests based on HTTP requests and responses, using a testing API such as WebDriver or HtmlUnit.
+   Such tests require an <em>in-container</em> approach, which brings a host of practical problems and difficulties,
+   such as how/when to start the application server, how to deploy/re-deploy the application code, and how to keep tests
+   isolated from each other given that a typical functional test often performs one or more database transactions, some
+   or all of them usually getting committed.
+</p>
+<p>
+   In comparison, the out-of-container integration tests shown here are more fine grained, typically comprising a single
+   transaction which is always rolled back at the end of the test.
+   This approach allows for tests that are easier to create, faster to run (in particular, with negligible startup
+   cost), and much less fragile.
+   It's also easier to employ a code coverage tool and easier/faster to use a debugger, since everything runs in a
+   single JVM instance.
+   The downside is that code in UI templates, as well as client-side JavaScript code, doesn't get covered by such tests.
 </p>
 
 <div id="bottom" class="navigation">
