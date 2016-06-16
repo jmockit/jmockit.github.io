@@ -864,11 +864,14 @@ public final class TestSuite
    <a href="#systemProperty">External application through a system property</a>
 </h3>
 <p>
-   The <strong><code>jmockit-mocks</code></strong> system property supports a comma-separated list of fully qualified
-   mock-up class names.
+   The <strong><code>mockups</code></strong> system property supports a comma-separated list of fully qualified mock-up
+   class names.
    If specified at JVM startup time, any such class (which must extend <code class="type">MockUp&ltT></code>) will be
    automatically applied for the whole test run.
    The mocks defined in startup mock classes will remain in effect until the end of the test run, for all test classes.
+   Each mock-up class will be instantiated through its no-args constructor, unless an additional value was provided
+   after the class name (for example, as in "-Dmockups=my.mockups.MyMockUp=anArbitraryStringWithoutCommas"), in which
+   case the mock-up class should have a constructor with one parameter of type <code class="type">String</code>.
 </p>
 <p>
    Note that a system property can be passed to the JVM through the standard "<code>-D</code>" command line parameter.
@@ -880,15 +883,12 @@ public final class TestSuite
    <a href="#propertiesFile">External application through the <code>jmockit.properties</code> file</a>
 </h3>
 <p>
-   Mock-up classes specified in the <code>jmockit-mocks</code> system property can alternatively be specified in a
-   separate <strong><code>jmockit.properties</code></strong> file, which should be present at the root of the classpath.
+   Mock-up classes specified in the <code>mockups</code> system property can alternatively be specified in a separate
+   <strong><code>jmockit.properties</code></strong> file, which should be present at the root of the classpath.
    If there are multiple such files in the classpath (either inside jars or plain directories), all class names listed
    are added together.
    This allows the creation of reusable mock classes which can be packaged in a jar file with its own properties file;
    when added to the execution classpath of a test suite, the mock classes will be automatically applied at startup.
-</p>
-<p>
-   For convenience, the entry in the properties file can be written without the "<code>jmockit-</code>" prefix.
 </p>
 
 <h2 id="advice">
@@ -911,6 +911,7 @@ public final class TestSuite
    private final Map&lt;Method, Long> methodTimes = new HashMap<>();
 
    public MethodTiming(Class&lt;?> targetClass) { super(targetClass); }
+   MethodTiming(String className) throws ClassNotFoundException { super(Class.forName(className)); }
 
    @Mock
    public Object $advice(Invocation invocation)
@@ -937,15 +938,17 @@ public final class TestSuite
       System.out.println("\nTotal timings for methods in " + mockedType + " (ms)");
 
       for (Entry&lt;Method, Long> methodAndTime : methodTimes.entrySet()) {
+         Method method = methodAndTime.getKey();
          long dtNanos = methodAndTime.getValue();
          long dtMillis = dtNanos / 1000000L;
-         System.out.println('\t' + methodAndTime.getKey().getName() + " = " + dtMillis);
+         System.out.println("\t" + method + " = " + dtMillis);
       }
    }
 }
 </code></pre>
 <p>
-   The mock-up above can be applied in a test class, either in a "before" or a "before class" method.
+   The mock-up above can be applied inside a test, in a "before" method, in a "before class" method, or even for the
+   entire test run by setting "<code>-Dmockups=testUtils.MethodTiming=my.application.AppClass</code>".
    It will add up the execution times for all executions of all methods in a given class.
    As shown in the implementation of the <code>$advice</code> method, it can obtain the
    <code>java.lang.reflect.Method</code> that is being executed.
