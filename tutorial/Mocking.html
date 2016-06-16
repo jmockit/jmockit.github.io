@@ -919,7 +919,7 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    Occasionally we may need to deal with expectations for "varargs" methods or constructors.
    It's valid to pass regular values as a varargs argument, and <em>also</em> valid to use the "with"/"any" matchers
    for such values.
-   However, it's <em>not</em> valid to combine both kinds of value-passing for the same expectation, when targeting a
+   However, it's <em>not</em> valid to combine both kinds of value-passing for the same expectation, when there is a
    varargs parameter.
    We need to either use <em>only</em> regular values or <em>only</em> values obtained through argument matchers.
 </p>
@@ -927,12 +927,6 @@ public void someTestMethod(@Mocked final DependencyAbc abc)
    In case we want to match invocations where the varargs parameter receives any number of values (including zero),
    we can specify an expectation with the "<strong><code>(Object[]) any</code></strong>" constraint for the final
    varargs parameter.
-</p>
-<p>
-   Probably the best way to understand the exact semantics of varargs matching (since there is no specific API involved)
-   is to look at or experiment with actual tests.
-   <a href="http://github.com/jmockit/jmockit1/blob/master/main/test/mockit/ExpectationsWithVarArgsMatchersTest.java">This</a>
-   test class demonstrates virtually all possibilities.
 </p>
 
 <h2 id="constraints">
