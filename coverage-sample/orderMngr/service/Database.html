@@ -56,10 +56,8 @@
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>23</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l23s0'>   private Database() {}</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>23</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>   private Database() {}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -79,42 +77,32 @@
       </td>
     </tr>
     <tr>
-      <td class='line'>27</td><td class='count'>0</td>
-      <td><pre class='prettyprint jmp'>      <span id='l27s0' title='Executions: 0' class='uncovered'>if (connection == null)</span> {</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>27</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      if (connection == null) {</pre></td>
     </tr>
     <tr>
       <td class='line'>28</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>         try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>29</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l29s0'>            connection = DriverManager.getConnection("jdbc:test:ordersDB");</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>29</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            connection = DriverManager.getConnection("jdbc:test:ordersDB");</pre></td>
     </tr>
     <tr>
       <td class='line'>30</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>         }</pre></td>
     </tr>
     <tr>
-      <td class='line'>31</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l31s0'>         catch (SQLException e) {</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>31</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         catch (SQLException e) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>32</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l32s0'>            throw new RuntimeException(e);</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>32</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            throw new RuntimeException(e);</pre></td>
     </tr>
     <tr>
-      <td class='line'>33</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l33s0'>         }</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>33</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         }</pre></td>
     </tr>
     <tr>
       <td class='line'>34</td><td>&nbsp;</td>
@@ -122,10 +110,8 @@
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>36</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l36s0'>      return connection;</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>36</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      return connection;</pre></td>
     </tr>
     <tr>
       <td class='line'>37</td><td>&nbsp;</td>
@@ -150,46 +136,32 @@
       </td>
     </tr>
     <tr>
-      <td class='line'>41</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l41s0'>      try (PreparedStatement stmt = createStatement(sql, args)) {</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>41</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      try (PreparedStatement stmt = createStatement(sql, args)) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>42</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l42s0'>         stmt.executeUpdate();</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>42</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         stmt.executeUpdate();</pre></td>
     </tr>
     <tr>
-      <td class='line'>43</td><td class='count'>0</td>
-      <td><pre class='prettyprint jmp'>      <span id='l43s0' title='Executions: 0' class='uncovered'>}</span></pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>43</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      }</pre></td>
     </tr>
     <tr>
-      <td class='line'>44</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l44s0'>      catch (SQLException e) {</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>44</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      catch (SQLException e) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>45</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l45s0'>         throw new RuntimeException(e);</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>45</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         throw new RuntimeException(e);</pre></td>
     </tr>
     <tr>
-      <td class='line'>46</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l46s0'>      }</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>46</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      }</pre></td>
     </tr>
     <tr>
-      <td class='line'>47</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l47s0'>   }</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>47</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>   }</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -201,56 +173,33 @@
       <td><pre class='prettyprint'>   {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>2</td>
+      <td></td><td class='count'>0</td>
       <td class='paths'>
-        <span style='cursor:default; background-color:#7f8000' onclick='hidePath()'>Path coverage: 1/2</span>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/2</span>
         <span class='uncovered' onclick="showPath(this,'l51s0 l54s0 l59s0')">A: 0</span>
-        <span class='covered' onclick="showPath(this,'l51s0 l54s0 l54s1 l59s0')">B: 2</span>
+        <span class='uncovered' onclick="showPath(this,'l51s0 l54s0 l54s1 l59s0')">B: 0</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>51</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l51s0'>      PreparedStatement stmt = connection().prepareStatement(sql);</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>51</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      PreparedStatement stmt = connection().prepareStatement(sql);</pre></td>
     </tr>
     <tr>
-      <td class='line'>52</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l52s0'>      int i = 1;</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>52</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      int i = 1;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>54</td><td class='count'>4</td>
-      <td><pre class='prettyprint jmp'>      <span id='l54s0' title='Executions: 4' class='covered cp' onclick='showHide(this,0)'>for (Object arg</span> : <span id='l54s1' title='Executions: 2' class='covered cp' onclick='showHide(this,1)'>args)</span> {</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x4</li>
-        </ol>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>54</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      for (Object arg : args) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>55</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l55s0'>         stmt.setObject(i, arg);</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>55</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         stmt.setObject(i, arg);</pre></td>
     </tr>
     <tr>
-      <td class='line'>56</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l56s0'>         i++;</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>56</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         i++;</pre></td>
     </tr>
     <tr>
       <td class='line'>57</td><td>&nbsp;</td>
@@ -258,12 +207,8 @@
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>59</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l59s0'>      return stmt;</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>59</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      return stmt;</pre></td>
     </tr>
     <tr>
       <td class='line'>60</td><td>&nbsp;</td>
@@ -279,68 +224,48 @@
       <td><pre class='prettyprint'>   {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>2</td>
+      <td></td><td class='count'>0</td>
       <td class='paths'>
-        <span style='cursor:default; background-color:#7f8000' onclick='hidePath()'>Path coverage: 1/2</span>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/2</span>
         <span class='uncovered' onclick="showPath(this,'l64s0 l72s0')">A: 0</span>
-        <span class='covered' onclick="showPath(this,'l64s0 l66s0 l72s0')">B: 2</span>
+        <span class='uncovered' onclick="showPath(this,'l64s0 l66s0 l72s0')">B: 0</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>64</td><td class='count'>2</td>
-      <td><pre class='prettyprint jmp'>      <span id='l64s0' title='Executions: 2' class='covered cp' onclick='showHide(this,0)'>if (result != null)</span> {</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>64</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      if (result != null) {</pre></td>
     </tr>
     <tr>
       <td class='line'>65</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>         try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>66</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l66s0'>            result.getStatement().close();</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>66</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            result.getStatement().close();</pre></td>
     </tr>
     <tr>
       <td class='line'>67</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>         }</pre></td>
     </tr>
     <tr>
-      <td class='line'>68</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l68s0'>         catch (SQLException e) {</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>68</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         catch (SQLException e) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>69</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l69s0'>            throw new RuntimeException(e);</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>69</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            throw new RuntimeException(e);</pre></td>
     </tr>
     <tr>
-      <td class='line'>70</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l70s0'>         }</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>70</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         }</pre></td>
     </tr>
     <tr>
       <td class='line'>71</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>      }</pre></td>
     </tr>
     <tr>
-      <td class='line'>72</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l72s0'>   }</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>72</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>   }</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -356,36 +281,24 @@
       <td><pre class='prettyprint'>      try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>77</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l77s0'>         PreparedStatement stmt = createStatement(sql, args);</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>77</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         PreparedStatement stmt = createStatement(sql, args);</pre></td>
     </tr>
     <tr>
-      <td class='line'>78</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered cp' onclick='showHide(this)' id='l78s0'>         return stmt.executeQuery();</pre>
-        <ol style='display:none'>
-          <li>orderMngr.domain.order.OrderRepository_MockupsAPI_Test#findOrderByNumber: 169x2</li>
-        </ol>
-      </td>
+      <td class='line'>78</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         return stmt.executeQuery();</pre></td>
     </tr>
     <tr>
       <td class='line'>79</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>      }</pre></td>
     </tr>
     <tr>
-      <td class='line'>80</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l80s0'>      catch (SQLException e) {</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>80</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>      catch (SQLException e) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>81</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l81s0'>         throw new RuntimeException(e);</pre>
-        <ol style='display:none'></ol>
-      </td>
+      <td class='line'>81</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>         throw new RuntimeException(e);</pre></td>
     </tr>
     <tr>
       <td class='line'>82</td><td>&nbsp;</td>
