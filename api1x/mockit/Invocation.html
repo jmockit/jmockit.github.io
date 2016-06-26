@@ -147,11 +147,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Invocation.html#Invocation-java.lang.Object-java.lang.Object:A-int-int-int-">Invocation</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;invokedInstance,
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Invocation.html#Invocation-java.lang.Object-java.lang.Object:A-int-">Invocation</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;invokedInstance,
           <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;invokedArguments,
-          int&nbsp;invocationCount,
-          int&nbsp;minInvocations,
-          int&nbsp;maxInvocations)</code>
+          int&nbsp;invocationCount)</code>
 <div class="block">For internal use only.</div>
 </td>
 </tr>
@@ -230,7 +228,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="Invocation-java.lang.Object-java.lang.Object:A-int-int-int-">
+<a name="Invocation-java.lang.Object-java.lang.Object:A-int-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -240,9 +238,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
                      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;invokedInstance,
                      <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
                      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;invokedArguments,
-                     int&nbsp;invocationCount,
-                     int&nbsp;minInvocations,
-                     int&nbsp;maxInvocations)</pre>
+                     int&nbsp;invocationCount)</pre>
 <div class="block">For internal use only.</div>
 </li>
 </ul>
@@ -339,7 +335,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if attempting to proceed into a mocked method which does not belong to an
  <a href="../mockit/Injectable.html" title="annotation in mockit">injectable mocked type</a> nor to a <a href="../mockit/Expectations.html#Expectations-java.lang.Object...-">dynamic
- partially mocked type</a>, into a <code>native</code> method, or into a mocked constructor while passing replacement
+ partially mocked type</a>, into a <code>native</code> method, into a mocked constructor while passing replacement
+ arguments, or into an interface or abstract method</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if replacement arguments were given but they are the same as the invoked
  arguments</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/Faking.html#proceed">Tutorial</a></dd>

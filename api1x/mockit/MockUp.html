@@ -19,7 +19,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -50,7 +50,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../mockit/Mocked.html" title="annotation in mockit"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../mockit/StrictExpectations.html" title="class in mockit"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../index.html?mockit/MockUp.html" target="_top">Frames</a></li>
@@ -75,13 +75,13 @@ var activeTableTab = "activeTableTab";
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -109,11 +109,11 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - specifies the type (class, interface, etc.) to be mocked; multiple interfaces can be mocked by defining
- a <em>type variable</em> in the test class or test method, and using it as the type argument;
- if a type variable is used but it extends a single type, then all implementation classes extending/implementing that
- base type are also mocked;
- if the type argument itself is a parameterized type, then only its raw type is considered for mocking</dd>
+<dd><code>T</code> - specifies the type (class, interface, etc.) to be faked; multiple interfaces can be faked by defining a
+ <em>type variable</em> in the test class or test method, and using it as the type argument;
+ if a type variable is used and it extends a <em>single</em> type, then all implementation classes extending or
+  implementing that base type are also faked;
+ if the type argument itself is a parameterized type, then only its raw type is considered</dd>
 </dl>
 <hr>
 <br>
@@ -121,26 +121,18 @@ var activeTableTab = "activeTableTab";
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">A base class used in the creation of a <em>mock-up</em> for a class or interface.
  Such mock-ups can be used as <em>fake</em> implementations for use in integration or unit tests.
- <pre>
-
- // Define and apply one or more mock-ups:
- new MockUp&lt;<strong>SomeClass</strong>>() {
-    &#64;Mock int someMethod(int i) { assertTrue(i > 0); return 123; }
-    &#64;Mock(maxInvocations = 2) void anotherMethod(int i, String s) { &#47;* validate arguments *&#47; }
- };
-
- // Exercise code under test:
- codeUnderTest.doSomething();
- </pre>
+ <p/>
  One or more <em>mock methods</em> annotated <a href="../mockit/Mock.html" title="annotation in mockit">as such</a> must be defined in the concrete subclass.
  Each <code>@Mock</code> method should have a matching method or constructor in the mocked class/interface.
  At runtime, the execution of a mocked method/constructor will get redirected to the corresponding mock method.
  <p/>
- When mocking an interface, an implementation class is generated where all methods are empty, with non-void methods
- returning a default value according to the return type: 0 for <code>int</code>, null for a reference
- type, and so on.
+ When the faked type is an interface, an implementation class is generated where all methods are empty, with non-void
+ methods returning a default value according to the return type: <code>0</code> for <code>int</code>, <code>null</code> for a
+ reference type, and so on.
+ In this case, an instance of the generated implementation class should be obtained by calling
+ <a href="../mockit/MockUp.html#getMockInstance--"><code>getMockInstance()</code></a>.
  <p/>
- When the type to be mocked is specified indirectly through a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">type variable</a>, there are two
+ When the type to be faked is specified indirectly through a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">type variable</a>, there are two
  other possible outcomes:
  <ol>
  <li>If the type variable "<code>extends</code>" two or more interfaces, a mocked proxy class that implements all
@@ -184,6 +176,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <a href="../mockit/MockUp.html#MockUp-T-"><code>MockUp(Object)</code></a>, 
 <a href="../mockit/MockUp.html#getMockInstance--"><code>getMockInstance()</code></a>, 
 <a href="../mockit/MockUp.html#tearDown--"><code>tearDown()</code></a>, 
+<a href="../mockit/MockUp.html#onTearDown--"><code>onTearDown()</code></a>, 
+<a href="../mockit/MockUp.html#mockedType"><code>mockedType</code></a>, 
 <a href="http://jmockit.org/tutorial/Faking.html#setUp">Tutorial</a></dd>
 </dl>
 </li>
@@ -192,6 +186,27 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#mockedType">mockedType</a></span></code>
+<div class="block">Holds the class or generic type targeted by this mock-up instance.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor.summary">
@@ -246,9 +261,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#onTearDown--">onTearDown</a></span>()</code>
+<div class="block">An empty method that can be overridden in a mock-up subclass wanting to be notified on tear down; this happens
+ through <em>automatic</em> tear down, but not if <a href="../mockit/MockUp.html#tearDown--"><code>tearDown()</code></a> is called.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#tearDown--">tearDown</a></span>()</code>
-<div class="block">Discards the mock methods originally set up by instantiating this mock-up object, restoring mocked methods to
+<div class="block">Discards the mock methods originally applied by instantiating this mock-up object, restoring faked methods to
  their original behaviors.</div>
 </td>
 </tr>
@@ -268,6 +290,24 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="mockedType">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>mockedType</h4>
+<pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a> mockedType</pre>
+<div class="block">Holds the class or generic type targeted by this mock-up instance.</div>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor.detail">
@@ -285,10 +325,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  through the type parameter.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if no type to be mocked was specified;
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if no type to be faked was specified;
  or if multiple types were specified through a type variable but not all of them are interfaces;
- or if there is a mock method for which no corresponding real method or constructor is found;
- or if the real method matching a mock method is <code>abstract</code></dd>
+ or there is a mock method for which no corresponding real method or constructor is found;
+ or the real method matching a mock method is <code>abstract</code>;
+ or if an <em>unbounded</em> type variable was used as the base type to be faked</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/MockUp.html#MockUp-java.lang.Class-"><code>MockUp(Class)</code></a>, 
 <a href="../mockit/MockUp.html#MockUp-T-"><code>MockUp(Object)</code></a></dd>
@@ -334,7 +375,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  given here.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>instanceToMock</code> - a real instance of the type to be mocked, meant to be the only one of that type that should
+<dd><code>instanceToMock</code> - a real instance of the type to be faked, meant to be the only one of that type that should
  be affected by this mock-up instance; must not be <code>null</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/MockUp.html#MockUp--"><code>MockUp()</code></a>, 
@@ -361,17 +402,31 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  If the mocked type was an interface, then said instance is the one that was automatically created when the mock-up
  was applied.
  If it was a class, and no such instance is currently associated with this mock-up object, then a new
- <em>uninitialized</em> instance of the mocked class is created and returned, becoming associated with the mock-up.
+ <em>uninitialized</em> instance of the faked class is created and returned, becoming associated with the mock-up.
  If a regular <em>initialized</em> instance was desired, then the <a href="../mockit/MockUp.html#MockUp-T-"><code>MockUp(Object)</code></a> constructor should have
  been used instead.
  <p/>
  In any case, for a given mock-up instance this method will always return the same mock instance.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if called from a mock method for a static method</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if called from a mock method for a static method, or if called on a mock-up whose
+ base type was specified by a type variable</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/Faking.html#interfaces">Tutorial</a></dd>
 </dl>
+</li>
+</ul>
+<a name="onTearDown--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>onTearDown</h4>
+<pre>protected&nbsp;void&nbsp;onTearDown()</pre>
+<div class="block">An empty method that can be overridden in a mock-up subclass wanting to be notified on tear down; this happens
+ through <em>automatic</em> tear down, but not if <a href="../mockit/MockUp.html#tearDown--"><code>tearDown()</code></a> is called.
+ <p/>
+ By default, this method does nothing.</div>
 </li>
 </ul>
 <a name="tearDown--">
@@ -381,11 +436,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>tearDown</h4>
 <pre>public final&nbsp;void&nbsp;tearDown()</pre>
-<div class="block">Discards the mock methods originally set up by instantiating this mock-up object, restoring mocked methods to
+<div class="block">Discards the mock methods originally applied by instantiating this mock-up object, restoring faked methods to
  their original behaviors.
  <p/>
- Note that JMockit will automatically restore classes mocked by a test at the end of its execution, as well as
- classes mocked for the whole test class before the first test in the next test class is executed.</div>
+ This method should rarely, if ever, be used, since tear-down is <em>automatic</em>: all classes faked by a test
+ will automatically be restored at the end of the test; the same for classes faked for the whole test class in a
+ "before class" method.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../mockit/MockUp.html#onTearDown--"><code>onTearDown()</code></a></dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -416,7 +476,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../mockit/Mocked.html" title="annotation in mockit"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../mockit/StrictExpectations.html" title="class in mockit"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../index.html?mockit/MockUp.html" target="_top">Frames</a></li>
@@ -441,13 +501,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

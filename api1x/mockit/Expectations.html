@@ -244,49 +244,49 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyBoolean">anyBoolean</a></span></code>
-<div class="block">Matches any <code>boolean</code> or <code>Boolean</code> value received by a parameter of one of these types.</div>
+<div class="block">Matches any <code>boolean</code> or <code>Boolean</code> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Byte.html?is-external=true" title="class or interface in java.lang">Byte</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyByte">anyByte</a></span></code>
-<div class="block">Matches any <code>byte</code> or <code>Byte</code> value received by a parameter of one of these types.</div>
+<div class="block">Matches any <code>byte</code> or <code>Byte</code> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyChar">anyChar</a></span></code>
-<div class="block">Matches any <code>char</code> or <code>Character</code> value received by a parameter of one of these types.</div>
+<div class="block">Matches any <code>char</code> or <code>Character</code> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Double.html?is-external=true" title="class or interface in java.lang">Double</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyDouble">anyDouble</a></span></code>
-<div class="block">Matches any <code>double</code> or <code>Double</code> value received by a parameter of one of these types.</div>
+<div class="block">Matches any <code>double</code> or <code>Double</code> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Float.html?is-external=true" title="class or interface in java.lang">Float</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyFloat">anyFloat</a></span></code>
-<div class="block">Matches any <code>float</code> or <code>Float</code> value received by a parameter of one of these types.</div>
+<div class="block">Matches any <code>float</code> or <code>Float</code> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyInt">anyInt</a></span></code>
-<div class="block">Matches any <code>int</code> or <code>Integer</code> value received by a parameter of one of these types.</div>
+<div class="block">Matches any <code>int</code> or <code>Integer</code> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyLong">anyLong</a></span></code>
-<div class="block">Matches any <code>long</code> or <code>Long</code> value received by a parameter of one of these types.</div>
+<div class="block">Matches any <code>long</code> or <code>Long</code> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyShort">anyShort</a></span></code>
-<div class="block">Matches any <code>short</code> or <code>Short</code> value received by a parameter of one of these types.</div>
+<div class="block">Matches any <code>short</code> or <code>Short</code> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -622,15 +622,21 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
  <p/>
- The use of this field will usually require a cast to the specific parameter type.
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.
+ <p/>
+ Notice the use of this field will usually require a cast to the specific parameter type.
  However, if there is any other parameter for which an argument matching constraint is specified, passing the
  <code>null</code> reference instead will have the same effect.
  <p/>
- When the parameter to be matched is a <em>varargs</em> parameter of element type <code>V</code>, the use of
- <code>any</code> should be cast to <code>V[]</code>.
- <p/>
- In invocations to <em>non-accessible</em> methods or constructors (for example, with
- <a href="../mockit/Deencapsulation.html#invoke-java.lang.Object-java.lang.String-java.lang.Object...-"><code>Deencapsulation.invoke(Object, String, Object...)</code></a>), use <a href="../mockit/Expectations.html#withAny-T-"><code>withAny(T)</code></a> instead.</div>
+ To match an entire <em>varargs</em> parameter of element type <code>V</code> (ie, all arguments in the array), cast it
+ to the parameter type: "<code>(V[]) any</code>".</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, 
@@ -653,10 +659,19 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyBoolean</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a> anyBoolean</pre>
-<div class="block">Matches any <code>boolean</code> or <code>Boolean</code> value received by a parameter of one of these types.
+<div class="block">Matches any <code>boolean</code> or <code>Boolean</code> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyByte"><code>anyByte</code></a>, 
@@ -679,10 +694,19 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyByte</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Byte.html?is-external=true" title="class or interface in java.lang">Byte</a> anyByte</pre>
-<div class="block">Matches any <code>byte</code> or <code>Byte</code> value received by a parameter of one of these types.
+<div class="block">Matches any <code>byte</code> or <code>Byte</code> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, 
@@ -705,10 +729,19 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyChar</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a> anyChar</pre>
-<div class="block">Matches any <code>char</code> or <code>Character</code> value received by a parameter of one of these types.
+<div class="block">Matches any <code>char</code> or <code>Character</code> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, 
@@ -731,10 +764,19 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyDouble</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Double.html?is-external=true" title="class or interface in java.lang">Double</a> anyDouble</pre>
-<div class="block">Matches any <code>double</code> or <code>Double</code> value received by a parameter of one of these types.
+<div class="block">Matches any <code>double</code> or <code>Double</code> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, 
@@ -757,10 +799,19 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyFloat</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Float.html?is-external=true" title="class or interface in java.lang">Float</a> anyFloat</pre>
-<div class="block">Matches any <code>float</code> or <code>Float</code> value received by a parameter of one of these types.
+<div class="block">Matches any <code>float</code> or <code>Float</code> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, 
@@ -783,10 +834,19 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyInt</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a> anyInt</pre>
-<div class="block">Matches any <code>int</code> or <code>Integer</code> value received by a parameter of one of these types.
+<div class="block">Matches any <code>int</code> or <code>Integer</code> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, 
@@ -809,10 +869,19 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyLong</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a> anyLong</pre>
-<div class="block">Matches any <code>long</code> or <code>Long</code> value received by a parameter of one of these types.
+<div class="block">Matches any <code>long</code> or <code>Long</code> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, 
@@ -835,10 +904,19 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyShort</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a> anyShort</pre>
-<div class="block">Matches any <code>short</code> or <code>Short</code> value received by a parameter of one of these types.
+<div class="block">Matches any <code>short</code> or <code>Short</code> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, 
@@ -864,7 +942,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="block">Matches any <code>String</code> value received by a parameter of this type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
- invocation, when recording or verifying an expectation; it cannot be used anywhere else.</div>
+ invocation, when recording or verifying an expectation; it cannot be used anywhere else.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, 
@@ -1135,7 +1222,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  In the first case, a return value of <code>true</code> will indicate a successful match for the actual invocation
  argument at replay time, while a return of <code>false</code> will fail to match the invocation.
  In the case of a <code>void</code> return type, the actual invocation argument should be validated through a suitable
- JUnit/TestNG assertion.</div>
+ JUnit/TestNG assertion.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>objectWithDelegateMethod</code> - an instance of a class defining a single non-<code>private</code> delegate method</dd>
@@ -1163,6 +1259,15 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, <a href="../mockit/Expectations.html#anyByte"><code>anyByte</code></a>, <a href="../mockit/Expectations.html#anyChar"><code>anyChar</code></a>, <a href="../mockit/Expectations.html#anyDouble"><code>anyDouble</code></a>, <a href="../mockit/Expectations.html#anyFloat"><code>anyFloat</code></a>, <a href="../mockit/Expectations.html#anyInt"><code>anyInt</code></a>,
  <a href="../mockit/Expectations.html#anyLong"><code>anyLong</code></a>, <a href="../mockit/Expectations.html#anyShort"><code>anyShort</code></a>, <a href="../mockit/Expectations.html#anyString"><code>anyString</code></a>, or <a href="../mockit/Expectations.html#any"><code>any</code></a> for other reference types.
  <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.
+ <p/>
  Note: when using <a href="../mockit/Deencapsulation.html#invoke-java.lang.Object-java.lang.String-java.lang.Object...-"><code>Deencapsulation.invoke(Object, String, Object...)</code></a>, etc., it's valid to pass
  <code>withAny(ParameterType.class)</code> if an actual instance of the parameter type cannot be created.</div>
 <dl>
@@ -1182,7 +1287,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>withArgThat</h4>
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withArgThat(org.hamcrest.Matcher&lt;? super T&gt;&nbsp;argumentMatcher)</pre>
-<div class="block">Applies a <em>Hamcrest</em> argument matcher for a parameter in the current expectation.</div>
+<div class="block">Applies a <em>Hamcrest</em> argument matcher for a parameter in the current expectation.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>argumentMatcher</code> - any <code>org.hamcrest.Matcher</code> object</dd>
@@ -1203,7 +1317,18 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withCapture(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;valueHolderForMultipleInvocations)</pre>
 <div class="block">Captures the argument value passed into the associated expectation parameter, for each invocation that matches the
  expectation when the tested code is exercised.
- As each such value is captured, it gets added to the given list so that it can be inspected later.</div>
+ As each such value is captured, it gets added to the given list so that it can be inspected later.
+ Apart from capturing received argument values, this method has the same effect as the <a href="../mockit/Expectations.html#any"><code>any</code></a> argument
+ matcher.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>valueHolderForMultipleInvocations</code> - list into which the arguments received by matching invocations will be
@@ -1226,7 +1351,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <pre>protected final&nbsp;double&nbsp;withEqual(double&nbsp;value,
                                  double&nbsp;delta)</pre>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a numeric invocation argument in the replay phase is
- sufficiently close to the given value.</div>
+ sufficiently close to the given value.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>value</code> - the center value for range comparison</dd>
@@ -1247,7 +1381,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <pre>protected final&nbsp;float&nbsp;withEqual(float&nbsp;value,
                                 double&nbsp;delta)</pre>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a numeric invocation argument in the replay phase is
- sufficiently close to the given value.</div>
+ sufficiently close to the given value.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>value</code> - the center value for range comparison</dd>
@@ -1274,8 +1417,17 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  The matcher is added to the end of the list of argument matchers for the invocation being recorded/verified.
  It cannot be reused for a different parameter.
  <p/>
- Usually, this particular method should <em>not</em> be used. Instead, simply pass the desired argument value
- directly, without any matcher.
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.
+ <p/>
+ Usually, this particular method should <em>not</em> be used.
+ Instead, simply pass the desired argument value directly, without any matcher.
  Only when specifying values for a <em>varargs</em> method it's useful, and even then only when some other argument
  matcher is also used.</div>
 <dl>
@@ -1301,7 +1453,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  the same class as the given object.
  <p/>
  Equivalent to a <code>withInstanceOf(object.getClass())</code> call, except that it returns <code>object</code> instead
- of <code>null</code>.</div>
+ of <code>null</code>.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>object</code> - an instance of the desired class</dd>
@@ -1320,7 +1481,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>withInstanceOf</h4>
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withInstanceOf(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;argClass)</pre>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is an instance of
- the given class.</div>
+ the given class.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>argClass</code> - the desired class</dd>
@@ -1344,7 +1514,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  the given <a href="http://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex"><code>regular expression</code></a>.
  <p/>
  Note that this can be used for any string comparison, including case insensitive ones (with <code>"(?i)"</code> in the
- regex).</div>
+ regex).
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>regex</code> - an arbitrary (non-null) regular expression against which textual argument values will be matched</dd>
@@ -1366,7 +1545,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>withNotEqual</h4>
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withNotEqual(T&nbsp;arg)</pre>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that the invocation argument in the replay phase is different
- from the given value.</div>
+ from the given value.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>arg</code> - an arbitrary value, but different from the ones expected to occur during replay</dd>
@@ -1385,7 +1573,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>withNotNull</h4>
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withNotNull()</pre>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is not
- <code>null</code>.</div>
+ <code>null</code>.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>always <code>null</code></dd>
@@ -1401,7 +1598,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>withNull</h4>
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withNull()</pre>
-<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is <code>null</code>.</div>
+<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is <code>null</code>.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>always <code>null</code></dd>
@@ -1420,7 +1626,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>withPrefix</h4>
 <pre>protected final&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;&nbsp;T&nbsp;withPrefix(T&nbsp;text)</pre>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase starts
- with the given text.</div>
+ with the given text.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>text</code> - an arbitrary non-null textual value</dd>
@@ -1441,7 +1656,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>withSameInstance</h4>
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withSameInstance(T&nbsp;object)</pre>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is the exact same
- instance as the one in the recorded/verified invocation.</div>
+ instance as the one in the recorded/verified invocation.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>object</code> - the desired instance</dd>
@@ -1462,7 +1686,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>withSubstring</h4>
 <pre>protected final&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;&nbsp;T&nbsp;withSubstring(T&nbsp;text)</pre>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase contains
- the given text as a substring.</div>
+ the given text as a substring.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>text</code> - an arbitrary non-null textual value</dd>
@@ -1483,7 +1716,16 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>withSuffix</h4>
 <pre>protected final&nbsp;&lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;&nbsp;T&nbsp;withSuffix(T&nbsp;text)</pre>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase ends with
- the given text.</div>
+ the given text.
+ <p/>
+ When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
+ method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
+ So, it's valid to mix the use of matchers with given values.
+ Any arguments given as literals, local variables, or fields, will be implicitly matched as if
+ <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
+ In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
+ regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>text</code> - an arbitrary non-null textual value</dd>
