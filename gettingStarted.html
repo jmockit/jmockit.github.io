@@ -285,6 +285,13 @@ public void aTestMethod(@Injectable final MyCollaborator mock)
    the verification block (excluding those which are verified implicitly, if any).
 </p>
 
+<h3 id="testedObjects">
+   <a href="#testedObjects"><em class="annotation">@Tested</em> objects</a>
+</h3>
+<p>
+
+</p>
+
 <h3 id="faking">
    <a href="#faking"><em>Fake</em> implementations</a>
 </h3>
@@ -293,39 +300,41 @@ public void aTestMethod(@Injectable final MyCollaborator mock)
    with a fake one; this is done with the <em>Mockups</em> API.
    The next test shows an example.
 </p>
-<pre><code>@Test
+<pre><code>public static final class ExampleMockUp extends MockUp&lt;MyCollaborator>
+{
+   @Mock // fake implementation for a method of the same signature
+   public boolean doSomething(int n, String s, ComplexData otherData)
+   {
+      // Return (or throw) a "fake" result for an invocation to the
+      // method in the faked class:
+      return true; // ... or whatever
+   }
+
+   // Other @Mock methods for other methods or constructors in MyCollaborator,
+   // if needed.
+}
+
+@Test
 public void fakingExample()
 {
-   new <strong>MockUp</strong>&lt;MyCollaborator>() {
-      @Mock
-      boolean doSomething(int n, String s, ComplexData otherData)
-      {
-         assertEquals(1, n);
-         assertNotNull(otherData);
-         ...
-         // Return (if non-void) or throw the result we want to produce for
-         // this invocation of the mocked method:
-         return otherData.isValid();
-      }
-
-      // Other mock or regular methods, if needed...
-   };
+   // Applies the mock-up by instantiating it:
+   new <strong>ExampleMockUp</strong>();
 
    // Exercise code under test normally; calls to MyCollaborator#doSomething will
    // execute the mock method above.
    ...
+
+   // The applied mock-up is automatically discarded when out of scope.
 }
 </code></pre>
 <p>
    The <code class="annotation">@Mock</code> annotation marks those methods in the <em>mock-up class</em> which are
    meant to provide mock implementations for the corresponding methods (of the same signature) in the mocked class.
-</p>
-<p>
-   A <code class="type">MockUp&lt;T></code> subclass can also be used as a general-purpose <em>fake implementation</em>
-   for the indicated type "<code>T</code>" (including <code>final</code> classes, classes with <code>static</code>
-   methods, etc.).
-   Such implementations can even be applied globally, by setting the "<code>mockups</code>" system property or
-   providing a "<code>jmockit.properties</code>" configuration file.
+   A <code class="type">MockUp&lt;T></code> subclass can be used as a general-purpose <em>fake implementation</em> for
+   the indicated type "<code>T</code>" (including <code>final</code> classes, classes with <code>static</code> methods,
+   etc.).
+   Such implementations can even be applied globally, by setting the "<code>mockups</code>" system property or providing
+   a "<code>jmockit.properties</code>" configuration file.
 </p>
 <p>
    Mock-up classes providing partial fake implementations can be very useful in integration testing.
@@ -337,7 +346,7 @@ public void fakingExample()
    <a href="#moreInfo">More information</a>
 </h3>
 <p>
-   The examples above give only a brief overview of the available mocking/faking APIs. There is more.
+   The examples above give a good overview of the available mocking/faking APIs, but there is more.
    The <a href="tutorial.html">JMockit Tutorial</a> contains an extensive discussion of nearly all methods, fields,
    annotations, etc., with many examples.
    The <a href="api1x/index.html">API documentation</a> provides a detailed specification for all API elements.
