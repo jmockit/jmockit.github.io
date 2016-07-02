@@ -27,6 +27,37 @@
 
 <h1>Development history</h1>
 
+<h2 id="next">
+   <a href="#next">Next release</a>
+</h2>
+
+<h3 id="1.26">Version <a href="#1.26">1.26</a> (Jul ??, 2016):</h3>
+<ul>
+   <li>
+      <strong>Deprecated</strong> the <code>MockUp#tearDown()</code> method.
+      Mock-up tear down is automatic, so explicit calls to this method are either made by mistake, or by misuse in
+      tests that should be broken down into two or more test methods.
+   </li>
+   <li>
+      <strong>Deprecated</strong> all three attributes from the <code class="annotation">@Mock</code> annotation
+      (<code>invocations</code>, <code>minInvocations</code>, and <code>maxInvocations</code>).
+      Use of said attributes is indicative of a behavior-oriented test that would be better written with the
+      Expectations API.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the "<code>$</code>" special field that can be used when recording or verifying
+      expectations to provide a custom error message.
+      This feature is of dubious value and probably never used.
+   </li>
+   <li>
+      <strong>Dropped</strong> support for the <code>jmockit.properties</code> configuration file.
+   </li>
+   <li>
+      Issues closed:
+      <a href="https://github.com/jmockit/jmockit1/issues/299">#299</a>.
+   </li>
+</ul>
+
 <h2 id="current">
    <a href="#current">Current release</a>
 </h2>
