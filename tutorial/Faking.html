@@ -40,7 +40,13 @@
    <li><a href="#invocation">Accessing the invocation context</a></li>
    <li><a href="#proceed">Proceeding into the real implementation</a></li>
    <li><a href="#reuse">Reusing mock-ups between tests</a></li>
-   <li><a href="#widerScopes">Global mock-ups</a></li>
+   <li>
+      <a href="#widerScopes">Global mock-ups</a>
+      <ol>
+         <li><a href="#programmatic">Programmatic application of global mock-ups</a></li>
+         <li><a href="#systemProperty">External application through a system property</a></li>
+      </ol>
+   </li>
    <li><a href="#advice">Applying AOP-style advice</a></li>
 </ol>
 <div style="text-align: center;" title="Click on types to open API documentation">
@@ -628,18 +634,6 @@ public final class TestSuite
    Note that a system property can be passed to the JVM through the standard "<code>-D</code>" command line parameter.
    Ant/Maven/etc. build scripts have their own ways of specifying system properties, so check their documentation for
    details.
-</p>
-
-<h3 id="propertiesFile">
-   <a href="#propertiesFile">External application through the <code>jmockit.properties</code> file</a>
-</h3>
-<p>
-   Mock-up classes specified in the <code>mockups</code> system property can alternatively be specified in a separate
-   <strong><code>jmockit.properties</code></strong> file, which should be present at the root of the classpath.
-   If there are multiple such files in the classpath (either inside jars or plain directories), all class names listed
-   are added together.
-   This allows the creation of reusable mock classes which can be packaged in a jar file with its own properties file;
-   when added to the execution classpath of a test suite, the mock classes will be automatically applied at startup.
 </p>
 
 <h2 id="advice">
