@@ -53,6 +53,12 @@
       <strong>Dropped</strong> support for the <code>jmockit.properties</code> configuration file.
    </li>
    <li>
+      <strong>Added</strong> support for <strong>JUnit 5</strong> (the <code>5.0.0-M1</code> release of July 7).
+      Differently from JUnit 4 support (and like TestNG support), the relative order in the classpath between JMockit
+      and JUnit 5 dependencies is irrelevant - also, no configuration code needs to be added to a JUnit 5 test class
+      in order to use the JMockit API, it just works.
+   </li>
+   <li>
       Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/307">#307</a>.
    </li>
