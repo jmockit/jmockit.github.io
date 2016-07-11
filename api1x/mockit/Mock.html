@@ -70,12 +70,12 @@
 <li>Summary:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Required&nbsp;|&nbsp;</li>
-<li><a href="#annotation.type.optional.element.summary">Optional</a></li>
+<li>Optional</li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#annotation.type.element.detail">Element</a></li>
+<li>Element</li>
 </ul>
 </div>
 <a name="skip.navbar.top">
@@ -118,142 +118,11 @@ public @interface <span class="memberNameLabel">Mock</span></pre>
  initializers of the mocked class, if present in the mock-up class.
  <p/>
  Yet another special mock method is "<strong><code>Object $advice(Invocation)</code></strong>", which if defined will
- match <em>every</em> method in the mocked class hierarchy.
- <p/>
- A mock method can specify <em>constraints</em> on the number of invocations it should receive while in effect
- (ie, from the time a real method/constructor is mocked to the time it is restored to its original definition).</div>
+ match <em>every</em> method in the mocked class hierarchy.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Mock.html#invocations--"><code>invocations</code></a>, 
-<a href="../mockit/Mock.html#minInvocations--"><code>minInvocations</code></a>, 
-<a href="../mockit/Mock.html#maxInvocations--"><code>maxInvocations</code></a>, 
-<a href="http://jmockit.org/tutorial/Faking.html#mocks">Tutorial</a></dd>
+<dd><a href="http://jmockit.org/tutorial/Faking.html#mocks">Tutorial</a></dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
-<!-- =========== ANNOTATION TYPE OPTIONAL MEMBER SUMMARY =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="annotation.type.optional.element.summary">
-<!--   -->
-</a>
-<h3>Optional Element Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Optional Element Summary table, listing optional elements, and an explanation">
-<caption><span>Optional Elements</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Optional Element and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Mock.html#invocations--">invocations</a></span></code>
-<div class="block">Number of expected invocations of the mock method.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Mock.html#maxInvocations--">maxInvocations</a></span></code>
-<div class="block">Maximum number of expected invocations of the mock method, if positive.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Mock.html#minInvocations--">minInvocations</a></span></code>
-<div class="block">Minimum number of expected invocations of the mock method, starting from 0 (zero, which is the default).</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
-<!-- ============ ANNOTATION TYPE MEMBER DETAIL =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="annotation.type.element.detail">
-<!--   -->
-</a>
-<h3>Element Detail</h3>
-<a name="invocations--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>invocations</h4>
-<pre>public abstract&nbsp;int&nbsp;invocations</pre>
-<div class="block">Number of expected invocations of the mock method.
- If 0 (zero), no invocations will be expected.
- A negative value (the default) means there is no expectation on the number of invocations;
- that is, the mock can be called any number of times or not at all during any test which uses it.
- <p/>
- A non-negative value is equivalent to setting <a href="../mockit/Mock.html#minInvocations--"><code>minInvocations</code></a> and
- <a href="../mockit/Mock.html#maxInvocations--"><code>maxInvocations</code></a> to that same value.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://jmockit.org/tutorial/Faking.html#constraints">Tutorial</a></dd>
-</dl>
-<dl>
-<dt>Default:</dt>
-<dd>-1</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="maxInvocations--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>maxInvocations</h4>
-<pre>public abstract&nbsp;int&nbsp;maxInvocations</pre>
-<div class="block">Maximum number of expected invocations of the mock method, if positive.
- If zero the mock is not expected to be called at all.
- A negative value (the default) means there is no expectation on the maximum number of invocations.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Mock.html#invocations--"><code>invocations</code></a>, 
-<a href="../mockit/Mock.html#minInvocations--"><code>minInvocations</code></a>, 
-<a href="http://jmockit.org/tutorial/Faking.html#constraints">Tutorial</a></dd>
-</dl>
-<dl>
-<dt>Default:</dt>
-<dd>-1</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="minInvocations--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>minInvocations</h4>
-<pre>public abstract&nbsp;int&nbsp;minInvocations</pre>
-<div class="block">Minimum number of expected invocations of the mock method, starting from 0 (zero, which is the default).</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Mock.html#invocations--"><code>invocations</code></a>, 
-<a href="../mockit/Mock.html#maxInvocations--"><code>maxInvocations</code></a>, 
-<a href="http://jmockit.org/tutorial/Faking.html#constraints">Tutorial</a></dd>
-</dl>
-<dl>
-<dt>Default:</dt>
-<dd>0</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
 </li>
 </ul>
 </div>
@@ -306,12 +175,12 @@ public @interface <span class="memberNameLabel">Mock</span></pre>
 <li>Summary:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Required&nbsp;|&nbsp;</li>
-<li><a href="#annotation.type.optional.element.summary">Optional</a></li>
+<li>Optional</li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#annotation.type.element.detail">Element</a></li>
+<li>Element</li>
 </ul>
 </div>
 <a name="skip.navbar.bottom">

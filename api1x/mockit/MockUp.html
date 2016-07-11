@@ -19,7 +19,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -175,7 +175,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <a href="../mockit/MockUp.html#MockUp-java.lang.Class-"><code>MockUp(Class)</code></a>, 
 <a href="../mockit/MockUp.html#MockUp-T-"><code>MockUp(Object)</code></a>, 
 <a href="../mockit/MockUp.html#getMockInstance--"><code>getMockInstance()</code></a>, 
-<a href="../mockit/MockUp.html#tearDown--"><code>tearDown()</code></a>, 
 <a href="../mockit/MockUp.html#onTearDown--"><code>onTearDown()</code></a>, 
 <a href="../mockit/MockUp.html#mockedType"><code>mockedType</code></a>, 
 <a href="http://jmockit.org/tutorial/Faking.html#setUp">Tutorial</a></dd>
@@ -265,13 +264,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#onTearDown--">onTearDown</a></span>()</code>
 <div class="block">An empty method that can be overridden in a mock-up subclass wanting to be notified on tear down; this happens
  through <em>automatic</em> tear down, but not if <a href="../mockit/MockUp.html#tearDown--"><code>tearDown()</code></a> is called.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#tearDown--">tearDown</a></span>()</code>
-<div class="block">Discards the mock methods originally applied by instantiating this mock-up object, restoring faked methods to
- their original behaviors.</div>
 </td>
 </tr>
 </table>
@@ -419,7 +411,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <a name="onTearDown--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>onTearDown</h4>
 <pre>protected&nbsp;void&nbsp;onTearDown()</pre>
@@ -427,25 +419,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  through <em>automatic</em> tear down, but not if <a href="../mockit/MockUp.html#tearDown--"><code>tearDown()</code></a> is called.
  <p/>
  By default, this method does nothing.</div>
-</li>
-</ul>
-<a name="tearDown--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>tearDown</h4>
-<pre>public final&nbsp;void&nbsp;tearDown()</pre>
-<div class="block">Discards the mock methods originally applied by instantiating this mock-up object, restoring faked methods to
- their original behaviors.
- <p/>
- This method should rarely, if ever, be used, since tear-down is <em>automatic</em>: all classes faked by a test
- will automatically be restored at the end of the test; the same for classes faked for the whole test class in a
- "before class" method.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/MockUp.html#onTearDown--"><code>onTearDown()</code></a></dd>
-</dl>
 </li>
 </ul>
 </li>
