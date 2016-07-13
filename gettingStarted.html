@@ -101,12 +101,12 @@
 </p>
 
 <h2 id="mockingAPIs">
-   <a href="#mockingAPIs">Using the mocking APIs</a>
+   <a href="#mockingAPIs">Using the mocking API</a>
 </h2>
 <p>
-   The JMockit mocking APIs can be used in tests written with JUnit 4 (version 4.5 or newer) or TestNG (version 6.2 or
+   The JMockit mocking API can be used in tests written with JUnit 4 (version 4.5 or newer) or TestNG (version 6.2 or
    newer).
-   Lets now see how mocking is done with the available APIs, which are imported from the "<code>mockit</code>" package.
+   Lets now see how mocking is done with this API, which is imported from the "<code>mockit</code>" package.
 </p>
 
 <h3 id="mockObject">
@@ -285,19 +285,76 @@ public void aTestMethod(@Injectable final MyCollaborator mock)
    the verification block (excluding those which are verified implicitly, if any).
 </p>
 
-<h3 id="testedObjects">
-   <a href="#testedObjects"><em class="annotation">@Tested</em> objects</a>
-</h3>
+<h2 id="testedObjects">
+   <a href="#testedObjects">Instantiating and injecting objects to be tested</a>
+</h2>
 <p>
+   The <code class="annotation">@Tested</code> annotation provides support for the automatic creation of an object under
+   test, with its dependencies automatically filled with mocked and/or real instances.
+   A test class can declare one or more fields for tested objects, as shown below.
+</p>
+<pre><code>public final class ClassUnderTest
+{
+   @Inject private Dependency dependency;
 
+   public void doSomething(String someData) { ... }
+}
+
+public final class ExampleUnitTest
+{
+   @Tested ClassUnderTest testedUnit;
+   @Injectable Dependency mockDependency;
+
+   @Test
+   public void exerciseUnitInIsolationFromDependency()
+   {
+      Data data = new Data();
+      new Expectations() {{ mockDependency.findSomeData(anyString); result = data; }};
+
+      testedUnit.doSomething("...");
+
+      new Verifications() {{ mockDependency.sendNotification(); }};
+   }
+}
+</code></pre>
+<p>
+   In the test above, the class under test is instantiated (through its no-args constructor) and initialized with a mock
+   dependency, so that it can be tested in isolation.
+   We can just as easily write an <em>integration</em> test, where dependencies are not mocked but recursively
+   instantiated and initialized as tested objects themselves; for this, we simply specify the tested object to be
+   <em>fully initialized</em>:
+</p>
+<pre><code>public final class ExampleIntegrationTest
+{
+   @Tested(fullyInitialized = true) ClassUnderTest sut;
+
+   @Test
+   public void exerciseTestedObjectsTogether()
+   {
+      Data data = new Data();
+      // Save data into application database or other data store.
+
+      sut.doSomething("...");
+
+      // Verify notification was sent.
+   }
+}
+</code></pre>
+<p>
+   We are not going to deal with the actions mentioned in the comments above in this brief overview, but don't assume
+   they are necessarily difficult to achieve.
+   The <code class="annotation">@Tested</code> API hides a lot of power behind one seemingly small annotation.
+   Even more, it can be used as a <em>meta-</em>annotation, so you can create your own annotations from it, such as
+   "<code class="annotation">@SUT</code>" (for "System Under Test"), or "<code class="annotation">@DataObject</code>",
+   or "<code class="annotation">@Dependency</code>"...
 </p>
 
-<h3 id="faking">
+<h2 id="faking">
    <a href="#faking"><em>Fake</em> implementations</a>
-</h3>
+</h2>
 <p>
    A different API is provided for substituting the original implementation of some method or constructor in a class
-   with a fake one; this is done with the <em>Mockups</em> API.
+   with a fake one; this is the <em>faking</em> API.
    The next test shows an example.
 </p>
 <pre><code>public static final class ExampleMockUp extends MockUp&lt;MyCollaborator>
@@ -329,7 +386,7 @@ public void fakingExample()
 </code></pre>
 <p>
    The <code class="annotation">@Mock</code> annotation marks those methods in the <em>mock-up class</em> which are
-   meant to provide mock implementations for the corresponding methods (of the same signature) in the mocked class.
+   meant to provide mock implementations for the corresponding methods (of the same signature) in the faked class.
    A <code class="type">MockUp&lt;T></code> subclass can be used as a general-purpose <em>fake implementation</em> for
    the indicated type "<code>T</code>" (including <code>final</code> classes, classes with <code>static</code> methods,
    etc.).
@@ -339,6 +396,9 @@ public void fakingExample()
    Mock-up classes providing partial fake implementations can be very useful in integration testing.
    They can be used in a supporting role when creating an integration testing infrastructure for complex application
    frameworks such as Spring, Hibernate, or Java EE.
+   For example, we could apply a mock-up for the Java Mail API in a <code class="annotation">@BeforeClass</code> method
+   (or the test run by setting "<code>mockups=testing.infrastructure.EmailMockUp</code>"), so that each test can recover
+   sent e-mail messages for verification.
 </p>
 
 <h3 id="moreInfo">
