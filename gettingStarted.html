@@ -357,32 +357,34 @@ public final class ExampleUnitTest
    with a fake one; this is the <em>faking</em> API.
    The next test shows an example.
 </p>
-<pre><code>public static final class ExampleMockUp extends MockUp&lt;MyCollaborator>
+<pre><code>public static final class ExampleMockUp extends MockUp&lt;ExternalService>
 {
    @Mock // fake implementation for a method of the same signature
    public boolean doSomething(int n, String s, ComplexData otherData)
    {
-      // Return (or throw) a "fake" result for an invocation to the
-      // method in the faked class:
+      // Return (or throw) a "fake" result for invocations to the method in the faked class:
       return true; // ... or whatever
    }
 
-   // Other @Mock methods for other methods or constructors in MyCollaborator,
-   // if needed.
+   // Other @Mock methods for other methods or constructors in ExternalService, if needed.
+}
+
+@BeforeClass
+public static void applyMockUps()
+{
+   // Applies the mock-up by instantiating it:
+   new <strong>ExampleMockUp</strong>();
 }
 
 @Test
 public void fakingExample()
 {
-   // Applies the mock-up by instantiating it:
-   new <strong>ExampleMockUp</strong>();
-
-   // Exercise code under test normally; calls to MyCollaborator#doSomething will
+   // Exercise code under test normally; calls to ExternalService#doSomething will
    // execute the mock method above.
    ...
-
-   // The applied mock-up is automatically discarded when out of scope.
 }
+
+// The applied mock-up is automatically discarded when out of scope.
 </code></pre>
 <p>
    The <code class="annotation">@Mock</code> annotation marks those methods in the <em>mock-up class</em> which are
