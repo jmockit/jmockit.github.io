@@ -28,7 +28,7 @@
 <ol class="contents">
    <li><a href="#mocks">Mock methods and mock-up classes</a></li>
    <li>
-      <a href="#setUp">Applying mock-ups for a test</a>
+      <a href="#setUp">Applying mock-ups</a>
       <ol>
          <li><a href="#mockableMethods">Kinds of methods which can be faked</a></li>
          <li><a href="#inline">In-line mock-up classes</a></li>
@@ -64,11 +64,11 @@
    methods and constructors unmodified.
 </p>
 <p>
-   Fake implementations can be particularly useful in <em>integration</em> tests which depend on external entities or
-   resources such as the network, the file system, etc.
+   Fake implementations can be particularly useful in <em>integration</em> tests which depend on external components or
+   resources such as mail or web services servers, complex libraries, etc.
    The replacement of real implementations with fake ones is completely transparent to the code which uses those
    dependencies, and can be switched on and off for the scope of a single test, all tests in a single test class, or
-   even for the entire test run.
+   for the entire test run.
 </p>
 <p>
    For the remaining of this chapter, lets say we want to write tests for an application that uses the
@@ -77,8 +77,8 @@
    In this case, we don't want our tests to actually execute any of the real JAAS code, since it may depend on external
    configuration and might not easily work in a developer testing environment.
    Therefore, an application class depending on <code class="type">LoginContext</code> will be the "code under test",
-   while the <code class="type">LoginContext</code> class (the dependency) will have at least some of its methods and
-   constructors faked for any given test which involves authentication logic.
+   while the <code class="type">LoginContext</code> class (the dependency) will have some of its methods and
+   constructors faked.
 </p>
 
 <h2 id="mocks">
@@ -88,17 +88,17 @@
    In the context of the Mockups API, a <em>mock (or fake) method</em> is any method in a <em>mock-up (fake) class</em>
    that gets annotated with <code class="annotation">@Mock</code>.
    A <em>mock-up class</em> is any class extending the <code class="type">mockit.MockUp&lt;T></code> generic base class,
-   where <code>&lt;T></code> is the type to be mocked up.
+   where <code>&lt;T></code> is the type to be faked.
    The example below shows several mock methods defined in a mock-up class for our example "real" class,
    <code class="type">javax.security.auth.login.LoginContext</code>.
 </p>
 <pre><code>public final class MockLoginContext extends MockUp&lt;LoginContext>
 {
    @Mock
-   public void $init(String name, CallbackHandler callbackHandler)
+   public void $init(String name, CallbackHandler callback)
    {
       assertEquals("test", name);
-      assertNotNull(callbackHandler);
+      assertNotNull(callback);
    }
 
    @Mock
@@ -112,12 +112,12 @@
    When a mock-up class is applied to a real class, the latter gets the implementation of those methods and constructors
    which have corresponding mock methods temporarily replaced with the implementations of the matching mock methods, as
    defined in the mock-up class.
-   In other words, the real class becomes "faked" for the duration of the test which applied the mock-up class, and will
-   respond accordingly whenever it receives invocations during test execution.
-   At runtime, what really happens is that the execution of a mocked method/constructor is intercepted and redirected to
+   In other words, the real class becomes "faked" for the duration of the test which applied the mock-up class.
+   Its methods will respond accordingly whenever it receives invocations during test execution.
+   At runtime, what really happens is that the execution of a faked method/constructor is intercepted and redirected to
    the corresponding mock method, which then executes and returns (unless an exception/error is thrown) to the original
    caller, without this one noticing that a different method was actually executed.
-   Normally, the "caller" class is the one under test, while the mocked class is a dependency.
+   Normally, the "caller" class is one under test, while the faked class is a dependency.
 </p>
 <p>
    Mock classes are often defined as nested (<code>static</code>), inner (non-<code>static</code>), or even as
@@ -128,8 +128,8 @@
 <p>
    Each <code class="annotation">@Mock</code> method must have a corresponding "real method/constructor" with the
    <em>same signature</em> in the targeted real class.
-   For a mocked <em>method</em>, the signature consists of the method name and parameters; for a mocked
-   <em>constructor</em>, it's just the parameters, with the mock method having the special name "<code>$init</code>".
+   For a <em>method</em>, the signature consists of the method name and parameters; for a <em>constructor</em>, it's
+   just the parameters, with the mock method having the special name "<code>$init</code>".
    If a matching real method/constructor cannot be found for a given mock method, either in the specified real class or
    in its super-classes (excluding <code class="type">java.lang.Object</code>), an
    <code class="type">IllegalArgumentException</code> is thrown when the test attempts to apply the mock class.
@@ -138,23 +138,20 @@
 </p>
 <p>
    Finally, notice there is no need to have mock methods for <em>all</em> methods and constructors in a real class.
-   Any such method or constructor for which no corresponding mock exists in the mock class will simply stay "as is",
-   that is, it won't be mocked.
-   This, of course, assuming there isn't some <em>other</em> mock class applied by the same test to the same real class,
-   something which is perfectly valid (and sometimes useful).
-   If two (or more) mock classes happen to be applied to the same real class for the same test, then such mock classes
-   should avoid defining the same mock twice.
-   In case a mock <em>is</em> duplicated, though, the "last" one to be applied wins.
+   Any such method or constructor for which no corresponding mock method exists in the mock-up class will simply stay
+   "as is", that is, it won't be faked.
 </p>
 
 <h2 id="setUp">
-   <a href="#setUp">Applying mock-ups for a test</a>
+   <a href="#setUp">Applying mock-ups</a>
 </h2>
 <p>
-   A given mock class must be applied to a corresponding real class to have any effect.
-   This is usually done inside an individual test method or inside a <code class="annotation">@BeforeMethod</code>
-   (TestNG) or <code class="annotation">@Before</code> (JUnit 4) method.
-   Once a mock class is applied, all executions of the mocked methods and constructors of the real class get
+   A given mock-up class must be applied to a corresponding real class to have any effect.
+   This is usually done for a whole test class or test suite, but can also be done for an individual test.
+   Mock-ups can be applied from anywhere inside a test class: a <code class="annotation">@BeforeClass</code> method, a
+   <code class="annotation">@Before</code> method (or <code class="annotation">@BeforeMethod</code> if using TestNG),
+   or from a <code class="annotation">@Test</code> method.
+   Once a mock-up class is applied, all executions of the faked methods and constructors of the real class get
    automatically redirected to the corresponding mock methods.
 </p>
 <p>
@@ -177,49 +174,10 @@ public void applyingAMockClass() throws Exception
 </p>
 <p>
    When the constructor invocation that instantiates <code class="type">LoginContext</code> executes, the corresponding
-   "<code>$init</code>" mock method in <code class="type">MockLoginContext</code> will be executed, asserting the
-   validity of the invocation arguments.
+   "<code>$init</code>" mock method in <code class="type">MockLoginContext</code> will be executed.
    Similarly, when the <code>LoginContext#login</code> method is called, the corresponding mock method will be executed,
    which in this case will do nothing since the method has no parameters and <code>void</code> return type.
    The mock-up class instance on which these invocations occur is the one created in the first part of the test.
-</p>
-<p>
-   The (partial) example test above simply verifies that the <code class="type">LoginContext</code> class is
-   instantiated with valid arguments through a particular constructor that takes a context name and a callback handler.
-   If the real class is not instantiated at all, the test would still pass (unless some other condition causes it to
-   fail).
-   The invocation of the <code>login</code> method also has no effect on the outcome of this test, except for the fact
-   that such an invocation will result in the execution of an empty mock method instead of the real method.
-</p>
-<p>
-   Now, what if we wanted to simulate an authentication failure for a different test?
-   The <code>LoginContext#login()</code> method declares that it can throw a <code class="type">LoginException</code>
-   "if the authentication fails", so what we need to do is very simple (using JUnit 4 in this example):
-</p>
-<pre><code>public static class MockLoginContextThatFailsAuthentication extends MockUp&lt;LoginContext>
-{
-   @Mock
-   public void $init(String name) {}
-
-   @Mock
-   public void login() throws LoginException
-   {
-      throw new LoginException();
-   }
-}
-
-@Test(expected = LoginException.class)
-public void applyingAnotherMockClass() throws Exception
-{
-   new <strong>MockLoginContextThatFailsAuthentication</strong>();
-
-   // Inside an application class:
-   new LoginContext("test").login();
-}
-</code></pre>
-<p>
-   This test will only pass if the <code>LoginContext#login()</code> method throws an exception, which it will when the
-   corresponding mock method is executed.
 </p>
 
 <h3 id="mockableMethods">
@@ -323,7 +281,7 @@ public final class TestedUnit
    Given a base type (be it an <code>interface</code>, an <code>abstract</code> class, or any sort of base class), we
    can write a test which only knows about the base type but where all implementing/extending implementation classes get
    faked.
-   To do so, we create a mock-up whose mocked type refers only to the known base type, and does so through a
+   To do so, we create a mock-up whose target type refers only to the known base type, and does so through a
    <em>type variable</em>.
    Not only will implementation classes already loaded by the JVM get faked, but also any additional classes that
    happen to get loaded by the JVM during later test execution.
@@ -386,20 +344,20 @@ public void fakingStaticInitializers()
 <p>
    A mock method can optionally declare an extra parameter of type <code class="type">mockit.Invocation</code>, provided
    it is the <em>first</em> parameter.
-   For each actual invocation to the corresponding mocked method/constructor, an <code class="type">Invocation</code>
+   For each actual invocation to the corresponding faked method/constructor, an <code class="type">Invocation</code>
    object will be automatically passed in when the mock method is executed.
 </p>
 <p>
    This invocation context object provides several <em>getters</em> which can be used inside the mock method.
-   One is the <code>getInvokedInstance()</code> method, which returns the <em>mocked</em> instance on which the
-   invocation occurred (<code>null</code> if the mocked method is <code>static</code>).
-   Other getters provide the number of invocations (including the current one) to the mocked method/constructor,
+   One is the <code>getInvokedInstance()</code> method, which returns the <em>faked</em> instance on which the
+   invocation occurred (<code>null</code> if the faked method is <code>static</code>).
+   Other getters provide the number of invocations (including the current one) to the faked method/constructor,
    the invocation arguments (if any), and the invoked member (a <code class="type">java.lang.reflect.Method</code> or
    <code class="type">java.lang.reflect.Constructor</code> object, as appropriate).
    Below we have an example test.
 </p>
 <pre><code>@Test
-public void accessingTheMockedInstanceInMockMethods() throws Exception
+public void accessingTheFakedInstanceInMockMethods() throws Exception
 {
    final Subject testSubject = new Subject();
 
@@ -443,9 +401,9 @@ public void accessingTheMockedInstanceInMockMethods() throws Exception
       }
    };
 
-   LoginContext theMockedInstance = new LoginContext("test", testSubject);
-   theMockedInstance.login();
-   theMockedInstance.logout();
+   LoginContext theFakedInstance = new LoginContext("test", testSubject);
+   theFakedInstance.login();
+   theFakedInstance.logout();
 }
 </code></pre>
 
@@ -453,9 +411,9 @@ public void accessingTheMockedInstanceInMockMethods() throws Exception
    <a href="#proceed">Proceeding into the real implementation</a>
 </h2>
 <p>
-   Once a <code class="annotation">@Mock</code> method is executing, any additional calls to the corresponding mocked
+   Once a <code class="annotation">@Mock</code> method is executing, any additional calls to the corresponding faked
    method are also redirected to the mock method, causing its implementation to be re-entered.
-   If, however, we want to execute the real implementation of the mocked method, we can call the <code>proceed()</code>
+   If, however, we want to execute the real implementation of the faked method, we can call the <code>proceed()</code>
    method on the <code class="type">Invocation</code> object received as the first parameter to the mock method.
 </p>
 <p>
@@ -498,7 +456,7 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
    void login(Invocation inv) throws LoginException
    {
       try {
-         <strong>inv.proceed();</strong> // executes the real code of the mocked method
+         <strong>inv.proceed();</strong> // executes the real code of the faked method
          loggedIn = true;
       }
       finally {
@@ -522,7 +480,7 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
 </code></pre>
 <p>
    In the example above, <em>all</em> the code inside the tested <code class="type">LoginContext</code> class will get
-   executed, even though some methods (<code>login</code> and <code>logout</code>) are mocked.
+   executed, even though some methods (<code>login</code> and <code>logout</code>) are faked.
    This example is contrived; in practice, the ability to proceed into real implementations would not normally be useful
    for <em>testing</em> per se, not directly at least.
 </p>
@@ -680,7 +638,7 @@ public final class TestSuite
    @Override
    protected void onTearDown()
    {
-      System.out.println("\nTotal timings for methods in " + mockedType + " (ms)");
+      System.out.println("\nTotal timings for methods in " + targetType + " (ms)");
 
       for (Entry&lt;Method, Long> methodAndTime : methodTimes.entrySet()) {
          Method method = methodAndTime.getKey();
