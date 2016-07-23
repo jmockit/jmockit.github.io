@@ -119,12 +119,19 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public abstract class <span class="typeNameLabel">MockUp&lt;T&gt;</span>
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block">A base class used in the creation of a <em>mock-up</em> for a class or interface.
- Such mock-ups can be used as <em>fake</em> implementations for use in integration or unit tests.
+<div class="block">A base class used in the creation of a <em>mock-up</em> for a class, an interface, etc.
+ Such mock-ups can be used as <em>fake</em> implementations for use in unit or integration tests.
+ For example:
+ <pre>
+
+ public final class FakeSystem <strong>extends MockUp&lt;System></strong> {
+    <strong>&#64;Mock</strong> public static long nanoTime() { return 123L; }
+ }
+ </pre>
  <p/>
  One or more <em>mock methods</em> annotated <a href="../mockit/Mock.html" title="annotation in mockit">as such</a> must be defined in the concrete subclass.
- Each <code>@Mock</code> method should have a matching method or constructor in the mocked class/interface.
- At runtime, the execution of a mocked method/constructor will get redirected to the corresponding mock method.
+ Each <code>@Mock</code> method should have a matching method or constructor in the faked class/interface.
+ At runtime, the execution of a faked method/constructor will get redirected to the corresponding mock method.
  <p/>
  When the faked type is an interface, an implementation class is generated where all methods are empty, with non-void
  methods returning a default value according to the return type: <code>0</code> for <code>int</code>, <code>null</code> for a
@@ -135,7 +142,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  When the type to be faked is specified indirectly through a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect">type variable</a>, there are two
  other possible outcomes:
  <ol>
- <li>If the type variable "<code>extends</code>" two or more interfaces, a mocked proxy class that implements all
+ <li>If the type variable "<code>extends</code>" two or more interfaces, a mock proxy class that implements all
  interfaces is created, with the proxy instance made available through a call to <a href="../mockit/MockUp.html#getMockInstance--"><code>getMockInstance()</code></a>.
  Example:
  <pre>
@@ -152,8 +159,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  }
  </pre>
  </li>
- <li>If the type variable extends a <em>single</em> type (either an interface or a class), then that type is taken
- as a <em>base</em> type whose concrete implementation classes should <em>also</em> get mocked.
+ <li>If the type variable extends a <em>single</em> type (either an interface or a non-<code>final</code> class), then
+ that type is taken as a <em>base</em> type whose concrete implementation classes should <em>also</em> get faked.
  Example:
  <pre>
 
@@ -176,7 +183,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <a href="../mockit/MockUp.html#MockUp-T-"><code>MockUp(Object)</code></a>, 
 <a href="../mockit/MockUp.html#getMockInstance--"><code>getMockInstance()</code></a>, 
 <a href="../mockit/MockUp.html#onTearDown--"><code>onTearDown()</code></a>, 
-<a href="../mockit/MockUp.html#mockedType"><code>mockedType</code></a>, 
+<a href="../mockit/MockUp.html#targetType"><code>targetType</code></a>, 
 <a href="http://jmockit.org/tutorial/Faking.html#setUp">Tutorial</a></dd>
 </dl>
 </li>
@@ -199,7 +206,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#mockedType">mockedType</a></span></code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#targetType">targetType</a></span></code>
 <div class="block">Holds the class or generic type targeted by this mock-up instance.</div>
 </td>
 </tr>
@@ -227,13 +234,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#MockUp-java.lang.Class-">MockUp</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classToMock)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#MockUp-java.lang.Class-">MockUp</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;targetClass)</code>
 <div class="block">Applies the <a href="../mockit/Mock.html" title="annotation in mockit">mock methods</a> defined in the mock-up subclass to the given class/interface.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#MockUp-T-">MockUp</a></span>(<a href="../mockit/MockUp.html" title="type parameter in MockUp">T</a>&nbsp;instanceToMock)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/MockUp.html#MockUp-T-">MockUp</a></span>(<a href="../mockit/MockUp.html" title="type parameter in MockUp">T</a>&nbsp;targetInstance)</code>
 <div class="block">Applies the <a href="../mockit/Mock.html" title="annotation in mockit">mock methods</a> defined in the mock-up subclass to the type specified through the type
  parameter, but only affecting the given instance.</div>
 </td>
@@ -288,13 +295,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="mockedType">
+<a name="targetType">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>mockedType</h4>
-<pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a> mockedType</pre>
+<h4>targetType</h4>
+<pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a> targetType</pre>
 <div class="block">Holds the class or generic type targeted by this mock-up instance.</div>
 </li>
 </ul>
@@ -334,11 +341,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>MockUp</h4>
-<pre>protected&nbsp;MockUp(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;classToMock)</pre>
+<pre>protected&nbsp;MockUp(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;targetClass)</pre>
 <div class="block">Applies the <a href="../mockit/Mock.html" title="annotation in mockit">mock methods</a> defined in the mock-up subclass to the given class/interface.
  <p/>
  In most cases, the constructor with no parameters can be used.
- This variation should be used only when the type to be mocked is not accessible or known to the test.</div>
+ This variation should be used only when the type to be faked is not accessible or known from the test code.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/MockUp.html#MockUp--"><code>MockUp()</code></a>, 
@@ -354,20 +361,20 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockListLast">
 <li class="blockList">
 <h4>MockUp</h4>
-<pre>protected&nbsp;MockUp(<a href="../mockit/MockUp.html" title="type parameter in MockUp">T</a>&nbsp;instanceToMock)</pre>
+<pre>protected&nbsp;MockUp(<a href="../mockit/MockUp.html" title="type parameter in MockUp">T</a>&nbsp;targetInstance)</pre>
 <div class="block">Applies the <a href="../mockit/Mock.html" title="annotation in mockit">mock methods</a> defined in the mock-up subclass to the type specified through the type
  parameter, but only affecting the given instance.
  <p/>
  In most cases, the constructor with no parameters should be adequate.
  This variation can be used when mock data or behavior is desired only for a particular instance, with other
  instances remaining unaffected; or when multiple mock-up objects carrying different states are desired, with one
- mock-up instance per real instance to be mocked.
+ mock-up instance per real instance.
  <p/>
  If <a href="../mockit/MockUp.html#getMockInstance--"><code>getMockInstance()</code></a> later gets called on this mock-up instance, it will return the instance that was
  given here.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>instanceToMock</code> - a real instance of the type to be faked, meant to be the only one of that type that should
+<dd><code>targetInstance</code> - a real instance of the type to be faked, meant to be the only one of that type that should
  be affected by this mock-up instance; must not be <code>null</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/MockUp.html#MockUp--"><code>MockUp()</code></a>, 
@@ -417,8 +424,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <pre>protected&nbsp;void&nbsp;onTearDown()</pre>
 <div class="block">An empty method that can be overridden in a mock-up subclass that wants to be notified whenever the mock-up is
  automatically torn down.
- Tear down happens when the mock-up goes out of scope: at the end of the test when applied inside a test, or at the
- end of the test class when applied before the test class.
+ Tear down happens when the mock-up goes out of scope: at the end of the test when applied inside a test, at the
+ end of the test class when applied before the test class, or at the end of the test run when applied through the
+ "<code>mockups</code>" system property.
  <p/>
  By default, this method does nothing.</div>
 </li>
