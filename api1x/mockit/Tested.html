@@ -176,8 +176,9 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Tested.html#fullyInitialized--">fullyInitialized</a></span></code>
-<div class="block">Indicates that each and every field of the tested object should be assigned a value, either an
- <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a> or a real (unmocked) instance of the field type.</div>
+<div class="block">Indicates that each and every field of the tested object should be assigned a value, which can be an
+ <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a>, another <code>@Tested</code> field of a type assignable to the field type, or a
+ real (unmocked) instance of the field type.</div>
 </td>
 </tr>
 </table>
@@ -229,18 +230,45 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
 <li class="blockList">
 <h4>fullyInitialized</h4>
 <pre>public abstract&nbsp;boolean&nbsp;fullyInitialized</pre>
-<div class="block">Indicates that each and every field of the tested object should be assigned a value, either an
- <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a> or a real (unmocked) instance of the field type.
+<div class="block">Indicates that each and every field of the tested object should be assigned a value, which can be an
+ <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a>, another <code>@Tested</code> field of a type assignable to the field type, or a
+ real (unmocked) instance of the field type.
  <p/>
  For each field of a reference type that would otherwise remain <code>null</code>, an attempt is made to automatically
  create and recursively initialize a suitable real instance.
  For this attempt to succeed, the type of the field must either be a concrete class having a constructor that can
- be satisfied by available injectables and/or by recursively created dependencies, an interface for which a single
- implementation class is loaded, or a known interface (see below) for which a real instance can be created.
+ be satisfied by available injectables and/or by recursively created dependencies, or a known interface (see below)
+ for which a real instance can be created.
  <p/>
- Currently, the JPA interfaces <code>javax.persistence.EntityManagerFactory</code> and
- <code>javax.persistence.EntityManager</code> are supported, provided a <code>META-INF/persistence.xml</code> file is
- available in the runtime classpath.</div>
+ Constructor injection is also supported.
+ In this case, the same rules used for injected fields apply to the parameters of the constructor that gets chosen
+ for automatic instantiation.
+ <p/>
+ Currently, the following standard types (mostly Java EE interfaces) have special support:
+ <ul>
+    <li>
+       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>: a logger is automatically
+       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true#getLogger(String)" title="class or interface in java.util.logging">created</a> with the name of the tested class.
+    </li>
+    <li>
+       <code>javax.inject.Provider&lt;T></code>: a provider which produces an instance of type
+       <code>T</code> is injected.
+    </li>
+    <li>
+       JPA interfaces <code>javax.persistence.EntityManagerFactory</code> and <code>javax.persistence.EntityManager</code>:
+       created through calls to <code>javax.persistence.Persistence#createEntityManagerFactory(String)</code> and
+       <code>javax.persistence.EntityManagerFactory#createEntityManager()</code>, provided a suitable
+       <code>META-INF/persistence.xml</code> file is available in the runtime classpath.
+    </li>
+    <li>
+       Servlet interfaces <code>javax.servlet.ServletContext</code> and <code>javax.servlet.http.HttpSession</code>:
+       objects that emulate the servlet context and HTTP session are automatically created for use in tests.
+    </li>
+    <li>
+       <code>javax.enterprise.context.Conversation</code>: an object that emulates an web application's conversation
+       context is created.
+    </li>
+ </ul></div>
 <dl>
 <dt>Default:</dt>
 <dd>false</dd>

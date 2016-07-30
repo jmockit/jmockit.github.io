@@ -41,11 +41,13 @@
 </ol>
 
 <p>
-   In this tutorial we examine the APIs available in JMockit, with the help of example tests.
-   The main API, intended for tests which use mocked dependencies, is the <a href="Mocking.html">mocking</a> API
+   In this tutorial we examine the APIs available in the toolkit, with the help of example tests.
+   The larger API, intended for tests which use mocked dependencies, is the <a href="Mocking.html">mocking</a> API
    (also known as the "Expectations" API).
-   The other one is the <a href="Faking.html">faking</a> API (aka the "Mockups" API), intended for tests which can
+   Another one is the <a href="Faking.html">faking</a> API (aka the "Mockups" API), intended for tests which can
    benefit from the use of <em>fake</em> implementations that avoid the full cost of heavy external components.
+   Finally, there is a small but powerful API that supports out-of-container
+   <a href="EnterpriseApplications">integration</a> testing.
 </p>
 <p>
    Even though the tutorial is fairly complete, it does not attempt to cover the entire published APIs in detail.
@@ -53,11 +55,11 @@
    <a href="../api1x/overview-summary.html">API documentation</a>.
    A copy of this documentation for each version of the toolkit can be found under the "jmockit.github.io/api1x" folder,
    inside the full distribution zip file.
-   The main library file, "jmockit.jar" (and its Maven equivalent), contains Java source files (with Javadoc comments)
-   for easy access to the API source code and documentation from a Java IDE.
+   The "<code>jmockit.jar</code>" library file (and its Maven equivalent), contains Java source files (with Javadoc
+   comments) for easy access to the API source code and documentation from a Java IDE.
 </p>
 <p>
-   A separate chapter covers the <a href="CodeCoverage.html">code coverage tool</a>.
+   A separate chapter covers the <a href="CodeCoverage.html">code coverage</a> tool.
 </p>
 
 <h2 id="isolation">
@@ -71,7 +73,7 @@
    of these testing frameworks.
 </p>
 <p>
-   Automated developer tests can be divided in two main categories:
+   Automated developer tests can be divided in two broad categories:
 </p>
 <ol>
    <li>
@@ -85,7 +87,7 @@
 <p>
    Even though integration tests include the interaction between multiple units, particular tests may not be interested
    in exercising all components, layers, or sub-systems involved.
-   The ability to isolate the code under test from irrelevant parts of the system is therefore generally useful.
+   The ability to isolate the code under test from certain parts of the system is therefore generally useful.
 </p>
 
 <h2 id="mocks">
@@ -125,12 +127,12 @@
    <a href="#tools">Tools for testing with mock objects</a>
 </h2>
 <p>
-   Existing tools for testing with mock objects include <a href="http://easymock.org">EasyMock</a> and
+   Existing libraries for testing with mock objects include <a href="http://easymock.org">EasyMock</a> and
    <a href="http://jmock.org">jMock</a>, both of which are based on
    <a href="http://download.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>,
    which can create at runtime an implementation for a given Java interface.
    It's also possible to create proxies for concrete classes through CGLIB-based subclass generation.
-   Each tool has a rich API for expressing <em>expectations</em> that are verified as methods are called on mock
+   Each library has a rich API for expressing <em>expectations</em> that are verified as methods are called on mock
    instances, or at the end of the test.
    It's not uncommon to see JUnit tests with most or all checks written as EasyMock/jMock expectations, instead of with
    JUnit's own assertion methods.
@@ -141,7 +143,7 @@
    non-final classes, classes from the JRE, enums, etc.).
 </p>
 <p>
-   There is another group of mocking tools, which rely on <em>explicit verification</em> of expectations over
+   There is another group of mocking libraries, which rely on <em>explicit verification</em> of expectations over
    <em>implicit verification</em>: <a href="http://mockito.org">Mockito</a> and
    <a href="http://www.unitils.org/summary.html">Unitils Mock</a>.
    The common characteristic of all these mocking APIs is that they use direct invocations to mock objects as a way to
@@ -151,7 +153,7 @@
    In the case of Mockito and Unitils Mock, on the other hand, the invocations can also be made <em>after</em>
    exercising the tested unit, in the <em>verify phase</em> of the test.
    (The phase in between is the <em>replay phase</em>, during which the unit under test actually performs the
-   invocations of interest on its mocked collaborators.)
+   invocations of interest on its mocked dependencies.)
    JMockit provides the <strong>Verifications API</strong>, a natural extension of the Expectations API, to allow the
    explicit verification of expectations in the "verify" phase.
 </p>
@@ -168,12 +170,12 @@
    proxies, and custom class loading).
 </p>
 <p>
-   The main design restriction with "mock object" tools is that classes eligible for mocking must either implement a
+   The main design restriction with "mock object" libraries is that classes eligible for mocking must either implement a
    separate interface, or all methods to be mocked must be overridable in a subclass.
    Additionally, the instantiation of dependencies must be controlled from outside the dependent unit, so that a proxy
-   object (the mock) can be passed to it in place of the "real" implementation for each dependency.
+   object (the mock) can be passed into the unit to take the place of the "real" dependency.
    That is, proxied classes can't simply be instantiated with the <code>new</code> operator in client code, because
-   constructor invocations cannot be intercepted through conventional techniques.
+   constructor invocations cannot be intercepted with conventional techniques.
 </p>
 <p>
    To sum up, these are the design restrictions that apply when using a conventional approach to mocking:
@@ -359,8 +361,8 @@ public final class MyBusinessServiceTest
    Recordings occur from inside an <em>expectation recording block</em>, while verifications occur from inside an
    <em>expectation verification block</em>; replays are invocations from inside the code under test.
    Note, however, that only invocations to <em>mocked</em> methods count; methods (or constructors) belonging to types
-   or instances with no associated mock field or mock parameter are not mocked, and therefore cannot be recorded, nor
-   verified, nor replayed.
+   or instances with no associated mock field or mock parameter are not mocked, and therefore cannot be recorded nor
+   verified.
 </p>
 <p>
    As the example test above shows, recording and verifying expectations is achieved simply by invoking the desired
@@ -432,22 +434,19 @@ public final class MyBusinessServiceTest
    The JMockit artifacts are located in the central Maven repository.
    To use them in a test suite, add the following to your <code>pom.xml</code> file:
 </p>
-<pre><code>&lt;properties>
-   &lt;jmockit.version><em>desired version</em>&lt;/jmockit.version>
-&lt;/properties>
-
-&lt;dependencies>
+<pre><code>&lt;dependencies>
    &lt;dependency>
       &lt;groupId>org.jmockit&lt;/groupId>
       &lt;artifactId>jmockit&lt;/artifactId>
-      &lt;version>${jmockit.version}&lt;/version>
+      &lt;version>1.<em>x</em>&lt;/version>
       &lt;scope>test&lt;/scope>
    &lt;/dependency>
 &lt;/dependencies>
 </code></pre>
 <p>
-   Make sure the specified version is the one you actually want. (The use of a property is optional, of course.)
-   When using JUnit, this dependency should come <em>before</em> the "<code>junit</code>" dependency.
+   Make sure the specified version is the one you actually want. Find the current version in the
+   <a href="../changes.html">development history</a> page.
+   When using JUnit 4, this dependency should come <em>before</em> the "<code>junit</code>" dependency.
 </p>
 <p>
    For information on <a href="CodeCoverage.html#maven">using JMockit Coverage with Maven</a>, see the relevant section

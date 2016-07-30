@@ -120,12 +120,12 @@
    <img src="MockingAPI.png" usemap="#figure1">
 </div>
 <p>
-   In the JMockit toolkit, the <strong>Expectations</strong> API provides rich support for the use of <em>mocking</em>
+   In the JMockit library, the <strong>Expectations</strong> API provides rich support for the use of <em>mocking</em>
    in automated developer tests.
-   When mocking is used, a test focuses on the behavior of the code the test, as expressed through its
+   When mocking is used, a test focuses on the behavior of the code under test, as expressed through its
    <em>interactions</em> with other types it depends upon.
    Mocking is typically used in the construction of <em>isolated</em> unit tests, where a <em>unit</em> under test
-   is exercised in isolation from the implementation of other units it depends.
+   is exercised in isolation from the implementation of other units it depends on.
    Typically, a unit of behavior is embodied in a single class, but it's also fine to consider a whole set of
    strongly-related classes as a single unit for the purposes of unit testing (as is usually the case when we have a
    central public class with one or more helper classes, possibly package-private); in general, individual methods
@@ -214,8 +214,8 @@ public void doBusinessOperationXyz(@Mocked final <strong>AnotherDependency anoth
    There are a few different annotations available for the declaration of mock fields and parameters, and ways in which
    the default mocking behavior can be modified to suit the needs of a particular test.
    Other sections of this chapter go into the details, but the basics are:
-   <a href="../api1x/mockit/Mocked.html">@Mocked</a> is the central mocking annotation, having a few optional attributes
-   which are useful in particular situations; <a href="../api1x/mockit/Injectable.html">@Injectable</a> is another
+   <a href="../api1x/mockit/Mocked.html">@Mocked</a> is the central mocking annotation, having one optional attribute
+   which is useful in certain cases; <a href="../api1x/mockit/Injectable.html">@Injectable</a> is another
    mocking annotation, which constrains mocking to the instance methods of a single mocked instance; and
    <a href="../api1x/mockit/Capturing.html">@Capturing</a> is yet another mocking annotation, which extends mocking to
    the classes implementing a mocked interface, or the subclasses extending a mocked class.
@@ -239,10 +239,10 @@ public void doBusinessOperationXyz(@Mocked final <strong>AnotherDependency anoth
    <a href="#expectation">Expectations</a>
 </h2>
 <p>
-   An <em>expectation</em> is a set of invocations to a specific mocked method/constructor that is relevant for a given
-   test.
+   An <em>expectation</em> represents a set of invocations to a specific mocked method/constructor that is relevant for
+   a given test.
    An expectation may cover multiple different invocations to the same method or constructor, but it doesn't have to
-   cover <em>all</em> such invocations that occur during the test execution.
+   cover <em>all</em> such invocations that occur during the execution of the test.
    Whether a particular invocation matches a given expectation or not will depend not only on the method/constructor
    signature but also on runtime aspects such as the instance on which the method is invoked, argument values, and/or
    the number of invocations already matched.

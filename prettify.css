@@ -42,6 +42,7 @@ pre, pre code {
    font-family: monospace, monospace;
    font-size: 0.95em;
 }
+code { font-size: 1.1em; }
 
 ul > li { list-style-type: square; }
 

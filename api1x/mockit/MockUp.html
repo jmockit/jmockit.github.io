@@ -123,12 +123,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  Such mock-ups can be used as <em>fake</em> implementations for use in unit or integration tests.
  For example:
  <pre>
-
  public final class FakeSystem <strong>extends MockUp&lt;System></strong> {
     <strong>&#64;Mock</strong> public static long nanoTime() { return 123L; }
  }
  </pre>
- <p/>
  One or more <em>mock methods</em> annotated <a href="../mockit/Mock.html" title="annotation in mockit">as such</a> must be defined in the concrete subclass.
  Each <code>@Mock</code> method should have a matching method or constructor in the faked class/interface.
  At runtime, the execution of a faked method/constructor will get redirected to the corresponding mock method.
@@ -146,7 +144,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  interfaces is created, with the proxy instance made available through a call to <a href="../mockit/MockUp.html#getMockInstance--"><code>getMockInstance()</code></a>.
  Example:
  <pre>
-
  &#64;Test
  public &lt;<strong>M extends Runnable & ResultSet</strong>> void someTest() {
      M mock = new MockUp&lt;<strong>M</strong>>() {
@@ -163,7 +160,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  that type is taken as a <em>base</em> type whose concrete implementation classes should <em>also</em> get faked.
  Example:
  <pre>
-
  &#64;Test
  public &lt;<strong>BC extends SomeBaseClass</strong>> void someTest() {
      new MockUp&lt;<strong>BC</strong>>() {
