@@ -251,6 +251,10 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
        <a href="http://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true#getLogger(String)" title="class or interface in java.util.logging">created</a> with the name of the tested class.
     </li>
     <li>
+       <a href="http://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql"><code>DataSource</code></a>: a JDBC data source is created and configured according to a matching
+       <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/sql.DataSourceDefinition.html?is-external=true" title="class or interface in javax.annotation"><code>@DataSourceDefinition</code></a> in the tested class.
+    </li>
+    <li>
        <code>javax.inject.Provider&lt;T></code>: a provider which produces an instance of type
        <code>T</code> is injected.
     </li>
@@ -265,7 +269,7 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
        objects that emulate the servlet context and HTTP session are automatically created for use in tests.
     </li>
     <li>
-       <code>javax.enterprise.context.Conversation</code>: an object that emulates an web application's conversation
+       <code>javax.enterprise.context.Conversation</code>: an object that emulates a web application's conversation
        context is created.
     </li>
  </ul></div>
