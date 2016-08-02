@@ -252,24 +252,24 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
     </li>
     <li>
        <a href="http://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql"><code>DataSource</code></a>: a JDBC data source is created and configured according to a matching
-       <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/sql.DataSourceDefinition.html?is-external=true" title="class or interface in javax.annotation"><code>@DataSourceDefinition</code></a> in the tested class.
+       <a href="http://docs.oracle.com/javaee/7/docs/api/javax/annotation/sql/DataSourceDefinition.html?is-external=true" title="class or interface in javax.annotation.sql"><code>@DataSourceDefinition</code></a> in the tested class.
     </li>
     <li>
-       <code>javax.inject.Provider&lt;T></code>: a provider which produces an instance of type
-       <code>T</code> is injected.
+       <a href="http://docs.oracle.com/javaee/7/docs/api/javax/inject/Provider.html?is-external=true" title="class or interface in javax.inject"><code>Provider&lt;T></code></a>: a provider which produces an instance of type <code>T</code> is
+       injected.
     </li>
     <li>
-       JPA interfaces <code>javax.persistence.EntityManagerFactory</code> and <code>javax.persistence.EntityManager</code>:
-       created through calls to <code>javax.persistence.Persistence#createEntityManagerFactory(String)</code> and
-       <code>javax.persistence.EntityManagerFactory#createEntityManager()</code>, provided a suitable
+       JPA interfaces <a href="http://docs.oracle.com/javaee/7/docs/api/javax/persistence/EntityManagerFactory.html?is-external=true" title="class or interface in javax.persistence"><code>EntityManagerFactory</code></a> and <a href="http://docs.oracle.com/javaee/7/docs/api/javax/persistence/EntityManager.html?is-external=true" title="class or interface in javax.persistence"><code>EntityManager</code></a>:
+       created through calls to <a href="http://docs.oracle.com/javaee/7/docs/api/javax/persistence/Persistence.html?is-external=true#createEntityManagerFactory(String)" title="class or interface in javax.persistence"><code>Persistence</code></a> and
+       <a href="http://docs.oracle.com/javaee/7/docs/api/javax/persistence/EntityManagerFactory.html?is-external=true#createEntityManager()" title="class or interface in javax.persistence"><code>EntityManagerFactory</code></a>, provided a suitable
        <code>META-INF/persistence.xml</code> file is available in the runtime classpath.
     </li>
     <li>
-       Servlet interfaces <code>javax.servlet.ServletContext</code> and <code>javax.servlet.http.HttpSession</code>:
+       Servlet interfaces <a href="http://docs.oracle.com/javaee/7/docs/api/javax/servlet/ServletContext.html?is-external=true" title="class or interface in javax.servlet"><code>ServletContext</code></a> and <a href="http://docs.oracle.com/javaee/7/docs/api/javax/servlet/http/HttpSession.html?is-external=true" title="class or interface in javax.servlet.http"><code>HttpSession</code></a>:
        objects that emulate the servlet context and HTTP session are automatically created for use in tests.
     </li>
     <li>
-       <code>javax.enterprise.context.Conversation</code>: an object that emulates a web application's conversation
+       <a href="http://docs.oracle.com/javaee/7/docs/api/javax/enterprise/context/Conversation.html?is-external=true" title="class or interface in javax.enterprise.context"><code>Conversation</code></a>: an object that emulates a web application's conversation
        context is created.
     </li>
  </ul></div>

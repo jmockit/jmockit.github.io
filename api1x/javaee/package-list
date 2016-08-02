@@ -1,0 +1,7 @@
+javax.annotation.sql
+javax.enterprise
+javax.enterprise.context
+javax.inject
+javax.persistence
+javax.servlet
+javax.servlet.http
