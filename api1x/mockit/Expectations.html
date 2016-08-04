@@ -137,33 +137,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  // Exercise tested code, with previously recorded expectations now available for <em>replay</em>.
  codeUnderTest.doSomething();
  </pre>
- Rather than creating anonymous subclasses, we can also create <em>named</em> subclasses to be reused in multiple
- tests.
- Some examples:
- <pre>
- public final class MyReusableExpectations extends Expectations {
-    public MyReusableExpectations(...any parameters...) {
-       // expectations recorded here
-    }
- }
-
- public class ReusableBaseExpectations extends Expectations {
-     protected ReusableBaseExpectations(...) {
-        // expectations here
-     }
- }
-
- &#64;Test
- public void someTest(@Mocked final SomeType aMock, etc.) {
-     // Record reusable expectations by instantiating a <em>final</em> "...Expectations" class.
-     new MyReusableExpectations(123, "test", <em>etc.</em>);
-
-     // Record and extend reusable expectations by instantiating a <em>non-final</em> base class.
-     new ReusableBaseExpectations() {{
-        // additional expectations
-     }};
- }
- </pre>
+ It is also possible to create <em>named</em> subclasses.
+ <p/>
  During replay, invocations matching a recorded expectation must occur at least <em>once</em> (unless specified
  otherwise);
  if, by the end of the test, no matching invocation occurred for a given recorded expectation, the test will fail with
@@ -298,7 +273,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <tr class="rowColor">
 <td class="colFirst"><code>protected int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#minTimes">minTimes</a></span></code>
-<div class="block">A non-negative value assigned to this field will be taken as the minimum number of times that invocations matching
+<div class="block">A positive value assigned to this field will be taken as the minimum number of times that invocations matching
  the current expectation should occur during replay.</div>
 </td>
 </tr>
@@ -953,6 +928,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  the current expectation should occur during replay.
  A <em>negative</em> value implies there is no upper limit.
  <p/>
+ If not specified, there is no upper limit by default, except in the case of a strict expectation, where the
+ default is <code>1</code> (one).
+ <p/>
  Both <code>minTimes</code> and <code>maxTimes</code> can be specified for the same expectation, as long as <code>minTimes</code>
  is assigned first.</div>
 <dl>
@@ -970,11 +948,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>minTimes</h4>
 <pre>protected&nbsp;int minTimes</pre>
-<div class="block">A non-negative value assigned to this field will be taken as the minimum number of times that invocations matching
+<div class="block">A positive value assigned to this field will be taken as the minimum number of times that invocations matching
  the current expectation should occur during replay.
- <em>Zero</em> or a <em>negative</em> value implies there is no lower limit.
- The <em>maximum</em> number of times is automatically adjusted to allow any number of invocations.
+ <em>Zero</em> or a <em>negative</em> value means there is no lower limit, but only when applied to an expectation
+ recorded in a test setup method, to a strict expectation, or to a full verification.
  <p/>
+ If not specified, the default value of <code>1</code> (one) is used.
+ <p/>
+ The <em>maximum</em> number of times is automatically adjusted to allow any number of invocations.
  Both <code>minTimes</code> and <code>maxTimes</code> can be specified for the same expectation, as long as <code>minTimes</code>
  is assigned first.</div>
 <dl>
@@ -1048,8 +1029,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  block; when not specified, 1 (one) iteration is assumed</dd>
 <dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be partially mocked</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Expectations.html#Expectations--"><code>Expectations()</code></a>, 
-<a href="http://jmockit.org/tutorial/Mocking.html#iteratedExpectations">Tutorial</a></dd>
+<dd><a href="../mockit/Expectations.html#Expectations--"><code>Expectations()</code></a></dd>
 </dl>
 </li>
 </ul>
