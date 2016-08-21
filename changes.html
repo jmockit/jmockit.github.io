@@ -38,7 +38,13 @@
       <code class="type">Expectations</code> and <code class="type">Verifications</code>.
    </li>
    <li>
+      Added a validation against the application of mock-ups to classes that are <em>internal</em> to the codebase of
+      the system under test.
+      Normally, mock-ups should only target types from <em>external</em> libraries or components.
+   </li>
+   <li>
       Issues closed:
+      <a href="https://github.com/jmockit/jmockit1/issues/316">#316</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/317">#317</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/318">#318</a>.
    </li>
@@ -74,6 +80,11 @@
       Differently from JUnit 4 support (and like TestNG support), the relative order in the classpath between JMockit
       and JUnit 5 dependencies is irrelevant - also, no configuration code needs to be added to a JUnit 5 test class
       in order to use the JMockit API, it just works.
+   </li>
+   <li>
+      Added validations against redundant recordings which return the instance that would be returned through automatic
+      cascading, and against the redundant or contradictory use of different mocking annotations on the same mock
+      field/parameter.
    </li>
    <li>
       Issues closed:
