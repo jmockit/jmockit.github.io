@@ -33,39 +33,26 @@
    <a href="#">Getting started with JMockit</a>
 </h1>
 <p>
-   The toolkit is provided as a versioned zip file (with jars, sources, documentation, and Maven configuration files),
-   and also as a set of Maven artifacts deployed to the
-   <a href="http://repo.maven.apache.org/maven2/org/jmockit/">Maven Central</a> repository.
+   The toolkit is provided as a <a href="https://github.com/jmockit/artifacts1x/raw/master/jmockit-1.26.zip">versioned
+   zip file</a> (with jars, sources, documentation, and Maven configuration files), and also as a set of Maven artifacts
+   deployed to the <a href="http://repo.maven.apache.org/maven2/org/jmockit/">Maven Central</a> repository.
    It requires <strong>Java 6</strong> or newer for test execution; tests must use JUnit or TestNG.
    The mocking/faking library has extensive <a href="api1x/overview-summary.html">API documentation</a>; additionally,
-   the APIs are described, with examples, in a <a href="tutorial.html">tutorial</a> which also covers the code coverage
-   tool and other parts of the toolkit.
+   the APIs are described, with examples, in a <a href="tutorial.html">tutorial</a> which also covers integration
+   testing support and code coverage.
 </p>
 
-<h2 id="fullDistribution">
-   <a href="#fullDistribution">Using the JMockit full distribution</a>
+<h2 id="library">
+   <a href="#library">Using the JMockit library</a>
 </h2>
 <p>
    Follow these instructions to start using JMockit:
 </p>
 <ol>
    <li>
-      Download the full distribution for the
-      <a href="https://github.com/jmockit/artifacts1x/raw/master/jmockit-1.26.zip">current release</a>.
-      Alternatively, you can <a href="https://github.com/jmockit/jmockit1">clone the GitHub repository</a>.
-   </li>
-   <li>
-      Unpack the zip file to any directory.
-      This will create two sub-directories, one for the <code>jmockit1.org</code> GitHub repository (with source files
-      and pre-packaged jar files), and the other for the <code>jmockit.github.io</code> GitHub
-      Pages repository (with HTML files for the tutorial, the API documentation, and other pages).
-      To build the project with Maven (3.3 or newer), simply use the "<code>jmockit1.org/main/pom.xml</code>" file from
-      the full distribution, or from a GitHub fork.
-   </li>
-   <li>
       Either add the library file <strong><code>jmockit.jar</code></strong> to your classpath (in your Java IDE project,
       Ant build file, etc.), or the <code>org/jmockit/jmockit/1.x</code> dependency to your Maven <code>pom.xml</code>
-      file.
+      or Gradle <code>build.gradle</code> file.
    </li>
    <li>
       Depending on the choice of test framework (JUnit or TestNG):
@@ -82,21 +69,19 @@
             the latter ones lack the "<code>attach</code>" native library.
          </li>
          <li>
-            When using <strong>TestNG 6.2+</strong>, simply add <code>jmockit.jar</code> (or the equivalent Maven
-            dependency) to the classpath.
+            When using <strong>TestNG 6.2+</strong> or <strong>JUnit 5+</strong>, simply add <code>jmockit.jar</code>
+            (or the equivalent Maven/Gradle dependency) to the classpath.
          </li>
       </ul>
    </li>
    <li>
       Optionally, configure your IDE to find API source code and Javadoc comments in this same <code>jmockit.jar</code>
       file (or the <code>jmockit-1.x-sources.jar</code> and <code>jmockit-1.x-javadoc.jar</code> Maven artifacts).
-      <a href="api1x/overview-summary.html">API documentation</a> is also available in the
-      "<code>jmockit.github.io/api1x/</code>" directory, as well as online.
    </li>
 </ol>
 <p>
-   For instructions on the use of JMockit from an <strong>Ant</strong> or <strong>Maven</strong> build, see the
-   corresponding sections in the JMockit Tutorial: <a href="tutorial/Introduction.html#ant">Ant</a>,
+   For additional instructions on the use of JMockit from an <strong>Ant</strong> or <strong>Maven</strong> build, see
+   the corresponding sections in the JMockit Tutorial: <a href="tutorial/Introduction.html#ant">Ant</a>,
    <a href="tutorial/Introduction.html#maven">Maven</a>.
 </p>
 
@@ -104,8 +89,8 @@
    <a href="#mockingAPIs">Using the mocking API</a>
 </h2>
 <p>
-   The JMockit mocking API can be used in tests written with JUnit 4 (version 4.5 or newer) or TestNG (version 6.2 or
-   newer).
+   The JMockit mocking API can be used in tests written with JUnit 4 (version 4.5 or newer), JUnit 5, or TestNG (version
+   6.2 or newer).
    Lets now see how mocking is done with this API, which is imported from the "<code>mockit</code>" package.
 </p>
 
