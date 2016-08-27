@@ -141,7 +141,8 @@
 <tr class="rowColor">
 <td class="colFirst"><a href="../mockit/MockUp.html" title="class in mockit">MockUp</a>&lt;T&gt;</td>
 <td class="colLast">
-<div class="block">A base class used in the creation of a <em>mock-up</em> for a class, an interface, etc.</div>
+<div class="block">A base class used in the creation of a <em>mock-up</em> for an <em>external</em> type, which is usually a class from
+ some library or component used from the <em>internal</em> codebase of the system under test (SUT).</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -228,7 +229,7 @@
  (ie, after the replay phase).
  <p/>
  The <a href="../mockit/MockUp.html" title="class in mockit"><code>MockUp&lt;T></code></a> generic class (where <code>T</code> is the mocked type) allows
- the definition of fake implementations for arbitrary classes or interfaces.
+ the definition of fake implementations for external classes or interfaces.
  <p/>
  For a description with examples of the <em>Expectations</em> API, see the
  "<a href="http://jmockit.org/tutorial/Mocking.html">Mocking</a>" chapter in the Tutorial.

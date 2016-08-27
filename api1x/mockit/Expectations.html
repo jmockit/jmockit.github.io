@@ -365,7 +365,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#withAny-T-">withAny</a></span>(T&nbsp;arg)</code>
-<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but matching any argument value of the appropriate type.</div>
+<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but matching any argument value of the appropriate type (<code>null</code>
+ included).</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -1208,7 +1209,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>withAny</h4>
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withAny(T&nbsp;arg)</pre>
-<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but matching any argument value of the appropriate type.
+<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but matching any argument value of the appropriate type (<code>null</code>
+ included).
  <p/>
  Consider using instead the "anyXyz" field appropriate to the parameter type:
  <a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, <a href="../mockit/Expectations.html#anyByte"><code>anyByte</code></a>, <a href="../mockit/Expectations.html#anyChar"><code>anyChar</code></a>, <a href="../mockit/Expectations.html#anyDouble"><code>anyDouble</code></a>, <a href="../mockit/Expectations.html#anyFloat"><code>anyFloat</code></a>, <a href="../mockit/Expectations.html#anyInt"><code>anyInt</code></a>,
@@ -1221,10 +1223,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a> had been used.
  In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
  regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
- parameter and varargs element.
- <p/>
- Note: when using <a href="../mockit/Deencapsulation.html#invoke-java.lang.Object-java.lang.String-java.lang.Object...-"><code>Deencapsulation.invoke(Object, String, Object...)</code></a>, etc., it's valid to pass
- <code>withAny(ParameterType.class)</code> if an actual instance of the parameter type cannot be created.</div>
+ parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>arg</code> - an arbitrary value which will match any argument value in the replay phase</dd>

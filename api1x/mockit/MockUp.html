@@ -119,7 +119,8 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public abstract class <span class="typeNameLabel">MockUp&lt;T&gt;</span>
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block">A base class used in the creation of a <em>mock-up</em> for a class, an interface, etc.
+<div class="block">A base class used in the creation of a <em>mock-up</em> for an <em>external</em> type, which is usually a class from
+ some library or component used from the <em>internal</em> codebase of the system under test (SUT).
  Such mock-ups can be used as <em>fake</em> implementations for use in unit or integration tests.
  For example:
  <pre>
@@ -324,7 +325,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  or if multiple types were specified through a type variable but not all of them are interfaces;
  or there is a mock method for which no corresponding real method or constructor is found;
  or the real method matching a mock method is <code>abstract</code>;
- or if an <em>unbounded</em> type variable was used as the base type to be faked</dd>
+ or if an <em>unbounded</em> type variable was used as the base type to be faked;
+ or if the mockup class contains a mock method for a <code>private</code> or package-private method or constructor, when
+ the type to be faked is a class internal to the SUT</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/MockUp.html#MockUp-java.lang.Class-"><code>MockUp(Class)</code></a>, 
 <a href="../mockit/MockUp.html#MockUp-T-"><code>MockUp(Object)</code></a></dd>
