@@ -562,9 +562,9 @@ public void doSomethingHandlesSomeCheckedException(@Mocked final DependencyAbc a
    same class remaining unmocked?
    (This second case tends to occur more often when classes from the standard Java libraries, or from other third-party
    libraries, are mocked.)
-   JMockit provides a mocking annotation, <code class="annotation">@Injectable</code>, which will only mock <em>one</em>
+   The API provides a mocking annotation, <code class="annotation">@Injectable</code>, which will only mock <em>one</em>
    instance of the mocked type, leaving others unaffected.
-   Additionally, it provides a couple ways to constrain the matching of expectations to specific
+   Additionally, we have a couple ways to constrain the matching of expectations to specific
    <code class="annotation">@Mocked</code> instances, while still mocking <em>all</em> instances of the mocked class.
 </p>
 
@@ -575,13 +575,13 @@ public void doSomethingHandlesSomeCheckedException(@Mocked final DependencyAbc a
    Suppose we need to test code which works with multiple instances of a given class, some of which we want to mock.
    If an instance to be mocked can be <em>passed</em> or <em>injected</em> into the code under test, then we can declare
    an <a href="../api1x/mockit/Injectable.html">@Injectable</a> mock field or mock parameter for it.
-   The <code class="annotation">@Injectable</code> instance created by JMockit will be an "exclusive" mocked instance;
+   This <code class="annotation">@Injectable</code> instance will be an "exclusive" mocked instance;
    any other instance of the same mocked type, unless obtained from a separate mock field/parameter, will remain as a
    regular, non-mocked instance.
 </p>
 <p>
-   Note also that, since having an injectable mocked instance is supposed to affect the behavior of only that instance,
-   <code>static</code> methods and constructors are <em>also</em> excluded from being mocked.
+   When using <code class="annotation">@Injectable</code>, <code>static</code> methods and constructors are also
+   excluded from being mocked.
    After all, a <code>static</code> method is not associated with any instance of the class, while a constructor is
    only associated with a newly created (and therefore different) instance.
 </p>
