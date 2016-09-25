@@ -101,6 +101,8 @@ public @interface <span class="memberNameLabel">Injectable</span></pre>
  Such instances can be said to be proper <em>mock objects</em>, in contrast to the mocked instances of a regular
  <code>@Mocked</code> type.
  <p/>
+ When the type of the injectable is <code>String</code>, a primitive wrapper, or an enum, it is <em>not</em> mocked.
+ <p/>
  For the duration of each test where the mock field/parameter is in scope, <em>only one</em> injectable instance is
  mocked; other instances of the same mocked type are not affected.
  For an injectable mocked <em>class</em>, <em>static methods</em> and <em>constructors</em> are <em>not</em> mocked;
@@ -136,8 +138,8 @@ public @interface <span class="memberNameLabel">Injectable</span></pre>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Injectable.html#value--">value</a></span></code>
-<div class="block">Specifies a literal value when the type of the injectable mock field/parameter is <code>String</code>, a primitive
- type, or an enum type.</div>
+<div class="block">Specifies a literal value when the type of the injectable mock field/parameter is <code>String</code>, a primitive or
+ wrapper type, or an enum type.</div>
 </td>
 </tr>
 </table>
@@ -162,13 +164,10 @@ public @interface <span class="memberNameLabel">Injectable</span></pre>
 <li class="blockList">
 <h4>value</h4>
 <pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value</pre>
-<div class="block">Specifies a literal value when the type of the injectable mock field/parameter is <code>String</code>, a primitive
- type, or an enum type.
- For a primitive type, the value provided must be convertible to it.
- For an enum type, the given textual value must equal the name of one of the possible enum values.
- <p/>
- When a value is provided for an injectable whose type is <code>String</code> or an enum type, said type is <em>not</em>
- mocked; otherwise, it is.</div>
+<div class="block">Specifies a literal value when the type of the injectable mock field/parameter is <code>String</code>, a primitive or
+ wrapper type, or an enum type.
+ For a primitive/wrapper type, the value provided must be convertible to it.
+ For an enum type, the given textual value must equal the name of one of the possible enum values.</div>
 <dl>
 <dt>Default:</dt>
 <dd>""</dd>
