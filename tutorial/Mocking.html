@@ -40,7 +40,7 @@
       <a href="#instanceMatching">Matching invocations to specific instances</a>
       <ol>
          <li><a href="#injectable">Injectable mocked instances</a></li>
-         <li><a href="#onInstance">The <code>onInstance(m)</code> constraint</a></li>
+         <li><a href="#multipleMockedInstances">Declaring multiple mocked instances</a></li>
          <li><a href="#futureInstancesByConstructor">Instances created with a given constructor</a></li>
       </ol>
    </li>
@@ -646,23 +646,19 @@ public void concatenateInputStreams(
    mocked, regardless of the instance on which it is called.
 </p>
 
-<h3 id="onInstance">
-   <a href="#onInstance">The <code>onInstance(m)</code> constraint</a>
+<h3 id="multipleMockedInstances">
+   <a href="#multipleMockedInstances">Declaring multiple mocked instances</a>
 </h3>
 <p>
    When using <code class="annotation">@Mocked</code> or <code class="annotation">@Capturing</code> (and not
    <code class="annotation">@Injectable</code> on the same mock field/parameter), we can still match replay invocations
    to expectations recorded on specific mocked instances.
-   For that, we use the
-   <a href="../api1x/mockit/Expectations.html#onInstance-java.lang.Object-">onInstance(mockObject)</a> method when
-   recording the expectation, as the next example shows.
+   For that, we simply declare multiple mock fields or parameters of the same mocked type, as the next example shows.
 </p>
 <pre><code>@Test
-public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>)
+public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>, @Mocked Collaborator <strong>otherInstance</strong>)
 {
-   new Expectations() {{
-      <strong>onInstance(mock)</strong>.getValue(); result = 12;
-   }};
+   new Expectations() {{ mock.getValue(); result = 12; }};
 
    // Exercise code under test with mocked instance passed from the test:
    int result = <strong>mock</strong>.getValue();
@@ -679,16 +675,7 @@ public void matchOnMockInstance(@Mocked final Collaborator <strong>mock</strong>
    The test above will only pass if the tested code (here embedded in the test method itself, for brevity) invokes
    <code>getValue()</code> on the exact same instance on which the recording invocation was made.
    This is typically useful when the code under test makes calls on two or more different instances of the same type,
-   and the test wants to verify that each invocation occurred on the proper instance.
-</p>
-<p>
-   To avoid the need to use <code>onInstance(m)</code> on every expectation when testing code which uses multiple
-   instances of the same type in different ways, JMockit automatically infers the need for "onInstance" matching based
-   on the set of mocked types in scope.
-   Specifically, whenever two or more mock fields/parameters of the exact same type are in scope for a given test,
-   invocations to instance methods made on their instances will always match expectations recorded on those same
-   instances.
-   Therefore, in such common situations it isn't necessary to explicitly use the <code>onInstance(m)</code> method.
+   and the test wants to verify that a particular invocation occurred on the expected instance.
 </p>
 
 <h3 id="futureInstancesByConstructor">
