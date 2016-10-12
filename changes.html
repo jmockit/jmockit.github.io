@@ -39,6 +39,14 @@
       deprecated in version 1.26.
    </li>
    <li>
+      <strong>Deprecated</strong> the <strong><code>onInstance(mock)</code></strong> method from classes
+      <code class="type">Expectations</code> and <code class="type">Verifications</code>.
+      Existing calls should be removed (leaving just "<code>mock</code>").
+      Tests that need to match invocations to specific mocked instances should instead make use of
+      <code class="annotation">@Injectable</code> or of multiple <code class="annotation">@Mocked</code>
+      fields/parameters of the same type.
+   </li>
+   <li>
       Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/346">#346</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/347">#347</a>,
