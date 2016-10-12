@@ -47,10 +47,18 @@
       fields/parameters of the same type.
    </li>
    <li>
+      <strong>Changed</strong> the signature of the "<code>Expectations#returns(Object, Object...)</code>" method to
+      just "<code>returns(Object)</code>", and <em>deprecated</em> it in favor of using the "<code>result</code>" field
+      (for a single return value) or the newly added method "<code>returns(Object, Object, Object...)</code>" (for a
+      <em>sequence</em> of multiple return values).
+   </li>
+   <li>
       Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/346">#346</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/347">#347</a>,
-      <a href="https://github.com/jmockit/jmockit1/issues/350">#350</a>.
+      <a href="https://github.com/jmockit/jmockit1/issues/350">#350</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/352">#352</a>,
+      <a href="https://github.com/jmockit/jmockit1/issues/353">#353</a>.
    </li>
 </ul>
 
