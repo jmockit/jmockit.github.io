@@ -176,9 +176,9 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Tested.html#fullyInitialized--">fullyInitialized</a></span></code>
-<div class="block">Indicates that each field of the tested object that is eligible for injection should be assigned a value, which
- can be an <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a>, another <code>@Tested</code> field of a type assignable to the field
- type, or a real (unmocked) instance of the field type.</div>
+<div class="block">Indicates that each non-<code>final</code> field of the tested object that is eligible for injection should be assigned
+ a value, which can be an <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a>, another <code>@Tested</code> field of a type assignable
+ to the field type, or a real (unmocked) instance of the field type.</div>
 </td>
 </tr>
 </table>
@@ -230,12 +230,16 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
 <li class="blockList">
 <h4>fullyInitialized</h4>
 <pre>public abstract&nbsp;boolean&nbsp;fullyInitialized</pre>
-<div class="block">Indicates that each field of the tested object that is eligible for injection should be assigned a value, which
- can be an <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a>, another <code>@Tested</code> field of a type assignable to the field
- type, or a real (unmocked) instance of the field type.
+<div class="block">Indicates that each non-<code>final</code> field of the tested object that is eligible for injection should be assigned
+ a value, which can be an <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a>, another <code>@Tested</code> field of a type assignable
+ to the field type, or a real (unmocked) instance of the field type.
+ <p/>
  Non-eligible fields are those that have already being assigned from a constructor, or that have a primitive,
  array, annotation, or JRE type (with the exception of the types described below, which are given special
  treatment).
+ Also non-eligible are any <code>static</code> or <code>volatile</code> fields, unless annotated with an <em>injection
+ annotation</em> (one of <code>@Inject</code>, <code>@Resource</code>, <code>@Autowired</code>, <code>@Value</code>, <code>@EJB</code>,
+ <code>@PersistenceContext</code>, or <code>@PersistenceUnit</code>).
  <p/>
  For each field of a reference type that would otherwise remain <code>null</code>, an attempt is made to automatically
  create and recursively initialize a suitable real instance.

@@ -327,7 +327,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  or the real method matching a mock method is <code>abstract</code>;
  or if an <em>unbounded</em> type variable was used as the base type to be faked;
  or if the mockup class contains a mock method for a <code>private</code> or package-private method or constructor, when
- the type to be faked is a class internal to the SUT</dd>
+ the type to be faked is a class internal to the SUT;
+ or if this same mockup subclass is already in effect (duplicate application)</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/MockUp.html#MockUp-java.lang.Class-"><code>MockUp(Class)</code></a>, 
 <a href="../mockit/MockUp.html#MockUp-T-"><code>MockUp(Object)</code></a></dd>
