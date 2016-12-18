@@ -136,9 +136,7 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/FullVerifications.html#FullVerifications--"><code>FullVerifications()</code></a>, 
-<a href="../mockit/FullVerifications.html#FullVerifications-int-"><code>FullVerifications(int)</code></a>, 
 <a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Object...-"><code>FullVerifications(Object...)</code></a>, 
-<a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Integer-java.lang.Object...-"><code>FullVerifications(Integer, Object...)</code></a>, 
 <a href="../mockit/FullVerifications.html#unverifiedInvocations--"><code>unverifiedInvocations()</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html" title="class in mockit"><code>FullVerificationsInOrder</code></a>, 
 <a href="http://jmockit.org/tutorial/Mocking.html#fullVerification">Tutorial</a></dd>
@@ -262,21 +260,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#FullVerifications--">FullVerifications</a></span>()</code>
 <div class="block">Begins <em>full</em> verification on the mocked types/instances that can potentially be invoked from code under
  test.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#FullVerifications-int-">FullVerifications</a></span>(int&nbsp;numberOfIterations)</code>
-<div class="block">Same as <a href="../mockit/FullVerifications.html#FullVerifications--"><code>FullVerifications()</code></a>, but considering that such invocations occurred in a given number of
- iterations.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Integer-java.lang.Object...-">FullVerifications</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;numberOfIterations,
-                 <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;mockedTypesAndInstancesToVerify)</code>
-<div class="block">Same as <a href="../mockit/FullVerifications.html#FullVerifications-int-"><code>FullVerifications(int)</code></a>, but restricting the verification to the specified mocked types and/or
- mocked instances.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -896,59 +879,7 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
  test.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerifications.html#FullVerifications-int-"><code>FullVerifications(int)</code></a>, 
-<a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Object...-"><code>FullVerifications(Object...)</code></a>, 
-<a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Integer-java.lang.Object...-"><code>FullVerifications(Integer, Object...)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="FullVerifications-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>FullVerifications</h4>
-<pre>protected&nbsp;FullVerifications(int&nbsp;numberOfIterations)</pre>
-<div class="block">Same as <a href="../mockit/FullVerifications.html#FullVerifications--"><code>FullVerifications()</code></a>, but considering that such invocations occurred in a given number of
- iterations.
- <p/>
- The effect of specifying a (positive) number of iterations is equivalent to setting to that number the lower and
- upper invocation count limits for each verified expectation.
- If, however, the lower/upper limit is explicitly specified for an expectation, the given number of iterations
- becomes a multiplier.
- When not specified, at least one matching invocation will be required to have occurred; therefore, specifying
- <em>1 (one)</em> iteration is different from not specifying the number of iterations at all.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>numberOfIterations</code> - the positive number of iterations for the whole set of verified expectations</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Object...-"><code>FullVerifications(Object...)</code></a>, 
-<a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Integer-java.lang.Object...-"><code>FullVerifications(Integer, Object...)</code></a>, 
-<a href="../mockit/FullVerifications.html#times"><code>times</code></a>, 
-<a href="../mockit/FullVerifications.html#minTimes"><code>minTimes</code></a>, 
-<a href="../mockit/FullVerifications.html#maxTimes"><code>maxTimes</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="FullVerifications-java.lang.Integer-java.lang.Object...-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>FullVerifications</h4>
-<pre>protected&nbsp;FullVerifications(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;numberOfIterations,
-                            <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;mockedTypesAndInstancesToVerify)</pre>
-<div class="block">Same as <a href="../mockit/FullVerifications.html#FullVerifications-int-"><code>FullVerifications(int)</code></a>, but restricting the verification to the specified mocked types and/or
- mocked instances.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>numberOfIterations</code> - the positive number of iterations for the whole set of verified expectations</dd>
-<dd><code>mockedTypesAndInstancesToVerify</code> - one or more of the mocked types (ie, <code>Class</code> objects) and/or mocked
- instances that are in scope for the test; for a given mocked <em>instance</em>, all classes up to (but not
- including) <code>java.lang.Object</code> are considered</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerifications.html#FullVerifications--"><code>FullVerifications()</code></a>, 
-<a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Object...-"><code>FullVerifications(Object...)</code></a></dd>
+<dd><a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Object...-"><code>FullVerifications(Object...)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -966,9 +897,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dd><code>mockedTypesAndInstancesToVerify</code> - one or more of the mocked types (ie, <code>Class</code> objects) and/or mocked
  instances that are in scope for the test; for a given mocked <em>instance</em>, all classes up to (but not
  including) <code>java.lang.Object</code> are considered</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerifications.html#FullVerifications-int-"><code>FullVerifications(int)</code></a>, 
-<a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Integer-java.lang.Object...-"><code>FullVerifications(Integer, Object...)</code></a></dd>
 </dl>
 </li>
 </ul>

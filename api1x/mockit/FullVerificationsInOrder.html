@@ -132,9 +132,7 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-int-"><code>FullVerificationsInOrder(int)</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Object...-"><code>FullVerificationsInOrder(Object...)</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Integer-java.lang.Object...-"><code>FullVerificationsInOrder(Integer, Object...)</code></a>, 
 <a href="http://jmockit.org/tutorial/Mocking.html#fullVerificationInOrder">Tutorial</a></dd>
 </dl>
 </li>
@@ -256,21 +254,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--">FullVerificationsInOrder</a></span>()</code>
 <div class="block">Begins <em>in-order</em> verification for <em>all</em> invocations on the mocked types/instances that can
  potentially be invoked from code under test.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-int-">FullVerificationsInOrder</a></span>(int&nbsp;numberOfIterations)</code>
-<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a>, but considering that such invocations occurred in a given number of
- iterations.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Integer-java.lang.Object...-">FullVerificationsInOrder</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;numberOfIterations,
-                        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;mockedTypesAndInstancesToVerify)</code>
-<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-int-"><code>FullVerificationsInOrder(int)</code></a>, but restricting the verification to the specified mocked types
- and/or mocked instances.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -884,52 +867,7 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
  potentially be invoked from code under test.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-int-"><code>FullVerificationsInOrder(int)</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Object...-"><code>FullVerificationsInOrder(Object...)</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Integer-java.lang.Object...-"><code>FullVerificationsInOrder(Integer, Object...)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="FullVerificationsInOrder-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>FullVerificationsInOrder</h4>
-<pre>protected&nbsp;FullVerificationsInOrder(int&nbsp;numberOfIterations)</pre>
-<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a>, but considering that such invocations occurred in a given number of
- iterations.
- <p/>
- The effect of specifying a number of iterations larger than 1 (one) is equivalent to duplicating (like in "copy &
- paste") the whole sequence of verified expectations.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>numberOfIterations</code> - the positive number of iterations for the whole set of verified expectations</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Object...-"><code>FullVerificationsInOrder(Object...)</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Integer-java.lang.Object...-"><code>FullVerificationsInOrder(Integer, Object...)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="FullVerificationsInOrder-java.lang.Integer-java.lang.Object...-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>FullVerificationsInOrder</h4>
-<pre>protected&nbsp;FullVerificationsInOrder(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;numberOfIterations,
-                                   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;mockedTypesAndInstancesToVerify)</pre>
-<div class="block">Same as <a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-int-"><code>FullVerificationsInOrder(int)</code></a>, but restricting the verification to the specified mocked types
- and/or mocked instances.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>mockedTypesAndInstancesToVerify</code> - one or more of the mocked types (ie, <code>Class</code> objects) and/or mocked
- instances that are in scope for the test; for a given mocked <em>instance</em>, all classes up to (but not
- including) <code>java.lang.Object</code> are considered</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-int-"><code>FullVerificationsInOrder(int)</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Object...-"><code>FullVerificationsInOrder(Object...)</code></a></dd>
+<dd><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Object...-"><code>FullVerificationsInOrder(Object...)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -948,9 +886,7 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
  instances that are in scope for the test; for a given mocked <em>instance</em>, all classes up to (but not
  including) <code>java.lang.Object</code> are considered</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-int-"><code>FullVerificationsInOrder(int)</code></a>, 
-<a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder-java.lang.Integer-java.lang.Object...-"><code>FullVerificationsInOrder(Integer, Object...)</code></a></dd>
+<dd><a href="../mockit/FullVerificationsInOrder.html#FullVerificationsInOrder--"><code>FullVerificationsInOrder()</code></a></dd>
 </dl>
 </li>
 </ul>

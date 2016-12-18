@@ -103,6 +103,7 @@ public @interface <span class="memberNameLabel">Injectable</span></pre>
  <p/>
  When the type of the injectable is <code>String</code>, a primitive wrapper, a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Number.html?is-external=true" title="class or interface in java.lang">number type</a>, or an
  enum, it is <em>not</em> mocked.
+ A non-empty <a href="../mockit/Injectable.html#value--"><code>value()</code></a> must then be provided, except in the first case where the empty string is used by default.
  <p/>
  For the duration of each test where the mock field/parameter is in scope, <em>only one</em> injectable instance is
  mocked; other instances of the same mocked type are not affected.

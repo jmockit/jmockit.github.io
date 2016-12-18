@@ -133,7 +133,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/VerificationsInOrder.html#VerificationsInOrder--"><code>VerificationsInOrder()</code></a>, 
-<a href="../mockit/VerificationsInOrder.html#VerificationsInOrder-int-"><code>VerificationsInOrder(int)</code></a>, 
 <a href="../mockit/VerificationsInOrder.html#unverifiedInvocations--"><code>unverifiedInvocations()</code></a>, 
 <a href="../mockit/VerificationsInOrder.html#verifiedInvocations-mockit.Verifications-"><code>verifiedInvocations(Verifications)</code></a>, 
 <a href="http://jmockit.org/tutorial/Mocking.html#verificationInOrder">Tutorial</a></dd>
@@ -257,13 +256,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#VerificationsInOrder--">VerificationsInOrder</a></span>()</code>
 <div class="block">Begins <em>in-order</em> verification on the mocked types/instances that were invoked while executing code under
  test.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#VerificationsInOrder-int-">VerificationsInOrder</a></span>(int&nbsp;numberOfIterations)</code>
-<div class="block">Same as <a href="../mockit/VerificationsInOrder.html#VerificationsInOrder--"><code>VerificationsInOrder()</code></a>, but considering that such invocations occurred in a given number of
- iterations.</div>
 </td>
 </tr>
 </table>
@@ -876,34 +868,12 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <a name="VerificationsInOrder--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>VerificationsInOrder</h4>
 <pre>protected&nbsp;VerificationsInOrder()</pre>
 <div class="block">Begins <em>in-order</em> verification on the mocked types/instances that were invoked while executing code under
  test.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/VerificationsInOrder.html#VerificationsInOrder-int-"><code>VerificationsInOrder(int)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="VerificationsInOrder-int-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>VerificationsInOrder</h4>
-<pre>protected&nbsp;VerificationsInOrder(int&nbsp;numberOfIterations)</pre>
-<div class="block">Same as <a href="../mockit/VerificationsInOrder.html#VerificationsInOrder--"><code>VerificationsInOrder()</code></a>, but considering that such invocations occurred in a given number of
- iterations.
- <p/>
- The effect of specifying a number of iterations larger than 1 (one) is equivalent to duplicating (like in "copy &
- paste") the whole sequence of verified expectations.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>numberOfIterations</code> - the positive number of iterations for the whole set of verified expectations</dd>
-</dl>
 </li>
 </ul>
 </li>

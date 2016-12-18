@@ -320,15 +320,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="block">Applies the <a href="../mockit/Mock.html" title="annotation in mockit">mock methods</a> defined in the concrete subclass to the class or interface specified
  through the type parameter.</div>
 <dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if no type to be faked was specified;
- or if multiple types were specified through a type variable but not all of them are interfaces;
- or there is a mock method for which no corresponding real method or constructor is found;
- or the real method matching a mock method is <code>abstract</code>;
- or if an <em>unbounded</em> type variable was used as the base type to be faked;
- or if the mockup class contains a mock method for a <code>private</code> or package-private method or constructor, when
- the type to be faked is a class internal to the SUT;
- or if this same mockup subclass is already in effect (duplicate application)</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/MockUp.html#MockUp-java.lang.Class-"><code>MockUp(Class)</code></a>, 
 <a href="../mockit/MockUp.html#MockUp-T-"><code>MockUp(Object)</code></a></dd>
@@ -341,8 +332,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>MockUp</h4>
-<pre>protected&nbsp;MockUp(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-                 <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;targetClass)</pre>
+<pre>protected&nbsp;MockUp(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;targetClass)</pre>
 <div class="block">Applies the <a href="../mockit/Mock.html" title="annotation in mockit">mock methods</a> defined in the mock-up subclass to the given class/interface.
  <p/>
  In most cases, the constructor with no parameters can be used.
@@ -362,8 +352,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockListLast">
 <li class="blockList">
 <h4>MockUp</h4>
-<pre>protected&nbsp;MockUp(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
-                 <a href="../mockit/MockUp.html" title="type parameter in MockUp">T</a>&nbsp;targetInstance)</pre>
+<pre>protected&nbsp;MockUp(<a href="../mockit/MockUp.html" title="type parameter in MockUp">T</a>&nbsp;targetInstance)</pre>
 <div class="block">Applies the <a href="../mockit/Mock.html" title="annotation in mockit">mock methods</a> defined in the mock-up subclass to the type specified through the type
  parameter, but only affecting the given instance.
  <p/>
@@ -377,7 +366,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>targetInstance</code> - a real instance of the type to be faked, meant to be the only one of that type that should
- be affected by this mock-up instance; must not be <code>null</code></dd>
+ be affected by this mock-up instance</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/MockUp.html#MockUp--"><code>MockUp()</code></a>, 
 <a href="../mockit/MockUp.html#MockUp-java.lang.Class-"><code>MockUp(Class)</code></a></dd>
@@ -409,9 +398,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <p/>
  In any case, for a given mock-up instance this method will always return the same mock instance.</div>
 <dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if called from a mock method for a static method, or if called on a mock-up whose
- base type was specified by a type variable, or if called on a stateless mock-up created without a target instance</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/Faking.html#interfaces">Tutorial</a></dd>
 </dl>

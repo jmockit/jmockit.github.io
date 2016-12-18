@@ -148,7 +148,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Verifications.html#Verifications--"><code>Verifications()</code></a>, 
-<a href="../mockit/Verifications.html#Verifications-int-"><code>Verifications(int)</code></a>, 
 <a href="../mockit/Verifications.html#withCapture--"><code>withCapture()</code></a>, 
 <a href="../mockit/Expectations.html" title="class in mockit"><code>Expectations</code></a>, 
 <a href="http://jmockit.org/tutorial/Mocking.html#verification">Tutorial</a></dd>
@@ -271,12 +270,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>protected </code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Verifications.html#Verifications--">Verifications</a></span>()</code>
 <div class="block">Begins a set of unordered expectation verifications, on the available mocked types and/or mocked instances.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Verifications.html#Verifications-int-">Verifications</a></span>(int&nbsp;numberOfIterations)</code>
-<div class="block">Same as <a href="../mockit/Verifications.html#Verifications--"><code>Verifications()</code></a>, but considering that such invocations occurred in a given number of iterations.</div>
 </td>
 </tr>
 </table>
@@ -881,41 +874,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <a name="Verifications--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>Verifications</h4>
 <pre>protected&nbsp;Verifications()</pre>
 <div class="block">Begins a set of unordered expectation verifications, on the available mocked types and/or mocked instances.
  Such verifications are meant to be executed <em>after</em> the call to code under test has been made.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Verifications.html#Verifications-int-"><code>Verifications(int)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="Verifications-int-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>Verifications</h4>
-<pre>protected&nbsp;Verifications(int&nbsp;numberOfIterations)</pre>
-<div class="block">Same as <a href="../mockit/Verifications.html#Verifications--"><code>Verifications()</code></a>, but considering that such invocations occurred in a given number of iterations.
- <p/>
- The effect of specifying a (positive) number of iterations is equivalent to setting to that number the lower and
- upper invocation count limits for each expectation verified.
- If, however, the lower/upper limit is explicitly specified for an expectation, the given number of iterations
- becomes a multiplier.
- When not specified, at least one matching invocation will be required to have occurred; therefore, specifying
- <em>1 (one)</em> iteration is different from not specifying the number of iterations at all.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>numberOfIterations</code> - the positive number of iterations for the whole set of verified expectations</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Verifications.html#times"><code>times</code></a>, 
-<a href="../mockit/Verifications.html#minTimes"><code>minTimes</code></a>, 
-<a href="../mockit/Verifications.html#maxTimes"><code>maxTimes</code></a></dd>
-</dl>
 </li>
 </ul>
 </li>

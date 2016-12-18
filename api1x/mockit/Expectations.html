@@ -179,7 +179,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#Expectations--"><code>Expectations()</code></a>, 
 <a href="../mockit/Expectations.html#Expectations-java.lang.Object...-"><code>Expectations(Object...)</code></a>, 
-<a href="../mockit/Expectations.html#Expectations-java.lang.Integer-java.lang.Object...-"><code>Expectations(Integer, Object...)</code></a>, 
 <a href="http://jmockit.org/tutorial/Mocking.html#expectation">Tutorial</a></dd>
 </dl>
 </li>
@@ -310,14 +309,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#Expectations-java.lang.Integer-java.lang.Object...-">Expectations</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;numberOfIterations,
-            <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;classesOrObjectsToBePartiallyMocked)</code>
-<div class="block">Same as <a href="../mockit/Expectations.html#Expectations-java.lang.Object...-"><code>Expectations(Object...)</code></a>, but considering that the invocations inside the block will occur in a
- given number of iterations.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#Expectations-java.lang.Object...-">Expectations</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;classesOrObjectsToBePartiallyMocked)</code>
 <div class="block">Same as <a href="../mockit/Expectations.html#Expectations--"><code>Expectations()</code></a>, except that one or more classes will be partially mocked according to the
@@ -994,34 +985,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  the instance initialization body of an anonymous subclass or the called constructor of a named subclass.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Expectations.html#Expectations-java.lang.Object...-"><code>Expectations(Object...)</code></a>, 
-<a href="../mockit/Expectations.html#Expectations-java.lang.Integer-java.lang.Object...-"><code>Expectations(Integer, Object...)</code></a></dd>
-</dl>
-</li>
-</ul>
-<a name="Expectations-java.lang.Integer-java.lang.Object...-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>Expectations</h4>
-<pre>protected&nbsp;Expectations(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;numberOfIterations,
-                       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;classesOrObjectsToBePartiallyMocked)</pre>
-<div class="block">Same as <a href="../mockit/Expectations.html#Expectations-java.lang.Object...-"><code>Expectations(Object...)</code></a>, but considering that the invocations inside the block will occur in a
- given number of iterations.
- <p/>
- The effect of specifying a number of iterations larger than 1 (one) is equivalent to multiplying by that number
- the lower and upper invocation count limits for each invocation inside the expectation block.
- <p/>
- It's also valid to have multiple expectation blocks for the same test, each with an arbitrary number of
- iterations.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>numberOfIterations</code> - the positive number of iterations for the whole set of expectations recorded inside the
- block; when not specified, 1 (one) iteration is assumed</dd>
-<dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be partially mocked</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Expectations.html#Expectations--"><code>Expectations()</code></a></dd>
+<dd><a href="../mockit/Expectations.html#Expectations-java.lang.Object...-"><code>Expectations(Object...)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -1054,8 +1018,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  primitive/wrapper type, or a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html?is-external=true#isProxyClass-java.lang.Class-" title="class or interface in java.lang.reflect">proxy class</a> created for an
  interface, or if given a value/instance of such a type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/Expectations.html#Expectations-java.lang.Integer-java.lang.Object...-"><code>Expectations(Integer, Object...)</code></a>, 
-<a href="http://jmockit.org/tutorial/Mocking.html#partial">Tutorial</a></dd>
+<dd><a href="http://jmockit.org/tutorial/Mocking.html#partial">Tutorial</a></dd>
 </dl>
 </li>
 </ul>
@@ -1102,8 +1065,6 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd><code>firstValue</code> - the first value to be returned at replay time</dd>
 <dd><code>secondValue</code> - the second value to be returned at replay time</dd>
 <dd><code>remainingValues</code> - any remaining values to be returned, in the same order</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if this method is used for a constructor or <code>void</code> method</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/Mocking.html#results">Tutorial</a></dd>
 </dl>
