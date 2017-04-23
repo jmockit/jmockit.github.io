@@ -75,14 +75,14 @@
 </h2>
 <p>
    The JMockit approach is an alternative to the conventional use of "mock objects" as provided by tools such as
-   <a href="http://easymock.org">EasyMock</a>, <a href="http://jmock.org">jMock</a>, and
+   <a href="http://easymock.org">EasyMock</a>, <a href="http://www.jmock.org">jMock</a>, and
    <a href="http://mockito.org">Mockito</a>.
 </p>
 <p>
    Such tools are based on the dynamic generation of implementation classes (through
    <a href="http://download.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>, when
-   given an interface to be mocked) and subclasses (through <a href="http://cglib.sourceforge.net">CGLIB</a>, when given
-   a non-final class to be mocked).
+   given an interface to be mocked) and subclasses (through <a href="http://github.com/cglib/cglib">CGLIB</a>, when
+   given a non-final class to be mocked).
    This particular mocking implementation technique, in which a subclass with overriding mock methods is created,
    implies some penalties: <code>final</code> classes, constructors, and non-overridable methods simply cannot be
    mocked.
