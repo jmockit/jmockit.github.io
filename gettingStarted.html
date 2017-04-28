@@ -85,13 +85,83 @@
    <a href="tutorial/Introduction.html#maven">Maven</a>.
 </p>
 
+<h2 id="testedObjects">
+   <a href="#testedObjects">Instantiating and injecting objects to be tested</a>
+</h2>
+<p>
+   In this and other sections we show many example tests.
+   They all use JUnit 4, but could just as well be written with TestNG or JUnit 5.
+   Imports are not shown; in the case of the JMockit APIs, they are all imported from the "<code>mockit</code>" package.
+</p>
+<p>
+   The <code class="annotation">@Tested</code> annotation provides support for the automatic creation of an object under
+   test, with its dependencies automatically filled with mocked and/or real instances.
+   A test class can declare one or more fields for tested objects, as shown below.
+</p>
+<pre><code>public final class ClassUnderTest
+{
+   @Inject private Dependency dependency;
+
+   public void doSomething(String someData) { ... }
+}
+
+public final class ExampleUnitTest
+{
+   @Tested ClassUnderTest testedUnit;
+   @Injectable Dependency mockDependency;
+
+   @Test
+   public void exerciseUnitInIsolationFromDependency()
+   {
+      Data data = new Data();
+      new Expectations() {{ mockDependency.findSomeData(anyString); result = data; }};
+
+      testedUnit.doSomething("...");
+
+      new Verifications() {{ mockDependency.sendNotification(); }};
+   }
+}
+</code></pre>
+<p>
+   In the test above, the class under test is instantiated (through its no-args constructor) and initialized with a mock
+   dependency, so that it can be tested in isolation.
+   We can just as easily write an <em>integration</em> test, where dependencies are not mocked but recursively
+   instantiated and initialized as tested objects themselves; for this, we simply specify the tested object to be
+   <em>fully initialized</em>:
+</p>
+<pre><code>public final class ExampleIntegrationTest
+{
+   @Tested(fullyInitialized = true) ClassUnderTest sut;
+
+   @Test
+   public void exerciseTestedObjectsTogether()
+   {
+      Data data = new Data();
+      // Save data into application database or other data store.
+
+      sut.doSomething("...");
+
+      // Verify notification was sent.
+   }
+}
+</code></pre>
+<p>
+   We are not going to deal with the actions mentioned in the comments above in this brief overview, but don't assume
+   they are necessarily difficult to achieve.
+   The <code class="annotation">@Tested</code> API hides a lot of power behind one seemingly small annotation.
+   Even more, it can be used as a <em>meta-</em>annotation, so you can create your own annotations from it, such as
+   "<code class="annotation">@SUT</code>" (for "System Under Test"), or "<code class="annotation">@DataObject</code>",
+   or "<code class="annotation">@Dependency</code>"...
+</p>
+
 <h2 id="mockingAPIs">
    <a href="#mockingAPIs">Using the mocking API</a>
 </h2>
 <p>
-   The JMockit mocking API can be used in tests written with JUnit 4 (version 4.5 or newer), JUnit 5, or TestNG (version
-   6.2 or newer).
-   Lets now see how mocking is done with this API, which is imported from the "<code>mockit</code>" package.
+   Lets now see how mocking is done with this API.
+   It is the largest one (three annotations, seven classes, and one interface), but that shouldn't be taken as a
+   suggestion to use it in every test.
+   On the contrary, mocking (as well as "faking", discussed in the next section) is best used in moderation.
 </p>
 
 <h3 id="mockObject">
@@ -110,8 +180,7 @@ import mockit.*;
 
 public class MyFirstJMockitTest
 {
-   // <strong>Mocked instances</strong> (rather than conventional "mock objects") will be
-   // automatically created and assigned to annotated mock fields:
+   // <strong>Mocked instances</strong> will be automatically created and assigned to annotated mock fields:
    @Mocked
    Collaborator <b>mock1</b>; // <strong>all</strong> current <strong>and future</strong> instances are mocked
 
@@ -121,7 +190,7 @@ public class MyFirstJMockitTest
    @Test
    public void myFirstTestMethod()
    {
-      // Any mock field can be used here or in any other test method of the class.
+      // Any mock field can be used here or in any other test method of the test class.
    }
 
    @Test
@@ -141,8 +210,8 @@ public class MyFirstJMockitTest
    in the class.
    Otherwise, mock parameters with scope limited to a single test are preferred.
    JMockit will always take care of instantiating the mocked type and either assigning the instance to the mock field
-   (provided the field is not <code>final</code>) or passing it as an argument when the test method is invoked by the
-   test runner.
+   (provided it's a non-<code>final</code> instance field) or passing it as an argument when the test method is invoked
+   by the test runner.
 </p>
 
 <h3 id="testMethod">
@@ -270,70 +339,6 @@ public void aTestMethod(@Injectable final MyCollaborator mock)
    the verification block (excluding those which are verified implicitly, if any).
 </p>
 
-<h2 id="testedObjects">
-   <a href="#testedObjects">Instantiating and injecting objects to be tested</a>
-</h2>
-<p>
-   The <code class="annotation">@Tested</code> annotation provides support for the automatic creation of an object under
-   test, with its dependencies automatically filled with mocked and/or real instances.
-   A test class can declare one or more fields for tested objects, as shown below.
-</p>
-<pre><code>public final class ClassUnderTest
-{
-   @Inject private Dependency dependency;
-
-   public void doSomething(String someData) { ... }
-}
-
-public final class ExampleUnitTest
-{
-   @Tested ClassUnderTest testedUnit;
-   @Injectable Dependency mockDependency;
-
-   @Test
-   public void exerciseUnitInIsolationFromDependency()
-   {
-      Data data = new Data();
-      new Expectations() {{ mockDependency.findSomeData(anyString); result = data; }};
-
-      testedUnit.doSomething("...");
-
-      new Verifications() {{ mockDependency.sendNotification(); }};
-   }
-}
-</code></pre>
-<p>
-   In the test above, the class under test is instantiated (through its no-args constructor) and initialized with a mock
-   dependency, so that it can be tested in isolation.
-   We can just as easily write an <em>integration</em> test, where dependencies are not mocked but recursively
-   instantiated and initialized as tested objects themselves; for this, we simply specify the tested object to be
-   <em>fully initialized</em>:
-</p>
-<pre><code>public final class ExampleIntegrationTest
-{
-   @Tested(fullyInitialized = true) ClassUnderTest sut;
-
-   @Test
-   public void exerciseTestedObjectsTogether()
-   {
-      Data data = new Data();
-      // Save data into application database or other data store.
-
-      sut.doSomething("...");
-
-      // Verify notification was sent.
-   }
-}
-</code></pre>
-<p>
-   We are not going to deal with the actions mentioned in the comments above in this brief overview, but don't assume
-   they are necessarily difficult to achieve.
-   The <code class="annotation">@Tested</code> API hides a lot of power behind one seemingly small annotation.
-   Even more, it can be used as a <em>meta-</em>annotation, so you can create your own annotations from it, such as
-   "<code class="annotation">@SUT</code>" (for "System Under Test"), or "<code class="annotation">@DataObject</code>",
-   or "<code class="annotation">@Dependency</code>"...
-</p>
-
 <h2 id="faking">
    <a href="#faking"><em>Fake</em> implementations</a>
 </h2>
@@ -392,7 +397,7 @@ public void fakingExample()
    <a href="#moreInfo">More information</a>
 </h3>
 <p>
-   The examples above give a good overview of the available mocking/faking APIs, but there is more.
+   The examples above give a good overview of the available APIs, but there is more.
    The <a href="tutorial.html">JMockit Tutorial</a> contains an extensive discussion of nearly all methods, fields,
    annotations, etc., with many examples.
    The <a href="api1x/overview-summary.html">API documentation</a> provides a detailed specification for all API

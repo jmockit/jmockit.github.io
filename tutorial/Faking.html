@@ -62,23 +62,19 @@
    implementations, or "<em>mock-ups</em>".
    Typically, a mock-up targets a few methods and/or constructors in the class to be faked, while leaving most other
    methods and constructors unmodified.
+   Also, usually the classes to be faked belong to <em>external</em> libraries, <em>not</em> to the codebase under test.
 </p>
 <p>
-   Fake implementations can be particularly useful in <em>integration</em> tests which depend on external components or
-   resources such as mail or web services servers, complex libraries, etc.
+   Fake implementations can be particularly useful in tests which depend on external components or resources such as
+   e-mail or web services servers, complex libraries, etc.
+   Often, the mock-ups will be applied from reusable testing infrastructure components, not directly from a test class.
+   In particular, the use of <em>both</em> the Faking API and the Mocking API in the same test class should be viewed
+   with suspicion, as it strongly indicates misuse.
+</p>
+<p>
    The replacement of real implementations with fake ones is completely transparent to the code which uses those
    dependencies, and can be switched on and off for the scope of a single test, all tests in a single test class, or
    for the entire test run.
-</p>
-<p>
-   For the remaining of this chapter, lets say we want to write tests for an application that uses the
-   <a href="http://download.oracle.com/javase/7/docs/api/javax/security/auth/login/LoginContext.html">
-      javax.security.auth.login.LoginContext</a> class (from the standard JAAS API) in order to authenticate users.
-   In this case, we don't want our tests to actually execute any of the real JAAS code, since it may depend on external
-   configuration and might not easily work in a developer testing environment.
-   Therefore, an application class depending on <code class="type">LoginContext</code> will be the "code under test",
-   while the <code class="type">LoginContext</code> class (the dependency) will have some of its methods and
-   constructors faked.
 </p>
 
 <h2 id="mocks">
