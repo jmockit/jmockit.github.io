@@ -37,25 +37,26 @@
 </ol>
 <div style="text-align: center;" title="Click to open API documentation">
    <map name="figure1">
-      <area shape="rect" coords="3,3,90,37" href="../api1x/mockit/Tested.html">
-      <area shape="rect" coords="28,45,126,62" href="../api1x/mockit/Tested.html#fullyInitialized--">
-      <area shape="rect" coords="28,67,180,85" href="../api1x/mockit/Tested.html#availableDuringSetup--">
+      <area shape="rect" coords="2,3,90,37" href="../api1x/mockit/Tested.html">
+      <area shape="rect" coords="27,45,126,61" href="../api1x/mockit/Tested.html#fullyInitialized--">
+      <area shape="rect" coords="27,67,180,84" href="../api1x/mockit/Tested.html#availableDuringSetup--">
    </map>
    <img src="TestedAPI.png" usemap="#figure1">
 </div>
 <p>
-   An <a href="https://en.wikipedia.org/wiki/Enterprise_software">enterprise</a>
-   <a href="http://c2.com/cgi/wiki?EnterpriseApplication">application</a> targets a particular business domain, usually
-   having a GUI for multiple concurrent users and an application database for many entity types; also, it often
-   integrates with other applications inside or outside the organization.
+   An <a href="https://en.wikipedia.org/wiki/Enterprise_software" target="enterpriseSoftware">enterprise</a>
+   <a href="http://c2.com/cgi/wiki?EnterpriseApplication" target="enterpriseApplications">application</a> targets a
+   particular business domain, usually having a GUI for multiple concurrent users and an application database for many
+   entity types; also, it often integrates with other applications inside or outside the organization.
    In Java, the Java EE APIs and/or the Spring framework are typically used when building such applications.
 </p>
 <p>
-   In this chapter we describe an approach to test Java enterprise applications by writing out-of-container
-   <em>integration</em> tests, where each test exercises a single step in a well-defined
-   <a href="http://www.requirementdriventesting.com/software-test-methodology-rdtrule1">business scenario</a> (also
-   known as a "<a href="http://tynerblain.com/blog/2007/04/10/what-are-use-case-scenarios">use case</a>" or
-   "<a href="http://agilemodeling.com/artifacts/usageScenario.htm">usage</a>" scenario).
+   In this chapter we describe an approach to test Java enterprise applications by writing <em>out-of-container</em>
+   integration tests, where each test exercises a single step in a well-defined
+   <a href="http://www.requirementdriventesting.com/software-test-methodology-rdtrule1" target="scenario">business
+      scenario</a> (also known as a
+   "<a href="http://tynerblain.com/blog/2007/04/10/what-are-use-case-scenarios" target="useCaseScenario">use case</a>"
+   or "<a href="http://agilemodeling.com/artifacts/usageScenario.htm" target="usageScenario">usage</a>" scenario).
    With a typical layered architecture, such a test calls a public method from a component in the highest layer
    (normally, the <em>presentation</em> or "UI" layer), which then calls down to lower layers.
 </p>

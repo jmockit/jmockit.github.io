@@ -1847,21 +1847,15 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    <a href="#tested">Instantiation and injection of tested classes</a>
 </h2>
 <p>
-   Typically, a test class will exercise a single <em>tested class</em>.
-   JMockit can help by automatically instantiating this class, and optionally injecting the relevant mocked
-   dependencies.
-   This is what the <a href="../api1x/mockit/Tested.html">@Tested</a> annotation is for.
-</p>
-<p>
-   A non-<code>final</code> instance field annotated as such in the test class will be considered for automatic
-   instantiation and injection, just before the execution of a test method.
+   A non-<code>final</code> instance field annotated as <a href="../api1x/mockit/Tested.html">@Tested</a> in the test
+   class will be considered for automatic instantiation and injection, just before the execution of a test method.
    If at this time the field still holds the <code>null</code> reference, an instance will be created using a suitable
    constructor of the tested class, while making sure its internal dependencies get properly injected (when applicable).
    If the field has already been initialized (not <code>null</code>), then nothing will be done.
 </p>
 <p>
-   For injection to be performed, the test class must also contain one or more mock fields or mock parameters declared
-   to be <strong><code class="annotation">@Injectable</code></strong>.
+   In order to inject <em>mocked</em> instances into the tested object, the test class must also contain one or more
+   mock fields or mock parameters declared to be <strong><code class="annotation">@Injectable</code></strong>.
    Mock fields/parameters annotated only with <code class="annotation">@Mocked</code> or
    <code class="annotation">@Capturing</code> are <em>not</em> considered for injection.
    On the other hand, not all injectable fields/parameters need to have <em>mockable</em> types; they can also have
