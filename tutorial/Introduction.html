@@ -254,23 +254,23 @@
 </ol>
 <p>
    The first two steps require access to the application database, which is done through a simplified API to the
-   persistence subsystem.
+   persistence subsystem (which itself uses JPA).
    The third one can be achieved with a third-party API for sending e-mail, which in this example is Apache's
    <a href="http://commons.apache.org/email">Commons Email</a> library.
 </p>
 <p>
    Therefore, the service class has two separate dependencies, one for persistence and another for e-mail.
-   In order to unit test the business operation while verifying proper interaction with these collaborators, we will use
-   the mocking API.
+   To test the business operation, we rely on JMockit's JPA support to deal with persistence, while mocking the e-mail
+   API.
    Complete source code for a working solution - with all tests - is
    <a href="http://github.com/jmockit/jmockit1/blob/master/samples/tutorial">available online</a>.
 </p>
-<pre><code>package jmockit.tutorial.domain;
+<pre><code>package tutorial.domain;
 
 import java.math.*;
 import java.util.*;
 import org.apache.commons.mail.*;
-import static jmockit.tutorial.persistence.Database.*;
+import static tutorial.persistence.Database.*;
 
 public final class MyBusinessService
 {
@@ -312,74 +312,68 @@ public final class MyBusinessService
 </code></pre>
 <p>
    The <code class="type">Database</code> class contains only static methods and a private constructor; the
-   <code>find</code> and <code>persist</code> methods should be obvious, so we won't list them here (assume they are
-   implemented on top of an ORM API, such as JPA).
+   <code>find</code> and <code>persist</code> methods should be obvious, so we won't list them here.
 </p>
 <p>
-   So, how can we unit test the "doBusinessOperationXyz" method without making any changes to the existing application
-   code?
-   In the following JUnit test class, each test will verify the invocations of interest made from the unit under test to
-   its external dependencies.
-   These invocations are the ones at points <code>(1)</code>-<code>(4)</code> indicated above.
+   So, how can we test the "doBusinessOperationXyz" method without making any changes to the existing application code?
+   In the following JUnit test class, each test will verify the correct execution of persistence operations, as well as
+   the expected invocations to the e-mail API.
+   These verification points are the ones numbered <code>(1)</code>-<code>(4)</code> as indicated above.
 </p>
-<pre><code>package jmockit.tutorial.domain;
+<pre><code>package tutorial.domain;
 
 import org.apache.commons.mail.*;
-import jmockit.tutorial.persistence.*;
+import static tutorial.persistence.Database.*;
 
 import org.junit.*;
+import org.junit.rules.*;
+import static org.junit.Assert.*;
 import mockit.*;
 
 public final class MyBusinessServiceTest
 {
-   @Mocked(stubOutClassInitialization = true) final Database unused = null;
+   @Rule public final ExpectedException thrown = ExpectedException.none();
+
+   @Tested final EntityX data = new EntityX(1, "abc", "someone@somewhere.com");
+   @Tested(fullyInitialized = true) MyBusinessService businessService;
    @Mocked SimpleEmail anyEmail;
 
    @Test
    public void doBusinessOperationXyz() throws Exception
    {
-      final EntityX data = new EntityX(5, "abc", "abc@xpta.net");
-      final EntityX existingItem = new EntityX(1, "AX5", "someone@somewhere.com");
+      EntityX existingItem = new EntityX(1, "AX5", "abc@xpta.net");
+(1)   persist(existingItem);
 
-      new Expectations() {{
-(1)      Database.<em>find</em>(withSubstring("select"), any);
-         result = existingItem; // automatically wrapped in a list of one item
-      }};
+      businessService.doBusinessOperationXyz();
 
-      new MyBusinessService(data).doBusinessOperationXyz();
-
-(2)   new Verifications() {{ Database.persist(data); }};
+(2)   assertNotEquals(0, data.getId()); // implies "data" was persisted
 (4)   new Verifications() {{ anyEmail.send(); times = 1; }};
    }
 
-   @Test(expected = EmailException.class)
+   @Test
    public void doBusinessOperationXyzWithInvalidEmailAddress() throws Exception
    {
-      new Expectations() {{
-(3)      anyEmail.addTo((String) withNotNull()); result = new EmailException();
-      }};
+      final String email = "invalid address";
+      data.setCustomerEmail(email);
+(3)   new Expectations() {{ anyEmail.addTo(email); result = new EmailException(); }};
+      thrown.expect(EmailException.class);
 
-      EntityX data = new EntityX(5, "abc", "someone@somewhere.com");
-      new MyBusinessService(data).doBusinessOperationXyz();
+      businessService.doBusinessOperationXyz();
    }
 }
 </code></pre>
 <p>
-   In a behavior-oriented mocking API like this, each test can be divided in three consecutive execution steps:
-   <em>record</em>, <em>replay</em>, and <em>verify</em>.
-   Recordings occur from inside an <em>expectation recording block</em>, while verifications occur from inside an
-   <em>expectation verification block</em>; replays are invocations from inside the code under test.
-   Note, however, that only invocations to <em>mocked</em> methods count; methods (or constructors) belonging to types
-   or instances with no associated mock field or mock parameter are not mocked, and therefore cannot be recorded nor
-   verified.
+   The example test uses a couple of annotations from the JMockit API.
+   <code class="annotation">@Tested</code> takes care of setting up properly initialized objects to be tested, while
+   <code class="annotation">@Mocked</code> applies mocking to a given type.
 </p>
 <p>
-   As the example test above shows, recording and verifying expectations is achieved simply by invoking the desired
-   methods (as well as constructors, even if not shown here) from inside a recording or verification block.
-   Matching of method arguments can be specified through API fields such as "<code>any</code>" and
-   "<code>anyString</code>", or through API methods such as "<code>withNotNull()</code>".
-   Values to return (or exceptions to throw) from matching invocations during replay are specified during recording
-   through the "<code>result</code>" field.
+   As also shown in the test, the recording (inside a <code>new Expectations() {{ ... }}</code> block) and the
+   verification (inside a <code>new Verifications() {{ ... }} block</code>) of expectations is achieved simply by
+   invoking the desired methods (as well as constructors, even if not shown here) on mocked types/instances from inside
+   the recording or verification block.
+   Values to return (or exceptions to throw) from matching invocations executed by the code under test are specified
+   during recording through the "<code>result</code>" field.
    Invocation count constraints can be specified, either when recording or when verifying, through API field assignments
    like "<code>times = 1</code>".
 </p>
