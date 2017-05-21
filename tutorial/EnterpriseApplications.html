@@ -58,7 +58,7 @@
    "<a href="http://tynerblain.com/blog/2007/04/10/what-are-use-case-scenarios" target="useCaseScenario">use case</a>"
    or "<a href="http://agilemodeling.com/artifacts/usageScenario.htm" target="usageScenario">usage</a>" scenario).
    With a typical layered architecture, such a test calls a public method from a component in the highest layer
-   (normally, the <em>presentation</em> or "UI" layer), which then calls down to lower layers.
+   (normally, the <em>application</em> layer), which then calls down to lower layers.
 </p>
 
 <h2 id="anExample">
@@ -78,7 +78,8 @@
    <code>PetType</code>, <code>Owner</code> (a pet's owner), and <code>Visit</code> (a visit from a pet and its owner to
    the clinic).
    Besides entities, the domain model (and layer) of the application also includes <em>domain service</em> classes.
-   In this simple domain, we have only one such class for each entity type, named as <code>VetMaintenance</code>, etc.
+   In this simple domain, we have only one such class for each entity type (<code>VetMaintenance</code>,
+   <code>PetMaintenance</code>, and so on).
 </p>
 <p>
    In DDD, entities are added into and reconstituted or removed from persistent storage through "repository" components.
@@ -97,9 +98,9 @@
    <a href="#javaEE">Using Java EE</a>
 </h3>
 <p>
-   With Java EE 7, we use JPA for the domain entities, EJBs (stateless session beans) or simply
-   <code class="annotation">@Transactional</code> classes for domain services, and JSF
-   <code class="annotated">@ViewScoped</code> beans for the application services.
+   With Java EE 7, we use JPA for the domain <code class="annotation">@Entity</code> types, EJBs (stateless session
+   beans) or simply <code class="annotation">@Transactional</code> classes for domain services, and JSF
+   <code class="annotation">@ViewScoped</code> beans for the application services.
    Code for the UI layer is not included in the sample, as it wouldn't be exercised by the integration test suite
    anyway.
    (In Java EE, this layer would be comprised of JSF facelets in the form of ".xhtml" files.)
@@ -175,9 +176,9 @@ public @interface SUT {} // the System Under Test
    resolved through dependency injection (specifically, constructor injection followed by field injection, as
    applicable).
    The use of "<code>availableDuringSetup = true</code>" merely causes the tested object to be created <em>before</em>
-   any test setup methods (<code>@Before</code> in JUnit or <code>@BeforeMethod</code> in TestNG) are executed,
-   contrary to the default which is to create tested objects right before each test method executes, and after any
-   setup methods.
+   any test setup methods (<code class="annotation">@Before</code> in JUnit or
+   <code class="annotation">@BeforeMethod</code> in TestNG) are executed, contrary to the default which is to create
+   tested objects right before each test method executes, and after any setup methods.
    In this first example test class, this effect is not used, so the only benefit of using
    "<code class="annotation">@TestUtil</code>" is to document the intent of the field in the test class.
 </p>
@@ -255,15 +256,15 @@ public @interface SUT {} // the System Under Test
 }
 </code></pre>
 <p>
-   The <code>Database</code> utility class (also available and used in production code) provides an easier to use API
-   than JPA's <code>EntityManager</code>, but its use is optional; tests could directly use the "<code>em</code>" field
-   instead of "<code>db</code>" (were it made <code>protected</code>, of course).
+   The <code class="type">Database</code> utility class (also available and used in production code) provides an easier
+   to use API than JPA's <code class="type">EntityManager</code>, but its use is optional; tests could directly use the
+   "<code>em</code>" field instead of "<code>db</code>" (were it made <code>protected</code>, of course).
    The <code>EntityManager em</code> field in the test database class gets injected with an instance automatically
    created according to the <code>META-INF/persistence.xml</code> file that should be present in the test runtime
    classpath (this would go into the "src/test" directory when using a Maven-compatible project structure; a
    "production" version of the file can then be provided under "src/main").
    A single default entity manager instance is created, and injected into whichever test or production classes (such as
-   the <code>Database</code> class) have a <code class="type">@PersistenceContext</code> field.
+   the <code class="type">Database</code> class) have a <code class="annotation">@PersistenceContext</code> field.
    If multiple databases are needed, each would have a different entity manager, as configured by the optional
    "<code>name</code>" attribute of this annotation, with the corresponding entry in the <code>persistence.xml</code>
    file.
@@ -283,6 +284,9 @@ public @interface SUT {} // the System Under Test
 <h2 id="spring">
    <a href="#spring">Using the Spring framework</a>
 </h2>
+<p>
+   (to be written)
+</p>
 
 <h2 id="trade-offs">
    <a href="#trade-offs">Trade-offs of the approach</a>
