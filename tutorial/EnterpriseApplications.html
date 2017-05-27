@@ -285,7 +285,52 @@ public @interface SUT {} // the System Under Test
    <a href="#spring">Using the Spring framework</a>
 </h2>
 <p>
-   (to be written)
+   Spring-specific annotations such as <code class="annotation">@Autowired</code> and
+   <code class="annotation">@Value</code> are also supported in fully initialized
+   <code class="annotation">@Tested</code> objects.
+   However, a Spring-based application can also make direct calls to <code>BeanFactory#getBean(...)</code> methods, on
+   instances of various <code class="type">BeanFactory</code> implementation classes.
+</p>
+<p>
+   Regardless of how said bean factory instances are obtained, <code class="annotation">@Tested</code> and
+   <code class="annotation">@Injectable</code> objects can be made available as beans from the bean factory instance, by
+   simply applying the <code class="type">mockit.integration.springframework.BeanFactoryMockUp</code> mock-up class, as
+   shown below using JUnit.
+</p>
+<pre><code>public final class ExampleSpringIntegrationTest
+{
+   @BeforeClass
+   public static void applySpringIntegration()
+   {
+      new BeanFactoryMockUp();
+   }
+
+   @Tested DependencyImpl dependency;
+   @Tested(fullyInitialized = true) ExampleService exampleService;
+
+   @Test
+   public void exerciseApplicationCodeWhichLooksUpBeansThroughABeanFactory()
+   {
+      // In code under test:
+      BeanFactory beanFactory = new DefaultListableBeanFactory();
+      ExampleService service = (ExampleService) beanFactory.getBean("exampleService");
+      Dependency dep = service.getDependency();
+      ...
+
+      assertSame(exampleService, service);
+      assertSame(dependency, dep);
+   }
+}
+</code></pre>
+<p>
+   With the bean factory mock-up applied, a tested object from a field in the test class will be automatically returned
+   from any <code>getBean(String)</code> call on any Spring bean factory instance, provided the given bean name equals
+   the tested field name.
+</p>
+<p>
+   Additionally, the <code class="type">mockit.integration.springframework.TestWebApplicationContext</code> class can be
+   used as a <code class="type">org.springframework.web.context.ConfigurableWebApplicationContext</code> implementation
+   which exposes <code class="annotation">@Tested</code> objects from test classes.
 </p>
 
 <h2 id="trade-offs">
