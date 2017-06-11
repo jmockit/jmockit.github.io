@@ -34,6 +34,11 @@
 <h3 id="1.33">Version <a href="#1.33">1.33</a> (Jul 30, 2017):</h3>
 <ul>
    <li>
+      Additional enhancements to <code class="annotation">@Tested</code>:
+      a) all available <code class="annotation">@Injectable</code>'s having <em>subtypes</em> of target fields and/or
+         constructor parameters are now considered for injection.
+   </li>
+   <li>
       Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/420">#420</a>.
    </li>
@@ -47,11 +52,11 @@
 <ul>
    <li>
       Enhancements to <code class="annotation">@Tested</code>:
-      a) <em>field extraction</em> from a tested object into other <code>@Tested</code> fields declared after it now
-         works for any field in the source object (including primitive types, arrays, and collections), not only for
-         injected dependencies;
+      a) <em>field extraction</em> from a tested object into other <code class="annotation">@Tested</code> fields
+         declared after it now works for any field in the source object (including primitive types, arrays, and
+         collections), not only for injected dependencies;
       b) the annotation can now be used on test method parameters;
-      c) New <code>value</code> attribute.
+      c) new <code>value</code> attribute.
    </li>
    <li>
       Issues closed:
