@@ -28,8 +28,6 @@
 <ol class="contents">
    <li><a href="#isolation">Automated developer testing and test isolation</a></li>
    <li><a href="#mocks">Testing with mock objects</a></li>
-   <li><a href="#tools">Tools for testing with mock objects</a></li>
-   <li><a href="#issues">Issues with conventional mock objects</a></li>
    <li><a href="#anExample">An example</a></li>
    <li>
       <a href="#runningTests">Running tests with JMockit</a>
@@ -130,115 +128,6 @@
    In order to verify the e-mail was correctly sent, the test could mock the e-mail sending API, while exercising the
    real code in every other component (an alternative would be to set up some kind of fake e-mail server which could be
    consulted in an assertion at the end of the test).
-</p>
-
-<h2 id="tools">
-   <a href="#tools">Tools for testing with mock objects</a>
-</h2>
-<p>
-   Existing libraries for testing with mock objects include <a href="http://easymock.org">EasyMock</a> and
-   <a href="http://www.jmock.org">jMock</a>, both of which are based on
-   <a href="http://download.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>,
-   which can create at runtime an implementation for a given Java interface.
-   It's also possible to create proxies for concrete classes through <a href="https://github.com/cglib">CGLIB</a>-based
-   subclass generation.
-   Each library has a rich API for expressing <em>expectations</em> that are verified as methods are called on mock
-   instances, or at the end of the test.
-   It's not uncommon to see JUnit tests with most or all checks written as EasyMock/jMock expectations, instead of with
-   JUnit's own assertion methods.
-</p>
-<p>
-   JMockit has its own <strong>Expectations API</strong>, which is similar to those APIs but goes beyond them by
-   allowing more succinct test code, and by providing support for mocking all kinds of methods, constructors, and types.
-</p>
-<p>
-   There is another group of mocking libraries, which rely on <em>explicit verification</em> of expectations over
-   <em>implicit verification</em>: <a href="http://mockito.org">Mockito</a> and
-   <a href="http://www.unitils.org/tutorial-mock.html">Unitils Mock</a>.
-   The common characteristic of all these mocking APIs is that they use direct invocations to mock objects as a way to
-   specify expectations.
-   In the case of EasyMock and jMock, such invocations can only be made <em>before</em> exercising the unit under test,
-   in the so-called <em>record phase</em> of the test.
-   In the case of Mockito and Unitils Mock, on the other hand, the invocations can also be made <em>after</em>
-   exercising the tested unit, in the <em>verify phase</em> of the test.
-   (The phase in between is the <em>replay phase</em>, during which the unit under test actually performs the
-   invocations of interest on its mocked dependencies.)
-   JMockit provides the <strong>Verifications API</strong>, a natural extension of the Expectations API, to allow the
-   explicit verification of expectations in the "verify" phase.
-</p>
-
-<h2 id="issues">
-   <a href="#issues">Issues with conventional mock objects</a>
-</h2>
-<p>
-   The conventional solutions for achieving isolation with mock objects impose certain design restrictions on the code
-   under test.
-   JMockit was created as an alternative with no such restrictions, by leveraging the facilities in the
-   <a href="http://download.oracle.com/javase/8/docs/api/java/lang/instrument/package-summary.html"
-   >java.lang.instrument</a> Java 6+ package (in addition to making use of - to a lesser degree - reflection, dynamic
-   proxies, and custom class loading).
-</p>
-<p>
-   The main design restriction with "mock object" libraries is that classes eligible for mocking must either implement a
-   separate interface, or all methods to be mocked must be overridable in a subclass.
-   Additionally, the instantiation of dependencies must be controlled from outside the dependent unit, so that a proxy
-   object (the mock) can be passed into the unit to take the place of the "real" dependency.
-   That is, proxied classes can't simply be instantiated with the <code>new</code> operator in client code, because
-   constructor invocations cannot be intercepted with conventional techniques.
-</p>
-<p>
-   To sum up, these are the design restrictions that apply when using a conventional approach to mocking:
-</p>
-<ol>
-   <li>
-      Application classes have to implement a separate interface (to enable the use of
-      <code class="type">java.lang.reflect.Proxy</code>) or at least not be declared <code>final</code> (to enable the
-      dynamic generation of a subclass with overriding methods).
-      In this second case, no instance method to be mocked can be <code>final</code> either.
-      <br/>
-      Obviously, creating Java interfaces just so a mock implementation can exist is not desirable.
-      Separate interfaces (or more generally, abstractions) should be created only when multiple implementations will
-      exist in <em>production</em> code.
-      <br/>
-      In Java, making classes and methods <code>final</code> is optional, even though the vast majority of classes are
-      not designed for extension by subclassing.
-      Declaring them as <code>final</code> communicates that fact, and is a commonly recommended practice in the Java
-      programming literature (see books like "Effective Java, 2nd edition", and "Practical API Design").
-      Additionally, it allows static analysis tools (such as Checkstyle, PMD, FindBugs, or your Java IDE) to provide
-      useful warnings about the code (about, for example, a final method which declares to throw a specific checked
-      exception, but doesn't actually throw it; such warning could not be given for a non-final method, since an
-      override could throw the exception).
-   </li>
-   <li>
-      No <code>static</code> methods for which mock behavior might be needed can be called.
-      <br/>
-      In practice, many APIs contain <code>static</code> methods as entry points or as factory methods.
-      Being able to occasionally mock them is a matter of pragmatism, avoiding costly workarounds such as the creation
-      of wrappers that would otherwise not exist.
-   </li>
-   <li>
-      Classes to be tested need to provide some way for tests to give them mock instances for their dependencies.
-      This usually means that extra setter methods or constructors are created in the dependent classes.
-      <br/>
-      As a consequence, dependent classes cannot simply use the <code>new</code> operator to obtain instances of their
-      dependencies, even in situations where doing so would be the natural choice.
-      <a href="http://martinfowler.com/articles/injection.html">Dependency injection</a> is a technique meant to
-      "separate configuration from use", to be used for dependencies which admit multiple implementations, one of which
-      is selected through some form of configuration code.
-      Unfortunately, some developers choose to use this technique when it's not called for, to the point of creating
-      many separate interfaces with a single implementation each, and/or a significant amount of unnecessary
-      configuration code.
-      Overuse of dependency injection frameworks or containers is particularly insidious when stateless singleton
-      "objects" get favored over proper stateful and short-lived objects.
-   </li>
-</ol>
-<p>
-   With JMockit, <em>any</em> design can be tested in isolation without restricting the developer's freedom.
-   Design decisions which have a negative effect on testability when using only traditional <em>mock objects</em> are
-   inconsequential when using an approach which truly supports the more general concept of <em>mocking</em>.
-   In effect, testability becomes much less of an issue in application design, allowing developers to avoid complexities
-   such as separate interfaces, factories, dependency injection and so on, when they aren't justified by actual system
-   requirements.
 </p>
 
 <h2 id="anExample">
