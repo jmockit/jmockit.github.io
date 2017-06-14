@@ -111,8 +111,6 @@
    As a complement to the assertions performed by each test, the mock itself can encode additional assertions.
 </p>
 <p>
-   The above is true for conventional mock object tools such as EasyMock, jMock, and Mockito (more about them in the
-   next section).
    JMockit goes beyond conventional mock objects by allowing methods <em>and</em> constructors to be mocked directly
    on "real" (non-mock) classes, eliminating the need to instantiate mock objects in tests and pass them to code under
    test; instead, objects created by code under test will execute the mock behavior defined by tests, whenever methods
