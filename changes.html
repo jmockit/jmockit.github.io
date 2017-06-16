@@ -36,10 +36,14 @@
    <li>
       Additional enhancements to <code class="annotation">@Tested</code>:
       a) all available <code class="annotation">@Injectable</code>'s having <em>subtypes</em> of target fields and/or
-         constructor parameters are now considered for injection.
+         constructor parameters are now considered for injection;
+      b) previous <code class="annotation">@Tested</code> values from annotated fields or parameters are now eligible
+         for injection into <code class="annotation">@Tested</code> objects, even without
+         <code>fullyInitialized = true</code>.
    </li>
    <li>
       Issues closed:
+      <a href="https://github.com/jmockit/jmockit1/issues/418">#418</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/420">#420</a>.
    </li>
 </ul>
