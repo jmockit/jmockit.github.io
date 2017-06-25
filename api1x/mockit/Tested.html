@@ -94,7 +94,7 @@
 <hr>
 <br>
 <pre><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">@Retention</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>=<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</a>)
- <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>={<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#FIELD" title="class or interface in java.lang.annotation">FIELD</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#PARAMETER" title="class or interface in java.lang.annotation">PARAMETER</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#ANNOTATION_TYPE" title="class or interface in java.lang.annotation">ANNOTATION_TYPE</a>})
+ <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">@Target</a>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true#value--" title="class or interface in java.lang.annotation">value</a>={<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#FIELD" title="class or interface in java.lang.annotation">FIELD</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#PARAMETER" title="class or interface in java.lang.annotation">PARAMETER</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#ANNOTATION_TYPE" title="class or interface in java.lang.annotation">ANNOTATION_TYPE</a>,<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#METHOD" title="class or interface in java.lang.annotation">METHOD</a>})
 public @interface <span class="memberNameLabel">Tested</span></pre>
 <div class="block">Indicates a class to be tested, with optional automatic instantiation and/or automatic injection of dependencies.
  This annotation is applicable to instance fields of a test class, and to test method parameters; alternatively, it
@@ -109,11 +109,12 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
  tested field declaration (it is ignored if applied to a tested parameter).
  Whenever automatic creation occurs, a suitable instance of the tested class is created, initialized, and assigned to
  the tested field or passed as argument to the tested parameter when the test method gets executed.
- Available <a href="../mockit/Injectable.html" title="annotation in mockit">injectables</a> are used, either as argument values for the chosen constructor of the
- tested class, or as values to set into injected fields of the newly-created tested object.
+ Available <a href="../mockit/Injectable.html" title="annotation in mockit">injectables</a> and other <code>@Tested</code> values are used, either as argument values
+ for the chosen constructor of the tested class, or as values to set into injected fields of the newly-created tested
+ object.
  <p/>
- For <em>constructor injection</em>, all constructor parameters (if any) must be satisfied with the values of
- available injectables.
+ For <em>constructor injection</em>, all constructor parameters (if any) must be satisfied with available
+ tested/injectable values.
  If the tested class has a constructor annotated with the standard CDI annotation "<code>@Inject</code>", then it is
  the one to be used;
  otherwise, if there are multiple satisfiable constructors then the one with the most parameters <em>and</em> the
@@ -132,7 +133,7 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
  each field will be used when looking for available injectables.
  Finally, if there is no matching and available injectable value for a given target field, it is left unassigned,
  unless the target field is for a <em>required</em> dependency; note that all fields marked with a DI annotation
- (such as <code>@Inject</code>, <code>Autowired</code>, etc.) indicate required dependencies by default
+ (such as <code>@Inject</code>, <code>@Autowired</code>, etc.) indicate required dependencies by default
  (the use of "<code>@Autowired(required = false)</code>" is respected, if present).
  <p/>
  Tested fields/parameters whose declared type is primitive, a primitive wrapper, numeric, or an enum can use the
@@ -227,10 +228,7 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
  initialization of other objects.
  Another potential use is to affect the initialization of other tested objects in the same test class, during their
  creation <em>after</em> setup.
- Finally, objects made available during setup are also available during the execution of any tear-down methods.
- <p/>
- In order to be made available during test setup, a tested object won't be injected from <code>@Injectable</code>
- test method parameters, only from injectable fields.</div>
+ Finally, objects made available during setup are also available during the execution of any tear-down methods.</div>
 <dl>
 <dt>Default:</dt>
 <dd>false</dd>
@@ -261,8 +259,8 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
  For each field of a reference type that would otherwise remain <code>null</code>, an attempt is made to automatically
  create and recursively initialize a suitable real instance.
  For this attempt to succeed, the type of the field must either be a concrete class having a constructor that can
- be satisfied by available injectables and/or by recursively created dependencies, or a known interface (see below)
- for which a real instance can be created.
+ be satisfied by available tested/injectable values and/or by recursively created dependencies, or a known
+ interface (see below) for which a real instance can be created.
  <p/>
  Constructor injection is also supported.
  In this case, the same rules used for injected fields apply to the parameters of the constructor that gets chosen
