@@ -71,15 +71,6 @@ img { border: none; }
    width: 22px; height: 22px;
 }
 
-.sidebar {
-   width: 22em;
-   padding: 3px;
-   margin-left: 5px; margin-bottom: 5px;
-   border: 2px ridge #bbb;
-   border-radius: 0.2em;
-   float: right;
-}
-
 .header { margin: 0; }
 .header a { font-family: serif; font-size: 150%; color: #bee916; }
 .header > span { font-size: 50%; padding-left: 2em; position: relative; top: -1ex; }

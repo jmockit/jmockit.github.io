@@ -61,32 +61,21 @@
 <div style="text-align: center;">
    <img src="Coverage.png">
 </div>
-<div class="sidebar">
-   Other coverage tools for Java include EMMA, Clover, <a href="http://cobertura.sourceforge.net">Cobertura</a>, and
-   <a href="http://www.eclemma.org/jacoco">JaCoCo</a>.
-   (The latter being more often used through the <em>EclEmma</em> Eclipse plugin.)
-   These tools provide two separate coverage metrics, namely <em>statement</em> and <em>branch</em> coverage.
-   The first one is also called <em>line</em> coverage, even though they don't actually attempt to measure how much of
-   the executable code in individual lines has been covered.
-   The second measures how many of the alternative branches resulting from decision points (an <code>if</code> or
-   <code>switch</code> statement) have been taken during a test run.
-   JMockit Coverage uses a different, but related, set of coverage metrics.
-</div>
 <p>
-<a href="http://en.wikipedia.org/wiki/Code_coverage"><em>Code coverage</em></a> consists of a set of software metrics
-that can tell you how much of the production code is covered by a given test suite.
-It's purely quantitative, and does not say anything about the <em>quality</em> of either the production code or the
-test code.
-That said, the examination of code coverage reports will sometimes lead to the discovery of unreachable code which
-can be eliminated.
-But more importantly, such reports can be used as a guide for the discovery of missing tests.
-This is not only useful when creating tests for existing production code, but also when writing tests first, such as
-in the practice of TDD (Test Driven Development).
+   <a href="http://en.wikipedia.org/wiki/Code_coverage"><em>Code coverage</em></a> consists of a set of software metrics
+   that can tell you how much of the production code is covered by a given test suite.
+   It's purely quantitative, and does not say anything about the <em>quality</em> of either the production code or the
+   test code.
+   That said, the examination of code coverage reports will sometimes lead to the discovery of unreachable code which
+   can be eliminated.
+   But more importantly, such reports can be used as a guide for the discovery of missing tests.
+   This is not only useful when creating tests for existing production code, but also when writing tests first, such as
+   in the practice of TDD (Test Driven Development).
 </p>
 <p>
-JMockit Coverage provides three different and complementary code coverage metrics:
-<em>line coverage</em>, <em>path coverage</em>, and <em>data coverage</em>.
-An <a href="../coverage-sample/index.html">example coverage report</a> showing all metrics can be found on-line.
+   JMockit Coverage provides three different and complementary code coverage metrics:
+   <em>line coverage</em>, <em>path coverage</em>, and <em>data coverage</em>.
+   An <a href="../coverage-sample/index.html">example coverage report</a> showing all metrics can be found on-line.
 </p>
 
 <h2 id="line">
