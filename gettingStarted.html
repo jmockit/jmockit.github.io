@@ -34,8 +34,8 @@
 </h1>
 <p>
    The toolkit is provided as a <a href="https://github.com/jmockit/artifacts1x/raw/master/jmockit-1.33.zip">versioned
-   zip file</a> (with jars, sources, documentation, and Maven configuration files), and also as a set of Maven artifacts
-   deployed to the <a href="http://repo.maven.apache.org/maven2/org/jmockit/">Maven Central</a> repository.
+   zip file</a> (with jars, sources, documentation, and Maven build files), and also as a set of artifacts deployed to
+   the <a href="http://repo.maven.apache.org/maven2/org/jmockit/">Maven Central</a> repository.
    It requires <strong>Java 6</strong> or newer for test execution; tests must use JUnit or TestNG.
    The library has extensive <a href="api1x/overview-summary.html">API documentation</a>; additionally, the APIs are
    described, with examples, in a <a href="tutorial.html">Tutorial</a>.
@@ -50,38 +50,39 @@
 <ol>
    <li>
       Either add the library file <strong><code>jmockit.jar</code></strong> to your classpath (in your Java IDE project,
-      Ant build file, etc.), or the <code>org/jmockit/jmockit/1.x</code> dependency to your Maven <code>pom.xml</code>
-      or Gradle <code>build.gradle</code> file.
+      Ant build file, etc.), or the <code>org/jmockit/jmockit/1.x</code> dependency to your <code>pom.xml</code> or
+      <code>build.gradle</code> file.
    </li>
    <li>
-      Depending on the choice of test framework (JUnit or TestNG):
+      Depending on the choice of test framework (JUnit 4.x/5.x, TestNG):
       <ul>
          <li>
-            When using <strong>JUnit 4.5+</strong>, verify that <code>jmockit.jar</code> (or the equivalent Maven
+            When using <strong>JUnit 4.5+</strong>, verify that <code>jmockit.jar</code> (or the equivalent Maven/Gradle
             dependency) appears <em>before</em> JUnit in the classpath.
             Alternatively, annotate test classes with
-            <code><span class="annotation">@RunWith</span>(<span class="type">JMockit</span>.class)</code>.
+            <code class="annotation">@RunWith</code><code>(JMockit.class)</code>.
             <br/>
-            Note for <strong>Eclipse</strong> users: when specifying the order of jars in the classpath, make sure to
-            use the "Order and Export" tab of the "Java Build Path" window.
+            Note for <strong>Eclipse</strong> users: use the "Order and Export" tab of the "Java Build Path" window when
+            specifying the order of jars in the classpath.
             Also, make sure the Eclipse project uses the JRE from a JDK installation instead of a "plain" JRE, since
             the latter ones lack the "<code>attach</code>" native library.
          </li>
          <li>
-            When using <strong>TestNG 6.2+</strong> or <strong>JUnit 5+</strong>, simply add <code>jmockit.jar</code>
+            When using <strong>JUnit 5+</strong> or <strong>TestNG 6.2+</strong>, simply add <code>jmockit.jar</code>
             (or the equivalent Maven/Gradle dependency) to the classpath.
          </li>
       </ul>
    </li>
    <li>
       Optionally, configure your IDE to find API source code and Javadoc comments in this same <code>jmockit.jar</code>
-      file (or the <code>jmockit-1.x-sources.jar</code> and <code>jmockit-1.x-javadoc.jar</code> Maven artifacts).
+      file (or the <code>jmockit-1.x-sources.jar</code> and <code>jmockit-1.x-javadoc.jar</code> Maven/Gradle
+      artifacts).
    </li>
 </ol>
 <p>
-   For additional instructions on the use of JMockit from an <strong>Ant</strong> or <strong>Maven</strong> build, see
-   the corresponding sections in the JMockit Tutorial: <a href="tutorial/Introduction.html#ant">Ant</a>,
-   <a href="tutorial/Introduction.html#maven">Maven</a>.
+   The JMockit Tutorial contains specific sections on the use of JMockit from an
+   <a href="tutorial/Introduction.html#ant">Ant</a>, <a href="tutorial/Introduction.html#maven">Maven</a>, or
+   <a href="tutorial/Introduction.html#gradle">Gradle</a> build.
 </p>
 
 <h2 id="testedObjects">
@@ -89,7 +90,7 @@
 </h2>
 <p>
    In this and other sections we show many example tests.
-   They all use JUnit 4, but could just as well be written with TestNG or JUnit 5.
+   They all use JUnit 4, but could just as well be written with JUnit 5 or TestNG.
    Imports are not shown; in the case of the JMockit APIs, they are all imported from the "<code>mockit</code>" package.
 </p>
 <p>
@@ -253,7 +254,7 @@ public void aTestMethod(<em>&lt;any number of mock parameters></em>)
 </p>
 <p>
 <pre><code>@Test
-public void aTestMethod(@Mocked final MyCollaborator anyCollaborator)
+public void aTestMethod(@Mocked MyCollaborator anyCollaborator)
 {
    new <strong>Expectations</strong>() {{
       anyCollaborator.getData(); <b>result</b> = "my test data";
@@ -307,7 +308,7 @@ public void aTestMethod(@Mocked final MyCollaborator anyCollaborator)
    This allows us to make sure that important invocations actually occurred during the replay phase.
 </p>
 <pre><code>@Test
-public void aTestMethod(@Injectable final MyCollaborator mock)
+public void aTestMethod(@Injectable MyCollaborator mock)
 {
    // Expectations are recorded, if needed.
    ...

@@ -34,6 +34,7 @@
       <ol>
          <li><a href="#ant">Running tests with the JUnit Ant task</a></li>
          <li><a href="#maven">Running tests from Maven</a></li>
+         <li><a href="#gradle">Running tests from Gradle</a></li>
       </ol>
    </li>
 </ol>
@@ -343,6 +344,21 @@ public final class MyBusinessServiceTest
    For information on <a href="CodeCoverage.html#maven">using JMockit Coverage with Maven</a>, see the relevant section
    in that chapter.
 </p>
+
+<h3 id="gradle">
+   <a href="#gradle">Running tests from Gradle</a>
+</h3>
+<p>
+   Gradle will also download the necessary artifacts from the <code>mavenCentral()</code> repository.
+   In your <code>gradle.build</code> file, simply add the <code>jmockit</code> dependency (preferably before the
+   <code>junit</code> dependency, if using JUnit 4.x), replacing "<code>x</code>" with the number of the
+   <a href="../changes.html">desired version</a>:
+</p>
+<pre><code>dependencies {
+   ... "compile" dependencies ...
+   testCompile <span style="color: #800">'org.jmockit:jmockit:1.<em>x</em>'</span>
+}
+</code></pre>
 
 <div id="bottom" class="navigation">
    <a href="EnterpriseApplications.html"><img src="go-next.png" title="Next chapter"></a>
