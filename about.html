@@ -51,8 +51,8 @@
 </h2>
 <p>
    Internally, the Java SE 6+ bytecode instrumentation feature (the
-   <a href="http://download.oracle.com/javase/7/docs/api/java/lang/instrument/package-summary.html"
-      >java.lang.instrument</a> package) is used extensively.
+   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/instrument/package-summary.html">java.lang.instrument</a>
+   package) is used extensively.
    For the reading and in-memory generation of modified bytecode arrays, the <a href="http://asm.objectweb.org">ASM</a>
    library is used.
 </p>
@@ -80,7 +80,7 @@
 </p>
 <p>
    Such tools are based on the dynamic generation of implementation classes (through
-   <a href="http://download.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>, when
+   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>, when
    given an interface to be mocked) and subclasses (through <a href="http://github.com/cglib/cglib">CGLIB</a>, when
    given a non-final class to be mocked).
    This particular mocking implementation technique, in which a subclass with overriding mock methods is created,
