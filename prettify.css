@@ -110,6 +110,7 @@ pre .string, pre .value {
 }
 
 pre b { color: #660E7A; }
+code var { font-style: normal; font-weight: bold; color: #9876AA; }
 
 @media print {
    * { background: transparent; color: black !important; text-shadow: none; }
