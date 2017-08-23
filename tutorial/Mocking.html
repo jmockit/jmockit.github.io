@@ -32,12 +32,6 @@
    <li><a href="#tested">Instantiation and injection of tested classes</a></li>
    <li><a href="#results">Recording results for an expectation</a></li>
    <li>
-      <a href="#strictness">Regular versus <em>strict</em> expectations</a>
-      <ol>
-         <li><a href="#strictMocks">Strict and non-strict <em>mocks</em></a></li>
-      </ol>
-   </li>
-   <li>
       <a href="#argumentMatching">Flexible matching of argument values</a>
       <ol>
          <li><a href="#matcherFields">Using the "any" fields for argument matching</a></li>
@@ -51,12 +45,42 @@
          <li><a href="#verificationInOrder">Verification in order</a></li>
       </ol>
    </li>
+   <li><a href="#delegates">Delegates: specifying custom results</a></li>
+   <li>
+      <a href="#withCapture">Capturing invocation arguments for verification</a>
+      <ol>
+         <li><a href="#singleInvocationCapture">Capturing arguments from a single invocation</a></li>
+         <li><a href="#multipleInvocationCapture">Capturing arguments from multiple invocations</a></li>
+         <li><a href="#capturingNewInstances">Capturing new instances</a></li>
+      </ol>
+   </li>
+   <li>
+      <a href="#cascading">Cascading mocks</a>
+      <ol>
+         <li><a href="#staticFactories">Cascading static factory methods</a></li>
+         <li><a href="#fluent">Cascading self-returning methods</a></li>
+      </ol>
+   </li>
+   <li>
+      <a href="#strictness">Regular versus <em>strict</em> expectations</a>
+      <ol>
+         <li><a href="#strictMocks">Strict and non-strict <em>mocks</em></a></li>
+      </ol>
+   </li>
    <li>
       <a href="#instanceMatching">Matching invocations to specific instances</a>
       <ol>
          <li><a href="#injectable">Injectable mocked instances</a></li>
          <li><a href="#multipleMockedInstances">Declaring multiple mocked instances</a></li>
          <li><a href="#futureInstancesByConstructor">Instances created with a given constructor</a></li>
+      </ol>
+   </li>
+   <li><a href="#partial">Partial mocking</a></li>
+   <li>
+      <a href="#capturing">Capturing implementation classes and instances</a>
+      <ol>
+         <li><a href="#mockingUnspecifiedImplementations">Mocking unspecified implementation classes</a></li>
+         <li><a href="#futureInstances">Specifying behavior for <em>future</em> instances</a></li>
       </ol>
    </li>
    <li>
@@ -69,30 +93,6 @@
          <li><a href="#restrictedFullVerifications">Restricting the set of mocked types to be fully verified</a></li>
          <li><a href="#emptyFullVerifications">Verifying that no invocations occurred</a></li>
          <li><a href="#unspecifiedInvocations">Verifying unspecified invocations that should not happen</a></li>
-      </ol>
-   </li>
-   <li>
-      <a href="#withCapture">Capturing invocation arguments for verification</a>
-      <ol>
-         <li><a href="#singleInvocationCapture">Capturing arguments from a single invocation</a></li>
-         <li><a href="#multipleInvocationCapture">Capturing arguments from multiple invocations</a></li>
-         <li><a href="#capturingNewInstances">Capturing new instances</a></li>
-      </ol>
-   </li>
-   <li><a href="#delegates">Delegates: specifying custom results</a></li>
-   <li>
-      <a href="#cascading">Cascading mocks</a>
-      <ol>
-         <li><a href="#staticFactories">Cascading static factory methods</a></li>
-         <li><a href="#fluent">Cascading self-returning methods</a></li>
-      </ol>
-   </li>
-   <li><a href="#partial">Partial mocking</a></li>
-   <li>
-      <a href="#capturing">Capturing implementation classes and instances</a>
-      <ol>
-         <li><a href="#mockingUnspecifiedImplementations">Mocking unspecified implementation classes</a></li>
-         <li><a href="#futureInstances">Specifying behavior for <em>future</em> instances</a></li>
       </ol>
    </li>
 </ol>
@@ -802,6 +802,316 @@ public void verifyingExpectationsInOrder(@Mocked DependencyAbc abc)
    at any time (or not at all).
 </p>
 
+<h2 id="delegates">
+   <a href="#delegates">Delegates: specifying custom results</a>
+</h2>
+<p>
+   We have seen how to record results for invocations through assignments to the <code><var>result</var></code> field or
+   calls to the <code>returns(...)</code> method.
+   We have also seen how to match invocation arguments flexibly with the <code>withXyz(...)</code> group of methods and
+   the various <code><var>anyXyz</var></code> fields.
+   But what if a test needs to decide the result of a recorded invocation based on the arguments it will receive at
+   replay time?
+   We can do it through a <a href="../api1x/mockit/Delegate.html">Delegate</a> instance, as exemplified below.
+</p>
+<pre><code>@Tested CodeUnderTest cut;
+
+@Test
+public void delegatingInvocationsToACustomDelegate(@Mocked DependencyAbc anyAbc)
+{
+   new Expectations() {{
+      anyAbc.intReturningMethod(<var>anyInt</var>, <var>anyString</var>);
+      <var>result</var> = <strong>new Delegate() {
+         int aDelegateMethod(int i, String s) {
+            return i == 1 ? i : s.length();
+         }
+      }</strong>;
+   }};
+
+   // Calls to "intReturningMethod(int, String)" will execute the delegate method above.
+   <var>cut</var>.doSomething();
+}
+</code></pre>
+<p>
+   The <code class="type">Delegate</code> interface is empty, being used simply to tell JMockit that actual invocations
+   at replay time should be delegated to the "delegate" method in the assigned object.
+   This method can have any name, provided it is the only non-<code>private</code> method in the delegate object.
+   As for the parameters of the delegate method, they should either match the parameters of the recorded method, or
+   there should be none.
+   In any case, the delegate method is allowed to have an additional parameter of type
+   <a href="../api1x/mockit/Invocation.html">Invocation</a> as its first parameter.
+   The <code class="type">Invocation</code> object received during replay will provide access to the invoked instance
+   and the actual invocation arguments, along with other abilities.
+   The return type of a delegate method doesn't have to be the same as the recorded method, although it should be
+   compatible in order to avoid a <code class="type">ClassCastException</code> later.
+</p>
+<p>
+   Constructors can also be handled through delegate <em>methods</em>.
+   The following example test shows a constructor invocation being delegated to a method which conditionally throws an
+   exception.
+</p>
+<pre><code>@Test
+public void delegatingConstructorInvocations(@Mocked Collaborator anyCollaboratorInstance)
+{
+   new Expectations() {{
+      new Collaborator(<var>anyInt</var>);
+      <var>result</var> = <strong>new Delegate() {
+         void delegate(int i) { if (i < 1) throw new IllegalArgumentException(); }
+      }</strong>;
+   }};
+
+   // The first instantiation using "Collaborator(int)" will execute the delegate above.
+   new Collaborator(4);
+}
+</code></pre>
+
+<h2 id="withCapture">
+   <a href="#withCapture">Capturing invocation arguments for verification</a>
+</h2>
+<p>
+   Invocation arguments can be captured for later verification through a set of special "<code>withCapture(...)</code>"
+   methods.
+   There are three different cases, each with its own specific capturing method:
+</p>
+<ol>
+   <li>verification of arguments passed to a mocked method, in a single invocation: <code>T withCapture()</code>;</li>
+   <li>verification of arguments passed to a mocked method, in multiple invocations: <code>T withCapture(List&lt;T>)</code>;</li>
+   <li>verification of arguments passed to a mocked constructor: <code>List&lt;T> withCapture(T)</code>.</li>
+</ol>
+
+<h3 id="singleInvocationCapture">
+   <a href="#singleInvocationCapture">Capturing arguments from a single invocation</a>
+</h3>
+<p>
+   To capture arguments from a single invocation to a mocked method or constructor, we use
+   <a href="../api1x/mockit/Verifications.html#withCapture--">withCapture()</a>, as the following example test
+   demonstrates.
+</p>
+<pre><code>@Test
+public void capturingArgumentsFromSingleInvocation(@Mocked Collaborator mock)
+{
+   // Inside tested code:
+   ...
+   new Collaborator().doSomething(0.5, new int[2], "test");
+
+   // Back in test code:
+   new Verifications() {{
+      double d;
+      String s;
+      mock.doSomething(<strong>d = withCapture()</strong>, null, <strong>s = withCapture()</strong>);
+
+      assertTrue(d > 0.0);
+      assertTrue(s.length() > 1);
+   }};
+}
+</code></pre>
+<p>
+   The <code>withCapture()</code> method can only be used in verification blocks.
+   Typically, we use it when a <em>single</em> matching invocation is expected to occur; if more than one such
+   invocation occurs, however, the last one to occur overwrites the values captured by previous ones.
+   It is particularly useful with parameters of a complex type (think a JPA <code class="annotation">@Entity</code>),
+   which may contain several items whose values need to be checked.
+</p>
+
+<h3 id="multipleInvocationCapture">
+   <a href="#multipleInvocationCapture">Capturing arguments from multiple invocations</a>
+</h3>
+<p>
+   If <em>multiple</em> invocations to a mocked method or constructor are expected, and we want to capture values for
+   all of them, then the <a href="../api1x/mockit/Verifications.html#withCapture-java.util.List-">withCapture(List)</a>
+   method should be used instead, as in the example below.
+</p>
+<pre><code>@Test
+public void capturingArgumentsFromMultipleInvocations(@Mocked Collaborator mock)
+{
+   // Inside tested code:
+   mock.doSomething(dataObject1);
+   mock.doSomething(dataObject2);
+   ...
+
+   // Back in test code:
+   new Verifications() {{
+      List&lt;DataObject> dataObjects = new ArrayList<>();
+      mock.doSomething(<strong>withCapture(dataObjects)</strong>);
+
+      assertEquals(2, dataObjects.size());
+      DataObject data1 = dataObjects.get(0);
+      DataObject data2 = dataObjects.get(1);
+      // Perform arbitrary assertions on data1 and data2.
+   }};
+}
+</code></pre>
+<p>
+   Differently from <code>withCapture()</code>, the <code>withCapture(List)</code> overload can also be used in
+   expectation recording blocks.
+</p>
+
+<h3 id="capturingNewInstances">
+   <a href="#capturingNewInstances">Capturing new instances</a>
+</h3>
+<p>
+   Finally, we can capture the new instances of a mocked class that got created during the test.
+</p>
+<pre><code>@Test
+public void capturingNewInstances(@Mocked Person mockedPerson)
+{
+   // From the code under test:
+   dao.create(new Person("Paul", 10));
+   dao.create(new Person("Mary", 15));
+   dao.create(new Person("Joe", 20));
+   ...
+
+   // Back in test code:
+   new Verifications() {{
+      // Captures the new instances created with a specific constructor.
+      List&lt;Person> personsInstantiated = withCapture(new Person(<var>anyString</var>, <var>anyInt</var>));
+
+      // Now captures the instances of the same type passed to a method.
+      List&lt;Person> personsCreated = new ArrayList<>();
+      dao.create(withCapture(personsCreated));
+
+      // Finally, verifies both lists are the same.
+      assertEquals(personsInstantiated, personsCreated);
+   }};
+}
+</code></pre>
+
+<h2 id="cascading">
+   <a href="#cascading">Cascading mocks</a>
+</h2>
+<p>
+   When using complex APIs where functionality is distributed through many different objects, it is not uncommon to see
+   chained invocations of the form <code>obj1.getObj2(...).getYetAnotherObj().doSomething(...)</code>.
+   In such cases it may be necessary to mock all objects/classes in the chain, starting with <code>obj1</code>.
+</p>
+<p>
+   All three mocking annotations provide this ability.
+   The following test shows a basic example, using the <code>java.net</code> and <code>java.nio</code> APIs.
+</p>
+<pre><code>@Test
+public void recordAndVerifyExpectationsOnCascadedMocks(
+   @Mocked Socket anySocket, // will match any new Socket object created during the test
+   @Mocked SocketChannel cascadedChannel // will match cascaded instances
+) throws Exception
+{
+   new Expectations() {{
+      // Calls to Socket#getChannel() will automatically return a cascaded SocketChannel;
+      // such an instance will be the same as the second mock parameter, allowing us to
+      // use it for expectations that will match all cascaded channel instances:
+      cascadedChannel.isConnected(); <var>result</var> = false;
+   }};
+
+   // Inside production code:
+   Socket sk = new Socket(); // mocked as "anySocket"
+   SocketChannel ch = sk.getChannel(); // mocked as "cascadedChannel"
+
+   if (!ch.isConnected()) {
+      SocketAddress sa = new InetSocketAddress("remoteHost", 123);
+      ch.connect(sa);
+   }
+
+   InetAddress adr1 = sk.getInetAddress();  // returns a newly created InetAddress instance
+   InetAddress adr2 = sk.getLocalAddress(); // returns another new instance
+   ...
+
+   // Back in test code:
+   new Verifications() {{ cascadedChannel.connect((SocketAddress) withNotNull()); }};
+}
+</code></pre>
+<p>
+   In the test above, calls to eligible methods in the mocked <code class="type">Socket</code> class will return a
+   <em>cascaded mock</em> object whenever they occur during the test.
+   The cascaded mock will allow further cascading, so a <code>null</code> reference will never be obtained from methods
+   which return object references (except for non-eligible return types <code class="type">Object</code> or
+   <code class="type">String</code> which will return <code>null</code>, or collection types which will return a
+   non-mocked empty collection).
+</p>
+<p>
+   Unless there is an available mocked instance from a mock field/parameter (such as
+   <code>cascadedChannel</code> above), a <em>new</em> cascaded instance will get created from the first call to each
+   mocked method.
+   In the example above, the two different methods with the same <code class="type">InetAddress</code> return type will
+   create and return <em>different</em> cascaded instances; the same method will always return the same cascaded
+   instance, though.
+</p>
+<p>
+   New cascaded instances are created with <code class="annotation">@Injectable</code> semantics, so as to not affect
+   other instances of the same type that may exist during the test.
+</p>
+<p>
+   Finally, it's worth noting that, if necessary, cascaded instances can be replaced with non-mocked ones, with a
+   different mocked instance, or not be returned at all; for that, record an expectation which assigns the
+   <code><var>result</var></code> field with the desired instance to be returned, or with <code>null</code> if no such
+   instance is desired.
+</p>
+
+<h3 id="staticFactories">
+   <a href="#staticFactories">Cascading static factory methods</a>
+</h3>
+<p>
+   Cascading is quite useful in scenarios where a mocked class contains <code>static</code> <em>factory methods</em>.
+   In the following example test, lets say we want to mock the
+   <code class="type">javax.faces.context.FacesContext</code> class from JSF (Java EE).
+</p>
+<pre><code>@Test
+public void postErrorMessageToUIForInvalidInputFields(@Mocked FacesContext jsf)
+{
+   // Set up invalid inputs, somehow.
+
+   // Code under test which validates input fields from a JSF page, adding
+   // error messages to the JSF context in case of validation failures.
+   FacesContext ctx = FacesContext.getCurrentInstance();
+
+   if (<em>some input is invalid</em>) {
+      ctx.addMessage(null, new FacesMessage("Input xyz is invalid: blah blah..."));
+   }
+   ...
+
+   // Test code: verify appropriate error message was added to context.
+   new Verifications() {{
+      FacesMessage msg;
+      jsf.addMessage(null, msg = withCapture());
+      assertTrue(msg.getSummary().contains("blah blah"));
+   }};
+}
+</code></pre>
+<p>
+   What's interesting in the test above is that we never have to worry about
+   <code>FacesContext.getCurrentInstance()</code>, as the "<code>jsf</code>" mocked instance gets automatically
+   returned.
+</p>
+
+<h3 id="fluent">
+   <a href="#fluent">Cascading self-returning methods</a>
+</h3>
+<p>
+   Another scenario where cascading tends to help is when code under test uses a
+   "<a href="http://martinfowler.com/bliki/FluentInterface.html">fluent interface</a>", where a "builder" object returns
+   itself from most of its methods.
+   So, we end up with a method call chain which produces some final object or state.
+   In the example test below we mock the <code class="type">java.lang.ProcessBuilder</code> class.
+</p>
+<pre><code>@Test
+public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exception
+{
+   // Code under test creates a new process to execute an OS-specific command.
+   String cmdLine = "copy /Y *.txt D:\\TEMP";
+   File wrkDir = new File("C:\\TEMP");
+   Process copy = new ProcessBuilder().command(cmdLine).directory(wrkDir).inheritIO().start();
+   int exit = copy.waitFor();
+   ...
+
+   // Verify the desired process was created with the correct command.
+   new Verifications() {{ pb.command(withSubstring("copy")).start(); }};
+}
+</code></pre>
+<P>
+   Above, methods <code>command(...)</code>, <code>directory(...)</code>, and <code>inheritIO()</code> configure the
+   process to be created, while <code>start()</code> finally creates it.
+   The mocked process builder object automatically returns itself ("<code>pb</code>") from these calls, while also
+   returning a new mocked <code class="type">Process</code> from the call to <code>start()</code>.
+</P>
+
 <h2 id="strictness">
    <a href="#strictness">Regular versus <em>strict</em> expectations</a>
 </h2>
@@ -1057,6 +1367,237 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @M
    Both versions of the test are equivalent.
    The second one also allows, when combined with <em>partial</em> mocking, for real (non-mocked) instances to be used
    as replacements.
+</p>
+
+<h2 id="partial">
+   <a href="#partial">Partial mocking</a>
+</h2>
+<p>
+   By default, <em>all</em> methods and constructors which can be called on a mocked type <em>and</em> its super-types
+   (except for <code class="annotation">java.lang.Object</code>) get mocked.
+   This is appropriate for most tests, but in some situations we might need to <em>select</em> only certain methods or
+   constructors to be mocked.
+   Methods/constructors not mocked in an otherwise mocked type will execute normally when called.
+</p>
+<p>
+   When a class or object is partially mocked, JMockit decides whether to execute the real implementation of a method or
+   constructor as it gets called from the code under test, based on which expectations were recorded and which were not.
+   The following example tests will demonstrate it.
+</p>
+<pre><code>public class PartialMockingTest
+{
+   static class Collaborator
+   {
+      final int value;
+
+      Collaborator() { value = -1; }
+      Collaborator(int value) { this.value = value; }
+
+      int getValue() { return value; }
+      final boolean simpleOperation(int a, String b, Date c) { return true; }
+      static void doSomething(boolean b, String s) { throw new IllegalStateException(); }
+   }
+
+   @Test
+   public void partiallyMockingAClassAndItsInstances()
+   {
+      Collaborator anyInstance = new Collaborator();
+
+      new Expectations(<strong>Collaborator.class</strong>) {{
+         anyInstance.getValue(); <var>result</var> = 123;
+      }};
+
+      // Not mocked, as no constructor expectations were recorded:
+      Collaborator c1 = new Collaborator();
+      Collaborator c2 = new Collaborator(150);
+
+      // Mocked, as a matching method expectation was recorded:
+      assertEquals(123, c1.getValue());
+      assertEquals(123, c2.getValue());
+
+      // Not mocked:
+      assertTrue(c1.simpleOperation(1, "b", null));
+      assertEquals(45, new Collaborator(45).value);
+   }
+
+   @Test
+   public void partiallyMockingASingleInstance()
+   {
+      Collaborator collaborator = new Collaborator(2);
+
+      new Expectations(<strong>collaborator</strong>) {{
+         collaborator.getValue(); <var>result</var> = 123;
+         collaborator.simpleOperation(1, "", null); <var>result</var> = false;
+
+         // Static methods can be dynamically mocked too.
+         Collaborator.doSomething(<var>anyBoolean</var>, "test");
+      }};
+
+      // Mocked:
+      assertEquals(123, collaborator.getValue());
+      assertFalse(collaborator.simpleOperation(1, "", null));
+      Collaborator.doSomething(true, "test");
+
+      // Not mocked:
+      assertEquals(2, collaborator.value);
+      assertEquals(45, new Collaborator(45).getValue());
+      assertEquals(-1, new Collaborator().getValue());
+   }
+}
+</code></pre>
+<p>
+   As shown above, the
+   <a href="../api1x/mockit/Expectations.html#Expectations-java.lang.Object...-">Expectations(Object...)</a> constructor
+   accepts one or more classes or objects to be partially mocked.
+   If a <code>Class</code> object is given, all methods <em>and</em> constructors defined in that class can be mocked,
+   as well as the methods and constructors of its super-classes; <em>all</em> instances of the specified class will be
+   regarded as mocked instances.
+   If, on the other hand, a regular <em>instance</em> is given, then <em>only</em> methods, not constructors, in the
+   class hierarchy can be mocked; even more, only <em>that</em> particular instance will be mocked.
+</p>
+<p>
+   Notice that in these two example tests there is no mock field or mock parameter.
+   The partial mocking constructor effectively provides yet another way to specify mocked types.
+   It also lets us turn objects stored in <em>local variables</em> into mocked instances.
+   Such objects can be created with any amount of state in internal instance fields; they will keep that state when
+   mocked.
+</p>
+<p>
+   It should be noted that, when we request a class or instance to be partially mocked, it can also have invocations
+   <em>verified</em> on it, even if the verified methods/constructors were not recorded.
+   For example, consider the following test.
+</p>
+<pre><code>   @Test
+   public void partiallyMockingAnObjectJustForVerifications()
+   {
+      Collaborator collaborator = new Collaborator(123);
+
+      new Expectations(collaborator) {};
+
+      // No expectations were recorded, so nothing will be mocked.
+      int value = collaborator.getValue(); // value == 123
+      collaborator.simpleOperation(45, "testing", new Date());
+      ...
+
+      // Unmocked methods can still be verified:
+      new Verifications() {{ c1.simpleOperation(<var>anyInt</var>, <var>anyString</var>, (Date) <var>any</var>); }};
+   }
+</code></pre>
+<p>
+   Finally, a simpler way to apply partial mocking to a tested class is to have a field in the test class annotated as
+   both <code class="annotation">@Tested</code> (see <a href="#tested">section below</a>) and
+   <code class="annotation">@Mocked</code>.
+   In this case, the tested object is not passed to the <code class="type">Expectations</code> constructor, but we still
+   need to record expectations on any methods requiring mocked results.
+</p>
+
+<h2 id="capturing">
+   <a href="#capturing">Capturing implementation classes and instances</a>
+</h2>
+<p>
+   Our discussion of this feature will be based on the (contrived) code below.
+</p>
+<pre><code>public interface Service { int doSomething(); }
+final class ServiceImpl implements Service { public int doSomething() { return 1; } }
+
+public final class TestedUnit
+{
+   private final Service service1 = <strong>new ServiceImpl();</strong>
+   private final Service service2 = <strong>new Service() { public int doSomething() { return 2; } };</strong>
+
+   public int businessOperation()
+   {
+      return service1.doSomething() + service2.doSomething();
+   }
+}
+</code></pre>
+<p>
+   The method we want to test, <code>businessOperation()</code>, uses classes that implement a separate interface,
+   <code class="type">Service</code>.
+   One of these implementations is defined through an anonymous inner class, which is completely inaccessible (except
+   for the use of Reflection) from client code.
+</p>
+
+<h3 id="mockingUnspecifiedImplementations">
+   <a href="#mockingUnspecifiedImplementations">Mocking unspecified implementation classes</a>
+</h3>
+<p>
+   Given a base type (be it an <code>interface</code>, an <code>abstract</code> class, or any sort of base class), we
+   can write a test which only knows about the base type but where all implementing/extending implementation classes get
+   mocked.
+   To do so, we declare a "capturing" mocked type which refers only to the known base type.
+   Not only will implementation classes already loaded by the JVM get mocked, but also any additional classes that
+   happen to get loaded by the JVM during later test execution.
+   This ability is activated by the <a href="../api1x/mockit/Capturing.html">@Capturing</a> annotation, which can be
+   applied to mock fields and mock parameters, as demonstrated below.
+</p>
+<pre><code>public final class UnitTest
+{
+   <strong>@Capturing Service anyService</strong>;
+
+   @Test
+   public void mockingImplementationClassesFromAGivenBaseType()
+   {
+      new Expectations() {{ anyService.doSomething(); returns(3, 4); }};
+
+      int result = new TestedUnit().businessOperation();
+
+      assertEquals(7, result);
+   }
+}
+</code></pre>
+<p>
+   In the test above, two return values are specified for the <code>Service#doSomething()</code> method.
+   This expectation will match all invocations to this method, regardless of the actual instance on which the invocation
+   occurs, <em>and</em> regardless of the actual class implementing the method.
+</p>
+
+<h3 id="futureInstances">
+   <a href="#futureInstances">Specifying behavior for <em>future</em> instances</a>
+</h3>
+<p>
+   An additional ability related to capturing applies to <em>future</em> instances assignable to the mocked type, and
+   is activated through the "<code>maxInstances</code>" optional attribute.
+   This attribute takes an <code>int</code> value specifying the <em>maximum</em> number of future instances of the
+   mocked type that should be covered by the associated mock field/parameter; when not specified, <em>all</em>
+   assignable instances, both pre-existing and to be created during the test, are covered.
+</p>
+<p>
+   The expectations recorded and/or verified on a given capturing mock field or parameter will match invocations to any
+   of the future instances covered by the mock field/parameter.
+   This allows us to record and/or verify different behavior for each set of future instances; for that, we declare two
+   or more capturing mock fields/parameters of the same declared type, each with its own <code>maxInstances</code>
+   value (except perhaps for the last mock field/parameter, which would then cover the remaining future instances).
+</p>
+<p>
+   For the sake of demonstration, the following example test takes control of <code class="type">java.nio.Buffer</code>
+   subclasses and their future instances; in a real test it would be preferable to use real buffers rather than mocked
+   ones.
+</p>
+<pre><code>@Test
+public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances(
+   @Capturing(maxInstances = 1) Buffer firstNewBuffer, @Capturing Buffer remainingNewBuffers)
+{
+   new Expectations() {{
+      firstNewBuffer.position(); <var>result</var> = 10;
+      remainingNewBuffers.position(); <var>result</var> = 20;
+   }};
+
+   // Code under test creates several buffers...
+   ByteBuffer buffer1 = ByteBuffer.allocate(100);
+   IntBuffer  buffer2 = IntBuffer.wrap(new int[] {1, 2, 3});
+   CharBuffer buffer3 = CharBuffer.wrap("                ");
+
+   // ... and eventually read their positions, getting 10 for
+   // the first buffer created, and 20 for the remaining ones.
+   assertEquals(10, buffer1.position());
+   assertEquals(20, buffer2.position());
+   assertEquals(20, buffer3.position());
+}
+</code></pre>
+<p>
+   It should be noted that while a capturing mocked type is in scope, <em>all</em> implementation classes will get
+   mocked, regardless of any "<code>maxInstances</code>" limits that may have been specified.
 </p>
 
 <h2 id="otherVerifications">
@@ -1335,537 +1876,6 @@ public void readOnlyOperation(@Mocked Dependency mock)
    phase, except for the ones explicitly verified in the verification block (<code>Dependency#getData()</code> in this
    case), then the test above will fail.
    On the other hand, it may be easier to use strict expectations in such cases, without any verification block at all.
-</p>
-
-<h2 id="withCapture">
-   <a href="#withCapture">Capturing invocation arguments for verification</a>
-</h2>
-<p>
-   Invocation arguments can be captured for later verification through a set of special "<code>withCapture(...)</code>"
-   methods.
-   There are three different cases, each with its own specific capturing method:
-   1) verification of arguments passed to a mocked method, in a single invocation: <code>T withCapture()</code>;
-   2) verification of arguments passed to a mocked method, in multiple invocations:
-   <code>T withCapture(List&lt;T>)</code>; and
-   3) verification of arguments passed to a mocked constructor: <code>List&lt;T> withCapture(T)</code>.
-</p>
-
-<h3 id="singleInvocationCapture">
-   <a href="#singleInvocationCapture">Capturing arguments from a single invocation</a>
-</h3>
-<p>
-   To capture arguments from a single invocation to a mocked method or constructor, we use "<code>withCapture()</code>",
-   as the following example test demonstrates.
-</p>
-<pre><code>@Test
-public void capturingArgumentsFromSingleInvocation(@Mocked Collaborator mock)
-{
-   // Inside tested code:
-   new Collaborator().doSomething(0.5, new int[2], "test");
-
-   new Verifications() {{
-      double d;
-      String s;
-      mock.doSomething(<strong>d = withCapture()</strong>, null, <strong>s = withCapture()</strong>);
-
-      assertTrue(d > 0.0);
-      assertTrue(s.length() > 1);
-   }};
-}
-</code></pre>
-<p>
-   The <a href="../api1x/mockit/Verifications.html#withCapture--">withCapture()</a> method can only be used in
-   verification blocks.
-   Typically, we use it when a <em>single</em> matching invocation is expected to occur; if more than one such
-   invocation occurs, however, the last one to occur overwrites the values captured by previous ones.
-   It is particularly useful with parameters of a complex type (think a JPA <code class="annotation">@Entity</code>),
-   which may contain several items whose values need to be checked.
-</p>
-
-<h3 id="multipleInvocationCapture">
-   <a href="#multipleInvocationCapture">Capturing arguments from multiple invocations</a>
-</h3>
-<p>
-   If <em>multiple</em> invocations to a mocked method or constructor are expected, and we want to capture values for
-   all of them, then the <a href="../api1x/mockit/Verifications.html#withCapture-java.util.List-">withCapture(List)</a>
-   method should be used instead, as in the example below.
-</p>
-<pre><code>@Test
-public void capturingArgumentsFromMultipleInvocations(@Mocked Collaborator mock)
-{
-   mock.doSomething(dataObject1);
-   mock.doSomething(dataObject2);
-
-   new Verifications() {{
-      List&lt;DataObject> dataObjects = new ArrayList<>();
-      mock.doSomething(<strong>withCapture(dataObjects)</strong>);
-
-      assertEquals(2, dataObjects.size());
-      DataObject data1 = dataObjects.get(0);
-      DataObject data2 = dataObjects.get(1);
-      // Perform arbitrary assertions on data1 and data2.
-   }};
-}
-</code></pre>
-<p>
-   Differently from <code>withCapture()</code>, the <code>withCapture(List)</code> overload can also be used in
-   expectation recording blocks.
-</p>
-
-<h3 id="capturingNewInstances">
-   <a href="#capturingNewInstances">Capturing new instances</a>
-</h3>
-<p>
-   Finally, we can capture the new instances of a mocked class that got created during the test.
-</p>
-<pre><code>@Test
-public void capturingNewInstances(@Mocked Person mockedPerson)
-{
-   // From the code under test:
-   dao.create(new Person("Paul", 10));
-   dao.create(new Person("Mary", 15));
-   dao.create(new Person("Joe", 20));
-
-   new Verifications() {{
-      // Captures the new instances created with a specific constructor.
-      List&lt;Person> personsInstantiated = withCapture(new Person(anyString, anyInt));
-
-      // Now captures the instances of the same type passed to a method.
-      List&lt;Person> personsCreated = new ArrayList<>();
-      dao.create(withCapture(personsCreated));
-
-      // Finally, verifies both lists are the same.
-      assertEquals(personsInstantiated, personsCreated);
-   }};
-}
-</code></pre>
-
-<h2 id="delegates">
-   <a href="#delegates">Delegates: specifying custom results</a>
-</h2>
-<p>
-   We have seen how to record results for invocations through assignments to the <code><em>result</em></code> field or
-   calls to the <code>returns(...)</code> method.
-   We have also seen how to match invocation arguments flexibly with the <code>withXyz(...)</code> group of methods and
-   the various <code>anyXyz</code> fields.
-   But what if a test needs to decide the result of a recorded invocation based on the arguments it will receive at
-   replay time?
-   We can do it through a <a href="../api1x/mockit/Delegate.html">Delegate</a> instance, as exemplified below.
-</p>
-<pre><code>@Test
-public void delegatingInvocationsToACustomDelegate(@Mocked DependencyAbc anyAbc)
-{
-   new Expectations() {{
-      anyAbc.intReturningMethod(<var>anyInt</var>, null);
-      <var>result</var> = <strong>new Delegate() {
-         int aDelegateMethod(int i, String s)
-         {
-            return i == 1 ? i : s.length();
-         }
-      }</strong>;
-   }};
-
-   // Calls to "intReturningMethod(int, String)" will execute the delegate method above.
-   new UnitUnderTest().doSomething();
-}
-</code></pre>
-<p>
-   The <code class="type">Delegate</code> interface is empty, being used simply to tell JMockit that actual invocations
-   at replay time should be delegated to the "delegate" method in the assigned object.
-   This method can have any name, provided it is the only non-<code>private</code> method in the delegate object.
-   As for the parameters of the delegate method, they should either match the parameters of the recorded method, or
-   there should be none.
-   In any case, the delegate method is allowed to have an additional parameter of type
-   <a href="../api1x/mockit/Invocation.html">Invocation</a> as its first parameter.
-   (The <code class="type">Invocation</code> object received during replay will provide access to the invoked instance
-   and the actual invocation arguments, along with other abilities.)
-   The return type of a delegate method doesn't have to be the same as the recorded method, although it should be
-   compatible in order to avoid a <code class="type">ClassCastException</code> later.
-</p>
-<p>
-   Constructors can also be handled through delegate <em>methods</em>.
-   The following example test shows a constructor invocation being delegated to a method which conditionally throws an
-   exception.
-</p>
-<pre><code>@Test
-public void delegatingConstructorInvocations(@Mocked Collaborator anyCollaboratorInstance)
-{
-   new Expectations() {{
-      new Collaborator(<var>anyInt</var>);
-      <var>result</var> = <strong>new Delegate() {
-         void delegate(int i) { if (i < 1) throw new IllegalArgumentException(); }
-      }</strong>;
-   }};
-
-   // The first instantiation using "Collaborator(int)" will execute the delegate above.
-   new Collaborator(4);
-}
-</code></pre>
-
-<h2 id="cascading">
-   <a href="#cascading">Cascading mocks</a>
-</h2>
-<p>
-   When using complex APIs where functionality is distributed through many different objects, it is not uncommon to see
-   chained invocations of the form <code>obj1.getObj2(...).getYetAnotherObj().doSomething(...)</code>.
-   In such cases it may be necessary to mock all objects/classes in the chain, starting with <code>obj1</code>.
-</p>
-<p>
-   All three mocking annotations provide this ability.
-   The following test shows a basic example, using the <code>java.net</code> and <code>java.nio</code> APIs.
-</p>
-<pre><code>@Test
-public void recordAndVerifyExpectationsOnCascadedMocks(
-   @Mocked Socket anySocket, // will match any new Socket object created during the test
-   @Mocked SocketChannel cascadedChannel // will match cascaded instances
-) throws Exception
-{
-   new Expectations() {{
-      // Calls to Socket#getChannel() will automatically return a cascaded SocketChannel;
-      // such an instance will be the same as the second mock parameter, allowing us to
-      // use it for expectations that will match all cascaded channel instances:
-      cascadedChannel.isConnected(); <var>result</var> = false;
-   }};
-
-   // Inside production code:
-   Socket sk = new Socket(); // mocked as "anySocket"
-   SocketChannel ch = sk.getChannel(); // mocked as "cascadedChannel"
-
-   if (!ch.isConnected()) {
-      SocketAddress sa = new InetSocketAddress("remoteHost", 123);
-      ch.connect(sa);
-   }
-
-   InetAddress adr1 = sk.getInetAddress();  // returns a newly created InetAddress instance
-   InetAddress adr2 = sk.getLocalAddress(); // returns another new instance
-   ...
-
-   // Back in test code:
-   new Verifications() {{ cascadedChannel.connect((SocketAddress) withNotNull()); }};
-}
-</code></pre>
-<p>
-   In the test above, calls to eligible methods in the mocked <code class="type">Socket</code> class will return a
-   <em>cascaded mock</em> object whenever they occur during the test.
-   The cascaded mock will allow further cascading, so a <code>null</code> reference will never be obtained from methods
-   which return object references (except for non-eligible return types <code>Object</code> or <code>String</code> which
-   will return <code>null</code>, or collection types which will return a non-mocked empty collection).
-</p>
-<p>
-   Unless there is an available mocked instance from a mock field/parameter (such as
-   <code>cascadedChannel</code> above), a <em>new</em> cascaded instance will get created from the first call to each
-   mocked method.
-   In the example above, the two different methods with the same <code>InetAddress</code> return type will create and
-   return <em>different</em> cascaded instances; the same method will always return the same cascaded instance, though.
-</p>
-<p>
-   New cascaded instances are created with <code class="annotation">@Injectable</code> semantics, so as to not affect
-   other instances of the same type that may exist during the test.
-</p>
-<p>
-   Finally, it's worth noting that, if necessary, cascaded instances can be replaced with non-mocked ones, with a
-   different mocked instance, or not be returned at all; for that, record an expectation which assigns the
-   <code>result</code> field with the desired instance to be returned, or with <code>null</code> if no such instance
-   is desired.
-</p>
-
-<h3 id="staticFactories">
-   <a href="#staticFactories">Cascading static factory methods</a>
-</h3>
-<p>
-   Cascading is extremely useful in scenarios where a mocked class contains <code>static</code> <em>factory
-   methods</em>.
-   In the following example test, lets say we want to mock the <code>javax.faces.context.FacesContext</code> class from
-   JSF (Java EE).
-</p>
-<pre><code>@Test
-public void postErrorMessageToUIForInvalidInputFields(@Mocked FacesContext jsf)
-{
-   // Set up invalid inputs, somehow.
-
-   // Code under test which validates input fields from a JSF page, adding
-   // error messages to the JSF context in case of validation failures.
-   FacesContext ctx = FacesContext.getCurrentInstance();
-
-   if (<em>some input is invalid</em>) {
-      ctx.addMessage(null, new FacesMessage("Input xyz is invalid: blah blah..."));
-   }
-   ...
-
-   // Test code: verify appropriate error message was added to context.
-   new Verifications() {{
-      FacesMessage msg;
-      jsf.addMessage(null, msg = withCapture());
-      assertTrue(msg.getSummary().contains("blah blah"));
-   }};
-}
-</code></pre>
-<p>
-   What's interesting in the test above is that we never have to worry about
-   <code>FacesContext.getCurrentInstance()</code>, as the "<code>jsf</code>" mocked instance gets automatically
-   returned.
-</p>
-
-<h3 id="fluent">
-   <a href="#fluent">Cascading self-returning methods</a>
-</h3>
-<p>
-   Another scenario where cascading tends to help is when code under test uses a
-   "<a href="http://martinfowler.com/bliki/FluentInterface.html">fluent interface</a>", where a "builder" object returns
-   itself from most of its methods.
-   So, we end up with a method call chain which produces some final object or state.
-   In the example test below we mock the <code>java.lang.ProcessBuilder</code> class.
-</p>
-<pre><code>@Test
-public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exception
-{
-   // Code under test creates a new process to execute an OS-specific command.
-   String cmdLine = "copy /Y *.txt D:\\TEMP";
-   File wrkDir = new File("C:\\TEMP");
-   Process copy = new ProcessBuilder().command(cmdLine).directory(wrkDir).inheritIO().start();
-   int exit = copy.waitFor();
-   ...
-
-   // Verify the desired process was created with the correct command.
-   new Verifications() {{ pb.command(withSubstring("copy")).start(); }};
-}
-</code></pre>
-<P>
-   Above, methods <code>command(...)</code>, <code>directory(...)</code>, and <code>inheritIO()</code> configure the
-   process to be created, while <code>start()</code> finally creates it.
-   The mocked process builder object automatically returns itself ("<code>pb</code>") from these calls, while also
-   returning a new mocked <code>Process</code> from the call to <code>start()</code>.
-</P>
-
-<h2 id="partial">
-   <a href="#partial">Partial mocking</a>
-</h2>
-<p>
-   By default, <em>all</em> methods and constructors which can be called on a mocked type <em>and</em> its super-types
-   (except for <code class="annotation">java.lang.Object</code>) get mocked.
-   This is appropriate for most tests, but in some situations we might need to <em>select</em> only certain methods or
-   constructors to be mocked.
-   Methods/constructors not mocked in an otherwise mocked type will execute normally when called.
-</p>
-<p>
-   When a class or object is partially mocked, JMockit decides whether to execute the real implementation of a method or
-   constructor as it gets called from the code under test, based on which expectations were recorded and which were not.
-   The following example tests will demonstrate it.
-</p>
-<pre><code>public class PartialMockingTest
-{
-   static class Collaborator
-   {
-      final int value;
-
-      Collaborator() { value = -1; }
-      Collaborator(int value) { this.value = value; }
-
-      int getValue() { return value; }
-      final boolean simpleOperation(int a, String b, Date c) { return true; }
-      static void doSomething(boolean b, String s) { throw new IllegalStateException(); }
-   }
-
-   @Test
-   public void partiallyMockingAClassAndItsInstances()
-   {
-      Collaborator anyInstance = new Collaborator();
-
-      new Expectations(<strong>Collaborator.class</strong>) {{
-         anyInstance.getValue(); <var>result</var> = 123;
-      }};
-
-      // Not mocked, as no constructor expectations were recorded:
-      Collaborator c1 = new Collaborator();
-      Collaborator c2 = new Collaborator(150);
-
-      // Mocked, as a matching method expectation was recorded:
-      assertEquals(123, c1.getValue());
-      assertEquals(123, c2.getValue());
-
-      // Not mocked:
-      assertTrue(c1.simpleOperation(1, "b", null));
-      assertEquals(45, new Collaborator(45).value);
-   }
-
-   @Test
-   public void partiallyMockingASingleInstance()
-   {
-      Collaborator collaborator = new Collaborator(2);
-
-      new Expectations(<strong>collaborator</strong>) {{
-         collaborator.getValue(); <var>result</var> = 123;
-         collaborator.simpleOperation(1, "", null); <var>result</var> = false;
-
-         // Static methods can be dynamically mocked too.
-         Collaborator.doSomething(<var>anyBoolean</var>, "test");
-      }};
-
-      // Mocked:
-      assertEquals(123, collaborator.getValue());
-      assertFalse(collaborator.simpleOperation(1, "", null));
-      Collaborator.doSomething(true, "test");
-
-      // Not mocked:
-      assertEquals(2, collaborator.value);
-      assertEquals(45, new Collaborator(45).getValue());
-      assertEquals(-1, new Collaborator().getValue());
-   }
-}
-</code></pre>
-<p>
-   As shown above, the
-   <a href="../api1x/mockit/Expectations.html#Expectations-java.lang.Object...-">Expectations(Object...)</a> constructor
-   accepts one or more classes or objects to be partially mocked.
-   If a <code>Class</code> object is given, all methods <em>and</em> constructors defined in that class can be mocked,
-   as well as the methods and constructors of its super-classes; <em>all</em> instances of the specified class will be
-   regarded as mocked instances.
-   If, on the other hand, a regular <em>instance</em> is given, then <em>only</em> methods, not constructors, in the
-   class hierarchy can be mocked; even more, only <em>that</em> particular instance will be mocked.
-</p>
-<p>
-   Notice that in these two example tests there is no mock field or mock parameter.
-   The partial mocking constructor effectively provides yet another way to specify mocked types.
-   It also lets us turn objects stored in <em>local variables</em> into mocked instances.
-   Such objects can be created with any amount of state in internal instance fields; they will keep that state when
-   mocked.
-</p>
-<p>
-   It should be noted that, when we request a class or instance to be partially mocked, it can also have invocations
-   <em>verified</em> on it, even if the verified methods/constructors were not recorded.
-   For example, consider the following test.
-</p>
-<pre><code>   @Test
-   public void partiallyMockingAnObjectJustForVerifications()
-   {
-      Collaborator collaborator = new Collaborator(123);
-
-      new Expectations(collaborator) {};
-
-      // No expectations were recorded, so nothing will be mocked.
-      int value = collaborator.getValue(); // value == 123
-      collaborator.simpleOperation(45, "testing", new Date());
-      ...
-
-      // Unmocked methods can still be verified:
-      new Verifications() {{ c1.simpleOperation(<var>anyInt</var>, <var>anyString</var>, (Date) <var>any</var>); }};
-   }
-</code></pre>
-<p>
-   Finally, a simpler way to apply partial mocking to a tested class is to have a field in the test class annotated as
-   both <code class="annotation">@Tested</code> (see <a href="#tested">section below</a>) and
-   <code class="annotation">@Mocked</code>.
-   In this case, the tested object is not passed to the <code class="type">Expectations</code> constructor, but we still
-   need to record expectations on any methods requiring mocked results.
-</p>
-
-<h2 id="capturing">
-   <a href="#capturing">Capturing implementation classes and instances</a>
-</h2>
-<p>
-   Our discussion of this feature will be based on the (contrived) code below.
-</p>
-<pre><code>public interface Service { int doSomething(); }
-final class ServiceImpl implements Service { public int doSomething() { return 1; } }
-
-public final class TestedUnit
-{
-   private final Service service1 = <strong>new ServiceImpl();</strong>
-   private final Service service2 = <strong>new Service() { public int doSomething() { return 2; } };</strong>
-
-   public int businessOperation()
-   {
-      return service1.doSomething() + service2.doSomething();
-   }
-}
-</code></pre>
-<p>
-   The method we want to test, <code>businessOperation()</code>, uses classes that implement a separate interface,
-   <code class="type">Service</code>.
-   One of these implementations is defined through an anonymous inner class, which is completely inaccessible (except
-   for the use of Reflection) from client code.
-</p>
-
-<h3 id="mockingUnspecifiedImplementations">
-   <a href="#mockingUnspecifiedImplementations">Mocking unspecified implementation classes</a>
-</h3>
-<p>
-   Given a base type (be it an <code>interface</code>, an <code>abstract</code> class, or any sort of base class), we
-   can write a test which only knows about the base type but where all implementing/extending implementation classes get
-   mocked.
-   To do so, we declare a "capturing" mocked type which refers only to the known base type.
-   Not only will implementation classes already loaded by the JVM get mocked, but also any additional classes that
-   happen to get loaded by the JVM during later test execution.
-   This ability is activated by the <a href="../api1x/mockit/Capturing.html">@Capturing</a> annotation, which can be
-   applied to mock fields and mock parameters, as demonstrated below.
-</p>
-<pre><code>public final class UnitTest
-{
-   <strong>@Capturing Service anyService</strong>;
-
-   @Test
-   public void mockingImplementationClassesFromAGivenBaseType()
-   {
-      new Expectations() {{ anyService.doSomething(); returns(3, 4); }};
-
-      int result = new TestedUnit().businessOperation();
-
-      assertEquals(7, result);
-   }
-}
-</code></pre>
-<p>
-   In the test above, two return values are specified for the <code>Service#doSomething()</code> method.
-   This expectation will match all invocations to this method, regardless of the actual instance on which the invocation
-   occurs, <em>and</em> regardless of the actual class implementing the method.
-</p>
-
-<h3 id="futureInstances">
-   <a href="#futureInstances">Specifying behavior for <em>future</em> instances</a>
-</h3>
-<p>
-   An additional ability related to capturing applies to <em>future</em> instances assignable to the mocked type, and
-   is activated through the "<code>maxInstances</code>" optional attribute.
-   This attribute takes an <code>int</code> value specifying the <em>maximum</em> number of future instances of the
-   mocked type that should be covered by the associated mock field/parameter; when not specified, <em>all</em>
-   assignable instances, both pre-existing and to be created during the test, are covered.
-</p>
-<p>
-   The expectations recorded and/or verified on a given capturing mock field or parameter will match invocations to any
-   of the future instances covered by the mock field/parameter.
-   This allows us to record and/or verify different behavior for each set of future instances; for that, we declare two
-   or more capturing mock fields/parameters of the same declared type, each with its own <code>maxInstances</code>
-   value (except perhaps for the last mock field/parameter, which would then cover the remaining future instances).
-</p>
-<p>
-   For the sake of demonstration, the following example test takes control of <code class="type">java.nio.Buffer</code>
-   subclasses and their future instances; in a real test it would be preferable to use real buffers rather than mocked
-   ones.
-</p>
-<pre><code>@Test
-public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances(
-   @Capturing(maxInstances = 1) Buffer firstNewBuffer, @Capturing Buffer remainingNewBuffers)
-{
-   new Expectations() {{
-      firstNewBuffer.position(); <var>result</var> = 10;
-      remainingNewBuffers.position(); <var>result</var> = 20;
-   }};
-
-   // Code under test creates several buffers...
-   ByteBuffer buffer1 = ByteBuffer.allocate(100);
-   IntBuffer  buffer2 = IntBuffer.wrap(new int[] {1, 2, 3});
-   CharBuffer buffer3 = CharBuffer.wrap("                ");
-
-   // ... and eventually read their positions, getting 10 for
-   // the first buffer created, and 20 for the remaining ones.
-   assertEquals(10, buffer1.position());
-   assertEquals(20, buffer2.position());
-   assertEquals(20, buffer3.position());
-}
-</code></pre>
-<p>
-   It should be noted that while a capturing mocked type is in scope, <em>all</em> implementation classes will get
-   mocked, regardless of any "<code>maxInstances</code>" limits that may have been specified.
 </p>
 
 <div id="bottom" class="navigation">
