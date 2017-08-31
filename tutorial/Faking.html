@@ -210,7 +210,7 @@ public void applyingAnAnonymousMockup() throws Exception
    new MockUp&lt;LoginContext>() {
       @Mock void $init(String name) { /* do nothing */ }
       @Mock void login() {}
-   });
+   };
 
    new LoginContext("test").login();
 }
