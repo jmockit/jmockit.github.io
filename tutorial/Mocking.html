@@ -62,12 +62,6 @@
       </ol>
    </li>
    <li>
-      <a href="#strictness">Regular versus <em>strict</em> expectations</a>
-      <ol>
-         <li><a href="#strictMocks">Strict and non-strict <em>mocks</em></a></li>
-      </ol>
-   </li>
-   <li>
       <a href="#instanceMatching">Matching invocations to specific instances</a>
       <ol>
          <li><a href="#injectable">Injectable mocked instances</a></li>
@@ -1111,56 +1105,6 @@ public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exc
    The mocked process builder object automatically returns itself ("<code>pb</code>") from these calls, while also
    returning a new mocked <code class="type">Process</code> from the call to <code>start()</code>.
 </P>
-
-<h2 id="strictness">
-   <a href="#strictness">Regular versus <em>strict</em> expectations</a>
-</h2>
-<p>
-   Expectations recorded inside a
-   "<code>new <a href="../api1x/mockit/Expectations.html">Expectations</a>() {...}</code>" block are the regular ones.
-   What this means is that the invocations they specify are <em>expected</em> to occur <em>at least once</em> during the
-   <em>replay</em> phase; they may occur more than once, though, and in a different order relative to other recorded
-   expectations; additionally, invocations that don't match any recorded expectation are allowed to occur in any number
-   and in any order.
-   If no invocation matches a given recorded expectation, a "missing invocation" error gets thrown at the end of the
-   test, causing it to fail (this is only the default behavior, though, as it can be overridden).
-</p>
-<p>
-   The API also supports the concept of <em>strict</em> expectations: those that, when recorded, only allow invocations
-   during replay that exactly match the recordings (within explicitly specified allowances, when needed), both in the
-   number of matching invocations (<em>exactly one</em>, by default) and in the order they occur.
-   Invocations that occur during replay but fail to match a recorded strict expectation are regarded as
-   <em>unexpected</em>, causing an immediate "unexpected invocation" error, and consequently failing the test.
-   This is achieved by using the <a href="../api1x/mockit/StrictExpectations.html">StrictExpectations</a> subclass.
-</p>
-<p>
-   Note that in the case of strict expectations, all invocations occurring during replay that match recorded
-   expectations are <em>implicitly</em> verified.
-   Any remaining invocations that don't match an expectation are considered unexpected, causing the test to fail.
-   The test will also fail if any recorded strict expectation is missed, ie, if no matching invocations occur during
-   replay.
-</p>
-<p>
-   We can mix expectations of different levels of strictness in the same test by writing multiple expectation blocks,
-   some regular (using <code class="type">Expectations</code>), others strict (using
-   <code class="type">StrictExpectations</code>).
-   Normally, a given mock field or mock parameter will appear in expectation blocks of a single kind, though.
-</p>
-<p>
-   Most tests will simply make use of "regular" expectations.
-   Usage of strict expectations is probably more a matter of personal preference.
-</p>
-
-<h3 id="strictMocks">
-   <a href="#strictMocks">Strict and non-strict <em>mocks</em></a>
-</h3>
-<p>
-   Note that we do not specify that a given mocked type/instance should be <em>strict</em> or not.
-   Instead, the strictness for a given mock field/parameter is determined by how it is used in the test.
-   Once the first strict expectation is recorded in a "<code>new StrictExpectations() {...}</code>" block, the
-   associated mocked type/instance is considered to be strict for the whole test; otherwise, it will be <em>not</em>
-   strict.
-</p>
 
 <h2 id="instanceMatching">
    <a href="#instanceMatching">Matching invocations to specific instances</a>
