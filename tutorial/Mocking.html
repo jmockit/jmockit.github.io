@@ -93,7 +93,6 @@
 <div style="text-align: center;" title="Click on types to open API documentation">
    <map name="figure1">
       <area coords=" 39, 84,172,117" href="../api1x/mockit/Expectations.html">
-      <area coords=" 18,167,193,199" href="../api1x/mockit/StrictExpectations.html">
       <area coords="453, 84,585,117" href="../api1x/mockit/Verifications.html">
       <area coords="227,166,421,199" href="../api1x/mockit/VerificationsInOrder.html">
       <area coords="440,166,598,199" href="../api1x/mockit/FullVerifications.html">
@@ -728,9 +727,6 @@ public void someOtherTestMethod(@Mocked DependencyAbc abc)
 <p>
    Besides specifying invocation count constraints on recorded expectations, we can also verify matching invocations
    explicitly in a <em>verification</em> block, <em>after</em> the call to the code under test.
-   (This is valid for regular expectations, but not for
-   <a href="../api1x/mockit/StrictExpectations.html">strict expectations</a>, since they are always verified
-   <em>implicitly</em>; there is no point in re-verifying them in a explicit verification block.)
 </p>
 <p>
    Inside a "<code>new <a href="../api1x/mockit/Verifications.html">Verifications</a>() {...}</code>" block we can use
@@ -1558,12 +1554,10 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    <a href="#fullVerification">Full verification</a>
 </h3>
 <p>
-   Sometimes it may be important to have <em>all</em> invocations to the mocked types involved in a test verified.
-   This is automatically the case when recording strict expectations, since any unexpected invocation causes the test to
-   fail.
-   When regular expectations are explicitly verified, though, a
-   "<code>new <a href="../api1x/mockit/FullVerifications.html">FullVerifications</a>() {...}</code>" block can be used
-   to make sure that no invocations are left unverified.
+   Sometimes it may be important to have <em>all</em> invocations to the mocked types/instances involved in a test
+   verified.
+   In such cases, a "<code>new <a href="../api1x/mockit/FullVerifications.html">FullVerifications</a>() {...}</code>"
+   block will make sure that no invocations are left unverified.
 </p>
 <pre><code>@Test
 public void verifyAllInvocations(@Mocked Dependency mock)
@@ -1819,7 +1813,6 @@ public void readOnlyOperation(@Mocked Dependency mock)
    If a call to any method (or constructor) of the <code class="type">Dependency</code> class occurs during the replay
    phase, except for the ones explicitly verified in the verification block (<code>Dependency#getData()</code> in this
    case), then the test above will fail.
-   On the other hand, it may be easier to use strict expectations in such cases, without any verification block at all.
 </p>
 
 <div id="bottom" class="navigation">
