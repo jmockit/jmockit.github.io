@@ -34,9 +34,7 @@
          <li><a href="#callPoints">Call points</a></li>
       </ol>
    </li>
-   <li>
-      <a href="#configuration">Configuring the coverage tool</a>
-   </li>
+   <li><a href="#configuration">Configuring the coverage tool</a></li>
    <li>
       <a href="#merging">Aggregated reports for multiple test runs</a>
       <ol>
@@ -56,7 +54,6 @@
       </ol>
    </li>
    <li><a href="#switching">Turning coverage off</a></li>
-   <li><a href="#standalone">Standalone mode</a></li>
 </ol>
 <div style="text-align: center;">
    <img src="Coverage.png">
@@ -550,49 +547,6 @@ jmockit-${jmockit.version}.jar=coverage</strong>
    in IntelliJ IDEA it is done by double clicking the status bar, with the desired file opened in the editor;
    in Eclipse there is a "Read only" check box in the "Properties" screen (which can be opened by typing "Alt+Enter")
    for the text file selected in the editor.
-</p>
-
-<h2 id="standalone">
-   <a href="#standalone">Standalone mode</a>
-</h2>
-<p>
-   Normally, the coverage tool is used during a JUnit/TestNG test run to measure <em>test</em> coverage.
-   It can also be used in <em>standalone</em> mode, by attaching to an arbitrary Java 6+ process to measure line and
-   path coverage metrics on specified classes.
-</p>
-<p>
-   There are two ways to activate standalone mode.
-   The first is to start the target JVM instance with the
-   "<code>-javaagent:&lt;proper/path/>jmockit.jar=standalone</code>" command line argument.
-   Initial configuration settings for the coverage tool can be specified through the "<code>coverage-xyz</code>" system
-   properties previously described, but this is entirely optional; the configuration properties can be modified later
-   through a dedicated UI.
-   The second way is to run the <code>main</code> method inside <code>jmockit.jar</code>, by running
-   "<code>java -jar jmockit.jar &lt;nnn></code>" in the command line, where "<code>&lt;nnn></code>" is the number of the
-   local process which is running the target JVM instance: this causes the JMockit coverage agent to be loaded into the
-   target JVM.
-</p>
-<p>
-   Once the target process is running with the JMockit Coverage Java agent, the user can connect to it with a JMX
-   client which can access arbitrary "MBeans".
-   Usually, the standard
-   <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/management/jconsole.html">JConsole</a> tool
-   available in a Java 6+ JDK will be used.
-   The JMockit Coverage MBean provides several configuration properties (the same ones which can be set with
-   "<code>-D</code>" on the command line), and one operation through which the desired output can be generated.
-   The user interface provided by JConsole is shown below, where the process that is running with the coverage tool is a
-   Tomcat 7 server instance.
-</p>
-<img src="mbeanUI.png" title="User interface presented by the JConsole tool, after connecting to a Tomcat instance
-   started with the JMockit Coverage agent.">
-<p>
-   The configuration properties (shown as "Attributes" of the "CoverageControl" MBean above) are as before, except in
-   the case of "SrcDirs" (which corresponds to <code>coverage-srcDirs</code>).
-   If this property is not specified, no attempt is made to find source files for the classes considered for coverage.
-</p>
-<p>
-   In case the MBean UI is not used, coverage output will be generated at JVM shutdown, according to the configuration
-   specified through coverage properties.
 </p>
 
 <div id="bottom" class="navigation">
