@@ -32,9 +32,9 @@
    <li>
       <a href="#runningTests">Running tests with JMockit</a>
       <ol>
-         <li><a href="#ant">Running tests with the JUnit Ant task</a></li>
          <li><a href="#maven">Running tests from Maven</a></li>
          <li><a href="#gradle">Running tests from Gradle</a></li>
+         <li><a href="#ant">Running tests with the JUnit Ant task</a></li>
       </ol>
    </li>
 </ol>
@@ -52,10 +52,8 @@
    Even though the tutorial is fairly complete, it does not attempt to cover the entire published APIs in detail.
    A complete and detailed specification for all annotations, classes, methods, etc. is provided through the
    <a href="../api1x/overview-summary.html">API documentation</a>.
-   A copy of this documentation for each version of the toolkit can be found under the "jmockit.github.io/api1x" folder,
-   inside the full distribution zip file.
-   The "<code>jmockit.jar</code>" library file (and its Maven "sources" artifact), contains Java source files (with
-   Javadoc comments) for easy access to the API source code and documentation from a Java IDE.
+   The "<code>jmockit-1.x-sources.jar</code>" library file (downloadable from the Maven Central repository), contains
+   Java source files (with Javadoc comments) for easy access to the API source code and documentation from a Java IDE.
 </p>
 <p>
    A separate chapter covers the <a href="CodeCoverage.html">code coverage</a> tool.
@@ -270,7 +268,7 @@ public final class MyBusinessServiceTest
    <a href="#runningTests">Running tests with JMockit</a>
 </h2>
 <p>
-   To run tests that use any of the JMockit APIs, use your Java IDE, Ant/Maven/Gradle build script, etc. the way you
+   To run tests that use any of the JMockit APIs, use your Java IDE, Maven/Gradle/Ant build script, etc. the way you
    normally would.
    In principle, any JDK of version <strong>1.6</strong> or newer, on Windows, Mac OS X, or Linux, can be used.
    JMockit supports (and requires) the use of JUnit (versions 4 and 5) or TestNG; details specific to each of these test
@@ -278,8 +276,8 @@ public final class MyBusinessServiceTest
 </p>
 <ul>
    <li>
-      For <strong>JUnit 4.5+</strong> test suites, make sure that <code>jmockit.jar</code> appears <em>before</em>
-      the JUnit jar in the classpath.
+      For <strong>JUnit 4.5+</strong> test suites, make sure the <code>jmockit</code> dependency (that is,
+      <code>jmockit-1.x.jar</code>) appears <em>before</em> the JUnit dependency/jar in the classpath.
       Alternatively, annotate test classes with
       <code><span class="annotation">@RunWith</span>(<span class="type">JMockit</span>.class)</code>.
       <br/>
@@ -289,35 +287,16 @@ public final class MyBusinessServiceTest
       latter lacks the "<code>attach</code>" native library.)
    </li>
    <li>
-      For <strong>TestNG 6.2+</strong> and <strong>JUnit 5+</strong> test suites, simply add <code>jmockit.jar</code> to
-      the classpath (at any position).
+      For <strong>TestNG 6.2+</strong> and <strong>JUnit 5+</strong> test suites, simply add the <code>jmockit</code>
+      dependency/jar to the test classpath (at any position).
    </li>
 </ul>
 <p>
    In other situations (like running on JDK implementations other than the Oracle JDKs), you may need to pass
-   "<code>-javaagent:<em>&lt;proper path></em>/jmockit.jar</code>" as a JVM initialization parameter.
+   "<code>-javaagent:<em>&lt;proper path></em>/jmockit-1.x.jar</code>" as a JVM initialization parameter.
    This can be done in the "Run/Debug Configuration" for both Eclipse and IntelliJ IDEA, or with build tools such as
-   Ant, Maven, or Gradle.
+   Maven, Gradle, or Ant.
 </p>
-
-<h3 id="ant">
-   <a href="#ant">Running tests with the JUnit Ant task</a>
-</h3>
-<p>
-   When using the <code>&lt;junit></code> element in a <code>build.xml</code> script, it's important to use a separate
-   JVM instance.
-   For example, something like the following:
-</p>
-<pre><code>&lt;junit fork="yes" forkmode="once" dir="directoryContainingJars">
-   &lt;classpath path="jmockit.jar"/>
-
-   &lt;!-- Additional classpath entries, including the appropriate junit.jar -->
-
-   &lt;batchtest>
-      &lt;!-- filesets specifying the desired test classes -->
-   &lt;/batchtest>
-&lt;/junit>
-</code></pre>
 
 <h3 id="maven">
    <a href="#maven">Running tests from Maven</a>
@@ -358,6 +337,25 @@ public final class MyBusinessServiceTest
    ... "compile" dependencies ...
    testCompile <span style="color: #800">'org.jmockit:jmockit:1.<em>x</em>'</span>
 }
+</code></pre>
+
+<h3 id="ant">
+   <a href="#ant">Running tests with the JUnit Ant task</a>
+</h3>
+<p>
+   When using the <code>&lt;junit></code> element in a <code>build.xml</code> script, it's important to use a separate
+   JVM instance.
+   For example, something like the following:
+</p>
+<pre><code>&lt;junit fork="yes" forkmode="once" dir="directoryContainingJars">
+   &lt;classpath path="jmockit.jar"/>
+
+   &lt;!-- Additional classpath entries, including the appropriate junit.jar -->
+
+   &lt;batchtest>
+      &lt;!-- filesets specifying the desired test classes -->
+   &lt;/batchtest>
+&lt;/junit>
 </code></pre>
 
 <div id="bottom" class="navigation">
