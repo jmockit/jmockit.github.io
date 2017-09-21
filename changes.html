@@ -45,6 +45,13 @@
       JMockit APIs.
    </li>
    <li>
+      <strong>Deprecated</strong> the <strong><code>MockUp(T)</code></strong> constructor.
+      (Use of this constructor causes the given instance of type <code>T</code> to be the only one affected by the
+      fake implementations.)
+      This feature was never intended for the faking API in the first place, it's been rarely used, and has no
+      demonstrable use cases; existing tests that happen to use it should instead use real (non-faked) instances.
+   </li>
+   <li>
       Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/337">#337</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/450">#450</a>,
