@@ -26,12 +26,11 @@
    <a href="#">Faking</a>
 </h1>
 <ol class="contents">
-   <li><a href="#mocks">Mock methods and mock-up classes</a></li>
+   <li><a href="#fakes">Fake methods and fake classes</a></li>
    <li>
-      <a href="#setUp">Applying mock-ups</a>
+      <a href="#setUp">Applying fake classes</a>
       <ol>
-         <li><a href="#mockableMethods">Kinds of methods which can be faked</a></li>
-         <li><a href="#inline">In-line mock-up classes</a></li>
+         <li><a href="#eligibleMethods">Kinds of methods which can be faked</a></li>
       </ol>
    </li>
    <li><a href="#interfaces">Faking an interface</a></li>
@@ -39,11 +38,11 @@
    <li><a href="#initializers">Faking class initializers</a></li>
    <li><a href="#invocation">Accessing the invocation context</a></li>
    <li><a href="#proceed">Proceeding into the real implementation</a></li>
-   <li><a href="#reuse">Reusing mock-ups between tests</a></li>
+   <li><a href="#reuse">Reusing fakes between tests</a></li>
    <li>
-      <a href="#widerScopes">Global mock-ups</a>
+      <a href="#widerScopes">Global fakes</a>
       <ol>
-         <li><a href="#programmatic">Programmatic application of global mock-ups</a></li>
+         <li><a href="#programmatic">Programmatic application of global fakes</a></li>
          <li><a href="#systemProperty">External application through a system property</a></li>
       </ol>
    </li>
@@ -58,16 +57,16 @@
    <img src="FakingAPI.png" usemap="#figure1">
 </div>
 <p>
-   In the JMockit toolkit, the <strong>Mockups API</strong> provides support for the creation of <em>fake</em>
-   implementations, or "<em>mock-ups</em>".
-   Typically, a mock-up targets a few methods and/or constructors in the class to be faked, while leaving most other
+   In the JMockit toolkit, the <strong>Faking API</strong> provides support for the creation of <em>fake</em>
+   implementations.
+   Typically, a fake targets a few methods and/or constructors in the class to be faked, while leaving most other
    methods and constructors unmodified.
    Also, usually the classes to be faked belong to <em>external</em> libraries, <em>not</em> to the codebase under test.
 </p>
 <p>
    Fake implementations can be particularly useful in tests which depend on external components or resources such as
    e-mail or web services servers, complex libraries, etc.
-   Often, the mock-ups will be applied from reusable testing infrastructure components, not directly from a test class.
+   Often, the fakes will be applied from reusable testing infrastructure components, not directly from a test class.
    In particular, the use of <em>both</em> the Faking API and the Mocking API in the same test class should be viewed
    with suspicion, as it strongly indicates misuse.
 </p>
@@ -77,19 +76,19 @@
    for the entire test run.
 </p>
 
-<h2 id="mocks">
-   <a href="#mocks">Mock methods and mock-up classes</a>
+<h2 id="fakes">
+   <a href="#fakes">Fake methods and fake classes</a>
 </h2>
 <p>
-   In the context of the Mockups API, a <em>mock (or fake) method</em> is any method in a <em>mock-up (fake) class</em>
-   that gets annotated with <code class="annotation">@Mock</code>.
-   A <em>mock-up class</em> is any class extending the <code class="type">mockit.MockUp&lt;T></code> generic base class,
-   where <code>T</code> is the type to be faked.
-   The example below shows several mock methods defined in a mock-up class for our example "real" class,
+   In the context of the Faking API, a <em>fake method</em> is any method in a <em>fake class</em> that gets annotated
+   with <code class="annotation">@Mock</code>.
+   A fake class is any class extending the <code class="type">mockit.MockUp&lt;T></code> generic base class, where
+   <code>T</code> is the type to be faked.
+   The example below shows several fake methods defined in a fake class for our example "real" class,
    <a href="http://docs.oracle.com/javase/8/docs/api/javax/security/auth/login/LoginContext.html">
       javax.security.auth.login.LoginContext</a>.
 </p>
-<pre><code>public final class MockLoginContext extends MockUp&lt;LoginContext>
+<pre><code>public final class FakeLoginContext extends MockUp&lt;LoginContext>
 {
    @Mock
    public void $init(String name, CallbackHandler callback)
@@ -106,58 +105,58 @@
 }
 </code></pre>
 <p>
-   When a mock-up class is applied to a real class, the latter gets the implementation of those methods and constructors
-   which have corresponding mock methods temporarily replaced with the implementations of the matching mock methods, as
-   defined in the mock-up class.
-   In other words, the real class becomes "faked" for the duration of the test which applied the mock-up class.
+   When a fake class is applied to a real class, the latter gets the implementation of those methods and constructors
+   which have corresponding fake methods temporarily replaced with the implementations of the matching fake methods, as
+   defined in the fake class.
+   In other words, the real class becomes "faked" for the duration of the test which applied the fake class.
    Its methods will respond accordingly whenever they receive invocations during test execution.
    At runtime, what really happens is that the execution of a faked method/constructor is intercepted and redirected to
-   the corresponding mock method, which then executes and returns (unless an exception/error is thrown) to the original
+   the corresponding fake method, which then executes and returns (unless an exception/error is thrown) to the original
    caller, without this one noticing that a different method was actually executed.
    Normally, the "caller" class is one being tested, while the faked class is a dependency.
 </p>
 <p>
-   Mock-up classes can be defined as top-level classes, or as nested (<code>static</code>), inner
+   Fake classes can be defined as top-level classes, or as nested (<code>static</code>), inner
    (non-<code>static</code>), or even as <em>anonymous</em> classes inside a JUnit/TestNG test class.
-   Being top-level is probably preferable if the mock-up class is to be reused from multiple test classes.
+   Being top-level is probably preferable if the fake class is to be reused from multiple test classes.
 </p>
 <p>
    Each <code class="annotation">@Mock</code> method must have a corresponding "real method/constructor" with the
    <em>same signature</em> in the targeted real class.
    For a <em>method</em>, the signature consists of the method name and parameters; for a <em>constructor</em>, it's
-   just the parameters, with the mock method having the special name "<code>$init</code>".
-   If a matching real method/constructor cannot be found for a given mock method, either in the specified real class or
+   just the parameters, with the fake method having the special name "<code>$init</code>".
+   If a matching real method/constructor cannot be found for a given fake method, either in the specified real class or
    in its super-classes (excluding <code class="type">java.lang.Object</code>), an
-   <code class="type">IllegalArgumentException</code> is thrown when the test attempts to apply the mock class.
+   <code class="type">IllegalArgumentException</code> is thrown when the test attempts to apply the fake class.
    Notice this exception can be caused by a refactoring in the real class (such as renaming the real method), so it's
    important to understand why it happens.
 </p>
 <p>
-   Finally, notice there is no need to have mock methods for <em>all</em> methods and constructors in a real class.
-   Any such method or constructor for which no corresponding mock method exists in the mock-up class will simply stay
+   Finally, notice there is no need to have fake methods for <em>all</em> methods and constructors in a real class.
+   Any such method or constructor for which no corresponding fake method exists in the fake class will simply stay
    "as is", that is, it won't be faked.
 </p>
 
 <h2 id="setUp">
-   <a href="#setUp">Applying mock-ups</a>
+   <a href="#setUp">Applying fake classes</a>
 </h2>
 <p>
-   A given mock-up class must be applied to a corresponding real class to have any effect.
+   A given fake class must be applied to a corresponding real class to have any effect.
    This is usually done for a whole test class or test suite, but can also be done for an individual test.
-   Mock-ups can be applied from anywhere inside a test class: a <code class="annotation">@BeforeClass</code> method, a
+   Fakes can be applied from anywhere inside a test class: a <code class="annotation">@BeforeClass</code> method, a
    <code class="annotation">@BeforeMethod</code> / <code class="annotation">@Before</code> / <code
    class="annotation">@BeforeEach</code> method (TestNG / JUnit 4 / JUnit 5), or from a
    <code class="annotation">@Test</code> method.
-   Once a mock-up class is applied, all executions of the faked methods and constructors of the real class get
-   automatically redirected to the corresponding mock methods.
+   Once a fake class is applied, all executions of the faked methods and constructors of the real class get
+   automatically redirected to the corresponding fake methods.
 </p>
 <p>
-   To apply the <code class="type">MockLoginContext</code> mock class above, we simply instantiate it:
+   To apply the <code class="type">FakeLoginContext</code> fake class above, we simply instantiate it:
 </p>
 <pre><code>@Test
-public void applyingAMockClass() throws Exception
+public void applyingAFakeClass() throws Exception
 {
-   <strong>new MockLoginContext()</strong>);
+   <strong>new FakeLoginContext()</strong>);
 
    // Inside an application class which creates a suitable <span class="type">CallbackHandler</span>:
    new LoginContext("test", callbackHandler).login();
@@ -166,65 +165,45 @@ public void applyingAMockClass() throws Exception
 }
 </code></pre>
 <p>
-   Since the mock-up class is applied inside a test method, the faking of <code class="type">LoginContext</code> by
-   <code class="type">MockLoginContext</code> will be in effect only for that particular test.
+   Since the fake class is applied inside a test method, the faking of <code class="type">LoginContext</code> by
+   <code class="type">FakeLoginContext</code> will be in effect only for that particular test.
 </p>
 <p>
    When the constructor invocation that instantiates <code class="type">LoginContext</code> executes, the corresponding
-   "<code>$init</code>" mock method in <code class="type">MockLoginContext</code> will be executed.
-   Similarly, when the <code>LoginContext#login</code> method is called, the corresponding mock method will be executed,
+   "<code>$init</code>" fake method in <code class="type">FakeLoginContext</code> will be executed.
+   Similarly, when the <code>LoginContext#login</code> method is called, the corresponding fake method will be executed,
    which in this case will do nothing since the method has no parameters and <code>void</code> return type.
-   The mock-up class instance on which these invocations occur is the one created in the first part of the test.
+   The fake class instance on which these invocations occur is the one created in the first part of the test.
 </p>
 
-<h3 id="mockableMethods">
-   <a href="#mockableMethods">Kinds of methods which can be faked</a>
+<h3 id="eligibleMethods">
+   <a href="#eligibleMethods">Kinds of methods which can be faked</a>
 </h3>
 <p>
-   So far, we have only faked public instance methods with public instance mock methods.
+   So far, we have only faked public instance methods with public instance fake methods.
    In reality, any other kind of method in a real class can be faked: methods with <code>private</code>,
    <code>protected</code> or "package-private" accessibility, <code>static</code> methods, <code>final</code> methods,
    and <code>native</code> methods.
-   Even more, a <code>static</code> method in the real class can be faked by an <em>instance</em> mock method, and
-   vice-versa (an instance real method with a <code>static</code> mock).
+   Even more, a <code>static</code> method in the real class can be faked by an <em>instance</em> fake method, and
+   vice-versa (an instance real method with a <code>static</code> fake).
 </p>
 <p>
    Methods to be faked need to have an implementation, though not necessarily in bytecode (in the case of
    <code>native</code> methods).
    Therefore, an <code>abstract</code> method cannot be faked directly, and the same applies to the methods of a Java
    <code>interface</code>.
-   (That said, as shown later the Mockups API can automatically create a proxy class that implements an interface.)
+   (That said, as shown later the Faking API can automatically create a proxy class that implements an interface.)
 </p>
-
-<h3 id="inline">
-   <a href="#inline">In-line mock-up classes</a>
-</h3>
 <p>
-   Sometimes, we need to fake a class only for a single test.
-   In such a situation we can create an <em>anonymous mock-up class</em> inside an individual test method, as
-   demonstrated by the next example.
-</p>
-<pre><code>@Test
-public void applyingAnAnonymousMockup() throws Exception
-{
-   new MockUp&lt;LoginContext>() {
-      @Mock void $init(String name) { /* do nothing */ }
-      @Mock void login() {}
-   };
-
-   new LoginContext("test").login();
-}
-</code></pre>
-<p>
-   Note that mock methods don't need to be <code>public</code>.
+   Note that fake methods don't need to be <code>public</code>.
 </p>
 
 <h2 id="interfaces">
    <a href="#interfaces">Faking an interface</a>
 </h2>
 <p>
-   Most of the time a mock-up class targets a real class directly.
-   But what if we need a mock object that implements a certain interface, to be passed to code under test?
+   Most of the time a fake class targets a real class directly.
+   But what if we need a fake object that implements a certain interface, to be passed to code under test?
    The following example test shows how it is done for the interface
    <a href="http://docs.oracle.com/javase/8/docs/api/javax/security/auth/callback/CallbackHandler.html">
       javax.security.auth.callback.CallbackHandler</a>.
@@ -279,7 +258,7 @@ public final class TestedUnit
    Given a base type (be it an <code>interface</code>, an <code>abstract</code> class, or any sort of base class), we
    can write a test which only knows about the base type but where all implementing/extending implementation classes get
    faked.
-   To do so, we create a mock-up whose target type refers only to the known base type, and does so through a
+   To do so, we create a fake whose target type refers only to the known base type, and does so through a
    <em>type variable</em>.
    Not only will implementation classes already loaded by the JVM get faked, but also any additional classes that
    happen to get loaded by the JVM during later test execution.
@@ -299,7 +278,7 @@ public <strong>&lt;T extends Service></strong> void fakingImplementationClassesF
 </code></pre>
 <p>
    In the test above, all invocations to methods implementing <code>Service#doSomething()</code> will be redirected to
-   the mock method implementation, regardless of the actual class implementing the interface method.
+   the fake method implementation, regardless of the actual class implementing the interface method.
 </p>
 
 <h2 id="initializers">
@@ -308,7 +287,7 @@ public <strong>&lt;T extends Service></strong> void fakingImplementationClassesF
 <p>
    When a class performs some work in one or more <em>static initialization blocks</em>, we may need to stub it out so
    it doesn't interfere with test execution.
-   We can define a special mock method for that, as shown below.
+   We can define a special fake method for that, as shown below.
 </p>
 <pre><code>@Test
 public void fakingStaticInitializers()
@@ -340,13 +319,13 @@ public void fakingStaticInitializers()
    <a href="#invocation">Accessing the invocation context</a>
 </h2>
 <p>
-   A mock method can optionally declare an extra parameter of type <code class="type">mockit.Invocation</code>, provided
+   A fake method can optionally declare an extra parameter of type <code class="type">mockit.Invocation</code>, provided
    it is the <em>first</em> parameter.
    For each actual invocation to the corresponding faked method/constructor, an <code class="type">Invocation</code>
-   object will be automatically passed in when the mock method is executed.
+   object will be automatically passed in when the fake method is executed.
 </p>
 <p>
-   This invocation context object provides several <em>getters</em> which can be used inside the mock method.
+   This invocation context object provides several <em>getters</em> which can be used inside the fake method.
    One is the <code>getInvokedInstance()</code> method, which returns the <em>faked</em> instance on which the
    invocation occurred (<code>null</code> if the faked method is <code>static</code>).
    Other getters provide the number of invocations (including the current one) to the faked method/constructor,
@@ -410,13 +389,13 @@ public void accessingTheFakedInstanceInMockMethods() throws Exception
 </h2>
 <p>
    Once a <code class="annotation">@Mock</code> method is executing, any additional calls to the corresponding faked
-   method are also redirected to the mock method, causing its implementation to be re-entered.
+   method are also redirected to the fake method, causing its implementation to be re-entered.
    If, however, we want to execute the real implementation of the faked method, we can call the <code>proceed()</code>
-   method on the <code class="type">Invocation</code> object received as the first parameter to the mock method.
+   method on the <code class="type">Invocation</code> object received as the first parameter to the fake method.
 </p>
 <p>
    The example test below exercises a <code class="type">LoginContext</code> object created normally (without any
-   mocking in effect at creation time), using an unspecified <code>configuration</code>.
+   faking in effect at creation time), using an unspecified <code>configuration</code>.
    (For the complete version of the test, see the
    <a href="http://github.com/jmockit/jmockit1/blob/master/main/test/mockit/MockAnnotationsTest.java">
       <code>mockit.MockAnnotationsTest</code></a> class.)
@@ -427,25 +406,25 @@ public void proceedIntoRealImplementationsOfFakedMethods() throws Exception
    // Create objects used by the code under test:
    LoginContext loginContext = new LoginContext("test", null, null, configuration);
 
-   // Apply mock-ups:
-   ProceedingMockLoginContext mockInstance = new ProceedingMockLoginContext();
+   // Apply fakes:
+   ProceedingFakeLoginContext fakeInstance = new ProceedingFakeLoginContext();
 
    // Exercise the code under test:
    assertNull(loginContext.getSubject());
    <strong>loginContext.login();</strong>
    assertNotNull(loginContext.getSubject());
-   assertTrue(mockInstance.loggedIn);
+   assertTrue(fakeInstance.loggedIn);
 
-   mockInstance.ignoreLogout = true;
+   fakeInstance.ignoreLogout = true;
    <strong>loginContext.logout();</strong> // first entry: do nothing
-   assertTrue(mockInstance.loggedIn);
+   assertTrue(fakeInstance.loggedIn);
 
-   mockInstance.ignoreLogout = false;
+   fakeInstance.ignoreLogout = false;
    <strong>loginContext.logout();</strong> // second entry: execute real implementation
-   assertFalse(mockInstance.loggedIn);
+   assertFalse(fakeInstance.loggedIn);
 }
 
-static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
+static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
 {
    boolean ignoreLogout;
    boolean loggedIn;
@@ -458,8 +437,8 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
          loggedIn = true;
       }
       finally {
-         // This is here just to show that arbitrary actions can be taken inside
-         // the mock, <em>before</em> and/or <em>after</em> the real method gets executed.
+         // This is here just to show that arbitrary actions can be taken inside the
+         // fake, <em>before</em> and/or <em>after</em> the real method gets executed.
          LoginContext lc = inv.getInvokedInstance();
          System.out.println("Login attempted for " + lc.getSubject());
       }
@@ -483,7 +462,7 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
    for <em>testing</em> per se, not directly at least.
 </p>
 <p>
-   You may have noticed that use of <code>Invocation#proceed(...)</code> in a mock method effectively behaves like
+   You may have noticed that use of <code>Invocation#proceed(...)</code> in a fake method effectively behaves like
    <em>advice</em> (from AOP jargon) for the corresponding real method.
    This is a powerful ability that can be useful for certain things (think of an interceptor or decorator).
 </p>
@@ -493,114 +472,109 @@ static final class ProceedingMockLoginContext extends MockUp&lt;LoginContext>
 </p>
 
 <h2 id="reuse">
-   <a href="#reuse">Reusing mock-ups between tests</a>
+   <a href="#reuse">Reusing fakes between tests</a>
 </h2>
 <p>
-   Often, a mock-up class needs to be used throughout multiple tests, or even applied for the test run as a whole.
+   Often, a fake class needs to be used throughout multiple tests, or even applied for the test run as a whole.
    One option is to use test setup methods that run <em>before</em> each test method; with JUnit, we use the
    <code class="annotation">@Before</code> annotation; with TestNG, it's <code class="annotation">@BeforeMethod</code>.
-   Another is to apply mock-ups inside of a test class setup method: <code class="annotation">@BeforeClass</code>.
-   Either way, the mock-up class is applied by simply instantiating it inside the setup method.
+   Another is to apply fakes inside of a test class setup method: <code class="annotation">@BeforeClass</code>.
+   Either way, the fake class is applied by simply instantiating it inside the setup method.
 </p>
 <p>
-   Once applied, a mock-up will remain in effect for the execution of all tests in the test class.
-   The scope of a mock-up applied in a "before" method includes the code in any "after" methods the test class may have
+   Once applied, a fake will remain in effect for the execution of all tests in the test class.
+   The scope of a fake applied in a "before" method includes the code in any "after" methods the test class may have
    (annotated with <code class="annotation">@After</code> for JUnit or <code class="annotation">@AfterMethod</code> for
    TestNG).
-   The same goes for any mock-ups applied in a <code class="annotation">@BeforeClass</code> method: they will still be
-   in effect during the execution of any <code class="annotation">AfterClass</code> methods.
-   Once the last "after" or "after class" method finish being executed, though, all mock-ups get automatically "torn
-   down".
+   The same goes for any fakes applied in a <code class="annotation">@BeforeClass</code> method: they will still be in
+   effect during the execution of any <code class="annotation">AfterClass</code> methods.
+   Once the last "after" or "after class" method finish being executed, though, all fakes get automatically "torn down".
 </p>
 <p>
-   For example, if we wanted to fake the <code class="type">LoginContext</code> class with a mock-up class for a bunch
-   of related tests, we would have the following methods in a JUnit test class:
+   For example, if we wanted to fake the <code class="type">LoginContext</code> class with a fake class for a bunch of
+   related tests, we would have the following methods in a JUnit test class:
 </p>
 <pre><code>public class MyTestClass
 {
    @BeforeClass
-   public static void applySharedMockups()
+   public static void applySharedFakes()
    {
       new MockUp&lt;LoginContext>() {
          // shared @Mock's here...
       };
    }
 
-   // test methods that will share the mock-ups applied above...
+   // test methods that will share the fakes applied above...
 }
 </code></pre>
 <p>
    It is also possible to extend from a base test class, which may optionally define "before" methods that apply one or
-   more mock-ups.
+   more fakes.
 </p>
 
 <h2 id="widerScopes">
-   <a href="#widerScopes">Global mock-ups</a>
+   <a href="#widerScopes">Global fakes</a>
 </h2>
 <p>
-   Sometimes, we need to apply mock-ups for the entire scope of a test suite (all of its test classes), ie, a "global"
-   mock-up.
-   Such a mock-up will remain in effect for the entire test run.
+   Sometimes, we need to apply fakes for the entire scope of a test suite (all of its test classes), ie, a "global"
+   fake.
+   Such a fake will remain in effect for the entire test run.
    This can be done in test code or through external configuration.
 </p>
 
 <h3 id="programmatic">
-   <a href="#programmatic">Programmatic application of global mock-ups</a>
+   <a href="#programmatic">Programmatic application of global fakes</a>
 </h3>
 <p>
-   To apply mock-ups over a test <em>suite</em>, we can use a TestNG <code class="annotation">@BeforeSuite</code>
-   method, or a JUnit <code class="type">Suite</code> class.
-   The next example shows a JUnit 4 test suite configuration with the application of global mock-ups.
+   To apply fakes over a test <em>suite</em>, we can use a TestNG <code class="annotation">@BeforeSuite</code> method,
+   or a JUnit <code class="type">Suite</code> class.
+   The next example shows a JUnit 4 test suite configuration with the application of a global fake.
 </p>
 <pre><code>@RunWith(Suite.class)
 @Suite.SuiteClasses({MyFirstTest.class, MySecondTest.class})
 public final class TestSuite
 {
    @BeforeClass
-   public static void applyGlobalMockUps()
+   public static void applyGlobalFake()
    {
-      new LoggingMocks();
-
-      new MockUp&lt;SomeClass>() {
-         @Mock someMethod() {}
-      };
+      new FakeLogging();
    }
 }
 </code></pre>
 <p>
-   In this example, we apply the <code class="type">LoggingMocks</code> mock-up class and an inline mock-up class; their
-   mock methods will be in effect until just after the last test in the test suite has been executed.
+   In this example, we apply the <code class="type">FakeLogging</code> fake class; its fake implementation methods will
+   be in effect until just after the last test in the test suite has been executed.
 </p>
 
 <h3 id="systemProperty">
    <a href="#systemProperty">External application through a system property</a>
 </h3>
 <p>
-   The <strong><code>mockups</code></strong> system property supports a comma-separated list of fully qualified mock-up
-   class names.
+   The <strong><code>fakes</code></strong> system property supports a comma-separated list of fully qualified fake class
+   names.
    If specified at JVM startup time, any such class (which must extend <code class="type">MockUp&ltT></code>) will be
    automatically applied for the whole test run.
-   The mock methods defined in startup mock classes will remain in effect until the end of the test run, for all test
+   The fake methods defined in startup fake classes will remain in effect until the end of the test run, for all test
    classes.
-   Each mock-up class will be instantiated through its no-args constructor, unless an additional value was provided
-   after the class name (for example, as in "-Dmockups=my.mockups.MyMockUp=anArbitraryStringWithoutCommas"), in which
-   case the mock-up class should have a constructor with one parameter of type <code class="type">String</code>.
+   Each fake class will be instantiated through its no-args constructor, unless an additional value was provided after
+   the class name (for example, as in "-Dfakes=my.fakes.MyFake=anArbitraryStringWithoutCommas"), in which
+   case the fake class should have a constructor with one parameter of type <code class="type">String</code>.
 </p>
 <p>
    Note that a system property can be passed to the JVM through the standard "<code>-D</code>" command line parameter.
-   Ant/Maven/etc. build scripts have their own ways of specifying system properties, so check their documentation for
-   details.
+   Maven/Gradle/Ant/etc. build scripts have their own ways of specifying system properties, so check their documentation
+   for details.
 </p>
 
 <h2 id="advice">
    <a href="#advice">Applying AOP-style advice</a>
 </h2>
 <p>
-   There is one more special <code class="annotation">@Mock</code> method that can appear in a mock-up class: the
+   There is one more special <code class="annotation">@Mock</code> method that can appear in a fake class: the
    "<code>$advice</code>" method.
-   If defined, this mock method will handle executions of each and every method in the target class (or classes, when
-   applying the mock-up over unspecified classes from a base type).
-   Differently from regular mock methods, this one needs to have a particular signature and return type:
+   If defined, this fake method will handle executions of each and every method in the target class (or classes, when
+   applying the fake over unspecified classes from a base type).
+   Differently from regular fake methods, this one needs to have a particular signature and return type:
    <code>Object $advice(Invocation)</code>.
 </p>
 <p>
@@ -648,14 +622,14 @@ public final class TestSuite
 }
 </code></pre>
 <p>
-   The mock-up above can be applied inside a test, in a "before" method, in a "before class" method, or even for the
-   entire test run by setting "<code>-Dmockups=testUtils.MethodTiming=my.application.AppClass</code>".
+   The fake class above can be applied inside a test, in a "before" method, in a "before class" method, or even for the
+   entire test run by setting "<code>-Dfakes=testUtils.MethodTiming=my.application.AppClass</code>".
    It will add up the execution times for all executions of all methods in a given class.
    As shown in the implementation of the <code>$advice</code> method, it can obtain the
    <code>java.lang.reflect.Method</code> that is being executed.
    If desired, the current invocation count and/or the invocation arguments could be obtained through similar calls to
    the <code>Invocation</code> object.
-   When the mock-up is (automatically) torn down, the <code>onTearDown()</code> method gets executed, dumping measured
+   When the fake is (automatically) torn down, the <code>onTearDown()</code> method gets executed, dumping measured
    timings to standard output.
 </p>
 
