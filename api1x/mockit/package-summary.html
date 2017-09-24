@@ -108,8 +108,7 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../mockit/Deencapsulation.html" title="class in mockit">Deencapsulation</a></td>
 <td class="colLast">
-<div class="block">Provides utility methods that enable access to ("de-encapsulate") otherwise non-accessible fields, methods, and
- constructors.</div>
+<div class="block">Provides utility methods that enable access to ("de-encapsulate") otherwise non-accessible fields.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -134,21 +133,15 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../mockit/Invocation.html" title="class in mockit">Invocation</a></td>
 <td class="colLast">
-<div class="block">A context object representing the current invocation to a mocked method/constructor, to be passed as the
- <em>first</em> parameter of the corresponding delegate/mock method implementation.</div>
+<div class="block">A context object representing the current invocation to a mocked or faked method/constructor, to be passed as the
+ <em>first</em> parameter of the corresponding delegate/fake method implementation.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../mockit/MockUp.html" title="class in mockit">MockUp</a>&lt;T&gt;</td>
 <td class="colLast">
-<div class="block">A base class used in the creation of a <em>mock-up</em> for an <em>external</em> type, which is usually a class from
+<div class="block">A base class used in the creation of a <em>fake</em> for an <em>external</em> type, which is usually a class from
  some library or component used from the <em>internal</em> codebase of the system under test (SUT).</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../mockit/StrictExpectations.html" title="class in mockit">StrictExpectations</a></td>
-<td class="colLast">
-<div class="block">Used to record <em>strict</em> expectations on <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> types and their instances.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -193,8 +186,8 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../mockit/Mock.html" title="annotation in mockit">Mock</a></td>
 <td class="colLast">
-<div class="block">Used inside a <a href="../mockit/MockUp.html" title="class in mockit">mock-up</a> class to indicate a <em>mock (fake) method</em> whose implementation will
- temporarily replace the implementation of a matching "real" method.</div>
+<div class="block">Used inside a <a href="../mockit/MockUp.html" title="class in mockit">fake</a> class to indicate a <em>fake method</em> whose implementation will temporarily
+ replace the implementation of a matching "real" method.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -240,17 +233,17 @@
  <p/>
  <a href="../mockit/MockUp.html" title="class in mockit"><code>MockUp&lt;T></code></a> is a generic base class (where <code>T</code> is the type to be
  faked) which allows the definition of fake implementations for external classes or interfaces.
- Methods in a mock-up subclass that take the place of the "real" methods in class <code>T</code> are indicated with the
+ Methods in a fake class that take the place of the "real" methods in class <code>T</code> are indicated with the
  <a href="../mockit/Mock.html" title="annotation in mockit">@Mock</a> annotation.
  Such methods can also (optionally) have an <a href="../mockit/Invocation.html" title="class in mockit"><code>Invocation</code></a> parameter.
  <p/>
  Finally, the <a href="../mockit/Deencapsulation.html" title="class in mockit"><code>Deencapsulation</code></a> class provides several Reflection-based utility methods, for the
  occasional cases where a <code>private</code> field needs to be accessed, etc.
  <p/>
- For a description with examples of the <em>Expectations</em> API, see the
+ For a description with examples of the <em>Mocking</em> API, see the
  "<a href="http://jmockit.org/tutorial/Mocking.html" target="tutorial">Mocking</a>" chapter in the Tutorial.
- For the <em>Mockups</em> API, see the
- "<a href="http://jmockit.org/tutorial/Faking.html" target="tutorial">Faking</a>" chapter.</div>
+ For the <em>Faking</em> API, see the "<a href="http://jmockit.org/tutorial/Faking.html" target="tutorial">Faking</a>"
+ chapter.</div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar.bottom">

@@ -111,12 +111,11 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">Invocation</span>
 extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block">A context object representing the current invocation to a mocked method/constructor, to be passed as the
- <em>first</em> parameter of the corresponding delegate/mock method implementation.
+<div class="block">A context object representing the current invocation to a mocked or faked method/constructor, to be passed as the
+ <em>first</em> parameter of the corresponding delegate/fake method implementation.
  <p/>
- With the <em>Expectations</em> API, this parameter can appear in delegate methods implemented in <a href="../mockit/Delegate.html" title="interface in mockit"><code>Delegate</code></a>
- classes.
- With the <em>Mockups</em> API, it can appear in <a href="../mockit/Mock.html" title="annotation in mockit"><code>@Mock</code></a> methods.</div>
+ With the <em>Mocking</em> API, this parameter can appear in delegate methods implemented in <a href="../mockit/Delegate.html" title="interface in mockit"><code>Delegate</code></a> classes.
+ With the <em>Faking</em> API, it can appear in <a href="../mockit/Mock.html" title="annotation in mockit"><code>@Mock</code></a> methods.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Invocation.html#getInvokedInstance--"><code>getInvokedInstance()</code></a>, 
