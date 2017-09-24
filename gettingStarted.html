@@ -345,7 +345,7 @@ public void aTestMethod(@Injectable MyCollaborator mock)
    with a fake one; this is the <em>faking</em> API.
    The next test shows an example.
 </p>
-<pre><code>public static final class ExampleMockUp extends MockUp&lt;ExternalService>
+<pre><code>public static final class ExampleFake extends MockUp&lt;ExternalService>
 {
    @Mock // fake implementation for a method of the same signature
    public boolean doSomething(int n, String s, ComplexData otherData)
@@ -358,36 +358,36 @@ public void aTestMethod(@Injectable MyCollaborator mock)
 }
 
 @BeforeClass
-public static void applyMockUps()
+public static void applyFakes()
 {
-   // Applies the mock-up by instantiating it:
-   new <strong>ExampleMockUp</strong>();
+   // Applies the fake by instantiating it:
+   new <strong>ExampleFake</strong>();
 }
 
 @Test
 public void fakingExample()
 {
    // Exercise code under test normally; calls to ExternalService#doSomething will
-   // execute the mock method above.
+   // execute the fake method above.
    ...
 }
 
-// The applied mock-up is automatically discarded when out of scope.
+// The applied fake is automatically discarded when out of scope.
 </code></pre>
 <p>
-   The <code class="annotation">@Mock</code> annotation marks those methods in the <em>mock-up class</em> which are
-   meant to provide mock implementations for the corresponding methods (of the same signature) in the faked class.
+   The <code class="annotation">@Mock</code> annotation marks those methods in the <em>fake class</em> which are meant
+   to provide fake implementations for the corresponding methods (of the same signature) in the faked class.
    A <code class="type">MockUp&lt;T></code> subclass can be used as a general-purpose <em>fake implementation</em> for
    the indicated type "<code>T</code>" (including <code>final</code> classes, classes with <code>static</code> methods,
    etc.).
-   Such implementations can even be applied globally, by setting the "<code>mockups</code>" system property.
+   Such implementations can even be applied globally, by setting the "<code>fakes</code>" system property.
 </p>
 <p>
-   Mock-up classes providing partial fake implementations can be very useful in integration testing.
+   Fake classes providing partial fake implementations can be very useful in integration testing.
    They can be used in a supporting role when creating an integration testing infrastructure for complex application
    frameworks such as Spring, Hibernate, or Java EE.
-   For example, we could apply a mock-up for the Java Mail API in a <code class="annotation">@BeforeClass</code> method
-   (or the test run by setting "<code>mockups=testing.infrastructure.EmailMockUp</code>"), so that each test can recover
+   For example, we could apply a fake for the Java Mail API in a <code class="annotation">@BeforeClass</code> method
+   (or the test run by setting "<code>fakes=testing.infrastructure.FakeEmail</code>"), so that each test can recover
    sent e-mail messages for verification.
 </p>
 
