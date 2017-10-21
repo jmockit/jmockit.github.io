@@ -74,8 +74,8 @@
 </p>
 <p>
    Another particularity of the mocking API is the special use of <em>fields</em> inside of user-defined
-   <code class="type">Expectations</code>/<code class="type">Verifications</code> subclasses, for the
-   recording/verifying of expectations.
+   <code class="type">Expectations</code>/<code class="type">Verifications</code> subclasses, for recording/verifying
+   expectations.
    Rather than actual field reads/writes, uses of fields such as "<code>anyString</code>" and "<code>result</code>" get
    transparently rewritten, at the bytecode level, as method calls (to methods in a specific internal class).
    This is performed by a
