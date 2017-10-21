@@ -51,14 +51,17 @@
 </h2>
 <p>
    Internally, the Java SE 6+ bytecode instrumentation feature (the
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/instrument/package-summary.html">java.lang.instrument</a>
-   package) is used extensively.
+   <a target="_blank" href="http://docs.oracle.com/javase/8/docs/api/java/lang/instrument/package-summary.html">
+      java.lang.instrument</a> package) is used extensively.
    For the reading and in-memory generation of modified bytecode arrays, the <a href="http://asm.objectweb.org">ASM</a>
    library is used.
 </p>
 <p>
    Mocking features mostly use the JVM's ability to <em>redefine</em> classes that have already been loaded, as exposed
-   through the <code>java.lang.instrument.Instrumentation#redefineClasses(ClassDefinition...)</code> method.
+   through the
+   <a target="_blank"
+      href="https://docs.oracle.com/javase/8/docs/api/java/lang/instrument/Instrumentation.html#redefineClasses-java.lang.instrument.ClassDefinition...-">
+      Instrumentation#redefineClasses</a> method.
    This method uses the same mechanism behind the "hotswap" feature commonly used while debugging Java code, which
    allows a new version of a class to take the place of its current version in a running JVM.
 </p>
@@ -68,6 +71,16 @@
    specified in a test.
    As soon as the test is completed, the class has its bytecode restored, and its original behavior is resumed.
    This process repeats itself for the next test, whenever needed as specified in test code through the mocking API.
+</p>
+<p>
+   Another particularity of the mocking API is the special use of <em>fields</em> inside of user-defined
+   <code class="type">Expectations</code>/<code class="type">Verifications</code> subclasses, for the
+   recording/verifying of expectations.
+   Rather than actual field reads/writes, uses of fields such as "<code>anyString</code>" and "<code>result</code>" get
+   transparently rewritten, at the bytecode level, as method calls (to methods in a specific internal class).
+   This is performed by a
+   <a target="_blank" href="https://docs.oracle.com/javase/8/docs/api/java/lang/instrument/ClassFileTransformer.html">
+      ClassFileTransformer</a> implementation which JMockit puts in place when it gets initialized.
 </p>
 
 <h2 id="conventionalTools">
