@@ -19,8 +19,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":10,"i1":10,"i2":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -100,7 +100,7 @@ var activeTableTab = "activeTableTab";
 <li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../mockit/MockUp.html" title="class in mockit">mockit.MockUp</a>&lt;org.springframework.beans.factory.support.AbstractBeanFactory&gt;</li>
+<li><a href="../../../mockit/MockUp.html" title="class in mockit">mockit.MockUp</a>&lt;org.springframework.beans.factory.support.DefaultListableBeanFactory&gt;</li>
 <li>
 <ul class="inheritance">
 <li>mockit.integration.springframework.FakeBeanFactory</li>
@@ -115,15 +115,16 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public final class <span class="typeNameLabel">FakeBeanFactory</span>
-extends <a href="../../../mockit/MockUp.html" title="class in mockit">MockUp</a>&lt;org.springframework.beans.factory.support.AbstractBeanFactory&gt;</pre>
-<div class="block">If applied, this fake will take over calls to <code>AbstractBeanFactory.getBean(String)</code> in any implementation
- class, returning instead a <a href="../../../mockit/Tested.html" title="annotation in mockit"><code>@Tested</code></a> or <a href="../../../mockit/Injectable.html" title="annotation in mockit"><code>@Injectable</code></a> object with the given field name,
- or a dependency object injected at any level into a <code>@Tested</code> object.
+extends <a href="../../../mockit/MockUp.html" title="class in mockit">MockUp</a>&lt;org.springframework.beans.factory.support.DefaultListableBeanFactory&gt;</pre>
+<div class="block">If applied, this fake will take over calls to <code>AbstractBeanFactory.getBean(String)</code> and
+ <code>AbstractBeanFactory.getBean(String, Class)</code> in any implementation class, returning instead a
+ <a href="../../../mockit/Tested.html" title="annotation in mockit"><code>@Tested</code></a> or <a href="../../../mockit/Injectable.html" title="annotation in mockit"><code>@Injectable</code></a> object with the given field name, or a dependency object
+ injected at any level into a <code>@Tested</code> object.
  <p/>
  In case said calls come (indirectly) from a test class having no <code>@Tested</code> fields, bean lookup will proceed
- into the actual <code>getBean(String)</code> implementation method.
+ into the actual <code>getBean</code> implementation method.
  <p/>
- Note this fake is only useful if the code under test makes direct calls to Spring's <code>getBean(name)</code> method.</div>
+ Note this fake is only useful if the code under test makes direct calls to Spring's <code>getBean</code> methods.</div>
 </li>
 </ul>
 </div>
@@ -169,15 +170,26 @@ extends <a href="../../../mockit/MockUp.html" title="class in mockit">MockUp</a>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../mockit/integration/springframework/FakeBeanFactory.html#getBean-mockit.Invocation-java.lang.Class-">getBean</a></span>(<a href="../../../mockit/Invocation.html" title="class in mockit">Invocation</a>&nbsp;invocation,
+       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../mockit/integration/springframework/FakeBeanFactory.html#getBean-mockit.Invocation-java.lang.String-">getBean</a></span>(<a href="../../../mockit/Invocation.html" title="class in mockit">Invocation</a>&nbsp;invocation,
        <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../mockit/integration/springframework/FakeBeanFactory.html#getBean-mockit.Invocation-java.lang.String-java.lang.Class-">getBean</a></span>(<a href="../../../mockit/Invocation.html" title="class in mockit">Invocation</a>&nbsp;invocation,
+       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+       <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -225,14 +237,42 @@ extends <a href="../../../mockit/MockUp.html" title="class in mockit">MockUp</a>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="getBean-mockit.Invocation-java.lang.Class-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBean</h4>
+<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;getBean(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                     <a href="../../../mockit/Invocation.html" title="class in mockit">Invocation</a>&nbsp;invocation,
+                     <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType)</pre>
+</li>
+</ul>
 <a name="getBean-mockit.Invocation-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBean</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;getBean(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                      <a href="../../../mockit/Invocation.html" title="class in mockit">Invocation</a>&nbsp;invocation,
+                      <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                      <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+</li>
+</ul>
+<a name="getBean-mockit.Invocation-java.lang.String-java.lang.Class-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getBean</h4>
-<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;getBean(<a href="../../../mockit/Invocation.html" title="class in mockit">Invocation</a>&nbsp;invocation,
-                             <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;getBean(<a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                     <a href="../../../mockit/Invocation.html" title="class in mockit">Invocation</a>&nbsp;invocation,
+                     <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a>
+                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                     <a href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a>
+                     <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;requiredType)</pre>
 </li>
 </ul>
 </li>
