@@ -91,8 +91,7 @@
 <pre><code>public final class FakeLoginContext extends MockUp&lt;LoginContext>
 {
    @Mock
-   public void $init(String name, CallbackHandler callback)
-   {
+   public void $init(String name, CallbackHandler callback) {
       assertEquals("test", name);
       assertNotNull(callback);
    }
@@ -154,8 +153,7 @@
    To apply the <code class="type">FakeLoginContext</code> fake class above, we simply instantiate it:
 </p>
 <pre><code>@Test
-public void applyingAFakeClass() throws Exception
-{
+public void applyingAFakeClass() throws Exception {
    <strong>new FakeLoginContext()</strong>);
 
    // Inside an application class which creates a suitable <span class="type">CallbackHandler</span>:
@@ -209,12 +207,10 @@ public void applyingAFakeClass() throws Exception
       javax.security.auth.callback.CallbackHandler</a>.
 </p>
 <pre><code>@Test
-public void fakingAnInterface() throws Exception
-{
+public void fakingAnInterface() throws Exception {
    CallbackHandler <strong>callbackHandler</strong> = new MockUp&lt;CallbackHandler>() {
       @Mock
-      void handle(Callback[] callbacks)
-      {
+      void handle(Callback[] callbacks) {
          // fake implementation here
       }
    }<strong>.getMockInstance()</strong>;
@@ -242,8 +238,7 @@ public final class TestedUnit
    private final Service service1 = <strong>new ServiceImpl();</strong>
    private final Service service2 = <strong>new Service() { public int doSomething() { return 2; } };</strong>
 
-   public int businessOperation()
-   {
+   public int businessOperation() {
       return service1.doSomething() + service2.doSomething();
    }
 }
@@ -265,8 +260,7 @@ public final class TestedUnit
    This ability is demonstrated below.
 </p>
 <pre><code>@Test
-public <strong>&lt;T extends Service></strong> void fakingImplementationClassesFromAGivenBaseType()
-{
+public <strong>&lt;T extends Service></strong> void fakingImplementationClassesFromAGivenBaseType() {
    new MockUp<strong>&lt;T></strong>() {
       @Mock int doSomething() { return 7; }
    };
@@ -290,12 +284,10 @@ public <strong>&lt;T extends Service></strong> void fakingImplementationClassesF
    We can define a special fake method for that, as shown below.
 </p>
 <pre><code>@Test
-public void fakingStaticInitializers()
-{
+public void fakingStaticInitializers() {
    new MockUp&lt;ClassWithStaticInitializers>() {
       @Mock
-      <strong>void $clinit()</strong>
-      {
+      <strong>void $clinit()</strong> {
          // Do nothing here (usually).
       }
    };
@@ -340,8 +332,7 @@ public void accessingTheFakedInstanceInFakeMethods() throws Exception
 
    new MockUp&lt;LoginContext>() {
       @Mock
-      void $init(<strong>Invocation invocation</strong>, String name, Subject subject)
-      {
+      void $init(<strong>Invocation invocation</strong>, String name, Subject subject) {
          assertNotNull(name);
          assertSame(testSubject, subject);
 
@@ -356,8 +347,7 @@ public void accessingTheFakedInstanceInFakeMethods() throws Exception
       }
 
       @Mock
-      void login(Invocation invocation)
-      {
+      void login(Invocation invocation) {
          // Gets the invoked instance.
          LoginContext loginContext = invocation.getInvokedInstance();
 
@@ -369,8 +359,7 @@ public void accessingTheFakedInstanceInFakeMethods() throws Exception
       }
 
       @Mock
-      void logout(Invocation invocation)
-      {
+      void logout(Invocation invocation) {
          // Gets the invoked instance.
          LoginContext loginContext = invocation.getInvokedInstance();
 
@@ -398,8 +387,7 @@ public void accessingTheFakedInstanceInFakeMethods() throws Exception
    faking in effect at creation time), using an unspecified <code>configuration</code>.
 </p>
 <pre><code>@Test
-public void proceedIntoRealImplementationsOfFakedMethods() throws Exception
-{
+public void proceedIntoRealImplementationsOfFakedMethods() throws Exception {
    // Create objects used by the code under test:
    LoginContext loginContext = new LoginContext("test", null, null, configuration);
 
@@ -427,8 +415,7 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
    boolean loggedIn;
 
    @Mock
-   void login(Invocation inv) throws LoginException
-   {
+   void login(Invocation inv) throws LoginException {
       try {
          <strong>inv.proceed();</strong> // executes the real code of the faked method
          loggedIn = true;
@@ -442,8 +429,7 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
    }
 
    @Mock
-   void logout(Invocation inv) throws LoginException
-   {
+   void logout(Invocation inv) throws LoginException {
       // We can choose to proceed into the real implementation <em>or not</em>.
       if (!ignoreLogout) {
          <strong>inv.proceed();</strong>
@@ -494,8 +480,7 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
 <pre><code>public class MyTestClass
 {
    @BeforeClass
-   public static void applySharedFakes()
-   {
+   public static void applySharedFakes() {
       new MockUp&lt;LoginContext>() {
          // shared @Mock's here...
       };
@@ -532,8 +517,7 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
 public final class TestSuite
 {
    @BeforeClass
-   public static void applyGlobalFake()
-   {
+   public static void applyGlobalFake() {
       new FakeLogging();
    }
 }
@@ -586,8 +570,7 @@ public final class TestSuite
    MethodTiming(String className) throws ClassNotFoundException { super(Class.forName(className)); }
 
    @Mock
-   public Object $advice(Invocation invocation)
-   {
+   public Object $advice(Invocation invocation) {
       long timeBefore = System.nanoTime();
 
       try {
@@ -605,8 +588,7 @@ public final class TestSuite
    }
 
    @Override
-   protected void onTearDown()
-   {
+   protected void onTearDown() {
       System.out.println("\nTotal timings for methods in " + targetType + " (ms)");
 
       for (Entry&lt;Method, Long> methodAndTime : methodTimes.entrySet()) {

@@ -109,8 +109,7 @@ public final class ExampleUnitTest
    @Injectable Dependency mockDependency;
 
    @Test
-   public void exerciseUnitInIsolationFromDependency()
-   {
+   public void exerciseUnitInIsolationFromDependency() {
       Data data = new Data();
       new Expectations() {{ mockDependency.findSomeData(anyString); result = data; }};
 
@@ -132,8 +131,7 @@ public final class ExampleUnitTest
    @Tested(fullyInitialized = true) ClassUnderTest sut;
 
    @Test
-   public void exerciseTestedObjectsTogether()
-   {
+   public void exerciseTestedObjectsTogether() {
       Data data = new Data();
       // Save data into application database or other data store.
 
@@ -186,14 +184,12 @@ public class MyFirstJMockitTest
    AnotherDependency <b>anotherMock</b>; // only <strong>one</strong> particular instance is mocked
 
    @Test
-   public void myFirstTestMethod()
-   {
+   public void myFirstTestMethod() {
       // Any mock field can be used here or in any other test method of the test class.
    }
 
    @Test
-   public void testMethodWithMockParameter(@Mocked YetAnotherDependency testSpecificMock)
-   {
+   public void testMethodWithMockParameter(@Mocked YetAnotherDependency testSpecificMock) {
       ...
    }
 
@@ -219,8 +215,7 @@ public class MyFirstJMockitTest
    The following template shows the basic structure of a JMockit test method, when using the <em>Expectations</em> API:
 </p>
 <pre><code>@Test
-public void aTestMethod(<em>&lt;any number of mock parameters></em>)
-{
+public void aTestMethod(<em>&lt;any number of mock parameters></em>) {
    // <strong>Record phase</strong>: expectations on mocks are <strong>recorded</strong>; empty if nothing to record.
 
    // <strong>Replay phase</strong>: invocations on mocks are "<strong>replayed</strong>"; code under test is exercised.
@@ -252,8 +247,7 @@ public void aTestMethod(<em>&lt;any number of mock parameters></em>)
 </p>
 <p>
 <pre><code>@Test
-public void aTestMethod(@Mocked MyCollaborator anyCollaborator)
-{
+public void aTestMethod(@Mocked MyCollaborator anyCollaborator) {
    new <strong>Expectations</strong>() {{
       anyCollaborator.getData(); <b>result</b> = "my test data";
       anyCollaborator.doSomething(<b>anyInt</b>, "some expected value", <b>anyString</b>); <b>times</b> = 1;
@@ -306,8 +300,7 @@ public void aTestMethod(@Mocked MyCollaborator anyCollaborator)
    This allows us to make sure that important invocations actually occurred during the replay phase.
 </p>
 <pre><code>@Test
-public void aTestMethod(@Injectable MyCollaborator mock)
-{
+public void aTestMethod(@Injectable MyCollaborator mock) {
    // Expectations are recorded, if needed.
    ...
 
@@ -348,8 +341,7 @@ public void aTestMethod(@Injectable MyCollaborator mock)
 <pre><code>public static final class ExampleFake extends MockUp&lt;ExternalService>
 {
    @Mock // fake implementation for a method of the same signature
-   public boolean doSomething(int n, String s, ComplexData otherData)
-   {
+   public boolean doSomething(int n, String s, ComplexData otherData) {
       // Return (or throw) a "fake" result for invocations to the method in the faked class:
       return true; // ... or whatever
    }
@@ -358,15 +350,13 @@ public void aTestMethod(@Injectable MyCollaborator mock)
 }
 
 @BeforeClass
-public static void applyFakes()
-{
+public static void applyFakes() {
    // Applies the fake by instantiating it:
    new <strong>ExampleFake</strong>();
 }
 
 @Test
-public void fakingExample()
-{
+public void fakingExample() {
    // Exercise code under test normally; calls to ExternalService#doSomething will
    // execute the fake method above.
    ...

@@ -171,8 +171,7 @@
 @Mocked <strong>Dependency mockInstance</strong>;
 
 @Test
-public void doBusinessOperationXyz(@Mocked <strong>AnotherDependency anotherMock</strong>)
-{
+public void doBusinessOperationXyz(@Mocked <strong>AnotherDependency anotherMock</strong>) {
    ...
    new Expectations() {{ // an "expectation block"
       ...
@@ -251,8 +250,7 @@ public void doBusinessOperationXyz(@Mocked <strong>AnotherDependency anotherMock
    It's only there so that the expectation can be specified.
 </p>
 <pre><code>@Test
-public void doBusinessOperationXyz(@Mocked Dependency mockInstance)
-{
+public void doBusinessOperationXyz(@Mocked Dependency mockInstance) {
    ...
    new Expectations() {{
       ...
@@ -278,8 +276,7 @@ public void doBusinessOperationXyz(@Mocked Dependency mockInstance)
    The phases execute sequentially, one at a time, as demonstrated below.
 </p>
 <pre><code>@Test
-public void someTestMethod()
-{
+public void someTestMethod() {
    // 1. Preparation: whatever is required before the code under test can be exercised.
    ...
    // 2. The code under test is exercised, usually by calling a public method.
@@ -335,8 +332,7 @@ public class SomeTest
    ...
 
    @Test
-   public void testWithRecordAndReplayOnly(mock parameters)
-   {
+   public void testWithRecordAndReplayOnly(mock parameters) {
       // Preparation code not specific to JMockit, if any.
 
       <strong>new Expectations()</strong> {{ // an "expectation block"
@@ -351,8 +347,7 @@ public class SomeTest
    }
 
    @Test
-   public void testWithReplayAndVerifyOnly(mock parameters)
-   {
+   public void testWithReplayAndVerifyOnly(mock parameters) {
       // Preparation code not specific to JMockit, if any.
 
       // Code under test is exercised.
@@ -367,8 +362,7 @@ public class SomeTest
    }
 
    @Test
-   public void testWithBothRecordAndVerify(mock parameters)
-   {
+   public void testWithBothRecordAndVerify(mock parameters) {
       // Preparation code not specific to JMockit, if any.
 
       <strong>new Expectations()</strong> {{
@@ -425,8 +419,7 @@ public class SomeTest
    @Injectable int someIntegralProperty = 123;
 
    @Test
-   public void someTestMethod(@Injectable("true") boolean flag, @Injectable("Mary") String name)
-   {
+   public void someTestMethod(@Injectable("true") boolean flag, @Injectable("Mary") String name) {
       // Record expectations on mocked types, if needed.
 
       tested.exerciseCodeUnderTest();
@@ -499,8 +492,7 @@ public class SomeTest
 {
 (1)private final DependencyAbc abc = <strong>new DependencyAbc()</strong>;
 
-   public void doSomething()
-   {
+   public void doSomething() {
 (2)   int n = <strong>abc.intReturningMethod()</strong>;
 
       for (int i = 0; i < n; i++) {
@@ -527,8 +519,7 @@ public class SomeTest
 <pre><code>@Tested ClassUnderTest cut;
 
 @Test
-public void doSomethingHandlesSomeCheckedException(@Mocked DependencyAbc abc) throws Exception
-{
+public void doSomethingHandlesSomeCheckedException(@Mocked DependencyAbc abc) throws Exception {
    new Expectations() {{
 (1)   abc.intReturningMethod(); <strong><var>result</var> = 3</strong>;
 
@@ -586,8 +577,7 @@ public void doSomethingHandlesSomeCheckedException(@Mocked DependencyAbc abc) th
 <pre><code>@Tested CodeUnderTest cut;
 
 @Test
-public void someTestMethod(@Mocked DependencyAbc abc)
-{
+public void someTestMethod(@Mocked DependencyAbc abc) {
    DataItem item = new DataItem(...);
 
    new Expectations() {{
@@ -625,8 +615,7 @@ public void someTestMethod(@Mocked DependencyAbc abc)
    An example test using some of the "with" methods is shown below.
 </p>
 <pre><code>@Test
-public void someTestMethod(@Mocked DependencyAbc abc)
-{
+public void someTestMethod(@Mocked DependencyAbc abc) {
    DataItem item = new DataItem(...);
 
    new Expectations() {{
@@ -683,8 +672,7 @@ public void someTestMethod(@Mocked DependencyAbc abc)
 <pre><code>@Tested CodeUnderTest cut;
 
 @Test
-public void someTestMethod(@Mocked DependencyAbc abc)
-{
+public void someTestMethod(@Mocked DependencyAbc abc) {
    new Expectations() {{
       // By default, at least one invocation is expected, i.e. "minTimes = 1":
       new DependencyAbc();
@@ -700,8 +688,7 @@ public void someTestMethod(@Mocked DependencyAbc abc)
 }
 
 @Test
-public void someOtherTestMethod(@Mocked DependencyAbc abc)
-{
+public void someOtherTestMethod(@Mocked DependencyAbc abc) {
    <var>cut</var>.doSomething();
 
    new Verifications() {{
@@ -738,8 +725,7 @@ public void someOtherTestMethod(@Mocked DependencyAbc abc)
    An example test follows.
 </p>
 <pre><code>@Test
-public void verifyInvocationsExplicitlyAtEndOfTest(@Mocked Dependency mock)
-{
+public void verifyInvocationsExplicitlyAtEndOfTest(@Mocked Dependency mock) {
    // Nothing recorded here, though it could be.
 
    // Inside tested code:
@@ -771,8 +757,7 @@ public void verifyInvocationsExplicitlyAtEndOfTest(@Mocked Dependency mock)
    occurred.
 </p>
 <pre><code>@Test
-public void verifyingExpectationsInOrder(@Mocked DependencyAbc abc)
-{
+public void verifyingExpectationsInOrder(@Mocked DependencyAbc abc) {
    // Somewhere inside the tested code:
    abc.aMethod();
    abc.doSomething("blah", 123);
@@ -807,8 +792,7 @@ public void verifyingExpectationsInOrder(@Mocked DependencyAbc abc)
 <pre><code>@Tested CodeUnderTest cut;
 
 @Test
-public void delegatingInvocationsToACustomDelegate(@Mocked DependencyAbc anyAbc)
-{
+public void delegatingInvocationsToACustomDelegate(@Mocked DependencyAbc anyAbc) {
    new Expectations() {{
       anyAbc.intReturningMethod(<var>anyInt</var>, <var>anyString</var>);
       <var>result</var> = <strong>new Delegate() {
@@ -841,8 +825,7 @@ public void delegatingInvocationsToACustomDelegate(@Mocked DependencyAbc anyAbc)
    exception.
 </p>
 <pre><code>@Test
-public void delegatingConstructorInvocations(@Mocked Collaborator anyCollaboratorInstance)
-{
+public void delegatingConstructorInvocations(@Mocked Collaborator anyCollaboratorInstance) {
    new Expectations() {{
       new Collaborator(<var>anyInt</var>);
       <var>result</var> = <strong>new Delegate() {
@@ -878,8 +861,7 @@ public void delegatingConstructorInvocations(@Mocked Collaborator anyCollaborato
    demonstrates.
 </p>
 <pre><code>@Test
-public void capturingArgumentsFromSingleInvocation(@Mocked Collaborator mock)
-{
+public void capturingArgumentsFromSingleInvocation(@Mocked Collaborator mock) {
    // Inside tested code:
    ...
    new Collaborator().doSomething(0.5, new int[2], "test");
@@ -912,8 +894,7 @@ public void capturingArgumentsFromSingleInvocation(@Mocked Collaborator mock)
    method should be used instead, as in the example below.
 </p>
 <pre><code>@Test
-public void capturingArgumentsFromMultipleInvocations(@Mocked Collaborator mock)
-{
+public void capturingArgumentsFromMultipleInvocations(@Mocked Collaborator mock) {
    // Inside tested code:
    mock.doSomething(dataObject1);
    mock.doSomething(dataObject2);
@@ -943,8 +924,7 @@ public void capturingArgumentsFromMultipleInvocations(@Mocked Collaborator mock)
    Finally, we can capture the new instances of a mocked class that got created during the test.
 </p>
 <pre><code>@Test
-public void capturingNewInstances(@Mocked Person mockedPerson)
-{
+public void capturingNewInstances(@Mocked Person mockedPerson) {
    // From the code under test:
    dao.create(new Person("Paul", 10));
    dao.create(new Person("Mary", 15));
@@ -982,8 +962,7 @@ public void capturingNewInstances(@Mocked Person mockedPerson)
 public void recordAndVerifyExpectationsOnCascadedMocks(
    @Mocked Socket anySocket, // will match any new Socket object created during the test
    @Mocked SocketChannel cascadedChannel // will match cascaded instances
-) throws Exception
-{
+) throws Exception {
    new Expectations() {{
       // Calls to Socket#getChannel() will automatically return a cascaded SocketChannel;
       // such an instance will be the same as the second mock parameter, allowing us to
@@ -1044,8 +1023,7 @@ public void recordAndVerifyExpectationsOnCascadedMocks(
    <code class="type">javax.faces.context.FacesContext</code> class from JSF (Java EE).
 </p>
 <pre><code>@Test
-public void postErrorMessageToUIForInvalidInputFields(@Mocked FacesContext jsf)
-{
+public void postErrorMessageToUIForInvalidInputFields(@Mocked FacesContext jsf) {
    // Set up invalid inputs, somehow.
 
    // Code under test which validates input fields from a JSF page, adding
@@ -1082,8 +1060,7 @@ public void postErrorMessageToUIForInvalidInputFields(@Mocked FacesContext jsf)
    In the example test below we mock the <code class="type">java.lang.ProcessBuilder</code> class.
 </p>
 <pre><code>@Test
-public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exception
-{
+public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exception {
    // Code under test creates a new process to execute an OS-specific command.
    String cmdLine = "copy /Y *.txt D:\\TEMP";
    File wrkDir = new File("C:\\TEMP");
@@ -1150,15 +1127,13 @@ public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exc
    private final Queue&lt;InputStream> sequentialInputs;
    private InputStream currentInput;
 
-   public ConcatenatingInputStream(InputStream... sequentialInputs)
-   {
+   public ConcatenatingInputStream(InputStream... sequentialInputs) {
       this.sequentialInputs = new LinkedList&lt;InputStream>(Arrays.asList(sequentialInputs));
       currentInput = this.sequentialInputs.poll();
    }
 
    @Override
-   public int read() throws IOException
-   {
+   public int read() throws IOException {
       if (currentInput == null) return -1;
 
       int nextByte = currentInput.read();
@@ -1179,9 +1154,9 @@ public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exc
    The following test will achieve this.
 </p>
 <pre><code>@Test
-public void concatenateInputStreams(@Injectable InputStream input1, @Injectable InputStream input2)
-   throws Exception
-{
+public void concatenateInputStreams(
+   @Injectable InputStream input1, @Injectable InputStream input2
+) throws Exception {
    new Expectations() {{
       input1.read(); returns(1, 2, -1);
       input2.read(); returns(3, -1);
@@ -1212,8 +1187,9 @@ public void concatenateInputStreams(@Injectable InputStream input1, @Injectable 
    For that, we simply declare multiple mock fields or parameters of the same mocked type, as the next example shows.
 </p>
 <pre><code>@Test
-public void matchOnMockInstance(@Mocked Collaborator <strong>mock</strong>, @Mocked Collaborator <strong>otherInstance</strong>)
-{
+public void matchOnMockInstance(
+   @Mocked Collaborator <strong>mock</strong>, @Mocked Collaborator <strong>otherInstance</strong>
+) {
    new Expectations() {{ mock.getValue(); <var>result</var> = 12; }};
 
    // Exercise code under test with mocked instance passed from the test:
@@ -1249,8 +1225,7 @@ public void matchOnMockInstance(@Mocked Collaborator <strong>mock</strong>, @Moc
    Lets see an example.
 </p>
 <pre><code>@Test
-public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyCollaborator)
-{
+public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyCollaborator) {
    // Record different behaviors for each set of instances:
    new Expectations() {{
       // One set, instances created with "a value":
@@ -1284,8 +1259,7 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyColla
    With this alternative mechanism, we can rewrite the test as follows.
 </p>
 <pre><code>@Test
-public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @Mocked Collaborator col2)
-{
+public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @Mocked Collaborator col2) {
    new Expectations() {{
       // Map separate sets of future instances to separate mock parameters:
       new Collaborator("a value"); <var>result</var> = col1;
@@ -1339,8 +1313,7 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @M
    }
 
    @Test
-   public void partiallyMockingAClassAndItsInstances()
-   {
+   public void partiallyMockingAClassAndItsInstances() {
       Collaborator anyInstance = new Collaborator();
 
       new Expectations(<strong>Collaborator.class</strong>) {{
@@ -1361,8 +1334,7 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @M
    }
 
    @Test
-   public void partiallyMockingASingleInstance()
-   {
+   public void partiallyMockingASingleInstance() {
       Collaborator collaborator = new Collaborator(2);
 
       new Expectations(<strong>collaborator</strong>) {{
@@ -1407,21 +1379,20 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @M
    <em>verified</em> on it, even if the verified methods/constructors were not recorded.
    For example, consider the following test.
 </p>
-<pre><code>   @Test
-   public void partiallyMockingAnObjectJustForVerifications()
-   {
-      Collaborator collaborator = new Collaborator(123);
+<pre><code>@Test
+public void partiallyMockingAnObjectJustForVerifications() {
+   Collaborator collaborator = new Collaborator(123);
 
-      new Expectations(collaborator) {};
+   new Expectations(collaborator) {};
 
-      // No expectations were recorded, so nothing will be mocked.
-      int value = collaborator.getValue(); // value == 123
-      collaborator.simpleOperation(45, "testing", new Date());
-      ...
+   // No expectations were recorded, so nothing will be mocked.
+   int value = collaborator.getValue(); // value == 123
+   collaborator.simpleOperation(45, "testing", new Date());
+   ...
 
-      // Unmocked methods can still be verified:
-      new Verifications() {{ c1.simpleOperation(<var>anyInt</var>, <var>anyString</var>, (Date) <var>any</var>); }};
-   }
+   // Unmocked methods can still be verified:
+   new Verifications() {{ c1.simpleOperation(<var>anyInt</var>, <var>anyString</var>, (Date) <var>any</var>); }};
+}
 </code></pre>
 <p>
    Finally, a simpler way to apply partial mocking to a tested class is to have a field in the test class annotated as
@@ -1445,8 +1416,7 @@ public final class TestedUnit
    private final Service service1 = <strong>new ServiceImpl();</strong>
    private final Service service2 = <strong>new Service() { public int doSomething() { return 2; } };</strong>
 
-   public int businessOperation()
-   {
+   public int businessOperation() {
       return service1.doSomething() + service2.doSomething();
    }
 }
@@ -1476,8 +1446,7 @@ public final class TestedUnit
    <strong>@Capturing Service anyService</strong>;
 
    @Test
-   public void mockingImplementationClassesFromAGivenBaseType()
-   {
+   public void mockingImplementationClassesFromAGivenBaseType() {
       new Expectations() {{ anyService.doSomething(); returns(3, 4); }};
 
       int result = new TestedUnit().businessOperation();
@@ -1516,8 +1485,8 @@ public final class TestedUnit
 </p>
 <pre><code>@Test
 public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances(
-   @Capturing(maxInstances = 1) Buffer firstNewBuffer, @Capturing Buffer remainingNewBuffers)
-{
+   @Capturing(maxInstances = 1) Buffer firstNewBuffer, @Capturing Buffer remainingNewBuffers
+) {
    new Expectations() {{
       firstNewBuffer.position(); <var>result</var> = 10;
       remainingNewBuffers.position(); <var>result</var> = 20;
@@ -1560,8 +1529,7 @@ public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances
    block will make sure that no invocations are left unverified.
 </p>
 <pre><code>@Test
-public void verifyAllInvocations(@Mocked Dependency mock)
-{
+public void verifyAllInvocations(@Mocked Dependency mock) {
    // Code under test included here for easy reference:
    mock.setSomething(123);
    mock.setSomethingElse("anotherValue");
@@ -1606,8 +1574,7 @@ public void verifyAllInvocations(@Mocked Dependency mock)
 @Mocked AnotherDependency xyz;
 
 @Test
-public void verifyingTheOrderOfSomeExpectationsRelativeToAllOthers()
-{
+public void verifyingTheOrderOfSomeExpectationsRelativeToAllOthers() {
    new CodeUnderTest().doSomething();
 
    new VerificationsInOrder() {{
@@ -1634,8 +1601,7 @@ public void verifyingTheOrderOfSomeExpectationsRelativeToAllOthers()
    field of the test class).
 </p>
 <pre><code>@Test
-public void verifyFirstAndLastCallsWithOthersInBetweenInAnyOrder()
-{
+public void verifyFirstAndLastCallsWithOthersInBetweenInAnyOrder() {
    // Invocations that occur while exercising the code under test:
    mock.prepare();
    mock.setSomethingElse("anotherValue");
@@ -1678,8 +1644,7 @@ public void verifyFirstAndLastCallsWithOthersInBetweenInAnyOrder()
    But what about <em>full ordered</em> verifications? Easy enough:
 </p>
 <pre><code>@Test
-public void verifyAllInvocationsInOrder(@Mocked Dependency mock)
-{
+public void verifyAllInvocationsInOrder(@Mocked Dependency mock) {
    // Code under test included here for easy reference:
    mock.setSomething(123);
    mock.setSomethingElse("anotherValue");
@@ -1718,8 +1683,9 @@ public void verifyAllInvocationsInOrder(@Mocked Dependency mock)
    The following test provides an example.
 </p>
 <pre><code>@Test
-public void verifyAllInvocationsToOnlyOneOfTwoMockedTypes(@Mocked Dependency mock1, @Mocked AnotherDependency mock2)
-{
+public void verifyAllInvocationsToOnlyOneOfTwoMockedTypes(
+   @Mocked Dependency mock1, @Mocked AnotherDependency mock2
+) {
    // Inside code under test:
    mock1.prepare();
    mock1.setSomething(123);
@@ -1765,8 +1731,8 @@ public void verifyAllInvocationsToOnlyOneOfTwoMockedTypes(@Mocked Dependency moc
 </p>
 <pre><code>@Test
 public void verifyNoInvocationsOnOneOfTwoMockedDependenciesBeyondThoseRecordedAsExpected(
-   @Mocked Dependency mock1, @Mocked AnotherDependency mock2)
-{
+   @Mocked Dependency mock1, @Mocked AnotherDependency mock2
+) {
    new Expectations() {{
       // These two are recorded as expected:
       mock1.setSomething(<var>anyInt</var>);
@@ -1795,8 +1761,7 @@ public void verifyNoInvocationsOnOneOfTwoMockedDependenciesBeyondThoseRecordedAs
    The following test provides an example.
 </p>
 <pre><code>@Test
-public void readOnlyOperation(@Mocked Dependency mock)
-{
+public void readOnlyOperation(@Mocked Dependency mock) {
    new Expectations() {{ mock.getData(); <var>result</var> = "test data"; }};
 
    // Code under test:

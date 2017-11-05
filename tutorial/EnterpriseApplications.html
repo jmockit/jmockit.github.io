@@ -116,8 +116,7 @@
    @SUT VetScreen vetScreen;
 
    @Test
-   public void findVets()
-   {
+   public void findVets() {
       // Inserts input data (instances of Vet and Specialty) into the database.
       Vet vet2 = <strong>vetData</strong>.create("Helen Leary", "radiology");
       Vet vet0 = <strong>vetData</strong>.create("James Carter");
@@ -200,8 +199,7 @@ public @interface SUT {} // the System Under Test
 </p>
 <pre><code>public final class VetData extends TestDatabase
 {
-   public Vet create(String fullName, String... specialtyNames)
-   {
+   public Vet create(String fullName, String... specialtyNames) {
       String[] names = fullName.split(" ");
 
       Vet vet = new Vet();
@@ -234,8 +232,7 @@ public @interface SUT {} // the System Under Test
    @Inject protected Database db;
 
    @PostConstruct
-   private void beginTransactionIfNotYet()
-   {
+   private void beginTransactionIfNotYet() {
       EntityTransaction transaction = em.getTransaction();
 
       if (!transaction.isActive()) {
@@ -244,8 +241,7 @@ public @interface SUT {} // the System Under Test
    }
 
    @PreDestroy
-   private void endTransactionWithRollbackIfStillActive()
-   {
+   private void endTransactionWithRollbackIfStillActive() {
       EntityTransaction transaction = em.getTransaction();
 
       if (transaction.isActive()) {
@@ -301,8 +297,7 @@ public @interface SUT {} // the System Under Test
 <pre><code>public final class ExampleSpringIntegrationTest
 {
    @BeforeClass
-   public static void applySpringIntegration()
-   {
+   public static void applySpringIntegration() {
       new BeanFactoryMockUp();
    }
 
@@ -310,8 +305,7 @@ public @interface SUT {} // the System Under Test
    @Tested(fullyInitialized = true) ExampleService exampleService;
 
    @Test
-   public void exerciseApplicationCodeWhichLooksUpBeansThroughABeanFactory()
-   {
+   public void exerciseApplicationCodeWhichLooksUpBeansThroughABeanFactory() {
       // In code under test:
       BeanFactory beanFactory = new DefaultListableBeanFactory();
       ExampleService service = (ExampleService) beanFactory.getBean("exampleService");

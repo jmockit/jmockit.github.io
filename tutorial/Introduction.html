@@ -164,8 +164,7 @@ public final class MyBusinessService
 
    public MyBusinessService(EntityX data) { this.data = data; }
 
-   public void doBusinessOperationXyz() throws EmailException
-   {
+   public void doBusinessOperationXyz() throws EmailException {
       List&lt;EntityX> items =
 (1)      <em>find</em>("select item from EntityX item where item.someProperty = ?1", data.getSomeProperty());
 
@@ -178,8 +177,7 @@ public final class MyBusinessService
       sendNotificationEmail(items);
    }
 
-   private void sendNotificationEmail(List&lt;EntityX> items) throws EmailException
-   {
+   private void sendNotificationEmail(List&lt;EntityX> items) throws EmailException {
       Email email = new SimpleEmail();
       email.setSubject("Notification about processing of ...");
 (3)   email.addTo(data.getCustomerEmail());
@@ -225,8 +223,7 @@ public final class MyBusinessServiceTest
    @Mocked SimpleEmail anyEmail;
 
    @Test
-   public void doBusinessOperationXyz() throws Exception
-   {
+   public void doBusinessOperationXyz() throws Exception {
       EntityX existingItem = new EntityX(1, "AX5", "abc@xpta.net");
 (1)   persist(existingItem);
 
@@ -237,8 +234,7 @@ public final class MyBusinessServiceTest
    }
 
    @Test
-   public void doBusinessOperationXyzWithInvalidEmailAddress() throws Exception
-   {
+   public void doBusinessOperationXyzWithInvalidEmailAddress() throws Exception {
       final String email = "invalid address";
       data.setCustomerEmail(email);
 (3)   new Expectations() {{ anyEmail.addTo(email); result = new EmailException(); }};
