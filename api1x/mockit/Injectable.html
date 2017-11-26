@@ -99,9 +99,9 @@ public @interface <span class="memberNameLabel">Injectable</span></pre>
 <div class="block">Indicates that the value of a mock field or mock parameter will be an isolated <a href="../mockit/Mocked.html" title="annotation in mockit">mocked</a> instance,
  intended to be passed or <em>injected</em> into the code under test.
  Such instances can be said to be proper <em>mock objects</em>, in contrast to the mocked instances of a regular
- <code>@Mocked</code> type.
+ <tt>@Mocked</tt> type.
  <p/>
- When the type of the injectable is <code>String</code>, a primitive wrapper, a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Number.html?is-external=true" title="class or interface in java.lang">number type</a>, or an
+ When the type of the injectable is <tt>String</tt>, a primitive wrapper, a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Number.html?is-external=true" title="class or interface in java.lang">number type</a>, or an
  enum, it is <em>not</em> mocked.
  A non-empty <a href="../mockit/Injectable.html#value--"><code>value()</code></a> must then be provided, except in the first case where the empty string is used by default.
  <p/>
@@ -140,7 +140,7 @@ public @interface <span class="memberNameLabel">Injectable</span></pre>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Injectable.html#value--">value</a></span></code>
-<div class="block">Specifies a literal value when the type of the injectable mock field/parameter is <code>String</code>, a primitive or
+<div class="block">Specifies a literal value when the type of the injectable mock field/parameter is <tt>String</tt>, a primitive or
  wrapper type, a number type, or an enum type.</div>
 </td>
 </tr>
@@ -166,7 +166,7 @@ public @interface <span class="memberNameLabel">Injectable</span></pre>
 <li class="blockList">
 <h4>value</h4>
 <pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value</pre>
-<div class="block">Specifies a literal value when the type of the injectable mock field/parameter is <code>String</code>, a primitive or
+<div class="block">Specifies a literal value when the type of the injectable mock field/parameter is <tt>String</tt>, a primitive or
  wrapper type, a number type, or an enum type.
  For a primitive/wrapper/number type, the value provided must be convertible to it.
  For an enum type, the given textual value must equal the name of one of the possible enum values.</div>

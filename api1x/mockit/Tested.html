@@ -102,14 +102,14 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/RetentionPolicy.html?is-external=true#RUNTIME" title="class or interface in java.lang.annotation">runtime</a> <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html?is-external=true" title="class or interface in java.lang.annotation">retention</a> and be <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html?is-external=true" title="class or interface in java.lang.annotation">applicable</a>
  to <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#FIELD" title="class or interface in java.lang.annotation">fields</a> and/or <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html?is-external=true#PARAMETER" title="class or interface in java.lang.annotation">parameters</a>.
  <p/>
- Every non-<code>final</code> tested field and every tested parameter is eligible for automatic instantiation and
+ Every non-<tt>final</tt> tested field and every tested parameter is eligible for automatic instantiation and
  initialization.
  By default, automatic instantiation occurs just before a test method is executed.
- This default can be changed by specifying the <a href="../mockit/Tested.html#availableDuringSetup--"><code>availableDuringSetup()</code></a> optional attribute as <code>true</code> in a
+ This default can be changed by specifying the <a href="../mockit/Tested.html#availableDuringSetup--"><code>availableDuringSetup()</code></a> optional attribute as <tt>true</tt> in a
  tested field declaration (it is ignored if applied to a tested parameter).
  Whenever automatic creation occurs, a suitable instance of the tested class is created, initialized, and assigned to
  the tested field or passed as argument to the tested parameter when the test method gets executed.
- Available <a href="../mockit/Injectable.html" title="annotation in mockit">injectables</a> and other <code>@Tested</code> values are used, either as argument values
+ Available <a href="../mockit/Injectable.html" title="annotation in mockit">injectables</a> and other <tt>@Tested</tt> values are used, either as argument values
  for the chosen constructor of the tested class, or as values to set into injected fields of the newly-created tested
  object.
  <p/>
@@ -118,8 +118,8 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
  If the tested class has a constructor annotated with the standard CDI annotation "<code>@Inject</code>", then it is
  the one to be used;
  otherwise, if there are multiple satisfiable constructors then the one with the most parameters <em>and</em> the
- widest accessibility (ie, first <code>public</code>, then <code>protected</code>, then <em>package-private</em>, and finally
- <code>private</code>) is chosen.
+ widest accessibility (ie, first <tt>public</tt>, then <tt>protected</tt>, then <em>package-private</em>, and finally
+ <tt>private</tt>) is chosen.
  The matching between injectable values and constructor parameters is done by <em>type</em> when there is only one
  parameter of a given type; otherwise, by type <em>and name</em>.
  <p/>
@@ -133,27 +133,27 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
  each field will be used when looking for available injectables.
  Finally, if there is no matching and available injectable value for a given target field, it is left unassigned,
  unless the target field is for a <em>required</em> dependency; note that all fields marked with a DI annotation
- (such as <code>@Inject</code>, <code>@Autowired</code>, etc.) indicate required dependencies by default
+ (such as <tt>@Inject</tt>, <tt>@Autowired</tt>, etc.) indicate required dependencies by default
  (the use of "<code>@Autowired(required = false)</code>" is respected, if present).
  <p/>
  Tested fields/parameters whose declared type is primitive, a primitive wrapper, numeric, or an enum can use the
  <a href="../mockit/Tested.html#value--"><code>value()</code></a> attribute to specify an initial value from a string.
  <p/>
- Custom names specified in field annotations from Java EE (<code>@Resource(name)</code>, <code>@Named</code>) or the Spring
- framework (<code>@Qualifier</code>) are used when looking for a matching <code>@Injectable</code> or <code>@Tested</code> value.
- When such a name contains a <code>-</code> (dash) or <code>.</code> (dot) character, the corresponding camel-cased name is used
- instead.
+ Custom names specified in field annotations from Java EE (<tt>@Resource(name)</tt>, <tt>@Named</tt>) or the Spring
+ framework (<tt>@Qualifier</tt>) are used when looking for a matching <tt>@Injectable</tt> or <tt>@Tested</tt> value.
+ When such a name contains a <tt>-</tt> (dash) or <tt>.</tt> (dot) character, the corresponding camel-cased name is
+ used instead.
  <p/>
  Whenever constructor or field injection is used, the value of each injectable goes into <em>at most one</em> matching
  constructor parameter or instance field of a tested class.
  <p/>
- The tested class can be <code>abstract</code>.
+ The tested class can be <tt>abstract</tt>.
  In this case, if the tested field is left null then a subclass implementing all abstract methods is automatically
  generated and instantiated.
  The abstract method implementations are automatically <em>mocked</em> so that expectations can be recorded or
  verified on them.
  <p/>
- When the <a href="../mockit/Tested.html#fullyInitialized--"><code>fullyInitialized()</code></a> attribute is <code>true</code>, all eligible fields in the tested object will get
+ When the <a href="../mockit/Tested.html#fullyInitialized--"><code>fullyInitialized()</code></a> attribute is <tt>true</tt>, all eligible fields in the tested object will get
  initialized with a suitable instance, which itself is recursively initialized in the same way.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -181,21 +181,21 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Tested.html#availableDuringSetup--">availableDuringSetup</a></span></code>
 <div class="block">Indicates whether the tested class gets instantiated and initialized <em>before</em> the execution of test setup
- methods (ie, those annotated as <code>@Before</code> or <code>@BeforeMethod</code>), or <em>after</em> them.</div>
+ methods (ie, those annotated as <tt>@Before</tt> or <tt>@BeforeMethod</tt>), or <em>after</em> them.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Tested.html#fullyInitialized--">fullyInitialized</a></span></code>
-<div class="block">Indicates that each non-<code>final</code> field of the tested object that is eligible for injection should be assigned
- a value, which can be an available <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a> or <code>@Tested</code> value of a type
- assignable to the field type, or a real (unmocked) instance of the field type.</div>
+<div class="block">Indicates that each non-<tt>final</tt> field of the tested object that is eligible for injection should be
+ assigned a value, which can be an available <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a> or <tt>@Tested</tt> value of a
+ type assignable to the field type, or a real (unmocked) instance of the field type.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Tested.html#value--">value</a></span></code>
-<div class="block">Specifies a literal value when the type of the tested field/parameter is <code>String</code>, a primitive or wrapper
+<div class="block">Specifies a literal value when the type of the tested field/parameter is <tt>String</tt>, a primitive or wrapper
  type, a number type, or an enum type.</div>
 </td>
 </tr>
@@ -222,7 +222,7 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
 <h4>availableDuringSetup</h4>
 <pre>public abstract&nbsp;boolean&nbsp;availableDuringSetup</pre>
 <div class="block">Indicates whether the tested class gets instantiated and initialized <em>before</em> the execution of test setup
- methods (ie, those annotated as <code>@Before</code> or <code>@BeforeMethod</code>), or <em>after</em> them.
+ methods (ie, those annotated as <tt>@Before</tt> or <tt>@BeforeMethod</tt>), or <em>after</em> them.
  <p/>
  Typically, the early creation of tested objects is useful in a test setup method, which can use them for the
  initialization of other objects.
@@ -245,18 +245,18 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
 <li class="blockList">
 <h4>fullyInitialized</h4>
 <pre>public abstract&nbsp;boolean&nbsp;fullyInitialized</pre>
-<div class="block">Indicates that each non-<code>final</code> field of the tested object that is eligible for injection should be assigned
- a value, which can be an available <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a> or <code>@Tested</code> value of a type
- assignable to the field type, or a real (unmocked) instance of the field type.
+<div class="block">Indicates that each non-<tt>final</tt> field of the tested object that is eligible for injection should be
+ assigned a value, which can be an available <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a> or <tt>@Tested</tt> value of a
+ type assignable to the field type, or a real (unmocked) instance of the field type.
  <p/>
  Non-eligible fields are those that have already being assigned from a constructor, or that have a primitive,
  array, annotation, or JRE type (with the exception of the types described below, which are given special
  treatment).
- Also non-eligible are any <code>static</code> or <code>volatile</code> fields, unless annotated with an <em>injection
- annotation</em> (one of <code>@Inject</code>, <code>@Resource</code>, <code>@Autowired</code>, <code>@Value</code>, <code>@EJB</code>,
- <code>@PersistenceContext</code>, or <code>@PersistenceUnit</code>).
+ Also non-eligible are any <tt>static</tt> or <tt>volatile</tt> fields, unless annotated with an <em>injection
+ annotation</em> (one of <tt>@Inject</tt>, <tt>@Resource</tt>, <tt>@Autowired</tt>, <tt>@Value</tt>, <tt>@EJB</tt>,
+ <tt>@PersistenceContext</tt>, or <tt>@PersistenceUnit</tt>).
  <p/>
- For each field of a reference type that would otherwise remain <code>null</code>, an attempt is made to automatically
+ For each field of a reference type that would otherwise remain <tt>null</tt>, an attempt is made to automatically
  create and recursively initialize a suitable real instance.
  For this attempt to succeed, the type of the field must either be a concrete class having a constructor that can
  be satisfied by available tested/injectable values and/or by recursively created dependencies, or a known
@@ -277,14 +277,14 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
        <a href="http://docs.oracle.com/javaee/7/api/javax/annotation/sql/DataSourceDefinition.html?is-external=true" title="class or interface in javax.annotation.sql"><code>@DataSourceDefinition</code></a> in the tested class.
     </li>
     <li>
-       <a href="http://docs.oracle.com/javaee/7/api/javax/inject/Provider.html?is-external=true" title="class or interface in javax.inject"><code>Provider&lt;T></code></a>: a provider which produces an instance of type <code>T</code> is
+       <a href="http://docs.oracle.com/javaee/7/api/javax/inject/Provider.html?is-external=true" title="class or interface in javax.inject"><code>Provider&lt;T></code></a>: a provider which produces an instance of type <tt>T</tt> is
        injected.
     </li>
     <li>
        JPA interfaces <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/EntityManagerFactory.html?is-external=true" title="class or interface in javax.persistence"><code>EntityManagerFactory</code></a> and <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/EntityManager.html?is-external=true" title="class or interface in javax.persistence"><code>EntityManager</code></a>:
        created through calls to <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Persistence.html?is-external=true#createEntityManagerFactory(String)" title="class or interface in javax.persistence"><code>Persistence</code></a> and
        <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/EntityManagerFactory.html?is-external=true#createEntityManager()" title="class or interface in javax.persistence"><code>EntityManagerFactory</code></a>, provided a suitable
-       <code>META-INF/persistence.xml</code> file is available in the runtime classpath.
+       <tt>META-INF/persistence.xml</tt> file is available in the runtime classpath.
     </li>
     <li>
        Servlet interfaces <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html?is-external=true" title="class or interface in javax.servlet"><code>ServletContext</code></a> and <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html?is-external=true" title="class or interface in javax.servlet.http"><code>HttpSession</code></a>:
@@ -311,7 +311,7 @@ public @interface <span class="memberNameLabel">Tested</span></pre>
 <li class="blockList">
 <h4>value</h4>
 <pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value</pre>
-<div class="block">Specifies a literal value when the type of the tested field/parameter is <code>String</code>, a primitive or wrapper
+<div class="block">Specifies a literal value when the type of the tested field/parameter is <tt>String</tt>, a primitive or wrapper
  type, a number type, or an enum type.
  For a primitive/wrapper/number type, the value provided must be convertible to it.
  For an enum type, the given textual value must equal the name of one of the possible enum values.</div>

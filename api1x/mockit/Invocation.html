@@ -188,14 +188,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Invocation.html#getInvokedInstance--">getInvokedInstance</a></span>()</code>
-<div class="block">Returns the instance on which the current invocation was made, or <code>null</code> for a <code>static</code> method
+<div class="block">Returns the instance on which the current invocation was made, or <tt>null</tt> for a <tt>static</tt> method
  invocation.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>&lt;M extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Member.html?is-external=true" title="class or interface in java.lang.reflect">Member</a>&gt;<br>M</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Invocation.html#getInvokedMember--">getInvokedMember</a></span>()</code>
-<div class="block">Returns the <code>Method</code> or <code>Constructor</code> object corresponding to the target method or constructor,
+<div class="block">Returns the <tt>Method</tt> or <tt>Constructor</tt> object corresponding to the target method or constructor,
  respectively.</div>
 </td>
 </tr>
@@ -287,7 +287,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>getInvokedInstance</h4>
 <pre>public final&nbsp;&lt;T&gt;&nbsp;T&nbsp;getInvokedInstance()</pre>
-<div class="block">Returns the instance on which the current invocation was made, or <code>null</code> for a <code>static</code> method
+<div class="block">Returns the instance on which the current invocation was made, or <tt>null</tt> for a <tt>static</tt> method
  invocation.</div>
 </li>
 </ul>
@@ -298,7 +298,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>getInvokedMember</h4>
 <pre>public final&nbsp;&lt;M extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Member.html?is-external=true" title="class or interface in java.lang.reflect">Member</a>&gt;&nbsp;M&nbsp;getInvokedMember()</pre>
-<div class="block">Returns the <code>Method</code> or <code>Constructor</code> object corresponding to the target method or constructor,
+<div class="block">Returns the <tt>Method</tt> or <tt>Constructor</tt> object corresponding to the target method or constructor,
  respectively.</div>
 </li>
 </ul>
@@ -334,7 +334,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if attempting to proceed into a target method which does not belong to an
  <a href="../mockit/Injectable.html" title="annotation in mockit">injectable mocked type</a> nor to a <a href="../mockit/Expectations.html#Expectations-java.lang.Object...-">dynamic
- partially mocked type</a>, into a <code>native</code> method, or into an interface or abstract method</dd>
+ partially mocked type</a>, into a <tt>native</tt> method, or into an interface or abstract method</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/Faking.html#proceed" target="tutorial">Tutorial</a></dd>
 </dl>

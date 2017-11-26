@@ -120,7 +120,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  executed.
  <p/>
  Expectations are recorded simply by invoking the desired method or constructor on the mocked type/instance, during
- the initialization of an <code>Expectations</code> object.
+ the initialization of an <tt>Expectations</tt> object.
  Typically, this is done by instantiating an anonymous subclass containing an instance initialization body, or as we
  call it, an <em>expectation block</em>:
  <pre>
@@ -136,7 +136,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  During replay, invocations matching a recorded expectation must occur at least <em>once</em> (unless specified
  otherwise);
  if, by the end of the test, no matching invocation occurred for a given recorded expectation, the test will fail with
- a <code>MissingInvocation</code> error.
+ a <tt>MissingInvocation</tt> error.
  <p/>
  When multiple expectations are recorded, matching invocations are allowed to occur in a <em>different</em> order.
  So, the order in which expectations are recorded is not significant.
@@ -187,61 +187,61 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#any">any</a></span></code>
-<div class="block">Matches any <code>Object</code> reference received by a parameter of a reference type.</div>
+<div class="block">Matches any <tt>Object</tt> reference received by a parameter of a reference type.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyBoolean">anyBoolean</a></span></code>
-<div class="block">Matches any <code>boolean</code> or <code>Boolean</code> value received by a parameter of that type.</div>
+<div class="block">Matches any <tt>boolean</tt> or <tt>Boolean</tt> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Byte.html?is-external=true" title="class or interface in java.lang">Byte</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyByte">anyByte</a></span></code>
-<div class="block">Matches any <code>byte</code> or <code>Byte</code> value received by a parameter of that type.</div>
+<div class="block">Matches any <tt>byte</tt> or <tt>Byte</tt> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyChar">anyChar</a></span></code>
-<div class="block">Matches any <code>char</code> or <code>Character</code> value received by a parameter of that type.</div>
+<div class="block">Matches any <tt>char</tt> or <tt>Character</tt> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Double.html?is-external=true" title="class or interface in java.lang">Double</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyDouble">anyDouble</a></span></code>
-<div class="block">Matches any <code>double</code> or <code>Double</code> value received by a parameter of that type.</div>
+<div class="block">Matches any <tt>double</tt> or <tt>Double</tt> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Float.html?is-external=true" title="class or interface in java.lang">Float</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyFloat">anyFloat</a></span></code>
-<div class="block">Matches any <code>float</code> or <code>Float</code> value received by a parameter of that type.</div>
+<div class="block">Matches any <tt>float</tt> or <tt>Float</tt> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyInt">anyInt</a></span></code>
-<div class="block">Matches any <code>int</code> or <code>Integer</code> value received by a parameter of that type.</div>
+<div class="block">Matches any <tt>int</tt> or <tt>Integer</tt> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyLong">anyLong</a></span></code>
-<div class="block">Matches any <code>long</code> or <code>Long</code> value received by a parameter of that type.</div>
+<div class="block">Matches any <tt>long</tt> or <tt>Long</tt> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyShort">anyShort</a></span></code>
-<div class="block">Matches any <code>short</code> or <code>Short</code> value received by a parameter of that type.</div>
+<div class="block">Matches any <tt>short</tt> or <tt>Short</tt> value received by a parameter of that type.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#anyString">anyString</a></span></code>
-<div class="block">Matches any <code>String</code> value received by a parameter of this type.</div>
+<div class="block">Matches any <tt>String</tt> value received by a parameter of this type.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -332,7 +332,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#withAny-T-">withAny</a></span>(T&nbsp;arg)</code>
-<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but matching any argument value of the appropriate type (<code>null</code>
+<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but matching any argument value of the appropriate type (<tt>null</tt>
  included).</div>
 </td>
 </tr>
@@ -404,13 +404,13 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#withNotNull--">withNotNull</a></span>()</code>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is not
- <code>null</code>.</div>
+ <tt>null</tt>.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#withNull--">withNull</a></span>()</code>
-<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is <code>null</code>.</div>
+<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is <tt>null</tt>.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
@@ -479,19 +479,19 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  If no result is recorded for a given expectation, then all matching invocations will return the appropriate
  default value according to the method return type:
  <ul>
- <li>Most <code>java.lang</code> types (<code>String</code>, <code>Object</code>, etc.): returns <code>null</code>.</li>
- <li><code>java.math</code> types (<code>BigDecimal</code>, etc.): returns <code>null</code>.</li>
- <li>Primitive/wrapper types: returns the standard default value (<code>false</code> for <code>boolean/Boolean</code>,
- <code>0</code> for <code>int/Integer</code>, and so on).
+ <li>Most <tt>java.lang</tt> types (<tt>String</tt>, <tt>Object</tt>, etc.): returns <tt>null</tt>.</li>
+ <li><tt>java.math</tt> types (<tt>BigDecimal</tt>, etc.): returns <tt>null</tt>.</li>
+ <li>Primitive/wrapper types: returns the standard default value (<code>false</code> for <tt>boolean/Boolean</tt>,
+ <tt>0</tt> for <tt>int/Integer</tt>, and so on).
  </li>
- <li><code>java.util.List</code>, <code>java.util.Collection</code>, or <code>java.lang.Iterable</code>: returns
+ <li><tt>java.util.List</tt>, <tt>java.util.Collection</tt>, or <tt>java.lang.Iterable</tt>: returns
  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collections.html?is-external=true#EMPTY_LIST" title="class or interface in java.util"><code>Collections.EMPTY_LIST</code></a>.</li>
- <li><code>java.util.Iterator</code> or <code>java.util.ListIterator</code>: returns an empty iterator.</li>
- <li><code>java.util.Set</code>: returns <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collections.html?is-external=true#EMPTY_SET" title="class or interface in java.util"><code>Collections.EMPTY_SET</code></a>.</li>
- <li><code>java.util.SortedSet</code>: returns an unmodifiable empty sorted set.</li>
- <li><code>java.util.Map</code>: returns <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collections.html?is-external=true#EMPTY_MAP" title="class or interface in java.util"><code>Collections.EMPTY_MAP</code></a>.</li>
- <li><code>java.util.SortedMap</code>: returns an unmodifiable empty sorted map.</li>
- <li><code>java.util.Optional</code>: returns <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true#empty--" title="class or interface in java.util"><code>Optional.empty()</code></a>.</li>
+ <li><tt>java.util.Iterator</tt> or <tt>java.util.ListIterator</tt>: returns an empty iterator.</li>
+ <li><tt>java.util.Set</tt>: returns <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collections.html?is-external=true#EMPTY_SET" title="class or interface in java.util"><code>Collections.EMPTY_SET</code></a>.</li>
+ <li><tt>java.util.SortedSet</tt>: returns an unmodifiable empty sorted set.</li>
+ <li><tt>java.util.Map</tt>: returns <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collections.html?is-external=true#EMPTY_MAP" title="class or interface in java.util"><code>Collections.EMPTY_MAP</code></a>.</li>
+ <li><tt>java.util.SortedMap</tt>: returns an unmodifiable empty sorted map.</li>
+ <li><tt>java.util.Optional</tt>: returns <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true#empty--" title="class or interface in java.util"><code>Optional.empty()</code></a>.</li>
  <li>Other reference types: returns a mocked instance through cascading.</li>
  <li>Array types: returns an array with zero elements (empty) in each dimension.</li>
  </ul>
@@ -500,8 +500,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <em>throwing</em> one), then the <a href="../mockit/Expectations.html#returns-java.lang.Object-java.lang.Object-java.lang.Object...-"><code>returns(Object, Object, Object...)</code></a> method should be used instead, as it
  only applies to return values.
  <p/>
- Assigning a value whose type differs from the method return type will cause an <code>IllegalArgumentException</code> to
- be thrown, unless it can be safely converted to the return type.
+ Assigning a value whose type differs from the method return type will cause an <tt>IllegalArgumentException</tt>
+ to be thrown, unless it can be safely converted to the return type.
  One such conversion is from an array to a collection or iterator.
  Another is from an array of at least two dimensions to a map, with the first dimension providing the keys and the
  second the values.
@@ -514,7 +514,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <p/>
  Results that depend on some programming logic can be provided through a <a href="../mockit/Delegate.html" title="interface in mockit">Delegate</a> object assigned to
  the field.
- This applies to <code>void</code> and non-<code>void</code> methods, as well as to constructors.
+ This applies to <tt>void</tt> and non-<code>void</code> methods, as well as to constructors.
  <p/>
  Finally, when recording an expectation on a <em>constructor</em> of a mocked class, an arbitrary instance of said
  class can be assigned to the field.
@@ -535,7 +535,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>any</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> any</pre>
-<div class="block">Matches any <code>Object</code> reference received by a parameter of a reference type.
+<div class="block">Matches any <tt>Object</tt> reference received by a parameter of a reference type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
@@ -551,10 +551,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <p/>
  Notice the use of this field will usually require a cast to the specific parameter type.
  However, if there is any other parameter for which an argument matching constraint is specified, passing the
- <code>null</code> reference instead will have the same effect.
+ <tt>null</tt> reference instead will have the same effect.
  <p/>
- To match an entire <em>varargs</em> parameter of element type <code>V</code> (ie, all arguments in the array), cast it
- to the parameter type: "<code>(V[]) any</code>".</div>
+ To match an entire <em>varargs</em> parameter of element type <tt>V</tt> (ie, all arguments in the array), cast it
+ to the parameter type: "<tt>(V[]) any</tt>".</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#anyBoolean"><code>anyBoolean</code></a>, 
@@ -577,7 +577,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyBoolean</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a> anyBoolean</pre>
-<div class="block">Matches any <code>boolean</code> or <code>Boolean</code> value received by a parameter of that type.
+<div class="block">Matches any <tt>boolean</tt> or <tt>Boolean</tt> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
@@ -612,7 +612,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyByte</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Byte.html?is-external=true" title="class or interface in java.lang">Byte</a> anyByte</pre>
-<div class="block">Matches any <code>byte</code> or <code>Byte</code> value received by a parameter of that type.
+<div class="block">Matches any <tt>byte</tt> or <tt>Byte</tt> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
@@ -647,7 +647,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyChar</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true" title="class or interface in java.lang">Character</a> anyChar</pre>
-<div class="block">Matches any <code>char</code> or <code>Character</code> value received by a parameter of that type.
+<div class="block">Matches any <tt>char</tt> or <tt>Character</tt> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
@@ -682,7 +682,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyDouble</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Double.html?is-external=true" title="class or interface in java.lang">Double</a> anyDouble</pre>
-<div class="block">Matches any <code>double</code> or <code>Double</code> value received by a parameter of that type.
+<div class="block">Matches any <tt>double</tt> or <tt>Double</tt> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
@@ -717,7 +717,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyFloat</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Float.html?is-external=true" title="class or interface in java.lang">Float</a> anyFloat</pre>
-<div class="block">Matches any <code>float</code> or <code>Float</code> value received by a parameter of that type.
+<div class="block">Matches any <tt>float</tt> or <tt>Float</tt> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
@@ -752,7 +752,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyInt</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a> anyInt</pre>
-<div class="block">Matches any <code>int</code> or <code>Integer</code> value received by a parameter of that type.
+<div class="block">Matches any <tt>int</tt> or <tt>Integer</tt> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
@@ -787,7 +787,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyLong</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a> anyLong</pre>
-<div class="block">Matches any <code>long</code> or <code>Long</code> value received by a parameter of that type.
+<div class="block">Matches any <tt>long</tt> or <tt>Long</tt> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
@@ -822,7 +822,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyShort</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Short.html?is-external=true" title="class or interface in java.lang">Short</a> anyShort</pre>
-<div class="block">Matches any <code>short</code> or <code>Short</code> value received by a parameter of that type.
+<div class="block">Matches any <tt>short</tt> or <tt>Short</tt> value received by a parameter of that type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
@@ -857,7 +857,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>anyString</h4>
 <pre>protected final&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> anyString</pre>
-<div class="block">Matches any <code>String</code> value received by a parameter of this type.
+<div class="block">Matches any <tt>String</tt> value received by a parameter of this type.
  <p/>
  This field can only be used as the argument value at the proper parameter position in a method/constructor
  invocation, when recording or verifying an expectation; it cannot be used anywhere else.
@@ -897,10 +897,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  A <em>negative</em> value implies there is no upper limit.
  <p/>
  If not specified, there is no upper limit by default, except in the case of a strict expectation, where the
- default is <code>1</code> (one).
+ default is <tt>1</tt> (one).
  <p/>
- Both <code>minTimes</code> and <code>maxTimes</code> can be specified for the same expectation, as long as <code>minTimes</code>
- is assigned first.</div>
+ Both <tt>minTimes</tt> and <tt>maxTimes</tt> can be specified for the same expectation, as long as
+ <tt>minTimes</tt> is assigned first.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#times"><code>times</code></a>, 
@@ -921,11 +921,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <em>Zero</em> or a <em>negative</em> value means there is no lower limit, but only when applied to an expectation
  recorded in a test setup method, to a strict expectation, or to a full verification.
  <p/>
- If not specified, the default value of <code>1</code> (one) is used.
+ If not specified, the default value of <tt>1</tt> (one) is used.
  <p/>
  The <em>maximum</em> number of times is automatically adjusted to allow any number of invocations.
- Both <code>minTimes</code> and <code>maxTimes</code> can be specified for the same expectation, as long as <code>minTimes</code>
- is assigned first.</div>
+ Both <tt>minTimes</tt> and <tt>maxTimes</tt> can be specified for the same expectation, as long as
+ <tt>minTimes</tt> is assigned first.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#times"><code>times</code></a>, 
@@ -985,14 +985,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="block">Same as <a href="../mockit/Expectations.html#Expectations--"><code>Expectations()</code></a>, except that one or more classes will be partially mocked according to the
  expectations recorded in the expectation block.
  <p/>
- The classes to be partially mocked are those directly specified through their <code>Class</code> objects as well as
+ The classes to be partially mocked are those directly specified through their <tt>Class</tt> objects as well as
  those to which any given objects belong.
  During replay, any invocations to one of these classes or objects will execute real production code, unless a
  matching expectation was recorded.
- This mechanism, however, does not apply to <code>native</code> methods, which are not supported for partial mocking.
+ This mechanism, however, does not apply to <tt>native</tt> methods, which are not supported for partial mocking.
  <p/>
- For a given <code>Class</code> object, all constructors and methods can be mocked, from the specified class up to but
- not including <code>java.lang.Object</code>.
+ For a given <tt>Class</tt> object, all constructors and methods can be mocked, from the specified class up to but
+ not including <tt>java.lang.Object</tt>.
  For a given <em>object</em>, only methods can be mocked, not constructors; also, during replay, invocations to
  instance methods will only match expectations recorded on the given instance (or instances, if more than one was
  given).</div>
@@ -1000,7 +1000,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>classesOrObjectsToBePartiallyMocked</code> - one or more classes or objects whose classes are to be partially mocked</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if given a <code>Class</code> object for an interface, an annotation, an array, a
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if given a <tt>Class</tt> object for an interface, an annotation, an array, a
  primitive/wrapper type, a synthetic class, a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html?is-external=true#isProxyClass-java.lang.Class-" title="class or interface in java.lang.reflect">proxy
  class</a>, or if given a value/instance of such a type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -1033,19 +1033,19 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  Certain data conversions will be applied, depending on the return type of the recorded method:
  <ol>
  <li>If the return type is iterable and can receive a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> value, then the given sequence of values will be
- converted into an <code>ArrayList</code>; this list will then be returned by matching invocations at replay time.</li>
- <li>If the return type is <code>SortedSet</code> or a sub-type, then the given sequence of values will be converted
- into a <code>TreeSet</code>; otherwise, if it is <code>Set</code> or a sub-type, then a <code>LinkedHashSet</code> will be
+ converted into an <tt>ArrayList</tt>; this list will then be returned by matching invocations at replay time.</li>
+ <li>If the return type is <tt>SortedSet</tt> or a sub-type, then the given sequence of values will be converted
+ into a <tt>TreeSet</tt>; otherwise, if it is <tt>Set</tt> or a sub-type, then a <tt>LinkedHashSet</tt> will be
  created to hold the values; the set will then be returned by matching invocations at replay time.</li>
- <li>If the return type is <code>Iterator</code> or a sub-type, then the given sequence of values will be converted into
- a <code>List</code> and the iterator created from this list will be returned by matching invocations at replay
+ <li>If the return type is <tt>Iterator</tt> or a sub-type, then the given sequence of values will be converted
+ into a <tt>List</tt> and the iterator created from this list will be returned by matching invocations at replay
  time.</li>
  <li>If the return type is an array, then the given sequence of values will be converted to an array of the same
  type, which will be returned by matching invocations at replay time.</li>
  </ol>
  The current expectation will have its upper invocation count automatically set to the total number of values
  specified to be returned.
- This upper limit can be overridden through the <code>maxTimes</code> field, if necessary.</div>
+ This upper limit can be overridden through the <tt>maxTimes</tt> field, if necessary.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>firstValue</code> - the first value to be returned at replay time</dd>
@@ -1066,14 +1066,14 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="block">Applies a custom argument matcher for a parameter in the current expectation.
  <p/>
  The class of the given delegate object should define a single non-<code>private</code> <em>delegate</em> method
- (plus any number of helper <code>private</code> methods).
+ (plus any number of helper <tt>private</tt> methods).
  The name of the delegate method doesn't matter, but it must have a single parameter capable of receiving the
  relevant argument values.
  <p/>
- The return type of the delegate method should be <code>boolean</code> or <code>void</code>.
- In the first case, a return value of <code>true</code> will indicate a successful match for the actual invocation
- argument at replay time, while a return of <code>false</code> will fail to match the invocation.
- In the case of a <code>void</code> return type, the actual invocation argument should be validated through a suitable
+ The return type of the delegate method should be <tt>boolean</tt> or <tt>void</tt>.
+ In the first case, a return value of <tt>true</tt> will indicate a successful match for the actual invocation
+ argument at replay time, while a return of <tt>false</tt> will fail to match the invocation.
+ In the case of a <tt>void</tt> return type, the actual invocation argument should be validated through a suitable
  JUnit/TestNG assertion.
  <p/>
  When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
@@ -1088,7 +1088,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>objectWithDelegateMethod</code> - an instance of a class defining a single non-<code>private</code> delegate method</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the default primitive value corresponding to <code>T</code> if it's a primitive wrapper type, or <code>null</code>
+<dd>the default primitive value corresponding to <tt>T</tt> if it's a primitive wrapper type, or <tt>null</tt>
  otherwise</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#withArgThat-org.hamcrest.Matcher-"><code>withArgThat(org.hamcrest.Matcher)</code></a>, 
@@ -1105,7 +1105,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>withAny</h4>
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withAny(T&nbsp;arg)</pre>
-<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but matching any argument value of the appropriate type (<code>null</code>
+<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but matching any argument value of the appropriate type (<tt>null</tt>
  included).
  <p/>
  Consider using instead the "anyXyz" field appropriate to the parameter type:
@@ -1149,9 +1149,9 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  parameter and varargs element.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>argumentMatcher</code> - any <code>org.hamcrest.Matcher</code> object</dd>
+<dd><code>argumentMatcher</code> - any <tt>org.hamcrest.Matcher</tt> object</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the value recorded inside the given Hamcrest matcher, or <code>null</code> if there is no such value to be
+<dd>the value recorded inside the given Hamcrest matcher, or <tt>null</tt> if there is no such value to be
  found</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#with-mockit.Delegate-"><code>with(Delegate)</code></a></dd>
@@ -1184,7 +1184,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd><code>valueHolderForMultipleInvocations</code> - list into which the arguments received by matching invocations will be
                                           added</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the default value for type <code>T</code></dd>
+<dd>the default value for type <tt>T</tt></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Verifications.html#withCapture--"><code>Verifications.withCapture()</code></a>, 
 <a href="../mockit/Verifications.html#withCapture-T-"><code>Verifications.withCapture(Object)</code></a>, 
@@ -1216,7 +1216,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd><code>value</code> - the center value for range comparison</dd>
 <dd><code>delta</code> - the tolerance around the center value, for a range of [value - delta, value + delta]</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the given <code>value</code></dd>
+<dd>the given <tt>value</tt></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/Mocking.html#withMethods" target="tutorial">Tutorial</a></dd>
 </dl>
@@ -1246,7 +1246,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dd><code>value</code> - the center value for range comparison</dd>
 <dd><code>delta</code> - the tolerance around the center value, for a range of [value - delta, value + delta]</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the given <code>value</code></dd>
+<dd>the given <tt>value</tt></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/Mocking.html#withMethods" target="tutorial">Tutorial</a></dd>
 </dl>
@@ -1271,7 +1271,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
  So, it's valid to mix the use of matchers with given values.
  Any arguments given as literals, local variables, or fields, will be implicitly matched as if
- <code>withEqual(value)</code> had been used.
+ <tt>withEqual(value)</tt> had been used.
  In the special case of a varargs method, however, this flexibility is not available: if a matcher is used for any
  regular parameter, or for any element in the varargs array, then a matcher <em>must</em> be used for every other
  parameter and varargs element.
@@ -1302,8 +1302,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is an instance of
  the same class as the given object.
  <p/>
- Equivalent to a <code>withInstanceOf(object.getClass())</code> call, except that it returns <code>object</code> instead
- of <code>null</code>.
+ Equivalent to a <code>withInstanceOf(object.getClass())</code> call, except that it returns <tt>object</tt>
+ instead of <tt>null</tt>.
  <p/>
  When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
  method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
@@ -1345,7 +1345,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>argClass</code> - the desired class</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>always <code>null</code>; if you need a specific return value, use <a href="../mockit/Expectations.html#withInstanceLike-T-"><code>withInstanceLike(Object)</code></a></dd>
+<dd>always <tt>null</tt>; if you need a specific return value, use <a href="../mockit/Expectations.html#withInstanceLike-T-"><code>withInstanceLike(Object)</code></a></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/Mocking.html#withMethods" target="tutorial">Tutorial</a></dd>
 </dl>
@@ -1363,7 +1363,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase matches
  the given <a href="http://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex"><code>regular expression</code></a>.
  <p/>
- Note that this can be used for any string comparison, including case insensitive ones (with <code>"(?i)"</code> in the
+ Note that this can be used for any string comparison, including case insensitive ones (with <tt>"(?i)"</tt> in the
  regex).
  <p/>
  When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
@@ -1423,7 +1423,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>withNotNull</h4>
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withNotNull()</pre>
 <div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is not
- <code>null</code>.
+ <tt>null</tt>.
  <p/>
  When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
  method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
@@ -1435,7 +1435,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  parameter and varargs element.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>always <code>null</code></dd>
+<dd>always <tt>null</tt></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/Mocking.html#withMethods" target="tutorial">Tutorial</a></dd>
 </dl>
@@ -1448,7 +1448,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>withNull</h4>
 <pre>protected final&nbsp;&lt;T&gt;&nbsp;T&nbsp;withNull()</pre>
-<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is <code>null</code>.
+<div class="block">Same as <a href="../mockit/Expectations.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is <tt>null</tt>.
  <p/>
  When an argument matcher is used for a regular (ie, non-varargs) parameter in a call to a mocked
  method/constructor, it's <em>not</em> necessary to also use matchers for the other parameters.
@@ -1460,7 +1460,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  parameter and varargs element.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>always <code>null</code></dd>
+<dd>always <tt>null</tt></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="http://jmockit.org/tutorial/Mocking.html#withMethods" target="tutorial">Tutorial</a></dd>
 </dl>

@@ -90,8 +90,8 @@
 <td class="colFirst"><a href="../mockit/Delegate.html" title="interface in mockit">Delegate</a>&lt;T&gt;</td>
 <td class="colLast">
 <div class="block">An empty interface to be used with the <a href="../mockit/Expectations.html#result"><code>Expectations.result</code></a> field or the
- <a href="Expectations.html#with(mockit.Delegate)"><code>Invocations#with(Delegate)</code></a> method, allowing test code
- to define varying invocation results or argument matching rules, respectively.</div>
+ <a href="Expectations.html#with(mockit.Delegate)">Invocations#with(Delegate)</a> method, allowing test code to define
+ varying invocation results or argument matching rules, respectively.</div>
 </td>
 </tr>
 </tbody>
@@ -218,8 +218,8 @@
  injection and/or recursive instantiation of dependencies.
  It can inject mocked instances when used in combination with the <a href="../mockit/Injectable.html" title="annotation in mockit">@Injectable</a> mocking
  annotation, and also inject <em>non-mocked</em> (real) instances when applied as
- <code>@Tested(fullyInitialized = true)</code>.
- Non-mocked instances are either automatically created or obtained from other <code>@Tested</code> fields.
+ <tt>@Tested(fullyInitialized = true)</tt>.
+ Non-mocked instances are either automatically created or obtained from other <tt>@Tested</tt> fields.
  <p/>
  The <a href="../mockit/Expectations.html" title="class in mockit"><code>Expectations</code></a> class provides an API for the <em>record-replay</em> model of recording expected
  invocations which are later replayed and implicitly verified.
@@ -231,14 +231,14 @@
  The <a href="../mockit/Invocation.html" title="class in mockit"><code>Invocation</code></a> class and the <a href="../mockit/Delegate.html" title="interface in mockit"><code>Delegate</code></a> interface are also part of this API; they can be
  used for recording expectations with custom results, and for the implementation of custom argument matchers.
  <p/>
- <a href="../mockit/MockUp.html" title="class in mockit"><code>MockUp&lt;T></code></a> is a generic base class (where <code>T</code> is the type to be
+ <a href="../mockit/MockUp.html" title="class in mockit"><code>MockUp&lt;T></code></a> is a generic base class (where <tt>T</tt> is the type to be
  faked) which allows the definition of fake implementations for external classes or interfaces.
- Methods in a fake class that take the place of the "real" methods in class <code>T</code> are indicated with the
+ Methods in a fake class that take the place of the "real" methods in class <tt>T</tt> are indicated with the
  <a href="../mockit/Mock.html" title="annotation in mockit">@Mock</a> annotation.
  Such methods can also (optionally) have an <a href="../mockit/Invocation.html" title="class in mockit"><code>Invocation</code></a> parameter.
  <p/>
  Finally, the <a href="../mockit/Deencapsulation.html" title="class in mockit"><code>Deencapsulation</code></a> class provides a few Reflection-based utility methods, for the rare cases
- where a <code>private</code> field needs to be accessed.
+ where a <tt>private</tt> field needs to be accessed.
  <p/>
  For a description with examples of the <em>Mocking</em> API, see the
  "<a href="http://jmockit.org/tutorial/Mocking.html" target="tutorial">Mocking</a>" chapter in the Tutorial.

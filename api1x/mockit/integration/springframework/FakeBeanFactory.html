@@ -119,12 +119,12 @@ extends <a href="../../../mockit/MockUp.html" title="class in mockit">MockUp</a>
 <div class="block">If applied, this fake will take over calls to <code>AbstractBeanFactory.getBean(String)</code> and
  <code>AbstractBeanFactory.getBean(String, Class)</code> in any implementation class, returning instead a
  <a href="../../../mockit/Tested.html" title="annotation in mockit"><code>@Tested</code></a> or <a href="../../../mockit/Injectable.html" title="annotation in mockit"><code>@Injectable</code></a> object with the given field name, or a dependency object
- injected at any level into a <code>@Tested</code> object.
+ injected at any level into a <tt>@Tested</tt> object.
  <p/>
- In case said calls come (indirectly) from a test class having no <code>@Tested</code> fields, bean lookup will proceed
- into the actual <code>getBean</code> implementation method.
+ In case said calls come (indirectly) from a test class having no <tt>@Tested</tt> fields, bean lookup will proceed
+ into the actual <tt>getBean</tt> implementation method.
  <p/>
- Note this fake is only useful if the code under test makes direct calls to Spring's <code>getBean</code> methods.</div>
+ Note this fake is only useful if the code under test makes direct calls to Spring's <tt>getBean</tt> methods.</div>
 </li>
 </ul>
 </div>
@@ -197,7 +197,7 @@ extends <a href="../../../mockit/MockUp.html" title="class in mockit">MockUp</a>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;mockit.<a href="../../../mockit/MockUp.html" title="class in mockit">MockUp</a></h3>
-<code><a href="../../../mockit/MockUp.html#getMockInstance--">getMockInstance</a>, <a href="../../../mockit/MockUp.html#onTearDown--">onTearDown</a></code></li>
+<code><a href="../../../mockit/MockUp.html#onTearDown--">onTearDown</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
