@@ -27,12 +27,21 @@
 
 <h1>Development history</h1>
 
-<h2 id="next">
-   <a href="#next">Next release</a>
+<h2 id="current">
+   <a href="#current">Current release</a>
 </h2>
 
 <h3 id="1.37">Version <a href="#1.37">1.37</a> (Nov 26, 2017):</h3>
 <ul>
+   <li>
+      <strong>Deprecated</strong> the <code>getMockInstance()</code> method from the <code class="type">MockUp</code>
+      class.
+      Normally, this method is only used to obtain an instance of a faked <em>interface</em>.
+      For faked <em>classes</em>, it has no practical use.
+      Instead of using a mock-up for an interface type, it's recommended to create a minimal implementation class, or
+      to use an existing implementation.
+      See deprecation comments in the API documentation.
+   </li>
    <li>
       Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/475">#475</a>,
@@ -40,8 +49,8 @@
    </li>
 </ul>
 
-<h2 id="current">
-   <a href="#current">Current release</a>
+<h2 id="previous">
+   <a href="#previous">Previous releases</a>
 </h2>
 
 <h3 id="1.36">Version <a href="#1.36">1.36</a> (Oct 29, 2017):</h3>
@@ -65,10 +74,6 @@
       <a href="https://github.com/jmockit/jmockit1/issues/473">#473</a>.
    </li>
 </ul>
-
-<h2 id="previous">
-   <a href="#previous">Previous releases</a>
-</h2>
 
 <h3 id="1.35">Version <a href="#1.35">1.35</a> (Sep 24, 2017):</h3>
 <ul>
