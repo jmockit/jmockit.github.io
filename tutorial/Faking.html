@@ -33,7 +33,6 @@
          <li><a href="#eligibleMethods">Kinds of methods which can be faked</a></li>
       </ol>
    </li>
-   <li><a href="#interfaces">Faking an interface</a></li>
    <li><a href="#implementationClasses">Faking unspecified implementation classes</a></li>
    <li><a href="#initializers">Faking class initializers</a></li>
    <li><a href="#invocation">Accessing the invocation context</a></li>
@@ -188,40 +187,10 @@ public void applyingAFakeClass() throws Exception {
 <p>
    Methods to be faked need to have an implementation, though not necessarily in bytecode (in the case of
    <code>native</code> methods).
-   Therefore, an <code>abstract</code> method cannot be faked directly, and the same applies to the methods of a Java
-   <code>interface</code>.
-   (That said, as shown later the Faking API can automatically create a proxy class that implements an interface.)
+   Therefore, an <code>abstract</code> method cannot be faked directly.
 </p>
 <p>
    Note that fake methods don't need to be <code>public</code>.
-</p>
-
-<h2 id="interfaces">
-   <a href="#interfaces">Faking an interface</a>
-</h2>
-<p>
-   Most of the time a fake class targets a real class directly.
-   But what if we need a fake object that implements a certain interface, to be passed to code under test?
-   The following example test shows how it is done for the interface
-   <a href="http://docs.oracle.com/javase/8/docs/api/javax/security/auth/callback/CallbackHandler.html">
-      javax.security.auth.callback.CallbackHandler</a>.
-</p>
-<pre><code>@Test
-public void fakingAnInterface() throws Exception {
-   CallbackHandler <strong>callbackHandler</strong> = new MockUp&lt;CallbackHandler>() {
-      @Mock
-      void handle(Callback[] callbacks) {
-         // fake implementation here
-      }
-   }<strong>.getMockInstance()</strong>;
-
-   Callback[] callbacks = {new NameCallback("Enter name:")};
-   <strong>callbackHandler</strong>.handle(callbacks);
-}
-</code></pre>
-<p>
-   The <a href="../api1x/mockit/MockUp.html#getMockInstance()"><code>MockUp#getMockInstance()</code></a> method returns
-   a proxy object that implements the desired interface.
 </p>
 
 <h2 id="implementationClasses">
