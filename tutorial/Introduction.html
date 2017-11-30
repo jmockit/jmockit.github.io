@@ -40,7 +40,7 @@
 </ol>
 
 <p>
-   In this tutorial we examine the APIs available in the library, with the help of example tests.
+   In this tutorial we examine the APIs available in the library, with the help of example tests (using Java 8).
    The central API - a single annotation - provides support for the automatic instantiation and initialization of the
    objects to be tested.
    Then we have the <a href="Mocking.html">mocking</a> API (also known as the "Expectations" API), intended for tests
@@ -235,7 +235,7 @@ public final class MyBusinessServiceTest
 
    @Test
    public void doBusinessOperationXyzWithInvalidEmailAddress() throws Exception {
-      final String email = "invalid address";
+      String email = "invalid address";
       data.setCustomerEmail(email);
 (3)   new Expectations() {{ anyEmail.addTo(email); result = new EmailException(); }};
       thrown.expect(EmailException.class);
@@ -312,7 +312,7 @@ public final class MyBusinessServiceTest
 </code></pre>
 <p>
    Make sure the specified version is the one you actually want. Find the current version in the
-   <a href="../changes.html">development history</a> page.
+   <a href="../changes.html#current">development history</a> page.
    When using JUnit 4, this dependency should come <em>before</em> the "<code>junit</code>" dependency.
 </p>
 <p>

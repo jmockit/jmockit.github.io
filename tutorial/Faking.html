@@ -297,7 +297,7 @@ public void fakingStaticInitializers() {
 <pre><code>@Test
 public void accessingTheFakedInstanceInFakeMethods() throws Exception
 {
-   final Subject testSubject = new Subject();
+   Subject testSubject = new Subject();
 
    new MockUp&lt;LoginContext>() {
       @Mock
