@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-  ~ Copyright (c) 2006 Rogério Liesenfeld
-  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
-  -->
 <html>
 <head>
    <title>JMockit - Tutorial - Introduction</title>
@@ -64,8 +60,9 @@
 </h2>
 <p>
    Automated <em>developer</em> tests are those written by the developers themselves, to test their own code.
-   They are usually written with the help of a testing framework, such as <a href="http://junit.org">JUnit</a> or
-   <a href="http://testng.org">TestNG</a>; JMockit supports both.
+   They are usually written with the help of a testing framework, such as
+   <a target="_blank" href="http://junit.org">JUnit</a> or <a target="_blank" href="http://testng.org">TestNG</a>;
+   JMockit supports both.
 </p>
 <p>
    Automated developer tests can be divided in two broad categories, whether they target individual program "units",
@@ -73,8 +70,8 @@
 </p>
 <ol>
    <li>
-      <a href="https://martinfowler.com/bliki/UnitTest.html">Unit tests</a>, intended to test a class or component in
-      isolation from the rest of the system.
+      <a target="_blank" href="https://martinfowler.com/bliki/UnitTest.html">Unit tests</a>, intended to test a class or
+      component in isolation from the rest of the system.
    </li>
    <li>
       <strong>Integration tests</strong>, intended to test system operations that encompass a unit and its dependencies
@@ -142,14 +139,14 @@
    The first two steps require access to the application database, which is done through a simplified API to the
    persistence subsystem (which itself uses JPA).
    The third one can be achieved with a third-party API for sending e-mail, which in this example is Apache's
-   <a href="http://commons.apache.org/email">Commons Email</a> library.
+   <a target="_blank" href="http://commons.apache.org/email">Commons Email</a> library.
 </p>
 <p>
    Therefore, the service class has two separate dependencies, one for persistence and another for e-mail.
    To test the business operation, we rely on JMockit's JPA support to deal with persistence, while mocking the e-mail
    API.
    Complete source code for a working solution - with all tests - is
-   <a href="http://github.com/jmockit/jmockit1/blob/master/samples/tutorial">available online</a>.
+   <a target="_blank" href="http://github.com/jmockit/jmockit1/blob/master/samples/tutorial">available online</a>.
 </p>
 <pre><code>package tutorial.domain;
 
