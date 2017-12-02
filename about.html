@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-  ~ Copyright (c) 2006 Rogério Liesenfeld
-  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
-  -->
 <html>
 <head>
    <title>JMockit - About The JMockit Testing Toolkit</title>
@@ -32,15 +28,15 @@
 </h1>
 <p>
    JMockit is open source software licensed under the
-   <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.
+   <a target="_blank" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.
    It includes APIs for mocking, faking, and integration testing, and a code coverage tool.
-   The library is meant to be used together with a testing framework such as <a href="http://junit.org">JUnit</a> or
-   <a href="http://testng.org">TestNG</a>.
+   The library is meant to be used together with a testing framework such as
+   <a target="_blank" href="http://junit.org">JUnit</a> or <a target="_blank" href="http://testng.org">TestNG</a>.
 </p>
 <p>
    The toolkit was created mainly as an attempt to overcome certain limitations found in "conventional"
-   <a href="http://www.martinfowler.com/articles/mocksArentStubs.html">mocking</a> tools, which prevented the creation
-   of unit tests for code designed according to well-established OO practices.
+   <a target="_blank" href="http://www.martinfowler.com/articles/mocksArentStubs.html">mocking</a> tools, which
+   prevented the creation of unit tests for code designed according to well-established OO practices.
    Another goal was to provide simpler and more succinct APIs for writing developer tests.
    In addition, and differently from other testing tools which specifically target the use of mocks, JMockit also
    includes advanced support for out-of-container integration testing, and a sophisticated code coverage tool.
@@ -53,8 +49,8 @@
    Internally, the Java SE 6+ bytecode instrumentation feature (the
    <a target="_blank" href="http://docs.oracle.com/javase/8/docs/api/java/lang/instrument/package-summary.html">
       java.lang.instrument</a> package) is used extensively.
-   For the reading and in-memory generation of modified bytecode arrays, the <a href="http://asm.objectweb.org">ASM</a>
-   library is used.
+   For the reading and in-memory generation of modified bytecode arrays, the
+   <a target="_blank" href="http://asm.objectweb.org">ASM</a> library is used.
 </p>
 <p>
    Mocking features mostly use the JVM's ability to <em>redefine</em> classes that have already been loaded, as exposed
@@ -88,14 +84,15 @@
 </h2>
 <p>
    The JMockit approach is an alternative to the conventional use of "mock objects" as provided by tools such as
-   <a href="http://easymock.org">EasyMock</a>, <a href="http://www.jmock.org">jMock</a>, and
-   <a href="http://mockito.org">Mockito</a>.
+   <a target="_blank" href="http://easymock.org">EasyMock</a>, <a target="_blank" href="http://www.jmock.org">jMock</a>,
+   and <a target="_blank" href="http://mockito.org">Mockito</a>.
 </p>
 <p>
    Such tools are based on the dynamic generation of implementation classes (through
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>, when
-   given an interface to be mocked) and subclasses (through <a href="http://github.com/cglib/cglib">CGLIB</a>, when
-   given a non-final class to be mocked).
+   <a target="_blank"
+      href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>, when
+   given an interface to be mocked) and subclasses (through
+   <a target="_blank" href="http://github.com/cglib/cglib">CGLIB</a>, when given a non-final class to be mocked).
    This particular mocking implementation technique, in which a subclass with overriding mock methods is created,
    implies some penalties: <code>final</code> classes, constructors, and non-overridable methods simply cannot be
    mocked.
