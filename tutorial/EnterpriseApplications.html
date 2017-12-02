@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-  ~ Copyright (c) 2006 Rogério Liesenfeld
-  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
-  -->
 <html>
 <head>
    <title>JMockit - Tutorial - Integration testing</title>
@@ -67,17 +63,17 @@
 </h2>
 <p>
    For demonstration, we will use a Java EE version of the Spring Pet Clinic sample application.
-   The <a href="http://github.com/jmockit/jmockit1/blob/master/samples/petclinic">full code</a> is available in the
-   project repository.
+   The <a target="_blank" href="http://github.com/jmockit/jmockit1/blob/master/samples/petclinic">full code</a> is
+   available in the project repository.
    The application codebase is organized in four layers: UI or presentation layer, application layer, domain layer, and
    infrastructure layer.
 </p>
 <p>
    The application's domain model (following the approach and terminology of
-   <a href="https://www.amazon.com/exec/obidos/ASIN/0321125215/domainlanguag-20">Domain Driven Design</a>) has six
-   domain entities: <code>Vet</code> (a veterinarian), <code>Specialty</code> (a vet's specialty), <code>Pet</code>,
-   <code>PetType</code>, <code>Owner</code> (a pet's owner), and <code>Visit</code> (a visit from a pet and its owner to
-   the clinic).
+   <a target="ddd" href="https://www.amazon.com/exec/obidos/ASIN/0321125215/domainlanguag-20">Domain Driven Design</a>)
+   has six domain entities: <code>Vet</code> (a veterinarian), <code>Specialty</code> (a vet's specialty),
+   <code>Pet</code>, <code>PetType</code>, <code>Owner</code> (a pet's owner), and <code>Visit</code> (a visit from a
+   pet and its owner to the clinic).
    Besides entities, the domain model (and layer) of the application also includes <em>domain service</em> classes.
    In this simple domain, we have only one such class for each entity type (<code>VetMaintenance</code>,
    <code>PetMaintenance</code>, and so on).
