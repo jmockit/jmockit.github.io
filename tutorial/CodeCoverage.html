@@ -203,16 +203,17 @@
    <a href="#configuration">Configuring the coverage tool</a>
 </h2>
 <p>
-   To enable the JMockit Coverage tool in a JUnit/TestNG test run, add <code>jmockit.jar</code> to the runtime
+   To enable the JMockit Coverage tool in a JUnit/TestNG test run, add <code>jmockit-1.x.jar</code> to the runtime
    classpath, and specify at least one of the "<code>coverage-output|metrics|classes</code>" system properties.
-   With JUnit, make sure that <code>jmockit.jar</code> appears first in the classpath.
+   With JUnit, make sure that <code>jmockit-1.x.jar</code> appears first in the classpath.
    (For more details on <a href="Introduction.html#runningTests">running tests with JMockit</a>, see the corresponding
    section in the Tutorial.)
 </p>
 <p>
    When not using the JMockit mocking APIs, code coverage can still be activated without adding any jar to the
    classpath.
-   Instead, run with "<code>-javaagent:&lt;proper path>/jmockit.jar=coverage</code>" as a JVM initialization parameter.
+   Instead, run with "<code>-javaagent:&lt;proper path>/jmockit-1.x.jar=coverage</code>" as a JVM initialization
+   parameter.
 </p>
 <p>
    In most cases, the coverage tool does not require any additional configuration to be used.
@@ -335,10 +336,10 @@
    Assuming that two or more <code>coverage.ser</code> files are available in separate directories, an aggregate report
    can be generated from them by executing the <code>mockit.coverage.CodeCoverage.main</code> method (a regular Java
    "main" method).
-   To facilitate this, the <code>jmockit.jar</code> file is <em>executable</em>.
+   To facilitate this, the <code>jmockit-1.x.jar</code> file is <em>executable</em>.
    As an example, the following Ant task could be used:
 </p>
-<pre><code>&lt;java fork="yes" dir="myBaseDir" jar="jmockit.jar">
+<pre><code>&lt;java fork="yes" dir="myBaseDir" jar="jmockit-1.x.jar">
    &lt;jvmarg line="-Dcoverage-output=html"/>
    &lt;arg line="module1-outDir anotherOutDir"/>
 &lt;/java>
