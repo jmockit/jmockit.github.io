@@ -122,52 +122,27 @@
    dependency cannot have its real implementation easily used, or when attempting to create tests for corner cases where
    a well-placed mocked interaction can greatly facilitate the test.
 </p>
-<p>
-   An interaction between two classes always takes the form of a method or constructor <em>invocation</em>.
-   The set of invocations from a tested class to its dependencies, together with the argument and return values passed
-   between them, define the behavior of interest for the tests of that particular class.
-   In addition, a given test may need to verify the relative order of execution between multiple invocations.
-</p>
 
 <h2 id="mocked">
    <a href="#mocked">Mocked types and instances</a>
 </h2>
 <p>
-   Methods and constructors invoked from the code under test on a dependency are the targets for mocking.
-   Mocking provides the mechanism that we need in order to isolate the tested code from (some of) its dependencies.
-   We specify which particular dependencies are to be mocked for a given test (or tests) by declaring suitable <em>mock
-   fields</em> and/or <em>mock parameters</em>; mock fields are declared as annotated instance fields of the test class,
+   Mocking provides a mechanism for isolating a class to be tested from (some of) its dependencies.
+   We specify which particular dependencies are to be mocked by declaring suitable <em>mock fields</em> and/or <em>mock
+   parameters</em> in a test class; mock fields are declared as annotated instance fields of the test class,
    while mock parameters are declared as annotated parameters of a test method.
-   The type of the dependency to be mocked will be the type of the mock field or parameter.
-   Such a type can be any kind of <em>reference</em> type: an <code>interface</code>, a <code>class</code> (including
-   <code>abstract</code> and <code>final</code> ones), an annotation, or an <code>enum</code>.
-</p>
-<p>
-   By default, <em>all</em> non-<code>private</code> methods (including any that are <code>static</code>,
-   <code>final</code>, or <code>native</code>) of the mocked type will be mocked for the duration of the test.
-   If the declared mocked type is a class, then all of its super-classes up to but not including
-   <code class="type">java.lang.Object</code> will also be mocked, recursively.
-   Therefore, inherited methods will automatically be mocked as well.
-   Also in the case of a class, all of its non-<code>private</code> <em>constructors</em> will get mocked.
-</p>
-<p>
-   When a method or constructor is mocked, its original implementation code won't be executed for invocations occurring
-   during the test.
-   Instead, the call will be redirected to JMockit so it can be dealt with in the manner that was explicitly or
-   implicitly specified for the test.
+   The type of the mock field or parameter can be any kind of <em>reference</em> type: an <code>interface</code>, a
+   <code>class</code> (including <code>abstract</code> and <code>final</code> ones), an annotation, or an
+   <code>enum</code>.
 </p>
 <p>
    The following example test skeleton (using Java 8 and JUnit 4) serves as a basic illustration for the declaration of
    mock fields and mock parameters, as well as the way in which they are typically used in test code.
-   In this tutorial, we use many code snippets like this, where the parts in bold font are the current focus of
-   explanation.
 </p>
-<pre><code>// "Dependency" is mocked for all tests in this test class.
-// The "mockInstance" field holds a mocked instance automatically created for use in each test.
-@Mocked <strong>Dependency mockInstance</strong>;
+<pre><code>@Mocked Dependency mockInstance; // holds a mocked instance automatically created for use in each test
 
 @Test
-public void doBusinessOperationXyz(@Mocked <strong>AnotherDependency anotherMock</strong>) {
+public void doBusinessOperationXyz(@Mocked AnotherDependency anotherMock) {
    ...
    new Expectations() {{ // an "expectation block"
       ...
@@ -189,29 +164,25 @@ public void doBusinessOperationXyz(@Mocked <strong>AnotherDependency anotherMock
    For a mock parameter declared in a test method, an instance of the declared type will be automatically created by
    JMockit and passed by the JUnit/TestNG test runner when it executes the test method;
    therefore, the parameter value will never be <code>null</code>.
-   For a mock field, an instance of the declared type will be automatically created by JMockit and assigned to the
-   field, provided it's not <code>final</code>.
+   For a mock field, an instance of the declared type will be automatically created and assigned to the field (provided
+   it's not <code>final</code>).
 </p>
 <p>
-   There are a few different annotations available for the declaration of mock fields and parameters, and ways in which
-   the default mocking behavior can be modified to suit the needs of a particular test.
-   Other sections of this chapter go into the details, but the basics are:
-   <a href="../api1x/mockit/Mocked.html">@Mocked</a> is the central mocking annotation, having one optional attribute
-   which is useful in certain cases; <a href="../api1x/mockit/Injectable.html">@Injectable</a> is another
-   mocking annotation, which constrains mocking to the instance methods of a single mocked instance; and
-   <a href="../api1x/mockit/Capturing.html">@Capturing</a> is yet another mocking annotation, which extends mocking to
-   the classes implementing a mocked interface, or the subclasses extending a mocked class.
-   When <code class="annotation">@Injectable</code> or <code class="annotation">@Capturing</code> is applied to a mock
-   field or mock parameter, <code class="annotation">@Mocked</code> is implied so it doesn't need to (but can) be
-   applied as well.
+   There are three different mocking annotations we can use when declaring mock fields and parameters:
+   <a href="../api1x/mockit/Mocked.html">@Mocked</a>, which will mock all methods and constructors on all existing and
+   <em>future</em> instances of a mocked class (for the duration of the tests using it);
+   <a href="../api1x/mockit/Injectable.html">@Injectable</a>, which constrains mocking to the instance methods of a
+   single mocked instance; and <a href="../api1x/mockit/Capturing.html">@Capturing</a>, which extends mocking to the
+   classes implementing a mocked interface, or the subclasses extending a mocked class.
 </p>
 <p>
    The mocked instances created by JMockit can be used normally in test code (for the recording and verification of
    expectations), and/or passed to the code under test. Or they may simply go unused.
    Differently from other mocking APIs, these <em>mocked</em> objects don't have to be the ones used by the code under
    test when it calls instance methods on its dependencies.
-   By default (ie, when <code class="annotation">@Injectable</code> is not used), JMockit does not care on which object
-   a mocked instance method is called.
+   When using <code class="annotation">@Mocked</code> or <code class="annotation">@Capturing</code> (but not when using
+   <code class="annotation">@Injectable</code>), JMockit does not care on which particular object a mocked instance
+   method is called.
    This allows the transparent mocking of instances created directly inside code under test, when said code invokes
    constructors on brand new instances using the <code>new</code> operator;
    the classes instantiated must be covered by mocked types declared in test code, that's all.
