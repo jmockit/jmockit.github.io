@@ -110,11 +110,6 @@
    Normally, the "caller" class is one being tested, while the faked class is a dependency.
 </p>
 <p>
-   Fake classes can be defined as top-level classes, or as nested (<code>static</code>), inner
-   (non-<code>static</code>), or even as <em>anonymous</em> classes inside a JUnit/TestNG test class.
-   Being top-level is probably preferable if the fake class is to be reused from multiple test classes.
-</p>
-<p>
    Each <code class="annotation">@Mock</code> method must have a corresponding "real method/constructor" with the
    <em>same signature</em> in the targeted real class.
    For a <em>method</em>, the signature consists of the method name and parameters; for a <em>constructor</em>, it's

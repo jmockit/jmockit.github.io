@@ -83,7 +83,7 @@
    <a href="#testedObjects">Instantiating and injecting objects to be tested</a>
 </h2>
 <p>
-   In this and other sections we show many example tests.
+   In this and other sections we show many example tests, written in Java 8.
    They all use JUnit 4, but could just as well be written with JUnit 5 or TestNG.
    Imports are not shown; in the case of the JMockit APIs, they are all imported from the "<code>mockit</code>" package.
 </p>
@@ -163,7 +163,6 @@ public final class ExampleUnitTest
    In a test class, declare a <em>mock field</em> of the type you wish to mock, and annotate it with
    <code class="annotation">@Mocked</code>, <code class="annotation">@Injectable</code>, or
    <code class="annotation">@Capturing</code>.
-   The last two annotations imply the first, which may then be omitted.
    When mocking a class, <code class="annotation">@Injectable</code> means that <em>only</em> the instance assigned to
    the mock field will have mock behavior; otherwise, <em>all</em> instances of the mocked class will be mocked.
 </p>
