@@ -35,6 +35,13 @@
       performance.
    </li>
    <li>
+      <strong>Deprecated</strong> the <code>unverifiedInvocations()</code> and <code>verifiedInvocations(...)</code>
+      methods from the <code class="type">VerificationsInOrder</code> and <code class="type">FullVerifications</code>
+      classes.
+      These methods support "partially ordered verification", a feature which is probably never used, and if used make
+      for difficult to understand tests; existing tests using them (if any) should either be removed or rewritten.
+   </li>
+   <li>
       Issues closed:
       <a href="https://github.com/jmockit/jmockit1/issues/483">#483</a>,
       <a href="https://github.com/jmockit/jmockit1/issues/485">#485</a>.
