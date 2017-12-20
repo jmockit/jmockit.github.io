@@ -78,7 +78,6 @@
       <ol>
          <li><a href="#fullVerification">Full verification</a></li>
          <li><a href="#neverHappened">Verifying that an invocation never happened</a></li>
-         <li><a href="#partiallyOrdered">Partially ordered verification</a></li>
          <li><a href="#fullVerificationInOrder">Full verification in order</a></li>
          <li><a href="#restrictedFullVerifications">Restricting the set of mocked types to be fully verified</a></li>
          <li><a href="#emptyFullVerifications">Verifying that no invocations occurred</a></li>
@@ -1524,81 +1523,6 @@ public void verifyAllInvocations(@Mocked Dependency mock) {
    To do this inside a verification block, add a "<code><var>times</var> = 0</code>" assignment right after the
    invocation that is expected to not have happened during the replay phase.
    If one or more matching invocations did happen, the test will fail.
-</p>
-
-<h3 id="partiallyOrdered">
-   <a href="#partiallyOrdered">Partially ordered verification</a>
-</h3>
-<p>
-   Suppose you want to verify that a particular method (or constructor) was called <em>before</em>/<em>after</em> other
-   invocations, but you don't care about the order in which those other invocations occurred.
-   Inside an ordered verification block, this can be achieved by simply calling the
-   <a href="../api1x/mockit/VerificationsInOrder.html#unverifiedInvocations--">unverifiedInvocations()</a>
-   method at the appropriate place(s).
-   The following test demonstrates it.
-</p>
-<pre><code>@Mocked DependencyAbc abc;
-@Mocked AnotherDependency xyz;
-
-@Test
-public void verifyingTheOrderOfSomeExpectationsRelativeToAllOthers() {
-   new CodeUnderTest().doSomething();
-
-   new VerificationsInOrder() {{
-      abc.methodThatNeedsToExecuteFirst();
-      <strong>unverifiedInvocations();</strong> // Invocations not verified must come here...
-      xyz.method1();
-      abc.method2();
-      <strong>unverifiedInvocations();</strong> // ... and/or here.
-      xyz.methodThatNeedsToExecuteLast();
-   }};
-}
-</code></pre>
-<p>
-   The example above is actually quite sophisticated, as it verifies several things:
-   a) a method that must be called <em>before</em> others; b) a method that must be called <em>after</em> others;
-   and c) that <code>AnotherDependency#method1()</code> must be called just before <code>DependencyAbc#method2()</code>.
-   In most tests, we will probably only do one of these different kinds of order-related verifications.
-   But the power is there to make all kinds of complex verifications quite easily.
-</p>
-<p>
-   Another situation not covered by the examples above is one where we want to verify that certain invocations occurred
-   in a given relative order, while also verifying the other invocations (in any order).
-   For this, we need to write two separate verification blocks, as illustrated below (where <code>mock</code> is a mock
-   field of the test class).
-</p>
-<pre><code>@Test
-public void verifyFirstAndLastCallsWithOthersInBetweenInAnyOrder() {
-   // Invocations that occur while exercising the code under test:
-   mock.prepare();
-   mock.setSomethingElse("anotherValue");
-   mock.setSomething(123);
-   mock.notifyBeforeSave();
-   mock.save();
-
-   new VerificationsInOrder() {{
-      mock.prepare(); // first expected call
-      <strong>unverifiedInvocations();</strong> // others at this point
-      mock.notifyBeforeSave(); // just before last
-      mock.save(); <var>times</var> = 1; // last expected call
-   }};
-
-   // Unordered verification of the invocations previously left unverified.
-   // Could be ordered, but then it would be simpler to just include these invocations
-   // in the previous block, at the place where "unverifiedInvocations()" is called.
-   new Verifications() {{
-      mock.setSomething(123);
-      mock.setSomethingElse(<var>anyString</var>);
-   }};
-}
-</code></pre>
-<p>
-   Usually, when a test has multiple verification blocks their relative order of execution <em>is</em> important.
-   In the previous test, for example, if the unordered block came before it would have left no "unverified invocations"
-   to match a later call to <code>unverifiedInvocations()</code>;
-   the test would still pass (assuming it originally passed) since it's not required that unverified invocations
-   actually occurred at the called position, but it would <em>not</em> have verified that the unordered group of
-   invocations occurred between the first and last expected calls.
 </p>
 
 <h3 id="fullVerificationInOrder">
