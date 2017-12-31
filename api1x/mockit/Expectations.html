@@ -121,8 +121,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
  <p/>
  Expectations are recorded simply by invoking the desired method or constructor on the mocked type/instance, during
  the initialization of an <tt>Expectations</tt> object.
- Typically, this is done by instantiating an anonymous subclass containing an instance initialization body, or as we
- call it, an <em>expectation block</em>:
+ This is done by instantiating an anonymous subclass containing an instance initialization body, or as we call it, an
+ <em>expectation block</em>:
  <pre>
  // <em>Record</em> one or more expectations on available mocked types/instances.
  new Expectations() {{
@@ -290,7 +290,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>protected </code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Expectations.html#Expectations--">Expectations</a></span>()</code>
 <div class="block">Registers one or more expectations recorded on available mocked types and/or mocked instances, as written inside
- the instance initialization body of an anonymous subclass or the called constructor of a named subclass.</div>
+ the instance initialization body of an anonymous subclass.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -967,7 +967,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>Expectations</h4>
 <pre>protected&nbsp;Expectations()</pre>
 <div class="block">Registers one or more expectations recorded on available mocked types and/or mocked instances, as written inside
- the instance initialization body of an anonymous subclass or the called constructor of a named subclass.</div>
+ the instance initialization body of an anonymous subclass.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/Expectations.html#Expectations-java.lang.Object...-"><code>Expectations(Object...)</code></a>, 

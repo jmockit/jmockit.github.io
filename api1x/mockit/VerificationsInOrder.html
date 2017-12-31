@@ -19,7 +19,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -133,8 +133,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/VerificationsInOrder.html#VerificationsInOrder--"><code>VerificationsInOrder()</code></a>, 
-<a href="../mockit/VerificationsInOrder.html#unverifiedInvocations--"><code>unverifiedInvocations()</code></a>, 
-<a href="../mockit/VerificationsInOrder.html#verifiedInvocations-mockit.Verifications-"><code>verifiedInvocations(Verifications)</code></a>, 
 <a href="http://jmockit.org/tutorial/Mocking.html#verificationInOrder" target="tutorial">Tutorial</a></dd>
 </dl>
 </li>
@@ -274,46 +272,32 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#unverifiedInvocations--">unverifiedInvocations</a></span>()</code>
-<div class="block">Accounts for a sequence of invocations executed by code under test that are not explicitly verified in any
- verification block.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#verifiedInvocations-mockit.Verifications-">verifiedInvocations</a></span>(<a href="../mockit/Verifications.html" title="class in mockit">Verifications</a>&nbsp;alreadyVerified)</code>
-<div class="block">Accounts for a sequence of invocations executed from code under test that have already been explicitly verified in
- a previous verification block.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#with-mockit.Delegate-">with</a></span>(<a href="../mockit/Delegate.html" title="interface in mockit">Delegate</a>&lt;? super T&gt;&nbsp;objectWithDelegateMethod)</code>
 <div class="block">Applies a custom argument matcher for a parameter in the current expectation.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withAny-T-">withAny</a></span>(T&nbsp;arg)</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but matching any argument value of the appropriate type (<tt>null</tt>
  included).</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withArgThat-org.hamcrest.Matcher-">withArgThat</a></span>(org.hamcrest.Matcher&lt;? super T&gt;&nbsp;argumentMatcher)</code>
 <div class="block">Applies a <em>Hamcrest</em> argument matcher for a parameter in the current expectation.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withCapture-java.util.List-">withCapture</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;valueHolderForMultipleInvocations)</code>
 <div class="block">Captures the argument value passed into the associated expectation parameter, for each invocation that matches the
  expectation when the tested code is exercised.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected double</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withEqual-double-double-">withEqual</a></span>(double&nbsp;value,
          double&nbsp;delta)</code>
@@ -321,7 +305,7 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
  sufficiently close to the given value.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected float</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withEqual-float-double-">withEqual</a></span>(float&nbsp;value,
          double&nbsp;delta)</code>
@@ -329,76 +313,76 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
  sufficiently close to the given value.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withEqual-T-">withEqual</a></span>(T&nbsp;arg)</code>
 <div class="block">When passed as argument for an expectation, creates a new matcher that will check if the given value is
  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang"><code>equal</code></a> to the corresponding argument received by a matching invocation.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withInstanceLike-T-">withInstanceLike</a></span>(T&nbsp;object)</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is an instance of
  the same class as the given object.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withInstanceOf-java.lang.Class-">withInstanceOf</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;argClass)</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is an instance of
  the given class.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withMatch-T-">withMatch</a></span>(T&nbsp;regex)</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase matches
  the given <a href="http://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex"><code>regular expression</code></a>.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withNotEqual-T-">withNotEqual</a></span>(T&nbsp;arg)</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that the invocation argument in the replay phase is different
  from the given value.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withNotNull--">withNotNull</a></span>()</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is not
  <tt>null</tt>.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withNull--">withNull</a></span>()</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is <tt>null</tt>.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withPrefix-T-">withPrefix</a></span>(T&nbsp;text)</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase starts
  with the given text.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withSameInstance-T-">withSameInstance</a></span>(T&nbsp;object)</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is the exact same
  instance as the one in the recorded/verified invocation.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withSubstring-T-">withSubstring</a></span>(T&nbsp;text)</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase contains
  the given text as a substring.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/VerificationsInOrder.html#withSuffix-T-">withSuffix</a></span>(T&nbsp;text)</code>
 <div class="block">Same as <a href="../mockit/VerificationsInOrder.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase ends with
@@ -884,68 +868,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="unverifiedInvocations--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>unverifiedInvocations</h4>
-<pre>protected final&nbsp;void&nbsp;unverifiedInvocations()</pre>
-<div class="block">Accounts for a sequence of invocations executed by code under test that are not explicitly verified in any
- verification block.
- Such a "sequence" of invocations can include only a single invocation, or even be empty.
- <p/>
- Invocations matching an expectation recorded with a minimum invocation count - if any - are <em>also</em>
- included here, since their replay order could not be verified otherwise.
- This doesn't apply to <em>strict</em> expectations, though, since in that case the replay order must be as
- recorded.
- <p/>
- This method can be used to verify that one or more consecutive invocations occurred <em>before</em> others, and
- conversely to verify that one or more consecutive invocations occurred <em>after</em> others.
- The call to this method marks the position where the unverified invocations are expected to have occurred,
- relative to the explicitly verified ones.
- <p/>
- The exact sequence of unverified invocations accounted for by a particular call to this method depends on the
- <em>position</em> of the call relative to other verifications.
- Each grouping of explicit verifications will correspond to a sequence of <em>consecutive</em> (and verified)
- invocations from the code under test.
- So, if this method is called more than once from the same verification block, each call will account for a
- separate sequence of unverified invocations; each sequence will be verified to occur, as a whole, in the same
- order as it appears relative to those groupings of verified invocations.
- <p/>
- Notice that when this method is not used, the invocations from code under test need <em>not</em> be consecutive,
- but only have the same relative order as the verification calls.
- <p/>
- Finally, notice that you can combine an ordered verification block that verifies the position of some calls
- relative to others with a later unordered block which verifies some or all of those other invocations.
- The unordered block should not come before, however, since it would "consume" the verified invocations.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/VerificationsInOrder.html#verifiedInvocations-mockit.Verifications-"><code>verifiedInvocations(Verifications)</code></a>, 
-<a href="http://jmockit.org/tutorial/Mocking.html#partiallyOrdered" target="tutorial">Tutorial</a></dd>
-</dl>
-</li>
-</ul>
-<a name="verifiedInvocations-mockit.Verifications-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>verifiedInvocations</h4>
-<pre>protected final&nbsp;void&nbsp;verifiedInvocations(<a href="../mockit/Verifications.html" title="class in mockit">Verifications</a>&nbsp;alreadyVerified)</pre>
-<div class="block">Accounts for a sequence of invocations executed from code under test that have already been explicitly verified in
- a previous verification block.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>alreadyVerified</code> - an unordered verification block describing a group of already verified invocations</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the given verifications are ordered</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../mockit/VerificationsInOrder.html#unverifiedInvocations--"><code>unverifiedInvocations()</code></a>, 
-<a href="http://jmockit.org/tutorial/Mocking.html#partiallyOrdered" target="tutorial">Tutorial</a></dd>
-</dl>
-</li>
-</ul>
 <a name="with-mockit.Delegate-">
 <!--   -->
 </a>

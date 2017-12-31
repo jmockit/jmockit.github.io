@@ -19,7 +19,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -137,7 +137,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../mockit/FullVerifications.html#FullVerifications--"><code>FullVerifications()</code></a>, 
 <a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Object...-"><code>FullVerifications(Object...)</code></a>, 
-<a href="../mockit/FullVerifications.html#unverifiedInvocations--"><code>unverifiedInvocations()</code></a>, 
 <a href="../mockit/FullVerificationsInOrder.html" title="class in mockit"><code>FullVerificationsInOrder</code></a>, 
 <a href="http://jmockit.org/tutorial/Mocking.html#fullVerification" target="tutorial">Tutorial</a></dd>
 </dl>
@@ -285,38 +284,32 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#unverifiedInvocations--">unverifiedInvocations</a></span>()</code>
-<div class="block">Accounts for all invocations not yet verified, removing them from any further consideration.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#with-mockit.Delegate-">with</a></span>(<a href="../mockit/Delegate.html" title="interface in mockit">Delegate</a>&lt;? super T&gt;&nbsp;objectWithDelegateMethod)</code>
 <div class="block">Applies a custom argument matcher for a parameter in the current expectation.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withAny-T-">withAny</a></span>(T&nbsp;arg)</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but matching any argument value of the appropriate type (<tt>null</tt>
  included).</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withArgThat-org.hamcrest.Matcher-">withArgThat</a></span>(org.hamcrest.Matcher&lt;? super T&gt;&nbsp;argumentMatcher)</code>
 <div class="block">Applies a <em>Hamcrest</em> argument matcher for a parameter in the current expectation.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withCapture-java.util.List-">withCapture</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;valueHolderForMultipleInvocations)</code>
 <div class="block">Captures the argument value passed into the associated expectation parameter, for each invocation that matches the
  expectation when the tested code is exercised.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected double</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withEqual-double-double-">withEqual</a></span>(double&nbsp;value,
          double&nbsp;delta)</code>
@@ -324,7 +317,7 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
  sufficiently close to the given value.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected float</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withEqual-float-double-">withEqual</a></span>(float&nbsp;value,
          double&nbsp;delta)</code>
@@ -332,76 +325,76 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
  sufficiently close to the given value.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withEqual-T-">withEqual</a></span>(T&nbsp;arg)</code>
 <div class="block">When passed as argument for an expectation, creates a new matcher that will check if the given value is
  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang"><code>equal</code></a> to the corresponding argument received by a matching invocation.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withInstanceLike-T-">withInstanceLike</a></span>(T&nbsp;object)</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is an instance of
  the same class as the given object.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withInstanceOf-java.lang.Class-">withInstanceOf</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;argClass)</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is an instance of
  the given class.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withMatch-T-">withMatch</a></span>(T&nbsp;regex)</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase matches
  the given <a href="http://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex"><code>regular expression</code></a>.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withNotEqual-T-">withNotEqual</a></span>(T&nbsp;arg)</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that the invocation argument in the replay phase is different
  from the given value.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withNotNull--">withNotNull</a></span>()</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is not
  <tt>null</tt>.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withNull--">withNull</a></span>()</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is <tt>null</tt>.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withPrefix-T-">withPrefix</a></span>(T&nbsp;text)</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase starts
  with the given text.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>protected &lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withSameInstance-T-">withSameInstance</a></span>(T&nbsp;object)</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that an invocation argument in the replay phase is the exact same
  instance as the one in the recorded/verified invocation.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withSubstring-T-">withSubstring</a></span>(T&nbsp;text)</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase contains
  the given text as a substring.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../mockit/FullVerifications.html#withSuffix-T-">withSuffix</a></span>(T&nbsp;text)</code>
 <div class="block">Same as <a href="../mockit/FullVerifications.html#withEqual-T-"><code>withEqual(Object)</code></a>, but checking that a textual invocation argument in the replay phase ends with
@@ -908,21 +901,6 @@ extends <a href="../mockit/Verifications.html" title="class in mockit">Verificat
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="unverifiedInvocations--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>unverifiedInvocations</h4>
-<pre>protected final&nbsp;void&nbsp;unverifiedInvocations()</pre>
-<div class="block">Accounts for all invocations not yet verified, removing them from any further consideration.
- Invocations that occur after this, however, can still be verified later in another verification block.
- <p/>
- If one or more mocked types/instances were specified in the
- <a href="../mockit/FullVerifications.html#FullVerifications-java.lang.Object...-">constructor call</a> for this verification block, then only the associated
- invocations (if any) are removed.</div>
-</li>
-</ul>
 <a name="with-mockit.Delegate-">
 <!--   -->
 </a>
