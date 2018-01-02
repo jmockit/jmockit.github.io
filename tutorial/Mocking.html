@@ -66,12 +66,7 @@
       </ol>
    </li>
    <li><a href="#partial">Partial mocking</a></li>
-   <li>
-      <a href="#capturing">Capturing implementation classes and instances</a>
-      <ol>
-         <li><a href="#mockingUnspecifiedImplementations">Mocking unspecified implementation classes</a></li>
-      </ol>
-   </li>
+   <li><a href="#capturing">Mocking unspecified implementation classes</a></li>
    <li>
       <a href="#otherVerifications">Full verification and other variations</a>
       <ol>
@@ -1368,7 +1363,7 @@ public void partiallyMockingAnObjectJustForVerifications() {
 </p>
 
 <h2 id="capturing">
-   <a href="#capturing">Capturing implementation classes and instances</a>
+   <a href="#capturing">Mocking unspecified implementation classes</a>
 </h2>
 <p>
    Our discussion of this feature will be based on the (contrived) code below.
@@ -1392,10 +1387,6 @@ public final class TestedUnit
    One of these implementations is defined through an anonymous inner class, which is completely inaccessible (except
    for the use of Reflection) from client code.
 </p>
-
-<h3 id="mockingUnspecifiedImplementations">
-   <a href="#mockingUnspecifiedImplementations">Mocking unspecified implementation classes</a>
-</h3>
 <p>
    Given a base type (be it an <code>interface</code>, an <code>abstract</code> class, or any sort of base class), we
    can write a test which only knows about the base type but where all implementing/extending implementation classes get
