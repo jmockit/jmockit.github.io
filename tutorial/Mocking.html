@@ -70,7 +70,6 @@
       <a href="#capturing">Capturing implementation classes and instances</a>
       <ol>
          <li><a href="#mockingUnspecifiedImplementations">Mocking unspecified implementation classes</a></li>
-         <li><a href="#futureInstances">Specifying behavior for <em>future</em> instances</a></li>
       </ol>
    </li>
    <li>
@@ -1425,54 +1424,6 @@ public final class TestedUnit
    In the test above, two return values are specified for the <code>Service#doSomething()</code> method.
    This expectation will match all invocations to this method, regardless of the actual instance on which the invocation
    occurs, <em>and</em> regardless of the actual class implementing the method.
-</p>
-
-<h3 id="futureInstances">
-   <a href="#futureInstances">Specifying behavior for <em>future</em> instances</a>
-</h3>
-<p>
-   An additional ability related to capturing applies to <em>future</em> instances assignable to the mocked type, and
-   is activated through the "<code>maxInstances</code>" optional attribute.
-   This attribute takes an <code>int</code> value specifying the <em>maximum</em> number of future instances of the
-   mocked type that should be covered by the associated mock field/parameter; when not specified, <em>all</em>
-   assignable instances, both pre-existing and to be created during the test, are covered.
-</p>
-<p>
-   The expectations recorded and/or verified on a given capturing mock field or parameter will match invocations to any
-   of the future instances covered by the mock field/parameter.
-   This allows us to record and/or verify different behavior for each set of future instances; for that, we declare two
-   or more capturing mock fields/parameters of the same declared type, each with its own <code>maxInstances</code>
-   value (except perhaps for the last mock field/parameter, which would then cover the remaining future instances).
-</p>
-<p>
-   For the sake of demonstration, the following example test takes control of <code class="type">java.nio.Buffer</code>
-   subclasses and their future instances; in a real test it would be preferable to use real buffers rather than mocked
-   ones.
-</p>
-<pre><code>@Test
-public void testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances(
-   @Capturing(maxInstances = 1) Buffer firstNewBuffer, @Capturing Buffer remainingNewBuffers
-) {
-   new Expectations() {{
-      firstNewBuffer.position(); <var>result</var> = 10;
-      remainingNewBuffers.position(); <var>result</var> = 20;
-   }};
-
-   // Code under test creates several buffers...
-   ByteBuffer buffer1 = ByteBuffer.allocate(100);
-   IntBuffer  buffer2 = IntBuffer.wrap(new int[] {1, 2, 3});
-   CharBuffer buffer3 = CharBuffer.wrap("                ");
-
-   // ... and eventually read their positions, getting 10 for
-   // the first buffer created, and 20 for the remaining ones.
-   assertEquals(10, buffer1.position());
-   assertEquals(20, buffer2.position());
-   assertEquals(20, buffer3.position());
-}
-</code></pre>
-<p>
-   It should be noted that while a capturing mocked type is in scope, <em>all</em> implementation classes will get
-   mocked, regardless of any "<code>maxInstances</code>" limits that may have been specified.
 </p>
 
 <h2 id="otherVerifications">
