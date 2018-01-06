@@ -102,10 +102,10 @@
    <em>interactions</em> with other types it depends upon.
    Mocking is typically used in the construction of <em>isolated</em> unit tests, where a <em>unit</em> under test
    is exercised in isolation from the implementation of other units it depends on.
-   Typically, a unit of behavior is embodied in a single class, but it's also fine to consider a whole set of
-   strongly-related classes as a single unit for the purposes of unit testing (as is usually the case when we have a
-   central public class with one or more helper classes, possibly package-private); in general, individual methods
-   should not be regarded as separate units on their own.
+   Typically, a unit of behavior is a single class, but it's also fine to consider a whole set of strongly-related
+   classes as a single unit for the purposes of unit testing (as is usually the case when we have a central public class
+   with one or more helper classes, possibly package-private); in general, individual methods should not be regarded as
+   separate units on their own.
 </p>
 <p>
    <em>Strict</em> unit testing, however, is not a recommended approach; one should not attempt to mock every single
