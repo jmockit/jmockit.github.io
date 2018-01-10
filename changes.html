@@ -23,6 +23,27 @@
 
 <h1>Development history</h1>
 
+<h2 id="next">
+   <a href="#next">Next release</a>
+</h2>
+
+<h3 id="1.39">Version <a href="#1.39">1.39</a> (Feb 25, 2018):</h3>
+<ul>
+   <li>
+      <strong>Deprecated</strong> the <code>maxInstances</code> attribute of the
+      <code class="annotation">@Capturing</code> annotation.
+      This attribute provides a feature which is probably never used, and if used makes for difficult to understand
+      tests; existing tests using it (if any) should either be removed or rewritten.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>MockUp#getMockInstance()</code> method, which was deprecated in version 1.37.
+   </li>
+   <li>
+      <strong>Removed</strong> the <code>unverifiedInvocations()</code> and <code>verifiedInvocations(...)</code>
+      methods, which were deprecated in version 1.38.
+   </li>
+</ul>
+
 <h2 id="current">
    <a href="#current">Current release</a>
 </h2>

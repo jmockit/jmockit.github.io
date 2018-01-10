@@ -1,1 +1,1 @@
-[Home Page](http://jmockit.org) for the JMockit open source project.
+[Home Page](http://jmockit.github.io) for the JMockit open source project.

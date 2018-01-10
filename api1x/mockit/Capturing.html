@@ -37,7 +37,7 @@
 <li class="navBarCell1Rev">Class</li>
 </ul>
 <div class="aboutLanguage">
-            <a href=http://jmockit.org target=_top>
+            <a href=http://jmockit.github.io target=_top>
                <img src=../resources/logo.png style=padding:4px;vertical-align:middle>JMockit Home</a>
          </div>
 </div>
@@ -70,12 +70,12 @@
 <li>Summary:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Required&nbsp;|&nbsp;</li>
-<li><a href="#annotation.type.optional.element.summary">Optional</a></li>
+<li>Optional</li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#annotation.type.element.detail">Element</a></li>
+<li>Element</li>
 </ul>
 </div>
 <a name="skip.navbar.top">
@@ -102,82 +102,11 @@ public @interface <span class="memberNameLabel">Capturing</span></pre>
  <em>Future</em> instances of a capturing mocked type (ie, instances created sometime later during the test) will
  become associated with the mock field/parameter.
  When recording or verifying expectations on the mock field/parameter, these associated instances are regarded as
- equivalent to the original mocked instance created for the mock field/parameter.
- <p/>
- The <a href="../mockit/Capturing.html#maxInstances--"><code>maxInstances()</code></a> attribute allows an upper limit to the number of future instances to be specified.
- If multiple capturing mock fields/parameters of the same type are declared, this attribute can be used so that each
- distinct instance gets associated with a separate mock field/parameter.
- In turn, this allows different expectations to be recorded and/or verified for each grouping of future instances,
- with each expectation using a different mock field/parameter.</div>
+ equivalent to the original mocked instance created for the mock field/parameter.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://jmockit.org/tutorial/Mocking.html#capturing" target="tutorial">Tutorial</a></dd>
+<dd><a href="http://jmockit.github.io/tutorial/Mocking.html#capturing" target="tutorial">Tutorial</a></dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
-<!-- =========== ANNOTATION TYPE OPTIONAL MEMBER SUMMARY =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="annotation.type.optional.element.summary">
-<!--   -->
-</a>
-<h3>Optional Element Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Optional Element Summary table, listing optional elements, and an explanation">
-<caption><span>Optional Elements</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Optional Element and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../mockit/Capturing.html#maxInstances--">maxInstances</a></span></code>
-<div class="block">This attribute specifies the maximum number of new instances to be covered by the capturing mock field/parameter.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
-<!-- ============ ANNOTATION TYPE MEMBER DETAIL =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="annotation.type.element.detail">
-<!--   -->
-</a>
-<h3>Element Detail</h3>
-<a name="maxInstances--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>maxInstances</h4>
-<pre>public abstract&nbsp;int&nbsp;maxInstances</pre>
-<div class="block">This attribute specifies the maximum number of new instances to be covered by the capturing mock field/parameter.
- <p/>
- Every eligible new instance (ie, one whose type is assignable to the capturing mocked type and which gets created
- from the code under test) is automatically associated with the corresponding mock field or mock parameter.
- For the purpose of matching invocations from code under test to recorded or verified expectations, such associated
- instances are regarded as equivalent to the original mocked instance created for the mock field/parameter.
- <p/>
- It is valid to declare two or more mock fields/parameters of the same mocked type with a positive number of
- <tt>maxInstances</tt> for each one of them, say <tt>n1</tt>, <tt>n2</tt>, etc.
- In this case, the first <tt>n1</tt> new instances will be associated with the first field/parameter, the following
- <tt>n2</tt> new instances to the second, and so on.</div>
-<dl>
-<dt>Default:</dt>
-<dd>2147483647</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
 </li>
 </ul>
 </div>
@@ -197,7 +126,7 @@ public @interface <span class="memberNameLabel">Capturing</span></pre>
 <li class="navBarCell1Rev">Class</li>
 </ul>
 <div class="aboutLanguage">
-            <a href=http://jmockit.org target=_top>
+            <a href=http://jmockit.github.io target=_top>
                <img src=../resources/logo.png style=padding:4px;vertical-align:middle>JMockit Home</a>
          </div>
 </div>
@@ -230,12 +159,12 @@ public @interface <span class="memberNameLabel">Capturing</span></pre>
 <li>Summary:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Required&nbsp;|&nbsp;</li>
-<li><a href="#annotation.type.optional.element.summary">Optional</a></li>
+<li>Optional</li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#annotation.type.element.detail">Element</a></li>
+<li>Element</li>
 </ul>
 </div>
 <a name="skip.navbar.bottom">
