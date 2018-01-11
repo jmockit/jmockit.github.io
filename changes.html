@@ -36,6 +36,12 @@
       tests; existing tests using it (if any) should either be removed or rewritten.
    </li>
    <li>
+      <strong>Deprecated</strong> the <code class="type">FullVerificationsInOrder</code> class.
+      Existing tests using it, if any, can replace the one expectation block with two, a
+      <code class="type">VerificationsInOrder</code> block containing the verified expectations, followed by an empty
+      <code class="type">FullVerifications</code> block.
+   </li>
+   <li>
       <strong>Removed</strong> the <code>MockUp#getMockInstance()</code> method, which was deprecated in version 1.37.
    </li>
    <li>

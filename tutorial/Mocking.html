@@ -72,7 +72,6 @@
       <ol>
          <li><a href="#fullVerification">Full verification</a></li>
          <li><a href="#neverHappened">Verifying that an invocation never happened</a></li>
-         <li><a href="#fullVerificationInOrder">Full verification in order</a></li>
          <li><a href="#restrictedFullVerifications">Restricting the set of mocked types to be fully verified</a></li>
          <li><a href="#emptyFullVerifications">Verifying that no invocations occurred</a></li>
          <li><a href="#unspecifiedInvocations">Verifying unspecified invocations that should not happen</a></li>
@@ -89,7 +88,6 @@
       <area coords="453, 84, 585,117" href="../api1x/mockit/Verifications.html">
       <area coords="227,166, 421,199" href="../api1x/mockit/VerificationsInOrder.html">
       <area coords="440,166, 598,199" href="../api1x/mockit/FullVerifications.html">
-      <area coords="617,166, 838,199" href="../api1x/mockit/FullVerificationsInOrder.html">
       <area coords="737,  3, 838, 35" href="../api1x/mockit/Delegate.html">
       <area coords="719, 51, 838, 84" href="../api1x/mockit/Invocation.html">
    </map>
@@ -1467,46 +1465,12 @@ public void verifyAllInvocations(@Mocked Dependency mock) {
    If one or more matching invocations did happen, the test will fail.
 </p>
 
-<h3 id="fullVerificationInOrder">
-   <a href="#fullVerificationInOrder">Full verification in order</a>
-</h3>
-<p>
-   So, we have seen how to do <em>unordered</em> verifications with <code class="type">Verifications</code>,
-   <em>ordered</em> verifications with <code class="type">VerificationsInOrder</code>, and full verifications with
-   <code class="type">FullVerifications</code>.
-   But what about <em>full ordered</em> verifications? Easy enough:
-</p>
-<pre><code>@Test
-public void verifyAllInvocationsInOrder(@Mocked Dependency mock) {
-   // Code under test included here for easy reference:
-   mock.setSomething(123);
-   mock.setSomethingElse("anotherValue");
-   mock.setSomething(45);
-   mock.save();
-
-   <strong>new FullVerificationsInOrder()</strong> {{
-      mock.setSomething(<var>anyInt</var>);
-      mock.setSomethingElse(<var>anyString</var>);
-      mock.setSomething(<var>anyInt</var>);
-      mock.save();
-   }};
-}
-</code></pre>
-<p>
-   Notice there is a not so obvious difference in semantics, though.
-   In the <code>verifyAllInvocations</code> test above, we were able to match two separate
-   <code>mock.setSomething(...)</code> invocations with a single invocation in the verification block.
-   In the <code>verifyAllInvocationsInOrder</code> test, however, we had to write two separate invocations to that
-   method inside the block, in the proper order with respect to other invocations.
-</p>
-
 <h3 id="restrictedFullVerifications">
    <a href="#restrictedFullVerifications">Restricting the set of mocked types to be fully verified</a>
 </h3>
 <p>
    By default, <em>all</em> invocations to <em>all</em> mocked instances/types in effect for a given test must be
-   verified explicitly when using a "<code>new FullVerifications() {}</code>" or
-   "<code>new FullVerificationsInOrder() {}</code>" block.
+   verified explicitly when using a "<code>new FullVerifications() {}</code>" block.
    Now, what if we have a test with two (or more) mocked types but we only want to fully verify invocations to one of
    them (or to any subset of mocked types when more than two)?
    The answer is to use the
@@ -1539,9 +1503,9 @@ public void verifyAllInvocationsToOnlyOneOfTwoMockedTypes(
 </P>
 <p>
    To restrict verification only to the methods/constructors of a single mocked class, pass the class literal to the
-   <code>FullVerifications(...)</code> or <code>FullVerificationsInOrder(...)</code> constructor.
-   For example, the <code>new FullVerificationsInOrder(AnotherDependency.class) { ... }</code> block would only make
-   sure that all invocations to the mocked <code class="type">AnotherDependency</code> class were verified.
+   <code>FullVerifications(...)</code> constructor.
+   For example, the <code>new FullVerifications(AnotherDependency.class) { ... }</code> block would only make sure that
+   all invocations to the mocked <code class="type">AnotherDependency</code> class were verified.
 </p>
 
 <h3 id="emptyFullVerifications">
@@ -1588,9 +1552,9 @@ public void verifyNoInvocationsOnOneOfTwoMockedDependenciesBeyondThoseRecordedAs
    <a href="#unspecifiedInvocations">Verifying unspecified invocations that should not happen</a>
 </h3>
 <p>
-   A full verification block (ordered or not) also allows us to verify that certain methods and/or constructors never
-   get invoked, without having to record or verify each one of them with a corresponding
-   <code><var>times</var> = 0</code> assignment.
+   A full verification block also allows us to verify that certain methods and/or constructors never get invoked,
+   without having to record or verify each one of them with a corresponding <code><var>times</var> = 0</code>
+   assignment.
    The following test provides an example.
 </p>
 <pre><code>@Test

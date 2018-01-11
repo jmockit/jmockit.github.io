@@ -317,8 +317,7 @@ public void aTestMethod(@Injectable MyCollaborator mock) {
 <p>
    The <em>Verifications</em> API is quite rich and flexible. Besides the <code class="type">Verifications</code> class
    shown above, which allows some invocations to be verified regardless of their order of execution, we have the
-   <code class="type">VerificationsInOrder</code>, <code class="type">FullVerifications</code>, and
-   <code class="type">FullVerificationsInOrder</code> subclasses.
+   <code class="type">VerificationsInOrder</code> and <code class="type">FullVerifications</code> subclasses.
    The "InOrder" suffix simply means that the relative order of the invocations appearing inside the verification block
    will have to match the actual order of execution of corresponding invocations during replay.
    The "Full" prefix means that all invocations that occurred during replay must be accounted for (verified) inside
