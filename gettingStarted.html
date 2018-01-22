@@ -53,13 +53,6 @@
          <li>
             When using <strong>JUnit 4.5+</strong>, verify the <code>jmockit</code> dependency appears <em>before</em>
             JUnit in the classpath.
-            Alternatively, annotate test classes with
-            <code class="annotation">@RunWith</code><code>(JMockit.class)</code>.
-            <br/>
-            Note for <strong>Eclipse</strong> users: use the "Order and Export" tab of the "Java Build Path" window when
-            specifying the order of jars in the classpath.
-            Also, make sure the Eclipse project uses the JRE from a JDK installation instead of a "plain" JRE, since
-            the latter ones lack the "<code>attach</code>" native library.
          </li>
          <li>
             When using <strong>JUnit 5+</strong> or <strong>TestNG 6.2+</strong>, simply add the <code>jmockit</code>
