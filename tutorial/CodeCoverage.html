@@ -219,8 +219,8 @@
    the JVM instance running the test suite.
 </p>
 <p>
-   Note that you should be able to easily specify these properties inside an Ant target, a Maven <code>surefire</code>
-   plugin configuration, or a test run configuration for your Java IDE of choice, using either JUnit or TestNG; no
+   Note that you should be able to easily specify these properties inside a Maven <code>surefire</code> plugin
+   configuration, or a test run configuration for your Java IDE of choice, using either JUnit or TestNG; no
    JMockit-specific plugin is needed.
 </p>
 <p>
@@ -417,14 +417,7 @@
 <p>
    The use of a file to mark the success or failure of coverage checks is meant to allow build tools to react
    accordingly, typically by failing the build when the file is present.
-   For example, we can do the following in an Ant build script:
-</p>
-<pre><code>&lt;fail message="Coverage check failed">
-   &lt;condition>&lt;available file="<strong>coverage.check.failed</strong>"/>&lt;/condition>
-&lt;/fail>
-</code></pre>
-<p>
-   Or the following in a Maven pom.xml file:
+   For example, we can do the following in a Maven pom.xml file:
 </p>
 <pre><code>&lt;plugin>
    &lt;artifactId>maven-enforcer-plugin&lt;/artifactId>
@@ -453,14 +446,13 @@
    (assuming the "<code>jmockit.version</code>" property has been properly defined):
 </p>
 <pre><code>&lt;dependency>
-   &lt;groupId><strong>org.jmockit</strong>&lt;/groupId>
-   &lt;artifactId><strong>jmockit</strong>&lt;/artifactId>
+   &lt;groupId><strong>org.jmockit</strong>&lt;/groupId> &lt;artifactId><strong>jmockit</strong>&lt;/artifactId>
    &lt;version><strong>${jmockit.version}</strong>&lt;/version>
    &lt;scope>test&lt;/scope>
 &lt;/dependency>
 </code></pre>
 <p>
-   In Maven 2/3, the <code>surefire</code> plugin is the one usually responsible for actually running tests.
+   With Maven, the <code>surefire</code> plugin is the one usually responsible for actually running tests.
    To activate and configure the coverage tool, specify values for the appropriate "<code>coverage-xyz</code>" system
    properties.
 </p>

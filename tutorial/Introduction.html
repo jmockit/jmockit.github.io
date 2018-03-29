@@ -30,7 +30,6 @@
       <ol>
          <li><a href="#maven">Running tests from Maven</a></li>
          <li><a href="#gradle">Running tests from Gradle</a></li>
-         <li><a href="#ant">Running tests with the JUnit Ant task</a></li>
       </ol>
    </li>
 </ol>
@@ -288,7 +287,7 @@ public final class MyBusinessServiceTest
    In other situations (like running on JDK implementations other than the Oracle JDKs), you may need to pass
    "<code>-javaagent:<em>&lt;proper path></em>/jmockit-1.x.jar</code>" as a JVM initialization parameter.
    This can be done in the "Run/Debug Configuration" for both Eclipse and IntelliJ IDEA, or with build tools such as
-   Maven, Gradle, or Ant.
+   Maven or Gradle.
 </p>
 
 <h3 id="maven">
@@ -330,25 +329,6 @@ public final class MyBusinessServiceTest
    ... "compile" dependencies ...
    testCompile <span style="color: #800">'org.jmockit:jmockit:1.<em>x</em>'</span>
 }
-</code></pre>
-
-<h3 id="ant">
-   <a href="#ant">Running tests with the JUnit Ant task</a>
-</h3>
-<p>
-   When using the <code>&lt;junit></code> element in a <code>build.xml</code> script, it's important to use a separate
-   JVM instance.
-   For example, something like the following:
-</p>
-<pre><code>&lt;junit fork="yes" forkmode="once" dir="directoryContainingJars">
-   &lt;classpath path="jmockit-1.x.jar"/>
-
-   &lt;!-- Additional classpath entries, including the appropriate junit.jar -->
-
-   &lt;batchtest>
-      &lt;!-- filesets specifying the desired test classes -->
-   &lt;/batchtest>
-&lt;/junit>
 </code></pre>
 
 <div id="bottom" class="navigation">
