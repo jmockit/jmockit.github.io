@@ -43,14 +43,7 @@
    </li>
    <li><a href="#advice">Applying AOP-style advice</a></li>
 </ol>
-<div style="text-align: center;" title="Click on types to open API documentation">
-   <map name="figure1">
-      <area coords="  1,1,131,34" href="../api1x/mockit/MockUp.html">
-      <area coords="138,1,215,34" href="../api1x/mockit/Mock.html">
-      <area coords="222,1,342,34" href="../api1x/mockit/Invocation.html">
-   </map>
-   <img src="FakingAPI.png" usemap="#figure1">
-</div>
+<div align="center"><img src="FakingAPI.png"></div>
 <p>
    In the JMockit toolkit, the <strong>Faking API</strong> provides support for the creation of <em>fake</em>
    implementations.
@@ -408,10 +401,6 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
    You may have noticed that use of <code>Invocation#proceed(...)</code> in a fake method effectively behaves like
    <em>advice</em> (from AOP jargon) for the corresponding real method.
    This is a powerful ability that can be useful for certain things (think of an interceptor or decorator).
-</p>
-<p>
-   For more details on all the methods available in the <code class="type">mockit.Invocation</code> class, see its
-   <a href="../api1x/mockit/Invocation.html">API documentation</a>.
 </p>
 
 <h2 id="reuse">
