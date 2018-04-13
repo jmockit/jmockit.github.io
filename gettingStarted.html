@@ -76,7 +76,7 @@
 <p>
    In this and other sections we show many example tests, written in Java 8.
    They all use JUnit 4, but could just as well be written with JUnit 5 or TestNG.
-   Imports are not shown; in the case of the JMockit APIs, they are all imported from the "<code>mockit</code>" package.
+   Imports are not shown; in the case of the JMockit APIs, they are imported from the "<code>mockit</code>" package.
 </p>
 <p>
    The <code class="annotation">@Tested</code> annotation provides support for the automatic creation of an object under
@@ -142,7 +142,7 @@ public final class ExampleUnitTest
 </h2>
 <p>
    Lets now see how mocking is done with this API.
-   It is the largest one (three annotations, seven classes, and one interface), but that shouldn't be taken as a
+   It is the largest one (three annotations, six classes, and one interface), but that shouldn't be taken as a
    suggestion to use it in every test.
    On the contrary, mocking (as well as "faking", discussed in the next section) is best used in moderation.
 </p>
@@ -323,31 +323,33 @@ public void aTestMethod(@Injectable MyCollaborator mock) {
    with a fake one; this is the <em>faking</em> API.
    The next test shows an example.
 </p>
-<pre><code>public static final class ExampleFake extends MockUp&lt;ExternalService>
+<pre><code>public final class ExampleFakingTest
 {
-   @Mock // fake implementation for a method of the same signature
-   public boolean doSomething(int n, String s, ComplexData otherData) {
-      // Return (or throw) a "fake" result for invocations to the method in the faked class:
-      return true; // ... or whatever
+   public static final class ExampleFake extends MockUp&lt;ExternalService> {
+      @Mock // fake implementation for a method of the same signature
+      public boolean doSomething(int n, String s, ComplexData otherData) {
+         // Return (or throw) a "fake" result for invocations to the method in the faked class:
+         return true; // ... or whatever
+      }
+
+      // Additional @Mock methods for other methods or constructors in ExternalService, if needed.
    }
 
-   // Other @Mock methods for other methods or constructors in ExternalService, if needed.
-}
+   @BeforeClass
+   public static void applyFakes() {
+      // Applies the fake by instantiating it:
+      new <strong>ExampleFake</strong>();
+   }
 
-@BeforeClass
-public static void applyFakes() {
-   // Applies the fake by instantiating it:
-   new <strong>ExampleFake</strong>();
-}
+   @Test
+   public void fakingExample() {
+      // Exercise code under test normally; calls to ExternalService#doSomething will
+      // execute the fake method above.
+      ...
+   }
 
-@Test
-public void fakingExample() {
-   // Exercise code under test normally; calls to ExternalService#doSomething will
-   // execute the fake method above.
-   ...
+   // The applied fake is automatically discarded when out of scope.
 }
-
-// The applied fake is automatically discarded when out of scope.
 </code></pre>
 <p>
    The <code class="annotation">@Mock</code> annotation marks those methods in the <em>fake class</em> which are meant
