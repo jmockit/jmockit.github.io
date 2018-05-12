@@ -1164,11 +1164,11 @@ public void matchOnMockInstance(
 public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyCollaborator) {
    // Record different behaviors for each set of instances:
    new Expectations() {{
-      // One set, instances created with "a value":
+      // One set, for instances created with "a value":
       Collaborator col1 = new Collaborator("a value");
       col1.doSomething(<var>anyInt</var>); <var>result</var> = 123;
 
-      // Another set, instances created with "another value":
+      // Another set, for instances created with "another value":
       Collaborator col2 = new Collaborator("another value");
       col2.doSomething(<var>anyInt</var>); <var>result</var> = new InvalidStateException();
    }};
@@ -1190,8 +1190,9 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyColla
    instances to a single instance used for recorded expectations.
 </p>
 <p>
-   The second mechanism lets us record a <em>replacement instance</em> for those future instances that match a recorded
-   constructor invocation.
+   The second mechanism lets us associate a given mock instance with a recorded constructor expectation, and then use
+   this instance for recording expectations on instance methods which will match invocations on future instances created
+   with a matching constructor invocation.
    With this alternative mechanism, we can rewrite the test as follows.
 </p>
 <pre><code>@Test
@@ -1215,8 +1216,6 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @M
 </code></pre>
 <p>
    Both versions of the test are equivalent.
-   The second one also allows, when combined with <em>partial</em> mocking, for real (non-mocked) instances to be used
-   as replacements.
 </p>
 
 <h2 id="partial">
@@ -1406,7 +1405,7 @@ public final class TestedUnit
    <a href="#fullVerification">Full verification</a>
 </h3>
 <p>
-   Sometimes it may be important to have <em>all</em> invocations to the mocked types/instances involved in a test
+   Sometimes it may be desired to have <em>all</em> invocations to the mocked types/instances involved in a test
    verified.
    In such cases, a "<code>new FullVerifications() {...}</code>" block will make sure that no invocations are left
    unverified.
