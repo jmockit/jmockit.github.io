@@ -29,6 +29,7 @@
          <li><a href="#spring">Using the Spring framework</a></li>
       </ol>
    </li>
+   <li><a href="#interfaceResolution">Interface resolution</a></li>
    <li><a href="#trade-offs">Trade-offs of the approach</a></li>
 </ol>
 <div align="center"><img src="TestedAPI.png"></div>
@@ -279,14 +280,14 @@ public @interface SUT {} // the System Under Test
 <p>
    Regardless of how said bean factory instances are obtained, <code class="annotation">@Tested</code> and
    <code class="annotation">@Injectable</code> objects can be made available as beans from the bean factory instance, by
-   simply applying the <code class="type">mockit.integration.springframework.BeanFactoryMockUp</code> mock-up class, as
+   simply applying the <code class="type">mockit.integration.springframework.FakeBeanFactory</code> mock-up class, as
    shown below using JUnit.
 </p>
 <pre><code>public final class ExampleSpringIntegrationTest
 {
    @BeforeClass
    public static void applySpringIntegration() {
-      new BeanFactoryMockUp();
+      new FakeBeanFactory();
    }
 
    @Tested DependencyImpl dependency;
@@ -314,6 +315,32 @@ public @interface SUT {} // the System Under Test
    Additionally, the <code class="type">mockit.integration.springframework.TestWebApplicationContext</code> class can be
    used as a <code class="type">org.springframework.web.context.ConfigurableWebApplicationContext</code> implementation
    which exposes <code class="annotation">@Tested</code> objects from test classes.
+</p>
+
+<h2 id="interfaceResolution">
+   <a href="#interfaceResolution">Interface resolution</a>
+</h2>
+<p>
+   Some application codebases use separate Java interfaces for many of their application-specific implementation
+   classes.
+   These interfaces, then, are the ones used in the fields and/or parameters that receive injected dependencies.
+   So, when instantiating a <code class="annotation">@Tested</code> object having interface-based dependencies, JMockit
+   needs to be told about the classes implementing those interfaces.
+   There are two ways to do this.
+</p>
+
+<h3>
+   <a href="#">Providing tested objects explicitly</a>
+</h3>
+<p>
+
+</p>
+
+<h3>
+   <a href="#">Providing an interface resolution method</a>
+</h3>
+<p>
+
 </p>
 
 <h2 id="trade-offs">
