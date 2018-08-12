@@ -41,19 +41,16 @@
 </p>
 <p>
    In this tutorial we examine the APIs available in the library, with the help of example tests (using Java 8).
-   The central API - a single annotation - provides support for the automatic instantiation and initialization of the
-   objects to be tested.
-   Then we have the <a href="Mocking.html">mocking</a> API (also known as the "Expectations" API), intended for tests
-   which use mocked dependencies.
-   Finally, there is a small <a href="Faking.html">faking</a> API (aka the "Mockups" API), which can be used for the
-   creation and application of <em>fake</em> implementations that avoid the full cost of external components.
+   The central API - a single annotation - provides support for the automatic instantiation and initialization of the objects to be tested.
+   Then we have the <a href="Mocking.html">mocking</a> API (also known as the "Expectations" API), intended for tests which use mocked dependencies.
+   Finally, there is a small <a href="Faking.html">faking</a> API (aka the "Mockups" API), which can be used for the creation and application of
+   <em>fake</em> implementations that avoid the full cost of external components.
 </p>
 <p>
    Even though the tutorial is fairly complete, it does not attempt to cover the entire published APIs in detail.
-   A complete and detailed specification for all annotations, classes, methods, etc. is provided through the API
-   documentation.
-   The "<code>jmockit-1.x-sources.jar</code>" library file (downloadable from the Maven Central repository), contains
-   Java source files (with Javadoc comments) for easy access to the API source code and documentation from a Java IDE.
+   A complete and detailed specification for all annotations, classes, methods, etc. is provided through the API documentation.
+   The "<code>jmockit-1.x-sources.jar</code>" library file (downloadable from the Maven Central repository), contains Java source files (with Javadoc
+   comments) for easy access to the API source code and documentation from a Java IDE.
 </p>
 <p>
    A separate chapter covers the <a href="CodeCoverage.html">code coverage</a> tool.
@@ -64,35 +61,32 @@
 </h2>
 <p>
    Automated <em>developer</em> tests are those written by the developers themselves, to test their own code.
-   They are usually written with the help of a testing framework, such as
-   <a target="_blank" href="http://junit.org">JUnit</a> or <a target="_blank" href="http://testng.org">TestNG</a>;
-   JMockit supports both.
+   They are usually written with the help of a testing framework, such as <a target="_blank" href="http://junit.org">JUnit</a> or
+   <a target="_blank" href="http://testng.org">TestNG</a>; JMockit supports both.
 </p>
 <p>
-   Automated developer tests can be divided in two broad categories, whether they target individual program "units",
-   multiple such units working together, or an entire "slice" of the system under test (the "SUT").
+   Automated developer tests can be divided in two broad categories, whether they target individual program "units", multiple such units working
+   together, or an entire "slice" of the system under test (the "SUT").
 </p>
 <ol>
    <li>
-      <a target="_blank" href="https://martinfowler.com/bliki/UnitTest.html">Unit tests</a>, intended to test a class or
-      component in isolation from the rest of the system.
+      <a target="_blank" href="https://martinfowler.com/bliki/UnitTest.html">Unit tests</a>, intended to test a class or component in isolation from
+      the rest of the system.
    </li>
    <li>
-      <strong>Integration tests</strong>, intended to test system operations that encompass a unit and its dependencies
-      (other classes/components with which the unit under test interacts).
-      Such tests range from end-to-end system tests which run through the application's UI (when the SUT has one), to
-      tests that exercise a small set of inter-related units.
-      Here, we are particularly interested in integration tests which are <em>not</em> executed through the application
-      UI, but otherwise exercise all the program units involved in a meaningful business scenario.
+      <strong>Integration tests</strong>, intended to test system operations that encompass a unit and its dependencies (other classes/components
+      with which the unit under test interacts).
+      Such tests range from end-to-end system tests which run through the application's UI (when the SUT has one), to tests that exercise a small set
+      of inter-related units.
+      Here, we are particularly interested in integration tests which are <em>not</em> executed through the application UI, but otherwise exercise
+      all the program units involved in a meaningful business scenario.
    </li>
 </ol>
 <p>
-   Even though integration tests include the interaction between multiple units, particular tests may not be interested
-   in exercising all components, layers, or sub-systems involved.
-   Such parts of the system may then be "mocked away" (or faked), so that the code under test runs in isolation from
-   them.
-   Therefore, the ability to isolate the code under test from certain parts of the system is generally useful in all
-   kinds of tests.
+   Even though integration tests include the interaction between multiple units, particular tests may not be interested in exercising all components,
+   layers, or sub-systems involved.
+   Such parts of the system may then be "mocked away" (or faked), so that the code under test runs in isolation from them.
+   Therefore, the ability to isolate the code under test from certain parts of the system is generally useful in all kinds of tests.
    That said, in general it's best to make a test as "realistic" as we can.
    So, the use of mocking and/or faking should, ideally, be kept at a minimum.
 </p>
@@ -102,30 +96,26 @@
 </h2>
 <p>
    A common and powerful technique for testing code in isolation is the use of "mocks".
-   Traditionally, a <em>mock object</em> is an instance of a class specifically implemented for a single test or set of
-   related tests.
+   Traditionally, a <em>mock object</em> is an instance of a class specifically implemented for a single test or set of related tests.
    This instance is passed to code under test to take the place of one of its dependencies.
-   Each mock object behaves in the way expected by both the code under test and the tests that use it, so that all tests
-   can pass.
+   Each mock object behaves in the way expected by both the code under test and the tests that use it, so that all tests can pass.
    That, however, is not the only role mock objects usually play.
    As a complement to the assertions performed by each test, the mock itself can encode additional assertions.
 </p>
 <p>
-   JMockit goes beyond conventional mock objects by allowing methods <em>and</em> constructors to be mocked directly
-   on "real" (non-mock) classes, eliminating the need to instantiate mock objects in tests and pass them to code under
-   test; instead, objects created by code under test will execute the mock behavior defined by tests, whenever methods
-   or constructors are called on the real classes.
-   When a class is mocked, the original implementations of existing methods/constructors are temporarily replaced with
-   mock implementations, usually for the duration of a single test.
-   This mocking approach applies not only to <code>public</code> instance methods, but also to <code>final</code> and
-   <code>static</code> methods, as well as constructors.
+   JMockit goes beyond conventional mock objects by allowing methods <em>and</em> constructors to be mocked directly on "real" (non-mock) classes,
+   eliminating the need to instantiate mock objects in tests and pass them to code under test; instead, objects created by code under test will
+   execute the mock behavior defined by tests, whenever methods or constructors are called on the real classes.
+   When a class is mocked, the original implementations of existing methods/constructors are temporarily replaced with mock implementations, usually
+   for the duration of a single test.
+   This mocking approach applies not only to <code>public</code> instance methods, but also to <code>final</code> and <code>static</code> methods, as
+   well as constructors.
 </p>
 <p>
    Mocks are most useful in isolated unit tests, but can also be used in integration tests.
    For example, you may want to test a business operation which happens to, at some point, send an e-mail.
-   In order to verify the e-mail was correctly sent, the test could mock the e-mail sending API, while exercising the
-   real code in every other component (an alternative would be to set up some kind of fake e-mail server which could be
-   consulted in an assertion at the end of the test).
+   In order to verify the e-mail was correctly sent, the test could mock the e-mail sending API, while exercising the real code in every other
+   component (an alternative would be to set up some kind of fake e-mail server which could be consulted in an assertion at the end of the test).
 </p>
 
 <h2 id="anExample">
@@ -140,15 +130,14 @@
    <li>send a notification e-mail to an interested party</li>
 </ol>
 <p>
-   The first two steps require access to the application database, which is done through a simplified API to the
-   persistence subsystem (which itself uses JPA).
+   The first two steps require access to the application database, which is done through a simplified API to the persistence subsystem (which itself
+   uses JPA).
    The third one can be achieved with a third-party API for sending e-mail, which in this example is Apache's
    <a target="_blank" href="http://commons.apache.org/email">Commons Email</a> library.
 </p>
 <p>
    Therefore, the service class has two separate dependencies, one for persistence and another for e-mail.
-   To test the business operation, we rely on JMockit's JPA support to deal with persistence, while mocking the e-mail
-   API.
+   To test the business operation, we rely on JMockit's JPA support to deal with persistence, while mocking the e-mail API.
    Complete source code for a working solution - with all tests - is
    <a target="_blank" href="http://github.com/jmockit/jmockit1/blob/master/samples/tutorial">available online</a>.
 </p>
@@ -196,13 +185,13 @@ public final class MyBusinessService
 }
 </code></pre>
 <p>
-   The <code class="type">Database</code> class contains only static methods and a private constructor; the
-   <code>find</code> and <code>persist</code> methods should be obvious, so we won't list them here.
+   The <code class="type">Database</code> class contains only static methods and a private constructor; the <code>find</code> and
+   <code>persist</code> methods should be obvious, so we won't list them here.
 </p>
 <p>
    So, how can we test the "doBusinessOperationXyz" method without making any changes to the existing application code?
-   In the following JUnit test class, each test will verify the correct execution of persistence operations, as well as
-   the expected invocations to the e-mail API.
+   In the following JUnit test class, each test will verify the correct execution of persistence operations, as well as the expected invocations to
+   the e-mail API.
    These verification points are the ones numbered <code>(1)</code>-<code>(4)</code> as indicated above.
 </p>
 <pre><code>package tutorial.domain;
@@ -251,49 +240,33 @@ public final class MyBusinessServiceTest
    <code class="annotation">@Mocked</code> applies mocking to a given type.
 </p>
 <p>
-   As also shown in the test, the recording (inside a <code>new Expectations() {{ ... }}</code> block) and the
-   verification (inside a <code>new Verifications() {{ ... }} block</code>) of expectations is achieved simply by
-   invoking the desired methods (as well as constructors, even if not shown here) on mocked types/instances from inside
-   the recording or verification block.
-   Values to return (or exceptions to throw) from matching invocations executed by the code under test are specified
-   during recording through the "<code>result</code>" field.
-   Invocation count constraints can be specified, either when recording or when verifying, through API field assignments
-   like "<code>times = 1</code>".
+   As also shown in the test, the recording (inside a <code>new Expectations() {{ ... }}</code> block) and the verification (inside a
+   <code>new Verifications() {{ ... }} block</code>) of expectations is achieved simply by invoking the desired methods (as well as constructors,
+   even if not shown here) on mocked types/instances from inside the recording or verification block.
+   Values to return (or exceptions to throw) from matching invocations executed by the code under test are specified during recording through the
+   "<code>result</code>" field.
+   Invocation count constraints can be specified, either when recording or when verifying, through API field assignments like
+   "<code>times = 1</code>".
 </p>
 
 <h2 id="runningTests">
    <a href="#runningTests">Running tests with JMockit</a>
 </h2>
 <p>
-   To run tests that use any of the JMockit APIs, use your Java IDE, Maven/Gradle build script, etc. the way you
-   normally would.
+   To run tests that use any of the JMockit APIs, use your Java IDE, Maven/Gradle build script, etc. the way you normally would.
    In principle, any JDK of version <strong>1.7</strong> or newer, on Windows, Mac OS X, or Linux, can be used.
-   JMockit supports (and requires) the use of JUnit (versions 4 and 5) or TestNG; details specific to each of these test
-   frameworks are as follows:
+   JMockit supports (and requires) the use of JUnit (version 4 or 5) or TestNG; specifically, you need to:
 </p>
 <ul>
    <li>
-      For <strong>JUnit 4.5+</strong> test suites, make sure the <code>jmockit</code> dependency (that is,
-      <code>jmockit-1.x.jar</code>) appears <em>before</em> the JUnit dependency/jar in the classpath.
-      Alternatively, annotate test classes with
-      <code><span class="annotation">@RunWith</span>(<span class="type">JMockit</span>.class)</code>.
-      <br/>
-      (Note for <strong>Eclipse</strong> users: when specifying the order of jars in the classpath, make sure to use
-      the "Order and Export" tab of the "Java Build Path" window.
-      Also, make sure the Eclipse project uses the JRE from a JDK installation instead of a "plain" JRE, since the
-      latter lacks the "<code>attach</code>" native library.)
+      Add the <code>jmockit</code> dependency/jar to the test classpath.
    </li>
    <li>
-      For <strong>TestNG 6.2+</strong> and <strong>JUnit 5+</strong> test suites, simply add the <code>jmockit</code>
-      dependency/jar to the test classpath (at any position).
+      Configure the test execution JVM to start with the "<code>-javaagent:<em>&lt;proper path></em>/jmockit.1.x.jar</code>" initialization parameter.
+      It can be specified in the "Run/Debug Configuration" for both Eclipse and IntelliJ IDEA, or in a plugin configuration with build tools such as
+      Maven or Gradle.
    </li>
 </ul>
-<p>
-   In other situations (like running on JDK implementations other than the Oracle JDKs), you may need to pass
-   "<code>-javaagent:<em>&lt;proper path></em>/jmockit-1.x.jar</code>" as a JVM initialization parameter.
-   This can be done in the "Run/Debug Configuration" for both Eclipse and IntelliJ IDEA, or with build tools such as
-   Maven or Gradle.
-</p>
 
 <h3 id="maven">
    <a href="#maven">Running tests from Maven</a>
@@ -306,19 +279,33 @@ public final class MyBusinessServiceTest
    &lt;dependency>
       &lt;groupId>org.jmockit&lt;/groupId>
       &lt;artifactId>jmockit&lt;/artifactId>
-      &lt;version>1.<em>x</em>&lt;/version>
+      &lt;version>${jmockit.version}&lt;/version>
       &lt;scope>test&lt;/scope>
    &lt;/dependency>
 &lt;/dependencies>
 </code></pre>
 <p>
-   Make sure the specified version is the one you actually want. Find the current version in the
-   <a href="../changes.html#current">development history</a> page.
-   When using JUnit 4, this dependency should come <em>before</em> the "<code>junit</code>" dependency.
+   Make sure the specified version (here specified in the "<code>jmockit.version</code>" property) is the one you actually want.
+   Find the current version in the <a href="../changes.html#current">development history</a> page.
+   JMockit also requires the <code>-javaagent</code> JVM initialization parameter to be used; when using the <strong>Maven Surefire</strong> plugin
+   for test execution, it's specified as follows:
 </p>
+<pre><code>&lt;plugins>
+   &lt;plugin>
+      &lt;artifactId>maven-surefire-plugin&lt;/artifactId>
+      &lt;version>2.21.0&lt;/version> &lt;!-- or some other version -->
+      &lt;configuration>
+         &lt;argLine>
+            -javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar
+         &lt;/argLine>
+         &lt;!-- ... -->
+      &lt;/configuration>
+   &lt;plugin>
+   &lt;!-- ... -->
+&lt;plugins>
+</code></pre>
 <p>
-   For information on <a href="CodeCoverage.html#maven">using JMockit Coverage with Maven</a>, see the relevant section
-   in that chapter.
+   For information on <a href="CodeCoverage.html#maven">using JMockit Coverage with Maven</a>, see the relevant section in that chapter.
 </p>
 
 <h3 id="gradle">
@@ -326,8 +313,7 @@ public final class MyBusinessServiceTest
 </h3>
 <p>
    Gradle will also download the necessary artifacts from the <code>mavenCentral()</code> repository.
-   In your <code>gradle.build</code> file, simply add the <code>jmockit</code> dependency (preferably before the
-   <code>junit</code> dependency, if using JUnit 4.x), replacing "<code>x</code>" with the number of the
+   In your <code>gradle.build</code> file, add the <code>jmockit</code> dependency, replacing "<code>x</code>" with the number of the
    <a href="../changes.html">desired version</a>:
 </p>
 <pre><code>dependencies {
