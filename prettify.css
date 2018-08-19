@@ -58,12 +58,11 @@ img { border: none; }
 }
 
 .navBar {
-   background: #bee916; color: black;
+   background: #bee916;
    padding: 3px; margin-top: 3px;
    border-radius: 0.2em; width: 100%;
 }
-.navBar th { font-weight: normal; }
-.navBar a { color: black; }
+.navBar a { color: #444; }
 
 .navigation { display: inline; float: right; }
 .navigation img {
