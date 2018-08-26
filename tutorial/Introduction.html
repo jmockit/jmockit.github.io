@@ -263,8 +263,7 @@ public final class MyBusinessServiceTest
    </li>
    <li>
       Configure the test execution JVM to start with the "<code>-javaagent:<em>&lt;proper path></em>/jmockit.1.x.jar</code>" initialization parameter.
-      It can be specified in the "Run/Debug Configuration" for both Eclipse and IntelliJ IDEA, or in a plugin configuration with build tools such as
-      Maven or Gradle.
+      It can be specified in the build script file for tools such as Maven or Gradle, or in a "Run/Debug Configuration" for IntelliJ IDEA or Eclipse.
    </li>
 </ul>
 
@@ -316,9 +315,16 @@ public final class MyBusinessServiceTest
    In your <code>gradle.build</code> file, add the <code>jmockit</code> dependency, replacing "<code>x</code>" with the number of the
    <a href="../changes.html">desired version</a>:
 </p>
-<pre><code>dependencies {
+<pre><code>def jmockitVersion = '1.42'
+
+dependencies {
    ... "compile" dependencies ...
-   testCompile <span style="color: #800">'org.jmockit:jmockit:1.<em>x</em>'</span>
+   testCompile <span style="color: #800">'org.jmockit:jmockit:$jmockitVersion'</span>
+}
+
+test {
+    def m2repository = new File(repositories.mavenLocal().url).absolutePath
+    jvmArgs "-javaagent:$m2repository/org/jmockit/jmockit/$jmockitVersion/jmockit-$jmockitVersion.jar"
 }
 </code></pre>
 
