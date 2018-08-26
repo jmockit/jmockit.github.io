@@ -21,63 +21,72 @@
 <h1 id="top">
    <a href="#">Mocking</a>
 </h1>
-<ol class="contents">
-   <li><a href="#mocked">Mocked types and instances</a></li>
-   <li><a href="#expectation">Expectations</a></li>
-   <li><a href="#model">The <em>record-replay-verify</em> model</a></li>
-   <li><a href="#tested">Instantiation and injection of tested classes</a></li>
-   <li><a href="#results">Recording results for an expectation</a></li>
-   <li>
-      <a href="#argumentMatching">Flexible matching of argument values</a>
-      <ol>
-         <li><a href="#matcherFields">Using the "any" fields</a></li>
-         <li><a href="#withMethods">Using the "with" methods</a></li>
+<table align="center" width="100%"><tr>
+   <td>
+      <ol class="contents">
+         <li><a href="#mocked">Mocked types and instances</a></li>
+         <li><a href="#expectation">Expectations</a></li>
+         <li><a href="#model">The <em>record-replay-verify</em> model</a></li>
+         <li><a href="#tested">Instantiation and injection of tested classes</a></li>
+         <li><a href="#results">Recording results for an expectation</a></li>
+         <li>
+            <a href="#argumentMatching">Flexible matching of argument values</a>
+            <ol>
+               <li><a href="#matcherFields">Using the "any" fields</a></li>
+               <li><a href="#withMethods">Using the "with" methods</a></li>
+            </ol>
+         </li>
+         <li><a href="#constraints">Specifying invocation count constraints</a></li>
+         <li>
+            <a href="#verification">Explicit verification</a>
+            <ol>
+               <li><a href="#verificationInOrder">Verification in order</a></li>
+            </ol>
+         </li>
+         <li><a href="#delegates">Delegates: specifying custom results</a></li>
+         <li>
+            <a href="#withCapture">Capturing invocation arguments for verification</a>
+            <ol>
+               <li><a href="#singleInvocationCapture">Capturing arguments from a single invocation</a></li>
+               <li><a href="#multipleInvocationCapture">Capturing arguments from multiple invocations</a></li>
+               <li><a href="#capturingNewInstances">Capturing new instances</a></li>
+            </ol>
+         </li>
       </ol>
-   </li>
-   <li><a href="#constraints">Specifying invocation count constraints</a></li>
-   <li>
-      <a href="#verification">Explicit verification</a>
-      <ol>
-         <li><a href="#verificationInOrder">Verification in order</a></li>
+   </td>
+   <td valign="top">
+      <ol class="contents">
+         <li value="11">
+            <a href="#cascading">Cascading mocks</a>
+            <ol>
+               <li><a href="#staticFactories">Cascading static factory methods</a></li>
+               <li><a href="#fluent">Cascading self-returning methods</a></li>
+            </ol>
+         </li>
+         <li>
+            <a href="#instanceMatching">Matching invocations to specific instances</a>
+            <ol>
+               <li><a href="#injectable">Injectable mocked instances</a></li>
+               <li><a href="#multipleMockedInstances">Declaring multiple mocked instances</a></li>
+               <li><a href="#futureInstancesByConstructor">Instances created with a given constructor</a></li>
+            </ol>
+         </li>
+         <li><a href="#partial">Partial mocking</a></li>
+         <li><a href="#capturing">Mocking unspecified implementation classes</a></li>
+         <li>
+            <a href="#otherVerifications">Full verification and other variations</a>
+            <ol>
+               <li><a href="#fullVerification">Full verification</a></li>
+               <li><a href="#neverHappened">Verifying that an invocation never happened</a></li>
+               <li><a href="#restrictedFullVerifications">Restricting the set of mocked types to be fully verified</a></li>
+               <li><a href="#emptyFullVerifications">Verifying that no invocations occurred</a></li>
+               <li><a href="#unspecifiedInvocations">Verifying unspecified invocations that should not happen</a></li>
+            </ol>
+            <br>
+         </li>
       </ol>
-   </li>
-   <li><a href="#delegates">Delegates: specifying custom results</a></li>
-   <li>
-      <a href="#withCapture">Capturing invocation arguments for verification</a>
-      <ol>
-         <li><a href="#singleInvocationCapture">Capturing arguments from a single invocation</a></li>
-         <li><a href="#multipleInvocationCapture">Capturing arguments from multiple invocations</a></li>
-         <li><a href="#capturingNewInstances">Capturing new instances</a></li>
-      </ol>
-   </li>
-   <li>
-      <a href="#cascading">Cascading mocks</a>
-      <ol>
-         <li><a href="#staticFactories">Cascading static factory methods</a></li>
-         <li><a href="#fluent">Cascading self-returning methods</a></li>
-      </ol>
-   </li>
-   <li>
-      <a href="#instanceMatching">Matching invocations to specific instances</a>
-      <ol>
-         <li><a href="#injectable">Injectable mocked instances</a></li>
-         <li><a href="#multipleMockedInstances">Declaring multiple mocked instances</a></li>
-         <li><a href="#futureInstancesByConstructor">Instances created with a given constructor</a></li>
-      </ol>
-   </li>
-   <li><a href="#partial">Partial mocking</a></li>
-   <li><a href="#capturing">Mocking unspecified implementation classes</a></li>
-   <li>
-      <a href="#otherVerifications">Full verification and other variations</a>
-      <ol>
-         <li><a href="#fullVerification">Full verification</a></li>
-         <li><a href="#neverHappened">Verifying that an invocation never happened</a></li>
-         <li><a href="#restrictedFullVerifications">Restricting the set of mocked types to be fully verified</a></li>
-         <li><a href="#emptyFullVerifications">Verifying that no invocations occurred</a></li>
-         <li><a href="#unspecifiedInvocations">Verifying unspecified invocations that should not happen</a></li>
-      </ol>
-   </li>
-</ol>
+   </td>
+</tr></table>
 <div align="center"><img src="MockingAPI.png"></div>
 <p>
    In the JMockit library, the <strong>Expectations</strong> API provides rich support for the use of <em>mocking</em>
