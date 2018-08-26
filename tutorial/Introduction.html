@@ -312,14 +312,19 @@ public final class MyBusinessServiceTest
 </h3>
 <p>
    Gradle will also download the necessary artifacts from the <code>mavenCentral()</code> repository.
-   In your <code>gradle.build</code> file, add the <code>jmockit</code> dependency, replacing "<code>x</code>" with the number of the
-   <a href="../changes.html">desired version</a>:
+   In your <code>gradle.build</code> file, add the <code>jmockit</code> dependency and test configuration, replacing the number of the
+   <a href="../changes.html">desired version</a> if needed:
 </p>
-<pre><code>def jmockitVersion = '1.42'
+<pre><code>repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+def jmockitVersion = '1.42'
 
 dependencies {
    ... "compile" dependencies ...
-   testCompile <span style="color: #800">'org.jmockit:jmockit:$jmockitVersion'</span>
+   testCompile 'org.jmockit:jmockit:$jmockitVersion'
 }
 
 test {
