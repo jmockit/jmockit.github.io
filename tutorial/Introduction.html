@@ -316,7 +316,6 @@ public final class MyBusinessServiceTest
    <a href="../changes.html">desired version</a> if needed:
 </p>
 <pre><code>repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -324,12 +323,11 @@ def jmockitVersion = '1.42'
 
 dependencies {
    ... "compile" dependencies ...
-   testCompile 'org.jmockit:jmockit:$jmockitVersion'
+   testCompile "org.jmockit:jmockit:$jmockitVersion"
 }
 
 test {
-    def m2repository = new File(repositories.mavenLocal().url).absolutePath
-    jvmArgs "-javaagent:$m2repository/org/jmockit/jmockit/$jmockitVersion/jmockit-$jmockitVersion.jar"
+    jvmArgs "-javaagent:${classpath.find { it.name.contains("jmockit") }.absolutePath}"
 }
 </code></pre>
 
