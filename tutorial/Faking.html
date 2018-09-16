@@ -21,28 +21,36 @@
 <h1 id="top">
    <a href="#">Faking</a>
 </h1>
-<ol class="contents">
-   <li><a href="#fakes">Fake methods and fake classes</a></li>
-   <li>
-      <a href="#setUp">Applying fake classes</a>
-      <ol>
-         <li><a href="#eligibleMethods">Kinds of methods which can be faked</a></li>
+<table align="center" width="100%"><tr>
+   <td>
+      <ol class="contents">
+         <li><a href="#fakes">Fake methods and fake classes</a></li>
+         <li>
+            <a href="#setUp">Applying fake classes</a>
+            <ol>
+               <li><a href="#eligibleMethods">Kinds of methods which can be faked</a></li>
+            </ol>
+         </li>
+         <li><a href="#implementationClasses">Faking unspecified implementation classes</a></li>
+         <li><a href="#initializers">Faking class initializers</a></li>
+         <li><a href="#invocation">Accessing the invocation context</a></li>
       </ol>
-   </li>
-   <li><a href="#implementationClasses">Faking unspecified implementation classes</a></li>
-   <li><a href="#initializers">Faking class initializers</a></li>
-   <li><a href="#invocation">Accessing the invocation context</a></li>
-   <li><a href="#proceed">Proceeding into the real implementation</a></li>
-   <li><a href="#reuse">Reusing fakes between tests</a></li>
-   <li>
-      <a href="#widerScopes">Global fakes</a>
-      <ol>
-         <li><a href="#programmatic">Programmatic application of global fakes</a></li>
-         <li><a href="#systemProperty">External application through a system property</a></li>
+   </td>
+   <td valign="top">
+      <ol class="contents">
+         <li value="6"><a href="#proceed">Proceeding into the real implementation</a></li>
+         <li><a href="#reuse">Reusing fakes between tests</a></li>
+         <li>
+            <a href="#widerScopes">Global fakes</a>
+            <ol>
+               <li><a href="#programmatic">Programmatic application of global fakes</a></li>
+               <li><a href="#systemProperty">External application through a system property</a></li>
+            </ol>
+         </li>
+         <li><a href="#advice">Applying AOP-style advice</a></li>
       </ol>
-   </li>
-   <li><a href="#advice">Applying AOP-style advice</a></li>
-</ol>
+   </td>
+</tr></table>
 <div align="center"><img src="FakingAPI.png"></div>
 <p>
    In the JMockit toolkit, the <strong>Faking API</strong> provides support for the creation of <em>fake</em>
