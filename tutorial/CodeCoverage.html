@@ -20,33 +20,41 @@
 <h1 id="top">
    <a href="#">Measuring code coverage</a>
 </h1>
-<ol class="contents">
-   <li><a href="#line">Line coverage</a></li>
-   <li><a href="#path">Path coverage</a></li>
-   <li><a href="#data">Data coverage</a></li>
-   <li>
-      <a href="#output">Types of coverage output</a>
-      <ol>
-         <li><a href="#callPoints">Call points</a></li>
+<table align="center" width="100%"><tr>
+   <td>
+      <ol class="contents">
+         <li><a href="#line">Line coverage</a></li>
+         <li><a href="#path">Path coverage</a></li>
+         <li><a href="#data">Data coverage</a></li>
+         <li>
+            <a href="#output">Types of coverage output</a>
+            <ol>
+               <li><a href="#callPoints">Call points</a></li>
+            </ol>
+         </li>
+         <li><a href="#configuration">Configuring the coverage tool</a><br><br></li>
       </ol>
-   </li>
-   <li><a href="#configuration">Configuring the coverage tool</a></li>
-   <li>
-      <a href="#merging">Aggregated reports for multiple test runs</a>
-      <ol>
-         <li><a href="#serial">Generating an aggregate report from multiple data files</a></li>
-         <li><a href="#serial-append">Generating an aggregate report from a single data file appended after each test run</a></li>
+   </td>
+   <td>
+      <ol class="contents">
+         <li value="6">
+            <a href="#merging">Aggregated reports for multiple test runs</a>
+            <ol>
+               <li><a href="#serial">Generating an aggregate report from multiple data files</a></li>
+               <li><a href="#serial-append">Generating an aggregate report from a single data file appended after each test run</a></li>
+            </ol>
+         </li>
+         <li><a href="#checking">Checking minimum coverage</a></li>
+         <li>
+            <a href="#maven">Activating coverage in a Maven project</a>
+            <ol>
+               <li><a href="#site">Including the HTML report in a Maven site</a></li>
+            </ol>
+         </li>
+         <li><a href="#switching">Turning coverage off</a></li>
       </ol>
-   </li>
-   <li><a href="#checking">Checking minimum coverage</a></li>
-   <li>
-      <a href="#maven">Activating coverage in a Maven project</a>
-      <ol>
-         <li><a href="#site">Including the HTML report in a Maven site</a></li>
-      </ol>
-   </li>
-   <li><a href="#switching">Turning coverage off</a></li>
-</ol>
+   </td>
+</tr></table>
 <p>
    <a target="_blank" href="http://en.wikipedia.org/wiki/Code_coverage"><em>Code coverage</em></a> consists of a set of software metrics that can
    tell you how much of the production code is covered by a given test suite.
