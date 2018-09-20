@@ -143,22 +143,21 @@ public void doBusinessOperationXyz(@Mocked AnotherDependency anotherMock) {
 </p>
 <p>
    There are three different mocking annotations we can use when declaring mock fields and parameters:
-   <code class="annotation">@Mocked</code>, which will mock all methods and constructors on all existing and
-   <em>future</em> instances of a mocked class (for the duration of the tests using it);
-   <code class="annotation">@Injectable</code>, which constrains mocking to the instance methods of a single mocked
-   instance; and <code class="annotation">@Capturing</code>, which extends mocking to the classes implementing a mocked
-   interface, or the subclasses extending a mocked class.
+   <code class="annotation">@Mocked</code>, which will mock all methods and constructors on all existing and <em>future</em> instances of a
+   mocked class (for the duration of the tests using it); <code class="annotation">@Injectable</code>, which constrains mocking to the
+   instance methods of a single mocked instance; and <code class="annotation">@Capturing</code>, which extends mocking to the classes
+   implementing a mocked interface, or the subclasses extending a mocked class.
 </p>
 <p>
-   The mocked instances created by JMockit can be used normally in test code (for the recording and verification of
-   expectations), and/or passed to the code under test. Or they may simply go unused.
-   Differently from other mocking APIs, these <em>mocked</em> objects don't have to be the ones used by the code under
-   test when it calls instance methods on its dependencies.
+   The mocked instances created by JMockit can be used normally in test code (for the recording and verification of expectations), and/or
+   passed to the code under test. Or they may simply go unused.
+   Differently from other mocking APIs, these <em>mocked</em> objects don't have to be the ones used by the code under test when it calls
+   instance methods on its dependencies.
    When using <code class="annotation">@Mocked</code> or <code class="annotation">@Capturing</code> (but not when using
    <code class="annotation">@Injectable</code>), JMockit does not care on which particular object a mocked instance method is called.
-   This allows the transparent mocking of instances created directly inside code under test, when said code invokes
-   constructors on brand new instances using the <code>new</code> operator;
-   the classes instantiated must be covered by mocked types declared in test code, that's all.
+   This allows the transparent mocking of instances created directly inside code under test, when said code invokes constructors on brand
+   new instances using the <code>new</code> operator; the classes instantiated must be covered by mocked types declared in test code, that's
+   all.
 </p>
 
 <h2 id="expectation">
@@ -166,22 +165,22 @@ public void doBusinessOperationXyz(@Mocked AnotherDependency anotherMock) {
 </h2>
 <p>
    An <em>expectation</em> represents a set of invocations to a specific mocked method/constructor that is relevant for a given test.
-   An expectation may cover multiple different invocations to the same method or constructor, but it doesn't have to
-   cover <em>all</em> such invocations that occur during the execution of the test.
+   An expectation may cover multiple different invocations to the same method or constructor, but it doesn't have to cover <em>all</em> such
+   invocations that occur during the execution of the test.
    Whether a particular invocation matches a given expectation or not will depend not only on the method/constructor signature but also on
    runtime aspects such as the instance on which the method is invoked, argument values, and/or the number of invocations already matched.
    Therefore, several types of matching <em>constraints</em> can (optionally) be specified for a given expectation.
 </p>
 <p>
    When we have one or more invocation parameters involved, an exact argument value may be specified for each parameter.
-   For example, the value <code>"test string"</code> could be specified for a <code>String</code> parameter, causing the
-   expectation to match only those invocations with this exact value in the corresponding parameter.
-   As we will see later, instead of specifying exact argument values, we can specify more relaxed constraints which will
-   match whole sets of different argument values.
+   For example, the value <code>"test string"</code> could be specified for a <code>String</code> parameter, causing the expectation to
+   match only those invocations with this exact value in the corresponding parameter.
+   As we will see later, instead of specifying exact argument values, we can specify more relaxed constraints which will match whole sets of
+   different argument values.
 </p>
 <p>
-   The example below shows an expectation for <code>Dependency#someMethod(int, String)</code>, which will match an
-   invocation to this method with the exact argument values as specified.
+   The example below shows an expectation for <code>Dependency#someMethod(int, String)</code>, which will match an invocation to this method
+   with the exact argument values as specified.
    Notice that the expectation itself is specified through an isolated invocation to the mocked method.
    There are no special API methods involved, as is common in other mocking APIs.
    This invocation, however, does not count as one of the "real" invocations we are interested in testing.
@@ -202,8 +201,8 @@ public void doBusinessOperationXyz(@Mocked Dependency mockInstance) {
 }
 </code></pre>
 <p>
-   We will see more about expectations later, after we understand the differences between <em>recording</em>,
-   <em>replaying</em>, and <em>verifying</em> invocations.
+   We will see more about expectations later, after we understand the differences between <em>recording</em>, <em>replaying</em>, and
+   <em>verifying</em> invocations.
 </p>
 
 <h2 id="model">
@@ -234,8 +233,8 @@ public void someTestMethod() {
    Different words, but the meaning is the same.
 </p>
 <p>
-   In the context of behavior-based testing with mocked types (and their mocked instances), we can identify the
-   following alternative phases, which are directly related to the three previously described conventional testing phases:
+   In the context of behavior-based testing with mocked types (and their mocked instances), we can identify the following alternative
+   phases, which are directly related to the three previously described conventional testing phases:
 </p>
 <ol>
    <li>
@@ -243,8 +242,8 @@ public void someTestMethod() {
       This happens during test preparation, <em>before</em> the invocations we want to test are executed.
    </li>
    <li>
-      The <strong><em>replay</em></strong> phase, during which the mock invocations of interest have a chance to be
-      executed, as the code under test is exercised.
+      The <strong><em>replay</em></strong> phase, during which the mock invocations of interest have a chance to be executed, as the code
+      under test is exercised.
       The invocations to mocked methods/constructors previously recorded will now be <em>replayed</em>.
       Often there isn't a one-to-one mapping between invocations recorded and replayed, though.
    </li>
@@ -325,18 +324,18 @@ public class SomeTest
    <a href="#tested">Instantiation and injection of tested classes</a>
 </h2>
 <p>
-   A non-<code>final</code> instance field annotated as <code class="annotation">>@Tested</code> in the test class will
-   be considered for automatic instantiation and injection, just before the execution of a test method.
-   If at this time the field still holds the <code>null</code> reference, an instance will be created using a suitable
-   constructor of the tested class, while making sure its internal dependencies get properly injected (when applicable).
+   A non-<code>final</code> instance field annotated as <code class="annotation">@Tested</code> in the test class will be considered for
+   automatic instantiation and injection, just before the execution of a test method.
+   If at this time the field still holds the <code>null</code> reference, an instance will be created using a suitable constructor of the
+   tested class, while making sure its internal dependencies get properly injected (when applicable).
 </p>
 <p>
-   In order to inject <em>mocked</em> instances into the tested object, the test class must also contain one or more
-   mock fields or mock parameters declared to be <strong><code class="annotation">@Injectable</code></strong>.
-   Mock fields/parameters annotated only with <code class="annotation">@Mocked</code> or
-   <code class="annotation">@Capturing</code> are <em>not</em> considered for injection.
-   On the other hand, not all injectable fields/parameters need to have <em>mockable</em> types; they can also have
-   <em>primitive</em> or <em>array</em> types.
+   In order to inject <em>mocked</em> instances into the tested object, the test class must also contain one or more mock fields or mock
+   parameters declared to be <strong><code class="annotation">@Injectable</code></strong>.
+   Mock fields/parameters annotated only with <code class="annotation">@Mocked</code> or <code class="annotation">@Capturing</code> are
+   <em>not</em> considered for injection.
+   On the other hand, not all injectable fields/parameters need to have <em>mockable</em> types; they can also have <em>primitive</em> or
+   <em>array</em> types.
    The following example test class will demonstrate.
 </p>
 <pre><code>public class SomeTest
@@ -365,15 +364,15 @@ public class SomeTest
 </p>
 <p>
    Two forms of injection are supported: <em>constructor</em> injection and <em>field</em> injection.
-   In the first case, the tested class must have a constructor which can be satisfied by the injectables and/or tested
-   values made available in the test class.
+   In the first case, the tested class must have a constructor which can be satisfied by the injectables and/or tested values made available
+   in the test class.
    Note that for a given test, the set of available injectable/tested values consists of the set of injectable/tested fields declared as
    instances fields of the test class <em>plus</em> the set of injectable/tested parameters declared in the test method; therefore,
    different tests in the same test class can provide different sets of values to be injected into the same tested object.
 </p>
 <p>
-   Once the tested class is initialized with the chosen constructor, its remaining uninitialized non-<code>final</code>
-   instance fields are considered for injection.
+   Once the tested class is initialized with the chosen constructor, its remaining uninitialized non-<code>final</code> instance fields are
+   considered for injection.
    For each such field to be injected, an injectable/tested field of the same type is searched in the test class.
    If only one is found, its current value is read and then stored in the injected field.
    If there is more than one, the injected field name is used to select between the injectable/tested fields of same type.
@@ -396,8 +395,8 @@ public class SomeTest
    constructors.
 </p>
 <p>
-   Multiple <em>consecutive</em> results (values to return and/or throwables to throw) can be recorded for the same
-   expectation, by simply assigning the <code><var>result</var></code> field multiple times in a row.
+   Multiple <em>consecutive</em> results (values to return and/or throwables to throw) can be recorded for the same expectation, by simply
+   assigning the <code><var>result</var></code> field multiple times in a row.
    The recording of multiple return values and/or exceptions/errors to be thrown can be freely mixed for the same expectation.
    In the case of recording multiple consecutive <em>return values</em> for a given expectation, a single call to the
    <code>returns(...)</code> method can be made.
