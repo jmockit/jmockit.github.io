@@ -43,20 +43,19 @@
 <div align="center"><img src="TestedAPI.png"></div>
 <p>
    An <a href="https://en.wikipedia.org/wiki/Enterprise_software" target="enterpriseSoftware">enterprise</a>
-   <a href="http://c2.com/cgi/wiki?EnterpriseApplication" target="enterpriseApplications">application</a> targets a
-   particular business domain, usually having a GUI for multiple concurrent users and an application database for many
-   entity types; also, it often integrates with other applications inside or outside the organization.
+   <a href="http://c2.com/cgi/wiki?EnterpriseApplication" target="enterpriseApplications">application</a> targets a particular business
+   domain, usually having a GUI for multiple concurrent users and an application database for many entity types; also, it often integrates
+   with other applications inside or outside the organization.
    In Java, the Java EE APIs and/or the Spring framework are typically used when building such applications.
 </p>
 <p>
-   In this chapter we describe an approach to test Java enterprise applications by writing <em>out-of-container</em>
-   integration tests, where each test exercises a single step in a well-defined
-   <a href="http://www.requirementdriventesting.com/software-test-methodology-rdtrule1" target="scenario">business
-      scenario</a> (also known as a
-   "<a href="http://tynerblain.com/blog/2007/04/10/what-are-use-case-scenarios" target="useCaseScenario">use case</a>"
-   or "<a href="http://agilemodeling.com/artifacts/usageScenario.htm" target="usageScenario">usage</a>" scenario).
-   With a typical layered architecture, such a test calls a public method from a component in the highest layer
-   (normally, the <em>application</em> layer), which then calls down to lower layers.
+   In this chapter we describe an approach to test Java enterprise applications by writing <em>out-of-container</em> integration tests,
+   where each test exercises a single step in a well-defined
+   <a href="http://www.requirementdriventesting.com/software-test-methodology-rdtrule1" target="scenario">business scenario</a> (also known
+   as a "<a href="http://tynerblain.com/blog/2007/04/10/what-are-use-case-scenarios" target="useCaseScenario">use case</a>" or
+   "<a href="http://agilemodeling.com/artifacts/usageScenario.htm" target="usageScenario">usage</a>" scenario).
+   With a typical layered architecture, such a test calls a public method from a component in the highest layer (normally, the
+   <em>application</em> layer), which then calls down to lower layers.
 </p>
 
 <h2 id="anExample">
@@ -64,31 +63,30 @@
 </h2>
 <p>
    For demonstration, we will use a Java EE version of the Spring Pet Clinic sample application.
-   The <a target="_blank" href="http://github.com/jmockit/jmockit1/blob/master/samples/petclinic">full code</a> is
-   available in the project repository.
-   The application codebase is organized in four layers: UI or presentation layer, application layer, domain layer, and
-   infrastructure layer.
+   The <a target="_blank" href="http://github.com/jmockit/jmockit1/blob/master/samples/petclinic">full code</a> is available in the project
+   repository.
+   The application codebase is organized in four layers: UI or presentation layer, application layer, domain layer, and infrastructure
+   layer.
 </p>
 <p>
    The application's domain model (following the approach and terminology of
-   <a target="ddd" href="https://www.amazon.com/exec/obidos/ASIN/0321125215/domainlanguag-20">Domain Driven Design</a>)
-   has six domain entities: <code>Vet</code> (a veterinarian), <code>Specialty</code> (a vet's specialty),
-   <code>Pet</code>, <code>PetType</code>, <code>Owner</code> (a pet's owner), and <code>Visit</code> (a visit from a
-   pet and its owner to the clinic).
+   <a target="ddd" href="https://www.amazon.com/exec/obidos/ASIN/0321125215/domainlanguag-20">Domain Driven Design</a>) has six domain
+   entities: <code>Vet</code> (a veterinarian), <code>Specialty</code> (a vet's specialty), <code>Pet</code>, <code>PetType</code>,
+   <code>Owner</code> (a pet's owner), and <code>Visit</code> (a visit from a pet and its owner to the clinic).
    Besides entities, the domain model (and layer) of the application also includes <em>domain service</em> classes.
-   In this simple domain, we have only one such class for each entity type (<code>VetMaintenance</code>,
-   <code>PetMaintenance</code>, and so on).
+   In this simple domain, we have only one such class for each entity type (<code>VetMaintenance</code>, <code>PetMaintenance</code>, and
+   so on).
 </p>
 <p>
    In DDD, entities are added into and reconstituted or removed from persistent storage through "repository" components.
-   Given that we use a sophisticated ORM API (JPA), there is only one such repository, which is not domain or
-   application specific and therefore goes into the infrastructure layer: the <code>Database</code> class.
-   The application uses a relational database, specifically an in-memory HSqlDb database in the sample application, so
-   that it can be self-contained.
+   Given that we use a sophisticated ORM API (JPA), there is only one such repository, which is not domain or application specific and
+   therefore goes into the infrastructure layer: the <code>Database</code> class.
+   The application uses a relational database, specifically an in-memory HSqlDb database in the sample application, so that it can be
+   self-contained.
 </p>
 <p>
-   The application layer contains application service classes, which translate user input from the UI to calls into the
-   lower layers, and make output data available for display in the UI.
+   The application layer contains application service classes, which translate user input from the UI to calls into the lower layers, and
+   make output data available for display in the UI.
    This is the layer at which database transactions are demarcated.
 </p>
 
@@ -96,16 +94,14 @@
    <a href="#javaEE">Using Java EE</a>
 </h3>
 <p>
-   With Java EE 7, we use JPA for the domain <code class="annotation">@Entity</code> types, EJBs (stateless session
-   beans) or simply <code class="annotation">@Transactional</code> classes for domain services, and JSF
-   <code class="annotation">@ViewScoped</code> beans for the application services.
-   Code for the UI layer is not included in the sample, as it wouldn't be exercised by the integration test suite
-   anyway.
+   With Java EE 7, we use JPA for the domain <code class="annotation">@Entity</code> types, EJBs (stateless session beans) or simply
+   <code class="annotation">@Transactional</code> classes for domain services, and JSF <code class="annotation">@ViewScoped</code> beans for
+   the application services.
+   Code for the UI layer is not included in the sample, as it wouldn't be exercised by the integration test suite anyway.
    (In Java EE, this layer would be comprised of JSF facelets in the form of ".xhtml" files.)
 </p>
 <p>
-   For our first integration test class, let's consider the Vet screen, which simply displays a list of all vets with
-   their specialties.
+   For our first integration test class, let's consider the Vet screen, which simply displays a list of all vets with their specialties.
 </p>
 <pre><code>public final class VetScreenTest
 {
@@ -139,21 +135,20 @@
 }
 </code></pre>
 <p>
-   The first thing to notice in the test above is that it starts at the topmost layer of the application, which is coded
-   in Java and therefore runs entirely in the JVM: the application layer.
-   So, the test is not concerned with any HTTP requests and responses, or how application URLs map to components in the
-   application layer; such details vary with the technology used for UI implementation (JSF, JSP, Struts, GWT, Spring
-   MVC, etc.), and are considered out of the scope of the integration tests.
+   The first thing to notice in the test above is that it starts at the topmost layer of the application, which is coded in Java and
+   therefore runs entirely in the JVM: the application layer.
+   So, the test is not concerned with any HTTP requests and responses, or how application URLs map to components in the application layer;
+   such details vary with the technology used for UI implementation (JSF, JSP, Struts, GWT, Spring MVC, etc.), and are considered out of the
+   scope of the integration tests.
 </p>
 <p>
    The second thing to notice is the test code is very clean and focused on what it's trying to test.
-   It's written entirely in terms of the application and its business domain, without low-level concerns such as
-   deployment, database configuration, or transactions.
+   It's written entirely in terms of the application and its business domain, without low-level concerns such as deployment, database
+   configuration, or transactions.
 </p>
 <p>
    Finally, the third thing to notice is that no JMockit API at all appears in the test class.
-   All we have is the use of the <code class="annotation">@TestUtil</code> and <code class="annotation">@SUT</code>
-   annotations.
+   All we have is the use of the <code class="annotation">@TestUtil</code> and <code class="annotation">@SUT</code> annotations.
    These are user-defined annotations, with arbitrary names chosen according to the preferences of the team.
    In our sample code, they are defined as follows.
 </p>
@@ -169,22 +164,20 @@ public @interface SUT {} // the System Under Test
 </code></pre>
 <p>
    So, here we use JMockit's <code class="annotation">@Tested</code> annotation as a <em>meta-annotation</em>.
-   The use of "<code>fullyInitialized = true</code>" causes the dependencies of a tested class to be automatically
-   resolved through dependency injection (specifically, constructor injection followed by field injection, as
-   applicable).
-   The use of "<code>availableDuringSetup = true</code>" merely causes the tested object to be created <em>before</em>
-   any test setup methods (<code class="annotation">@Before</code> in JUnit or
-   <code class="annotation">@BeforeMethod</code> in TestNG) are executed, contrary to the default which is to create
-   tested objects right before each test method executes, and after any setup methods.
-   In this first example test class, this effect is not used, so the only benefit of using
-   "<code class="annotation">@TestUtil</code>" is to document the intent of the field in the test class.
+   The use of "<code>fullyInitialized = true</code>" causes the dependencies of a tested class to be automatically resolved through
+   dependency injection (specifically, constructor injection followed by field injection, as applicable).
+   The use of "<code>availableDuringSetup = true</code>" merely causes the tested object to be created <em>before</em> any test setup
+   methods (<code class="annotation">@Before</code> in JUnit or <code class="annotation">@BeforeMethod</code> in TestNG) are executed,
+   contrary to the default which is to create tested objects right before each test method executes, and after any setup methods.
+   In this first example test class, this effect is not used, so the only benefit of using "<code class="annotation">@TestUtil</code>" is to
+   document the intent of the field in the test class.
 </p>
 <p>
-   As seen in the test, <code class="type">VetData</code> provides methods that create new test data needed by the test,
-   and other utility methods such as <code>refresh(an entity)</code> (which forces the persistent state of a given
-   entity to be freshly loaded from the database).
-   As the name implies, the test suite would have one such class for each entity type, to be used in one or more test
-   classes whenever they need persistent instances of said types.
+   As seen in the test, <code class="type">VetData</code> provides methods that create new test data needed by the test, and other utility
+   methods such as <code>refresh(an entity)</code> (which forces the persistent state of a given entity to be freshly loaded from the
+   database).
+   As the name implies, the test suite would have one such class for each entity type, to be used in one or more test classes whenever they
+   need persistent instances of said types.
    More details are provided in the following section.
 </p>
 
@@ -218,10 +211,10 @@ public @interface SUT {} // the System Under Test
 }
 </code></pre>
 <p>
-   Such classes are easy to write, as they simply use the existing entity classes, plus the methods made available in a
-   "<code>db</code>" field from the <code class="type">TestDatabase</code> base class.
-   This is a test infrastructure class which can be reused for different enterprise applications, as long as they use
-   JPA for persistence (and JMockit for integration testing).
+   Such classes are easy to write, as they simply use the existing entity classes, plus the methods made available in a "<code>db</code>"
+   field from the <code class="type">TestDatabase</code> base class.
+   This is a test infrastructure class which can be reused for different enterprise applications, as long as they use JPA for persistence
+   (and JMockit for integration testing).
 </p>
 <pre><code>public class TestDatabase
 {
@@ -250,46 +243,39 @@ public @interface SUT {} // the System Under Test
 }
 </code></pre>
 <p>
-   The <code class="type">Database</code> utility class (also available and used in production code) provides an easier
-   to use API than JPA's <code class="type">EntityManager</code>, but its use is optional; tests could directly use the
-   "<code>em</code>" field instead of "<code>db</code>" (were it made <code>protected</code>, of course).
-   The <code>EntityManager em</code> field in the test database class gets injected with an instance automatically
-   created according to the <code>META-INF/persistence.xml</code> file that should be present in the test runtime
-   classpath (this would go into the "src/test" directory when using a Maven-compatible project structure; a
-   "production" version of the file can then be provided under "src/main").
-   A single default entity manager instance is created, and injected into whichever test or production classes (such as
-   the <code class="type">Database</code> class) have a <code class="annotation">@PersistenceContext</code> field.
-   If multiple databases are needed, each would have a different entity manager, as configured by the optional
-   "<code>name</code>" attribute of this annotation, with the corresponding entry in the <code>persistence.xml</code>
-   file.
+   The <code class="type">Database</code> utility class (also available and used in production code) provides an easier to use API than
+   JPA's <code class="type">EntityManager</code>, but its use is optional; tests could directly use the "<code>em</code>" field instead of
+   "<code>db</code>" (were it made <code>protected</code>, of course).
+   The <code>EntityManager em</code> field in the test database class gets injected with an instance automatically created according to the
+   <code>META-INF/persistence.xml</code> file that should be present in the test runtime classpath (this would go into the "src/test"
+   directory when using a Maven-compatible project structure; a "production" version of the file can then be provided under "src/main").
+   A single default entity manager instance is created, and injected into whichever test or production classes (such as the
+   <code class="type">Database</code> class) have a <code class="annotation">@PersistenceContext</code> field.
+   If multiple databases are needed, each would have a different entity manager, as configured by the optional "<code>name</code>" attribute
+   of this annotation, with the corresponding entry in the <code>persistence.xml</code> file.
 </p>
 <p>
-   Another important responsibility of this base class is to demarcate the transaction in which each test runs, ensuring
-   that it exists before the test begins, and that it ends with a rollback after the test is completed (either with
-   success or failure).
-   This works because JMockit executes the <code class="annotation">@PostConstruct</code> and
-   <code class="annotation">@PreDestroy</code> methods (from the
-   standard <code>javax.annotation</code> API, also supported by the Spring framework) at the appropriate times.
-   Since each "test data" object is introduced to the test class in a
-   <code class="annotation">@Tested(availableDuringSetup = true)</code> field, it gets "constructed" before any setup or
-   test method, and "destroyed" after each test is finished.
+   Another important responsibility of this base class is to demarcate the transaction in which each test runs, ensuring that it exists
+   before the test begins, and that it ends with a rollback after the test is completed (either with success or failure).
+   This works because JMockit executes the <code class="annotation">@PostConstruct</code> and <code class="annotation">@PreDestroy</code>
+   methods (from the standard <code>javax.annotation</code> API, also supported by the Spring framework) at the appropriate times.
+   Since each "test data" object is introduced to the test class in a <code class="annotation">@Tested(availableDuringSetup = true)</code>
+   field, it gets "constructed" before any setup or test method, and "destroyed" after each test is finished.
 </p>
 
 <h2 id="spring">
    <a href="#spring">Using the Spring framework</a>
 </h2>
 <p>
-   Spring-specific annotations such as <code class="annotation">@Autowired</code> and
-   <code class="annotation">@Value</code> are also supported in fully initialized
-   <code class="annotation">@Tested</code> objects.
-   However, a Spring-based application can also make direct calls to <code>BeanFactory#getBean(...)</code> methods, on
-   instances of various <code class="type">BeanFactory</code> implementation classes.
+   Spring-specific annotations such as <code class="annotation">@Autowired</code> and <code class="annotation">@Value</code> are also
+   supported in fully initialized <code class="annotation">@Tested</code> objects.
+   However, a Spring-based application can also make direct calls to <code>BeanFactory#getBean(...)</code> methods, on instances of various
+   <code class="type">BeanFactory</code> implementation classes.
 </p>
 <p>
    Regardless of how said bean factory instances are obtained, <code class="annotation">@Tested</code> and
-   <code class="annotation">@Injectable</code> objects can be made available as beans from the bean factory instance, by
-   simply applying the <code class="type">mockit.integration.springframework.FakeBeanFactory</code> mock-up class, as
-   shown below using JUnit.
+   <code class="annotation">@Injectable</code> objects can be made available as beans from the bean factory instance, by simply applying the
+   <code class="type">mockit.integration.springframework.FakeBeanFactory</code> fake class, as shown below using JUnit.
 </p>
 <pre><code>public final class ExampleSpringIntegrationTest
 {
@@ -315,25 +301,23 @@ public @interface SUT {} // the System Under Test
 }
 </code></pre>
 <p>
-   With the bean factory mock-up applied, a tested object from a field in the test class will be automatically returned
-   from any <code>getBean(String)</code> call on any Spring bean factory instance, provided the given bean name equals
-   the tested field name.
+   With the bean factory fake applied, a tested object from a field in the test class will be automatically returned from any
+   <code>getBean(String)</code> call on any Spring bean factory instance, provided the given bean name equals the tested field name.
 </p>
 <p>
-   Additionally, the <code class="type">mockit.integration.springframework.TestWebApplicationContext</code> class can be
-   used as a <code class="type">org.springframework.web.context.ConfigurableWebApplicationContext</code> implementation
-   which exposes <code class="annotation">@Tested</code> objects from test classes.
+   Additionally, the <code class="type">mockit.integration.springframework.TestWebApplicationContext</code> class can be used as a
+   <code class="type">org.springframework.web.context.ConfigurableWebApplicationContext</code> implementation which exposes
+   <code class="annotation">@Tested</code> objects from test classes.
 </p>
 
 <h2 id="interfaceResolution">
    <a href="#interfaceResolution">Interface resolution</a>
 </h2>
 <p>
-   Some application codebases use separate Java interfaces for many of their application-specific implementation
-   classes.
+   Some application codebases use separate Java interfaces for many of their application-specific implementation classes.
    These interfaces, then, are the ones used in the fields and/or parameters that receive injected dependencies.
-   So, when instantiating a <code class="annotation">@Tested</code> object having interface-based dependencies, JMockit
-   needs to be told about the classes implementing those interfaces.
+   So, when instantiating a <code class="annotation">@Tested</code> object having interface-based dependencies, JMockit needs to be told
+   about the classes implementing those interfaces.
    There are two ways to do this.
 </p>
 
@@ -355,30 +339,27 @@ public @interface SUT {} // the System Under Test
    <a href="#trade-offs">Trade-offs of the approach</a>
 </h2>
 <p>
-   In this testing approach, the goal is to have integration tests covering all of the Java code in the codebase of an
-   enterprise application.
-   To avoid the difficulties inherent to having the code run inside a Java application server (such as Tomcat,
-   Glassfish, or JBoss Wildfly), these are <em>out-of-container</em> tests where all code (production as well as test
-   code) runs in the same JVM instance.
+   In this testing approach, the goal is to have integration tests covering all of the Java code in the codebase of an enterprise
+   application.
+   To avoid the difficulties inherent to having the code run inside a Java application server (such as Tomcat, Glassfish, or JBoss Wildfly),
+   these are <em>out-of-container</em> tests where all code (production as well as test code) runs in the same JVM instance.
 </p>
 <p>
    The tests are written against the API of the highest-level components of the application.
-   Therefore, UI code is <em>not</em> exercised, as it's typically not written in the Java language, but in a
-   technology-specific templating language such as JSF facelets, JSPs, or something supported by the Spring framework.
-   To exercise such UI components, which in a web application also often include JavaScript code, we would need to write
-   <em>functional</em> UI tests based on HTTP requests and responses, using a testing API such as WebDriver or HtmlUnit.
-   Such tests require an <em>in-container</em> approach, which brings a host of practical problems and difficulties,
-   such as how/when to start the application server, how to deploy/re-deploy the application code, and how to keep tests
-   isolated from each other given that a typical functional test often performs one or more database transactions, some
-   or all of them usually getting committed.
+   Therefore, UI code is <em>not</em> exercised, as it's typically not written in the Java language, but in a technology-specific templating
+   language such as JSF facelets, JSPs, or something supported by the Spring framework.
+   To exercise such UI components, which in a web application also often include JavaScript code, we would need to write <em>functional</em>
+   UI tests based on HTTP requests and responses, using a testing API such as WebDriver or HtmlUnit.
+   Such tests require an <em>in-container</em> approach, which brings a host of practical problems and difficulties, such as how/when to
+   start the application server, how to deploy/re-deploy the application code, and how to keep tests isolated from each other given that a
+   typical functional test often performs one or more database transactions, some or all of them usually getting committed.
 </p>
 <p>
-   In comparison, the out-of-container integration tests shown here are more fine grained, typically comprising a single
-   transaction which is always rolled back at the end of the test.
-   This approach allows for tests that are easier to create, faster to run (in particular, with negligible startup
-   cost), and much less fragile.
-   It's also easier to employ a code coverage tool and easier/faster to use a debugger, since everything runs in a
-   single JVM instance.
+   In comparison, the out-of-container integration tests shown here are more fine grained, typically comprising a single transaction which
+   is always rolled back at the end of the test.
+   This approach allows for tests that are easier to create, faster to run (in particular, with negligible startup cost), and much less
+   fragile.
+   It's also easier to employ a code coverage tool and easier/faster to use a debugger, since everything runs in a single JVM instance.
    The downside is that code in UI templates, as well as client-side JavaScript code, doesn't get covered by such tests.
 </p>
 

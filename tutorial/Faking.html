@@ -53,33 +53,31 @@
 </tr></table>
 <div align="center"><img src="FakingAPI.png"></div>
 <p>
-   In the JMockit toolkit, the <strong>Faking API</strong> provides support for the creation of <em>fake</em>
-   implementations.
-   Typically, a fake targets a few methods and/or constructors in the class to be faked, while leaving most other
-   methods and constructors unmodified.
+   In the JMockit toolkit, the <strong>Faking API</strong> provides support for the creation of <em>fake</em> implementations.
+   Typically, a fake targets a few methods and/or constructors in the class to be faked, while leaving most other methods and constructors
+   unmodified.
    Also, usually the classes to be faked belong to <em>external</em> libraries, <em>not</em> to the codebase under test.
 </p>
 <p>
-   Fake implementations can be particularly useful in tests which depend on external components or resources such as
-   e-mail or web services servers, complex libraries, etc.
+   Fake implementations can be particularly useful in tests which depend on external components or resources such as e-mail or web services
+   servers, complex libraries, etc.
    Often, the fakes will be applied from reusable testing infrastructure components, not directly from a test class.
-   In particular, the use of <em>both</em> the Faking API and the Mocking API in the same test class should be viewed
-   with suspicion, as it strongly indicates misuse.
+   In particular, the use of <em>both</em> the Faking API and the Mocking API in the same test class should be viewed with suspicion, as it
+   strongly indicates misuse.
 </p>
 <p>
-   The replacement of real implementations with fake ones is completely transparent to the code which uses those
-   dependencies, and can be switched on and off for the scope of a single test, all tests in a single test class, or
-   for the entire test run.
+   The replacement of real implementations with fake ones is completely transparent to the code which uses those dependencies, and can be
+   switched on and off for the scope of a single test, all tests in a single test class, or for the entire test run.
 </p>
 
 <h2 id="fakes">
    <a href="#fakes">Fake methods and fake classes</a>
 </h2>
 <p>
-   In the context of the Faking API, a <em>fake method</em> is any method in a <em>fake class</em> that gets annotated
-   with <code class="annotation">@Mock</code>.
-   A fake class is any class extending the <code class="type">mockit.MockUp&lt;T></code> generic base class, where
-   <code>T</code> is the type to be faked.
+   In the context of the Faking API, a <em>fake method</em> is any method in a <em>fake class</em> that gets annotated with
+   <code class="annotation">@Mock</code>.
+   A fake class is any class extending the <code class="type">mockit.MockUp&lt;T></code> generic base class, where <code>T</code> is the type
+   to be faked.
    The example below shows several fake methods defined in a fake class for our example "real" class,
    <a target="_blank" href="http://docs.oracle.com/javase/8/docs/api/javax/security/auth/login/LoginContext.html">
       javax.security.auth.login.LoginContext</a>.
@@ -100,31 +98,30 @@
 }
 </code></pre>
 <p>
-   When a fake class is applied to a real class, the latter gets the implementation of those methods and constructors
-   which have corresponding fake methods temporarily replaced with the implementations of the matching fake methods, as
-   defined in the fake class.
+   When a fake class is applied to a real class, the latter gets the implementation of those methods and constructors which have
+   corresponding fake methods temporarily replaced with the implementations of the matching fake methods, as defined in the fake class.
    In other words, the real class becomes "faked" for the duration of the test which applied the fake class.
    Its methods will respond accordingly whenever they receive invocations during test execution.
-   At runtime, what really happens is that the execution of a faked method/constructor is intercepted and redirected to
-   the corresponding fake method, which then executes and returns (unless an exception/error is thrown) to the original
-   caller, without this one noticing that a different method was actually executed.
+   At runtime, what really happens is that the execution of a faked method/constructor is intercepted and redirected to the corresponding
+   fake method, which then executes and returns (unless an exception/error is thrown) to the original caller, without this one noticing that
+   a different method was actually executed.
    Normally, the "caller" class is one being tested, while the faked class is a dependency.
 </p>
 <p>
-   Each <code class="annotation">@Mock</code> method must have a corresponding "real method/constructor" with the
-   <em>same signature</em> in the targeted real class.
-   For a <em>method</em>, the signature consists of the method name and parameters; for a <em>constructor</em>, it's
-   just the parameters, with the fake method having the special name "<code>$init</code>".
-   If a matching real method/constructor cannot be found for a given fake method, either in the specified real class or
-   in its super-classes (excluding <code class="type">java.lang.Object</code>), an
-   <code class="type">IllegalArgumentException</code> is thrown when the test attempts to apply the fake class.
-   Notice this exception can be caused by a refactoring in the real class (such as renaming the real method), so it's
-   important to understand why it happens.
+   Each <code class="annotation">@Mock</code> method must have a corresponding "real method/constructor" with the <em>same signature</em> in
+   the targeted real class.
+   For a <em>method</em>, the signature consists of the method name and parameters; for a <em>constructor</em>, it's just the parameters,
+   with the fake method having the special name "<code>$init</code>".
+   If a matching real method/constructor cannot be found for a given fake method, either in the specified real class or in its super-classes
+   (excluding <code class="type">java.lang.Object</code>), an <code class="type">IllegalArgumentException</code> is thrown when the test
+   attempts to apply the fake class.
+   Notice this exception can be caused by a refactoring in the real class (such as renaming the real method), so it's important to
+   understand why it happens.
 </p>
 <p>
    Finally, notice there is no need to have fake methods for <em>all</em> methods and constructors in a real class.
-   Any such method or constructor for which no corresponding fake method exists in the fake class will simply stay
-   "as is", that is, it won't be faked.
+   Any such method or constructor for which no corresponding fake method exists in the fake class will simply stay "as is", that is, it
+   won't be faked.
 </p>
 
 <h2 id="setUp">
@@ -134,11 +131,10 @@
    A given fake class must be applied to a corresponding real class to have any effect.
    This is usually done for a whole test class or test suite, but can also be done for an individual test.
    Fakes can be applied from anywhere inside a test class: a <code class="annotation">@BeforeClass</code> method, a
-   <code class="annotation">@BeforeMethod</code> / <code class="annotation">@Before</code> / <code
-   class="annotation">@BeforeEach</code> method (TestNG / JUnit 4 / JUnit 5), or from a
-   <code class="annotation">@Test</code> method.
-   Once a fake class is applied, all executions of the faked methods and constructors of the real class get
-   automatically redirected to the corresponding fake methods.
+   <code class="annotation">@BeforeMethod</code> / <code class="annotation">@Before</code> / <code class="annotation">@BeforeEach</code>
+   method (TestNG / JUnit 4 / JUnit 5), or from a <code class="annotation">@Test</code> method.
+   Once a fake class is applied, all executions of the faked methods and constructors of the real class get automatically redirected to the
+   corresponding fake methods.
 </p>
 <p>
    To apply the <code class="type">FakeLoginContext</code> fake class above, we simply instantiate it:
@@ -158,10 +154,10 @@ public void applyingAFakeClass() throws Exception {
    <code class="type">FakeLoginContext</code> will be in effect only for that particular test.
 </p>
 <p>
-   When the constructor invocation that instantiates <code class="type">LoginContext</code> executes, the corresponding
-   "<code>$init</code>" fake method in <code class="type">FakeLoginContext</code> will be executed.
-   Similarly, when the <code>LoginContext#login</code> method is called, the corresponding fake method will be executed,
-   which in this case will do nothing since the method has no parameters and <code>void</code> return type.
+   When the constructor invocation that instantiates <code class="type">LoginContext</code> executes, the corresponding "<code>$init</code>"
+   fake method in <code class="type">FakeLoginContext</code> will be executed.
+   Similarly, when the <code>LoginContext#login</code> method is called, the corresponding fake method will be executed, which in this case
+   will do nothing since the method has no parameters and <code>void</code> return type.
    The fake class instance on which these invocations occur is the one created in the first part of the test.
 </p>
 
@@ -170,15 +166,13 @@ public void applyingAFakeClass() throws Exception {
 </h3>
 <p>
    So far, we have only faked public instance methods with public instance fake methods.
-   In reality, any other kind of method in a real class can be faked: methods with <code>private</code>,
-   <code>protected</code> or "package-private" accessibility, <code>static</code> methods, <code>final</code> methods,
-   and <code>native</code> methods.
-   Even more, a <code>static</code> method in the real class can be faked by an <em>instance</em> fake method, and
-   vice-versa (an instance real method with a <code>static</code> fake).
+   In reality, any other kind of method in a real class can be faked: methods with <code>private</code>, <code>protected</code> or
+   "package-private" accessibility, <code>static</code> methods, <code>final</code> methods, and <code>native</code> methods.
+   Even more, a <code>static</code> method in the real class can be faked by an <em>instance</em> fake method, and vice-versa (an instance
+   real method with a <code>static</code> fake).
 </p>
 <p>
-   Methods to be faked need to have an implementation, though not necessarily in bytecode (in the case of
-   <code>native</code> methods).
+   Methods to be faked need to have an implementation, though not necessarily in bytecode (in the case of <code>native</code> methods).
    Therefore, an <code>abstract</code> method cannot be faked directly.
 </p>
 <p>
@@ -207,17 +201,15 @@ public final class TestedUnit
 <p>
    The method we want to test, <code>businessOperation()</code>, uses classes that implement a separate interface,
    <code class="type">Service</code>.
-   One of these implementations is defined through an anonymous inner class, which is completely inaccessible (except
-   for the use of Reflection) from client code.
+   One of these implementations is defined through an anonymous inner class, which is completely inaccessible (except for the use of
+   Reflection) from client code.
 </p>
 <p>
-   Given a base type (be it an <code>interface</code>, an <code>abstract</code> class, or any sort of base class), we
-   can write a test which only knows about the base type but where all implementing/extending implementation classes get
-   faked.
-   To do so, we create a fake whose target type refers only to the known base type, and does so through a
-   <em>type variable</em>.
-   Not only will implementation classes already loaded by the JVM get faked, but also any additional classes that
-   happen to get loaded by the JVM during later test execution.
+   Given a base type (be it an <code>interface</code>, an <code>abstract</code> class, or any sort of base class), we can write a test which
+   only knows about the base type but where all implementing/extending implementation classes get faked.
+   To do so, we create a fake whose target type refers only to the known base type, and does so through a <em>type variable</em>.
+   Not only will implementation classes already loaded by the JVM get faked, but also any additional classes that happen to get loaded by
+   the JVM during later test execution.
    This ability is demonstrated below.
 </p>
 <pre><code>@Test
@@ -232,16 +224,16 @@ public <strong>&lt;T extends Service></strong> void fakingImplementationClassesF
 }
 </code></pre>
 <p>
-   In the test above, all invocations to methods implementing <code>Service#doSomething()</code> will be redirected to
-   the fake method implementation, regardless of the actual class implementing the interface method.
+   In the test above, all invocations to methods implementing <code>Service#doSomething()</code> will be redirected to the fake method
+   implementation, regardless of the actual class implementing the interface method.
 </p>
 
 <h2 id="initializers">
    <a href="#initializers">Faking class initializers</a>
 </h2>
 <p>
-   When a class performs some work in one or more <em>static initialization blocks</em>, we may need to stub it out so
-   it doesn't interfere with test execution.
+   When a class performs some work in one or more <em>static initialization blocks</em>, we may need to stub it out so it doesn't interfere
+   with test execution.
    We can define a special fake method for that, as shown below.
 </p>
 <pre><code>@Test
@@ -258,31 +250,31 @@ public void fakingStaticInitializers() {
 </code></pre>
 <p>
    Special care must be taken when the static initialization code of a class is faked.
-   Note that this includes not only any "<code>static</code>" blocks in the class, but also any assignments to
-   <code>static</code> fields (excluding those resolved at compile time, which do not produce executable bytecode).
-   Since the JVM only attempts to initialize a class <em>once</em>, restoring the static initialization code of a
-   faked class will have no effect.
-   So, if you fake away the static initialization of a class that hasn't been initialized by the JVM yet, the original
-   class initialization code will <em>never</em> be executed in the test run.
-   This will cause any static fields that are assigned with expressions computed at runtime to instead remain
-   initialized with the <em>default</em> values for their types.
+   Note that this includes not only any "<code>static</code>" blocks in the class, but also any assignments to <code>static</code> fields
+   (excluding those resolved at compile time, which do not produce executable bytecode).
+   Since the JVM only attempts to initialize a class <em>once</em>, restoring the static initialization code of a faked class will have no
+   effect.
+   So, if you fake away the static initialization of a class that hasn't been initialized by the JVM yet, the original class initialization
+   code will <em>never</em> be executed in the test run.
+   This will cause any static fields that are assigned with expressions computed at runtime to instead remain initialized with the
+   <em>default</em> values for their types.
 </p>
 
 <h2 id="invocation">
    <a href="#invocation">Accessing the invocation context</a>
 </h2>
 <p>
-   A fake method can optionally declare an extra parameter of type <code class="type">mockit.Invocation</code>, provided
-   it is the <em>first</em> parameter.
-   For each actual invocation to the corresponding faked method/constructor, an <code class="type">Invocation</code>
-   object will be automatically passed in when the fake method is executed.
+   A fake method can optionally declare an extra parameter of type <code class="type">mockit.Invocation</code>, provided it is the
+   <em>first</em> parameter.
+   For each actual invocation to the corresponding faked method/constructor, an <code class="type">Invocation</code> object will be
+   automatically passed in when the fake method is executed.
 </p>
 <p>
    This invocation context object provides several <em>getters</em> which can be used inside the fake method.
-   One is the <code>getInvokedInstance()</code> method, which returns the <em>faked</em> instance on which the
-   invocation occurred (<code>null</code> if the faked method is <code>static</code>).
-   Other getters provide the number of invocations (including the current one) to the faked method/constructor,
-   the invocation arguments (if any), and the invoked member (a <code class="type">java.lang.reflect.Method</code> or
+   One is the <code>getInvokedInstance()</code> method, which returns the <em>faked</em> instance on which the invocation occurred
+   (<code>null</code> if the faked method is <code>static</code>).
+   Other getters provide the number of invocations (including the current one) to the faked method/constructor, the invocation arguments
+   (if any), and the invoked member (a <code class="type">java.lang.reflect.Method</code> or
    <code class="type">java.lang.reflect.Constructor</code> object, as appropriate).
    Below we have an example test.
 </p>
@@ -338,14 +330,14 @@ public void accessingTheFakedInstanceInFakeMethods() throws Exception
    <a href="#proceed">Proceeding into the real implementation</a>
 </h2>
 <p>
-   Once a <code class="annotation">@Mock</code> method is executing, any additional calls to the corresponding faked
-   method are also redirected to the fake method, causing its implementation to be re-entered.
-   If, however, we want to execute the real implementation of the faked method, we can call the <code>proceed()</code>
-   method on the <code class="type">Invocation</code> object received as the first parameter to the fake method.
+   Once a <code class="annotation">@Mock</code> method is executing, any additional calls to the corresponding faked method are also
+   redirected to the fake method, causing its implementation to be re-entered.
+   If, however, we want to execute the real implementation of the faked method, we can call the <code>proceed()</code> method on the
+   <code class="type">Invocation</code> object received as the first parameter to the fake method.
 </p>
 <p>
-   The example test below exercises a <code class="type">LoginContext</code> object created normally (without any
-   faking in effect at creation time), using an unspecified <code>configuration</code>.
+   The example test below exercises a <code class="type">LoginContext</code> object created normally (without any faking in effect at
+   creation time), using an unspecified <code>configuration</code>.
 </p>
 <pre><code>@Test
 public void proceedIntoRealImplementationsOfFakedMethods() throws Exception {
@@ -400,14 +392,14 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
 }
 </code></pre>
 <p>
-   In the example above, <em>all</em> the code inside the tested <code class="type">LoginContext</code> class will get
-   executed, even though some methods (<code>login</code> and <code>logout</code>) are faked.
-   This example is contrived; in practice, the ability to proceed into real implementations would not normally be useful
-   for <em>testing</em> per se, not directly at least.
+   In the example above, <em>all</em> the code inside the tested <code class="type">LoginContext</code> class will get executed, even though
+   some methods (<code>login</code> and <code>logout</code>) are faked.
+   This example is contrived; in practice, the ability to proceed into real implementations would not normally be useful for
+   <em>testing</em> per se, not directly at least.
 </p>
 <p>
-   You may have noticed that use of <code>Invocation#proceed(...)</code> in a fake method effectively behaves like
-   <em>advice</em> (from AOP jargon) for the corresponding real method.
+   You may have noticed that use of <code>Invocation#proceed(...)</code> in a fake method effectively behaves like <em>advice</em> (from AOP
+   jargon) for the corresponding real method.
    This is a powerful ability that can be useful for certain things (think of an interceptor or decorator).
 </p>
 
@@ -423,16 +415,15 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
 </p>
 <p>
    Once applied, a fake will remain in effect for the execution of all tests in the test class.
-   The scope of a fake applied in a "before" method includes the code in any "after" methods the test class may have
-   (annotated with <code class="annotation">@After</code> for JUnit or <code class="annotation">@AfterMethod</code> for
-   TestNG).
-   The same goes for any fakes applied in a <code class="annotation">@BeforeClass</code> method: they will still be in
-   effect during the execution of any <code class="annotation">AfterClass</code> methods.
+   The scope of a fake applied in a "before" method includes the code in any "after" methods the test class may have (annotated with
+   <code class="annotation">@After</code> for JUnit or <code class="annotation">@AfterMethod</code> for TestNG).
+   The same goes for any fakes applied in a <code class="annotation">@BeforeClass</code> method: they will still be in effect during the
+   execution of any <code class="annotation">AfterClass</code> methods.
    Once the last "after" or "after class" method finish being executed, though, all fakes get automatically "torn down".
 </p>
 <p>
-   For example, if we wanted to fake the <code class="type">LoginContext</code> class with a fake class for a bunch of
-   related tests, we would have the following methods in a JUnit test class:
+   For example, if we wanted to fake the <code class="type">LoginContext</code> class with a fake class for a bunch of related tests, we
+   would have the following methods in a JUnit test class:
 </p>
 <pre><code>public class MyTestClass
 {
@@ -447,16 +438,14 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
 }
 </code></pre>
 <p>
-   It is also possible to extend from a base test class, which may optionally define "before" methods that apply one or
-   more fakes.
+   It is also possible to extend from a base test class, which may optionally define "before" methods that apply one or more fakes.
 </p>
 
 <h2 id="widerScopes">
    <a href="#widerScopes">Global fakes</a>
 </h2>
 <p>
-   Sometimes, we need to apply fakes for the entire scope of a test suite (all of its test classes), ie, a "global"
-   fake.
+   Sometimes, we need to apply fakes for the entire scope of a test suite (all of its test classes), ie, a "global" fake.
    Such a fake will remain in effect for the entire test run.
    This can be done in test code or through external configuration.
 </p>
@@ -465,8 +454,8 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
    <a href="#programmatic">Programmatic application of global fakes</a>
 </h3>
 <p>
-   To apply fakes over a test <em>suite</em>, we can use a TestNG <code class="annotation">@BeforeSuite</code> method,
-   or a JUnit <code class="type">Suite</code> class.
+   To apply fakes over a test <em>suite</em>, we can use a TestNG <code class="annotation">@BeforeSuite</code> method, or a JUnit
+   <code class="type">Suite</code> class.
    The next example shows a JUnit 4 test suite configuration with the application of a global fake.
 </p>
 <pre><code>@RunWith(Suite.class)
@@ -480,44 +469,41 @@ public final class TestSuite
 }
 </code></pre>
 <p>
-   In this example, we apply the <code class="type">FakeLogging</code> fake class; its fake implementation methods will
-   be in effect until just after the last test in the test suite has been executed.
+   In this example, we apply the <code class="type">FakeLogging</code> fake class; its fake implementation methods will be in effect until
+   just after the last test in the test suite has been executed.
 </p>
 
 <h3 id="systemProperty">
    <a href="#systemProperty">External application through a system property</a>
 </h3>
 <p>
-   The <strong><code>fakes</code></strong> system property supports a comma-separated list of fully qualified fake class
-   names.
-   If specified at JVM startup time, any such class (which must extend <code class="type">MockUp&ltT></code>) will be
-   automatically applied for the whole test run.
-   The fake methods defined in startup fake classes will remain in effect until the end of the test run, for all test
-   classes.
-   Each fake class will be instantiated through its no-args constructor, unless an additional value was provided after
-   the class name (for example, as in "-Dfakes=my.fakes.MyFake=anArbitraryStringWithoutCommas"), in which
-   case the fake class should have a constructor with one parameter of type <code class="type">String</code>.
+   The <strong><code>fakes</code></strong> system property supports a comma-separated list of fully qualified fake class names.
+   If specified at JVM startup time, any such class (which must extend <code class="type">MockUp&ltT></code>) will be automatically applied
+   for the whole test run.
+   The fake methods defined in startup fake classes will remain in effect until the end of the test run, for all test classes.
+   Each fake class will be instantiated through its no-args constructor, unless an additional value was provided after the class name (for
+   example, as in "-Dfakes=my.fakes.MyFake=anArbitraryStringWithoutCommas"), in which case the fake class should have a constructor with one
+   parameter of type <code class="type">String</code>.
 </p>
 <p>
    Note that a system property can be passed to the JVM through the standard "<code>-D</code>" command line parameter.
-   Maven/Gradle/etc. build scripts have their own ways of specifying system properties, so check their documentation for
-   details.
+   Maven/Gradle/etc. build scripts have their own ways of specifying system properties, so check their documentation for details.
 </p>
 
 <h2 id="advice">
    <a href="#advice">Applying AOP-style advice</a>
 </h2>
 <p>
-   There is one more special <code class="annotation">@Mock</code> method that can appear in a fake class: the
-   "<code>$advice</code>" method.
-   If defined, this fake method will handle executions of each and every method in the target class (or classes, when
-   applying the fake over unspecified classes from a base type).
+   There is one more special <code class="annotation">@Mock</code> method that can appear in a fake class: the "<code>$advice</code>"
+   method.
+   If defined, this fake method will handle executions of each and every method in the target class (or classes, when applying the fake over
+   unspecified classes from a base type).
    Differently from regular fake methods, this one needs to have a particular signature and return type:
    <code>Object $advice(Invocation)</code>.
 </p>
 <p>
-   For demonstration, lets say we want to measure the execution times of all methods in a given class during test
-   execution, while still executing the original code of each method.
+   For demonstration, lets say we want to measure the execution times of all methods in a given class during test execution, while still
+   executing the original code of each method.
 </p>
 <pre><code>public final class MethodTiming extends MockUp&lt;Object>
 {
@@ -558,15 +544,15 @@ public final class TestSuite
 }
 </code></pre>
 <p>
-   The fake class above can be applied inside a test, in a "before" method, in a "before class" method, or even for the
-   entire test run by setting "<code>-Dfakes=testUtils.MethodTiming=my.application.AppClass</code>".
+   The fake class above can be applied inside a test, in a "before" method, in a "before class" method, or even for the entire test run by
+   setting "<code>-Dfakes=testUtils.MethodTiming=my.application.AppClass</code>".
    It will add up the execution times for all executions of all methods in a given class.
-   As shown in the implementation of the <code>$advice</code> method, it can obtain the
-   <code>java.lang.reflect.Method</code> that is being executed.
-   If desired, the current invocation count and/or the invocation arguments could be obtained through similar calls to
-   the <code>Invocation</code> object.
-   When the fake is (automatically) torn down, the <code>onTearDown()</code> method gets executed, dumping measured
-   timings to standard output.
+   As shown in the implementation of the <code>$advice</code> method, it can obtain the <code>java.lang.reflect.Method</code> that is being
+   executed.
+   If desired, the current invocation count and/or the invocation arguments could be obtained through similar calls to the
+   <code>Invocation</code> object.
+   When the fake is (automatically) torn down, the <code>onTearDown()</code> method gets executed, dumping measured timings to standard
+   output.
 </p>
 
 <div id="bottom" class="navigation">
