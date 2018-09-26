@@ -83,19 +83,18 @@
    developer tests.
    When mocking is used, a test focuses on the behavior of the code under test, as expressed through its <em>interactions</em> with other
    types it depends upon.
-   Mocking is typically used in the construction of <em>isolated</em> unit tests, where a <em>unit</em> under test is exercised in
-   isolation from the implementation of other units it depends on.
+   Mocking is typically used in the construction of <em>isolated</em> unit tests, where a <em>unit</em> under test is exercised in isolation
+   from the implementation of other units it depends on.
    Typically, a unit of behavior is a single class, but it's also fine to consider a whole set of strongly-related classes as a single unit
    for the purposes of unit testing (as is usually the case when we have a central public class with one or more helper classes, possibly
    package-private); in general, individual methods should not be regarded as separate units on their own.
 </p>
 <p>
-   <em>Strict</em> unit testing, however, is not a recommended approach; one should not attempt to mock every single
-   dependency.
+   <em>Strict</em> unit testing, however, is not a recommended approach; one should not attempt to mock every single dependency.
    Mocking is best used in moderation; whenever possible, favor integration tests over isolated unit tests.
-   This said, mocking is occasionally also useful in the creation of integration tests, when some particular
-   dependency cannot have its real implementation easily used, or when attempting to create tests for corner cases where
-   a well-placed mocked interaction can greatly facilitate the test.
+   This said, mocking is occasionally also useful in the creation of integration tests, when some particular dependency cannot have its real
+   implementation easily used, or when attempting to create tests for corner cases where a well-placed mocked interaction can greatly
+   facilitate the test.
 </p>
 
 <h2 id="mocked">
@@ -103,16 +102,15 @@
 </h2>
 <p>
    Mocking provides a mechanism for isolating a class to be tested from (some of) its dependencies.
-   We specify which particular dependencies are to be mocked by declaring suitable <em>mock fields</em> and/or <em>mock
-   parameters</em> in a test class; mock fields are declared as annotated instance fields of the test class,
-   while mock parameters are declared as annotated parameters of a test method.
-   The type of the mock field or parameter can be any kind of <em>reference</em> type: an <code>interface</code>, a
-   <code>class</code> (including <code>abstract</code> and <code>final</code> ones), an annotation, or an
-   <code>enum</code>.
+   We specify which particular dependencies are to be mocked by declaring suitable <em>mock fields</em> and/or <em>mock parameters</em> in a
+   test class; mock fields are declared as annotated instance fields of the test class, while mock parameters are declared as annotated
+   parameters of a test method.
+   The type of the mock field or parameter can be any kind of <em>reference</em> type: an <code>interface</code>, a <code>class</code>
+   (including <code>abstract</code> and <code>final</code> ones), an annotation, or an <code>enum</code>.
 </p>
 <p>
-   The following example test skeleton (using Java 8 and JUnit 4) serves as a basic illustration for the declaration of
-   mock fields and mock parameters, as well as the way in which they are typically used in test code.
+   The following example test skeleton (using Java 8 and JUnit 4) serves as a basic illustration for the declaration of mock fields and mock
+   parameters, as well as the way in which they are typically used in test code.
 </p>
 <pre><code>@Mocked Dependency mockInstance; // holds a mocked instance automatically created for use in each test
 
@@ -431,8 +429,8 @@ public class SomeTest
 }
 </code></pre>
 <p>
-   A possible test for the <code>doSomething()</code> method could exercise the case where
-   <code class="type">SomeCheckedException</code> gets thrown, after an arbitrary number of successful iterations.
+   A possible test for the <code>doSomething()</code> method could exercise the case where <code class="type">SomeCheckedException</code>
+   gets thrown, after an arbitrary number of successful iterations.
    Assuming that we want to record a set of expectations for the interaction between these two classes, we might write the test below.
 </p>
 <pre><code>@Tested ClassUnderTest cut;
@@ -453,9 +451,9 @@ public void doSomethingHandlesSomeCheckedException(@Mocked DependencyAbc abc) th
 <p>
    This test records two different expectations.
    The first one specifies that <code>intReturningMethod()</code> will return <code>3</code> when called.
-   The second specifies a sequence of three consecutive results for <code>stringReturningMethod()</code>, where the last
-   result happens to be an instance of the desired exception, allowing the test to achieve its goal (note that it will
-   only pass if the exception is not propagated out).
+   The second specifies a sequence of three consecutive results for <code>stringReturningMethod()</code>, where the last result happens to
+   be an instance of the desired exception, allowing the test to achieve its goal (note that it will only pass if the exception is not
+   propagated out).
 </p>
 
 <h2 id="argumentMatching">
@@ -483,10 +481,10 @@ public void doSomethingHandlesSomeCheckedException(@Mocked DependencyAbc abc) th
    <a href="#matcherFields">Using the "any" fields</a>
 </h3>
 <p>
-   The most common argument matching constraint tends also to be the <em>least</em> restrictive one: to match
-   invocations with <em>any</em> value for a given parameter (of the proper parameter type, of course).
-   For such cases we have a whole set of special <em>argument matching fields</em>, one for each primitive type (and the
-   corresponding wrapper class), one for strings, and a "universal" one of type <code>Object</code>.
+   The most common argument matching constraint tends also to be the <em>least</em> restrictive one: to match invocations with <em>any</em>
+   value for a given parameter (of the proper parameter type, of course).
+   For such cases we have a whole set of special <em>argument matching fields</em>, one for each primitive type (and the corresponding
+   wrapper class), one for strings, and a "universal" one of type <code>Object</code>.
    The test below demonstrates some uses.
 </p>
 <pre><code>@Tested CodeUnderTest cut;
@@ -519,8 +517,8 @@ public void someTestMethod(@Mocked DependencyAbc abc) {
    <a href="#withMethods">Using the "with" methods</a>
 </h3>
 <p>
-   When recording or verifying an expectation, calls to the <code>withXyz(...)</code> methods can occur for any subset
-   of the arguments passed in the invocation.
+   When recording or verifying an expectation, calls to the <code>withXyz(...)</code> methods can occur for any subset of the arguments
+   passed in the invocation.
    They can be freely mixed with regular argument-passing (using literal values, local variables, etc.).
    The only requirement is that such calls appear inside the recorded/verified invocation statement, rather than before it.
    It's not possible, for example, to first assign the result of a call to <code>withNotEqual(val)</code> to a local variable and then use
@@ -553,8 +551,8 @@ public void someTestMethod(@Mocked DependencyAbc abc) {
    There are more "with" methods than shown above. Use your IDE's code completion, and consult the API documentation for more details.
 </p>
 <p>
-   Besides the several predefined argument matching constraints available in the API, JMockit allows the user to provide custom
-   constraints, through the <code>with(Delegate)</code> and <code>withArgThat(Matcher)</code> methods.
+   Besides the several predefined argument matching constraints available in the API, JMockit allows the user to provide custom constraints,
+   through the <code>with(Delegate)</code> method.
 </p>
 
 <h2 id="constraints">
@@ -566,8 +564,8 @@ public void someTestMethod(@Mocked DependencyAbc abc) {
    need a way to account for all those separate invocations.
 </p>
 <p>
-   The number of invocations expected and/or allowed to match a given expectation can be specified through
-   <em>invocation count constraints</em>.
+   The number of invocations expected and/or allowed to match a given expectation can be specified through <em>invocation count
+   constraints</em>.
    The mocking API provides three special fields just for that: <code>times</code>, <code>minTimes</code>, and <code>maxTimes</code>.
    These fields can be used either when recording or when verifying expectations.
    In either case, the method or constructor associated with the expectation will be constrained to receive a number of invocations that
@@ -625,8 +623,7 @@ public void someOtherTestMethod(@Mocked DependencyAbc abc) {
    "<code>new Expectations() {...}</code>" block, with the exception of methods and fields used to record return values
    and thrown exceptions/errors.
    That is, we can freely use the <code>anyXyz</code> fields, the <code>withXyz(...)</code> argument matching methods, and the
-   <code><var>times</var></code>, <code><var>minTimes</var></code>, and <code><var>maxTimes</var></code> invocation count constraint
-   fields.
+   <code><var>times</var></code>, <code><var>minTimes</var></code>, and <code><var>maxTimes</var></code> invocation count constraint fields.
    An example test follows.
 </p>
 <pre><code>@Test
@@ -707,12 +704,11 @@ public void verifyAllInvocations(@Mocked Dependency mock) {
    <a href="#delegates">Delegates: specifying custom results</a>
 </h2>
 <p>
-   We have seen how to record results for invocations through assignments to the <code><var>result</var></code> field or
-   calls to the <code>returns(...)</code> method.
-   We have also seen how to match invocation arguments flexibly with the <code>withXyz(...)</code> group of methods and
-   the various <code><var>anyXyz</var></code> fields.
-   But what if a test needs to decide the result of a recorded invocation based on the arguments it will receive at
-   replay time?
+   We have seen how to record results for invocations through assignments to the <code><var>result</var></code> field or calls to the
+   <code>returns(...)</code> method.
+   We have also seen how to match invocation arguments flexibly with the <code>withXyz(...)</code> group of methods and the various
+   <code><var>anyXyz</var></code> fields.
+   But what if a test needs to decide the result of a recorded invocation based on the arguments it will receive at replay time?
    We can do it through a <code class="type">Delegate</code> instance, as exemplified below.
 </p>
 <pre><code>@Tested CodeUnderTest cut;
@@ -733,16 +729,16 @@ public void delegatingInvocationsToACustomDelegate(@Mocked DependencyAbc anyAbc)
 }
 </code></pre>
 <p>
-   The <code class="type">Delegate</code> interface is empty, being used simply to tell JMockit that actual invocations
-   at replay time should be delegated to the "delegate" method in the assigned object.
+   The <code class="type">Delegate</code> interface is empty, being used simply to tell JMockit that actual invocations at replay time
+   should be delegated to the "delegate" method in the assigned object.
    This method can have any name, provided it is the only non-<code>private</code> method in the delegate object.
    As for the parameters of the delegate method, they should either match the parameters of the recorded method, or there should be none.
-   In any case, the delegate method is allowed to have an additional parameter of type
-   <code class="type">Invocation</code> as its first parameter.
-   The <code class="type">Invocation</code> object received during replay will provide access to the invoked instance
-   and the actual invocation arguments, along with other abilities.
-   The return type of a delegate method doesn't have to be the same as the recorded method, although it should be
-   compatible in order to avoid a <code class="type">ClassCastException</code> later.
+   In any case, the delegate method is allowed to have an additional parameter of type <code class="type">Invocation</code> as its first
+   parameter.
+   The <code class="type">Invocation</code> object received during replay will provide access to the invoked instance and the actual
+   invocation arguments, along with other abilities.
+   The return type of a delegate method doesn't have to be the same as the recorded method, although it should be compatible in order to
+   avoid a <code class="type">ClassCastException</code> later.
 </p>
 <p>
    Constructors can also be handled through delegate <em>methods</em>.
@@ -801,18 +797,18 @@ public void capturingArgumentsFromSingleInvocation(@Mocked Collaborator mock) {
 </code></pre>
 <p>
    The <code>withCapture()</code> method can only be used in verification blocks.
-   Typically, we use it when a <em>single</em> matching invocation is expected to occur; if more than one such
-   invocation occurs, however, the last one to occur overwrites the values captured by previous ones.
-   It is particularly useful with parameters of a complex type (think a JPA <code class="annotation">@Entity</code>),
-   which may contain several items whose values need to be checked.
+   Typically, we use it when a <em>single</em> matching invocation is expected to occur; if more than one such invocation occurs, however,
+   the last one to occur overwrites the values captured by previous ones.
+   It is particularly useful with parameters of a complex type (think a JPA <code class="annotation">@Entity</code>), which may contain
+   several items whose values need to be checked.
 </p>
 
 <h3 id="multipleInvocationCapture">
    <a href="#multipleInvocationCapture">Capturing arguments from multiple invocations</a>
 </h3>
 <p>
-   If <em>multiple</em> invocations to a mocked method or constructor are expected, and we want to capture values for
-   all of them, then the <code>withCapture(List)</code> method should be used instead, as in the example below.
+   If <em>multiple</em> invocations to a mocked method or constructor are expected, and we want to capture values for all of them, then the
+   <code>withCapture(List)</code> method should be used instead, as in the example below.
 </p>
 <pre><code>@Test
 public void capturingArgumentsFromMultipleInvocations(@Mocked Collaborator mock) {
@@ -871,8 +867,8 @@ public void capturingNewInstances(@Mocked Person mockedPerson) {
    <a href="#cascading">Cascading mocks</a>
 </h2>
 <p>
-   When using complex APIs where functionality is distributed through many different objects, it is not uncommon to see
-   chained invocations of the form <code>obj1.getObj2(...).getYetAnotherObj().doSomething(...)</code>.
+   When using complex APIs where functionality is distributed through many different objects, it is not uncommon to see chained invocations
+   of the form <code>obj1.getObj2(...).getYetAnotherObj().doSomething(...)</code>.
    In such cases it may be necessary to mock all objects/classes in the chain, starting with <code>obj1</code>.
 </p>
 <p>
@@ -909,8 +905,8 @@ public void recordAndVerifyExpectationsOnCascadedMocks(
 }
 </code></pre>
 <p>
-   In the test above, calls to eligible methods in the mocked <code class="type">Socket</code> class will return a
-   <em>cascaded mock</em> object whenever they occur during the test.
+   In the test above, calls to eligible methods in the mocked <code class="type">Socket</code> class will return a <em>cascaded mock</em>
+   object whenever they occur during the test.
    The cascaded mock will allow further cascading, so a <code>null</code> reference will never be obtained from methods which return object
    references (except for non-eligible return types <code class="type">Object</code> or <code class="type">String</code> which will return
    <code>null</code>, or collection types which will return a non-mocked empty collection).
@@ -922,13 +918,13 @@ public void recordAndVerifyExpectationsOnCascadedMocks(
    <em>different</em> cascaded instances; the same method will always return the same cascaded instance, though.
 </p>
 <p>
-   New cascaded instances are created with <code class="annotation">@Injectable</code> semantics, so as to not affect
-   other instances of the same type that may exist during the test.
+   New cascaded instances are created with <code class="annotation">@Injectable</code> semantics, so as to not affect other instances of the
+   same type that may exist during the test.
 </p>
 <p>
-   Finally, it's worth noting that, if necessary, cascaded instances can be replaced with non-mocked ones, with a different mocked
-   instance, or not be returned at all; for that, record an expectation which assigns the <code><var>result</var></code> field with the
-   desired instance to be returned, or with <code>null</code> if no such instance is desired.
+   Finally, it's worth noting that, if necessary, cascaded instances can be replaced with non-mocked ones, with a different mocked instance,
+   or not be returned at all; for that, record an expectation which assigns the <code><var>result</var></code> field with the desired
+   instance to be returned, or with <code>null</code> if no such instance is desired.
 </p>
 
 <h3 id="staticFactories">
@@ -1060,9 +1056,8 @@ public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exc
 }
 </code></pre>
 <p>
-   This class could easily be tested without mocking by using <code class="type">ByteArrayInputStream</code> objects for input, but lets
-   say we want to make sure that the <code>InputStream#read()</code> method is properly invoked on each input stream passed in the
-   constructor.
+   This class could easily be tested without mocking by using <code class="type">ByteArrayInputStream</code> objects for input, but lets say
+   we want to make sure that the <code>InputStream#read()</code> method is properly invoked on each input stream passed in the constructor.
    The following test will achieve this.
 </p>
 <pre><code>@Test
@@ -1094,8 +1089,8 @@ public void concatenateInputStreams(
 </h3>
 <p>
    When using <code class="annotation">@Mocked</code> or <code class="annotation">@Capturing</code> (and not
-   <code class="annotation">@Injectable</code> on the same mock field/parameter), we can still match replay invocations
-   to expectations recorded on specific mocked instances.
+   <code class="annotation">@Injectable</code> on the same mock field/parameter), we can still match replay invocations to expectations
+   recorded on specific mocked instances.
    For that, we simply declare multiple mock fields or parameters of the same mocked type, as the next example shows.
 </p>
 <pre><code>@Test
