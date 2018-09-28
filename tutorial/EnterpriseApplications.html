@@ -28,6 +28,7 @@
             <a href="#anExample">An example</a>
             <ol>
                <li><a href="#javaEE">Using Java EE</a></li>
+               <li><a href="#infrastructure">Test infrastructure</a></li>
                <li><a href="#spring">Using the Spring framework</a></li>
             </ol>
          </li>
@@ -35,7 +36,13 @@
    </td>
    <td>
       <ol class="contents">
-         <li value="2"><a href="#interfaceResolution">Interface resolution</a></li>
+         <li value="2">
+            <a href="#interfaceResolution">Interface resolution</a>
+            <ol>
+               <li><a href="#testedObjects">Providing tested objects explicitly</a></li>
+               <li><a href="#resolutionMethod">Providing an interface resolution method</a></li>
+            </ol>
+         </li>
          <li><a href="#trade-offs">Trade-offs of the approach</a><br><br></li>
       </ol>
    </td>
@@ -321,15 +328,15 @@ public @interface SUT {} // the System Under Test
    There are two ways to do this.
 </p>
 
-<h3>
-   <a href="#">Providing tested objects explicitly</a>
+<h3 id="testedObjects">
+   <a href="#testedObjects">Providing tested objects explicitly</a>
 </h3>
 <p>
 
 </p>
 
-<h3>
-   <a href="#">Providing an interface resolution method</a>
+<h3 id="resolutionMethod">
+   <a href="#resolutionMethod">Providing an interface resolution method</a>
 </h3>
 <p>
 
