@@ -380,8 +380,8 @@ public class SomeTest
    <a href="#results">Recording results for an expectation</a>
 </h2>
 <p>
-   For a given method with non-<code>void</code> return type, a return value can be recorded through an assignment to the
-   <code>result</code> field.
+   For a given method with non-<code>void</code> return type, a return value can be recorded with an assignment to the
+   <code><var>result</var></code> field.
    When the method gets called in the replay phase, the specified return value will be returned to the caller.
    The assignment to <code><var>result</var></code> should appear right after the invocation that identifies the recorded expectation,
    inside an expectation block.
@@ -393,13 +393,10 @@ public class SomeTest
    constructors.
 </p>
 <p>
-   Multiple <em>consecutive</em> results (values to return and/or throwables to throw) can be recorded for the same expectation, by simply
-   assigning the <code><var>result</var></code> field multiple times in a row.
-   The recording of multiple return values and/or exceptions/errors to be thrown can be freely mixed for the same expectation.
-   In the case of recording multiple consecutive <em>return values</em> for a given expectation, a single call to the
-   <code>returns(...)</code> method can be made.
-   Also, a single assignment to the <code><var>result</var></code> field will achieve the same effect, if the value assigned to it is a
-   <em>list</em> or <em>array</em> containing the consecutive values.
+   Multiple <em>consecutive</em> values to return can be recorded for an expectation, by calling the <code>returns(v1, v2, ...)</code>
+   method.
+   Alternatively, the same can be achieved by assigning the <code><var>result</var></code> field with a <em>list</em> or <em>array</em>
+   containing the consecutive values.
 </p>
 <p>
    The following example test records both types of results for the methods of a mocked <code class="type">DependencyAbc</code> class, to
@@ -408,16 +405,16 @@ public class SomeTest
 </p>
 <pre><code>public class ClassUnderTest
 {
-(1)private final DependencyAbc abc = <strong>new DependencyAbc()</strong>;
+   private final DependencyAbc abc = <strong>new DependencyAbc()</strong>;
 
    public void doSomething() {
-(2)   int n = <strong>abc.intReturningMethod()</strong>;
+(1)   int n = <strong>abc.intReturningMethod()</strong>;
 
       for (int i = 0; i < n; i++) {
          String s;
 
          try {
-(3)         s = <strong>abc.stringReturningMethod()</strong>;
+(2)         s = <strong>abc.stringReturningMethod()</strong>;
          }
          catch (SomeCheckedException e) {
             // somehow handle the exception
@@ -449,11 +446,10 @@ public void doSomethingHandlesSomeCheckedException(@Mocked DependencyAbc abc) th
 }
 </code></pre>
 <p>
-   This test records two different expectations.
+   This test records two expectations.
    The first one specifies that <code>intReturningMethod()</code> will return <code>3</code> when called.
    The second specifies a sequence of three consecutive results for <code>stringReturningMethod()</code>, where the last result happens to
-   be an instance of the desired exception, allowing the test to achieve its goal (note that it will only pass if the exception is not
-   propagated out).
+   be an instance of the desired exception, allowing the test to achieve its goal.
 </p>
 
 <h2 id="argumentMatching">
@@ -566,7 +562,8 @@ public void someTestMethod(@Mocked DependencyAbc abc) {
 <p>
    The number of invocations expected and/or allowed to match a given expectation can be specified through <em>invocation count
    constraints</em>.
-   The mocking API provides three special fields just for that: <code>times</code>, <code>minTimes</code>, and <code>maxTimes</code>.
+   The mocking API provides three special fields just for that: <code><var>times</var></code>, <code><var>minTimes</var></code>, and
+   <code><var>maxTimes</var></code>.
    These fields can be used either when recording or when verifying expectations.
    In either case, the method or constructor associated with the expectation will be constrained to receive a number of invocations that
    falls in the specified range.
