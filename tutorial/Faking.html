@@ -71,7 +71,7 @@
 </p>
 
 <h2 id="fakes">
-   <a href="#fakes">Fake methods and fake classes</a>
+   <a href="#fakes">1 Fake methods and fake classes</a>
 </h2>
 <p>
    In the context of the Faking API, a <em>fake method</em> is any method in a <em>fake class</em> that gets annotated with
@@ -125,7 +125,7 @@
 </p>
 
 <h2 id="setUp">
-   <a href="#setUp">Applying fake classes</a>
+   <a href="#setUp">2 Applying fake classes</a>
 </h2>
 <p>
    A given fake class must be applied to a corresponding real class to have any effect.
@@ -162,7 +162,7 @@ public void applyingAFakeClass() throws Exception {
 </p>
 
 <h3 id="eligibleMethods">
-   <a href="#eligibleMethods">Kinds of methods which can be faked</a>
+   <a href="#eligibleMethods">2.1 Kinds of methods which can be faked</a>
 </h3>
 <p>
    So far, we have only faked public instance methods with public instance fake methods.
@@ -180,7 +180,7 @@ public void applyingAFakeClass() throws Exception {
 </p>
 
 <h2 id="implementationClasses">
-   <a href="#implementationClasses">Faking unspecified implementation classes</a>
+   <a href="#implementationClasses">3 Faking unspecified implementation classes</a>
 </h2>
 <p>
    To demonstrate this feature, lets consider the following code under test.
@@ -229,7 +229,7 @@ public <strong>&lt;T extends Service></strong> void fakingImplementationClassesF
 </p>
 
 <h2 id="initializers">
-   <a href="#initializers">Faking class initializers</a>
+   <a href="#initializers">4 Faking class initializers</a>
 </h2>
 <p>
    When a class performs some work in one or more <em>static initialization blocks</em>, we may need to stub it out so it doesn't interfere
@@ -261,7 +261,7 @@ public void fakingStaticInitializers() {
 </p>
 
 <h2 id="invocation">
-   <a href="#invocation">Accessing the invocation context</a>
+   <a href="#invocation">5 Accessing the invocation context</a>
 </h2>
 <p>
    A fake method can optionally declare an extra parameter of type <code class="type">mockit.Invocation</code>, provided it is the
@@ -327,7 +327,7 @@ public void accessingTheFakedInstanceInFakeMethods() throws Exception
 </code></pre>
 
 <h2 id="proceed">
-   <a href="#proceed">Proceeding into the real implementation</a>
+   <a href="#proceed">6 Proceeding into the real implementation</a>
 </h2>
 <p>
    Once a <code class="annotation">@Mock</code> method is executing, any additional calls to the corresponding faked method are also
@@ -404,7 +404,7 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
 </p>
 
 <h2 id="reuse">
-   <a href="#reuse">Reusing fakes between tests</a>
+   <a href="#reuse">7 Reusing fakes between tests</a>
 </h2>
 <p>
    Often, a fake class needs to be used throughout multiple tests, or even applied for the test run as a whole.
@@ -442,7 +442,7 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
 </p>
 
 <h2 id="widerScopes">
-   <a href="#widerScopes">Global fakes</a>
+   <a href="#widerScopes">8 Global fakes</a>
 </h2>
 <p>
    Sometimes, we need to apply fakes for the entire scope of a test suite (all of its test classes), ie, a "global" fake.
@@ -451,7 +451,7 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
 </p>
 
 <h3 id="programmatic">
-   <a href="#programmatic">Programmatic application of global fakes</a>
+   <a href="#programmatic">8.1 Programmatic application of global fakes</a>
 </h3>
 <p>
    To apply fakes over a test <em>suite</em>, we can use a TestNG <code class="annotation">@BeforeSuite</code> method, or a JUnit
@@ -474,7 +474,7 @@ public final class TestSuite
 </p>
 
 <h3 id="systemProperty">
-   <a href="#systemProperty">External application through a system property</a>
+   <a href="#systemProperty">8.2 External application through a system property</a>
 </h3>
 <p>
    The <strong><code>fakes</code></strong> system property supports a comma-separated list of fully qualified fake class names.
@@ -491,7 +491,7 @@ public final class TestSuite
 </p>
 
 <h2 id="advice">
-   <a href="#advice">Applying AOP-style advice</a>
+   <a href="#advice">9 Applying AOP-style advice</a>
 </h2>
 <p>
    There is one more special <code class="annotation">@Mock</code> method that can appear in a fake class: the "<code>$advice</code>"
