@@ -166,8 +166,8 @@ public void applyingAFakeClass() throws Exception {
 </h3>
 <p>
    So far, we have only faked public instance methods with public instance fake methods.
-   In reality, any other kind of method in a real class can be faked: methods with <code>private</code>, <code>protected</code> or
-   "package-private" accessibility, <code>static</code> methods, <code>final</code> methods, and <code>native</code> methods.
+   Several other kinds of methods in a real class can also be faked: methods with <code>protected</code> or "package-private" accessibility,
+   <code>static</code> methods, <code>final</code> methods, and <code>native</code> methods.
    Even more, a <code>static</code> method in the real class can be faked by an <em>instance</em> fake method, and vice-versa (an instance
    real method with a <code>static</code> fake).
 </p>
@@ -279,50 +279,39 @@ public void fakingStaticInitializers() {
    Below we have an example test.
 </p>
 <pre><code>@Test
-public void accessingTheFakedInstanceInFakeMethods() throws Exception
-{
-   Subject testSubject = new Subject();
-
+public void accessingTheFakedInstanceInFakeMethods() throws Exception {
    new MockUp&lt;LoginContext>() {
+      Subject testSubject;
+
       @Mock
       void $init(<strong>Invocation invocation</strong>, String name, Subject subject) {
          assertNotNull(name);
-         assertSame(testSubject, subject);
+         assertNotNull(subject);
 
-         // Gets the invoked instance.
-         LoginContext loginContext = <strong>invocation.getInvokedInstance()</strong>;
-
-         // Verifies that this is the first invocation.
+         // Verifies this is the first invocation.
          assertEquals(1, invocation.getInvocationCount());
-
-         // Forces setting of private Subject field, since no setter is available.
-         Deencapsulation.setField(loginContext, subject);
       }
 
       @Mock
       void login(Invocation invocation) {
          // Gets the invoked instance.
-         LoginContext loginContext = invocation.getInvokedInstance();
-
-         // getSubject() returns null until the subject is authenticated.
-         assertNull(loginContext.getSubject());
-
-         // Private field set to true when login succeeds.
-         Deencapsulation.setField(loginContext, "loginSucceeded", true);
+         LoginContext loginContext = <strong>invocation.getInvokedInstance()</strong>;
+         assertNull(loginContext.getSubject()); // null until subject is authenticated
+         testSubject = new Subject();
       }
 
       @Mock
-      void logout(Invocation invocation) {
-         // Gets the invoked instance.
-         LoginContext loginContext = invocation.getInvokedInstance();
+      void logout() { testSubject = null; }
 
-         assertSame(testSubject, loginContext.getSubject());
-      }
+      @Mock
+      Subject getSubject() { return testSubject; }
    };
 
-   LoginContext theFakedInstance = new LoginContext("test", testSubject);
+   LoginContext theFakedInstance = new LoginContext("test", new Subject());
    theFakedInstance.login();
+   assertSame(testSubject, theFakedInstance.getSubject();
    theFakedInstance.logout();
+   assertNull(theFakedInstance.getSubject();
 }
 </code></pre>
 
