@@ -26,6 +26,17 @@
 
 <h3 id="1.45">Version <a href="#1.45">1.45</a> (Jan 27, 2019):</h3>
 <ul>
+   <li>
+      Mocking annotations (<code class="annotation">@Mocked</code>, <code class="annotation">@Capturing</code>, and
+      <code class="annotation">@Injectable</code>) can no longer be used on Java SE collection and map interfaces, for two reasons:
+      1) on Java 8+, such interfaces include <em>default</em> methods, which do get mocked, easily causing unexpected results in tests;
+      2) mocking of said interfaces (and more generally, of all value-oriented types which basically encapsulate state without complex
+      behavior in methods) is a well known bad practice.<br>
+      In the particular case of having an <code class="annotation">@Injectable</code> collection/map field which is meant to be injected
+      into a <code class="annotation">@Tested</code> object, the test should be changed to use <code class="annotation">@Tested</code> as
+      well on the collection/map field, with its declaration positioned <em>before</em> the target <code class="annotation">@Tested</code>
+      field.
+   </li>
    <li>Removed the <code>Deencapsulation.setField</code> methods, which were deprecated in version 1.44.</li>
    <li>
       Added a warning (printed to standard output) for <code class="annotation">@Mock</code> methods that target a <code>private</code>
