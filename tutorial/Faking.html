@@ -33,20 +33,14 @@
          </li>
          <li><a href="#implementationClasses">Faking unspecified implementation classes</a></li>
          <li><a href="#initializers">Faking class initializers</a></li>
-         <li><a href="#invocation">Accessing the invocation context</a></li>
       </ol>
    </td>
    <td>
       <ol class="contents">
-         <li value="6"><a href="#proceed">Proceeding into the real implementation</a></li>
+         <li value="5"><a href="#invocation">Accessing the invocation context</a></li>
+         <li><a href="#proceed">Proceeding into the real implementation</a></li>
          <li><a href="#reuse">Reusing fakes between tests</a></li>
-         <li>
-            <a href="#widerScopes">Global fakes</a>
-            <ol>
-               <li><a href="#programmatic">Programmatic application of global fakes</a></li>
-               <li><a href="#systemProperty">External application through a system property</a></li>
-            </ol>
-         </li>
+         <li><a href="#widerScopes">Global fakes</a></li>
          <li><a href="#advice">Applying AOP-style advice</a></li>
       </ol>
    </td>
@@ -434,49 +428,17 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
    <a href="#widerScopes">8 Global fakes</a>
 </h2>
 <p>
-   Sometimes, we need to apply fakes for the entire scope of a test suite (all of its test classes), ie, a "global" fake.
-   Such a fake will remain in effect for the entire test run.
-   This can be done in test code or through external configuration.
+   Sometimes, we may need to apply a fake for the entire scope of a test suite (all of its test classes), ie, a "global" fake.
+   This can be done through external configuration, by setting a system property.
 </p>
-
-<h3 id="programmatic">
-   <a href="#programmatic">8.1 Programmatic application of global fakes</a>
-</h3>
-<p>
-   To apply fakes over a test <em>suite</em>, we can use a TestNG <code class="annotation">@BeforeSuite</code> method, or a JUnit
-   <code class="type">Suite</code> class.
-   The next example shows a JUnit 4 test suite configuration with the application of a global fake.
-</p>
-<pre><code>@RunWith(Suite.class)
-@Suite.SuiteClasses({MyFirstTest.class, MySecondTest.class})
-public final class TestSuite
-{
-   @BeforeClass
-   public static void applyGlobalFake() {
-      new FakeLogging();
-   }
-}
-</code></pre>
-<p>
-   In this example, we apply the <code class="type">FakeLogging</code> fake class; its fake implementation methods will be in effect until
-   just after the last test in the test suite has been executed.
-</p>
-
-<h3 id="systemProperty">
-   <a href="#systemProperty">8.2 External application through a system property</a>
-</h3>
 <p>
    The <strong><code>fakes</code></strong> system property supports a comma-separated list of fully qualified fake class names.
    If specified at JVM startup time, any such class (which must extend <code class="type">MockUp&ltT></code>) will be automatically applied
    for the whole test run.
    The fake methods defined in startup fake classes will remain in effect until the end of the test run, for all test classes.
    Each fake class will be instantiated through its no-args constructor, unless an additional value was provided after the class name (for
-   example, as in "-Dfakes=my.fakes.MyFake=anArbitraryStringWithoutCommas"), in which case the fake class should have a constructor with one
-   parameter of type <code class="type">String</code>.
-</p>
-<p>
-   Note that a system property can be passed to the JVM through the standard "<code>-D</code>" command line parameter.
-   Maven/Gradle/etc. build scripts have their own ways of specifying system properties, so check their documentation for details.
+   example, as in "<code>-Dfakes=my.fakes.MyFake=anArbitraryStringWithoutCommas</code>"), in which case the fake class should have a
+   constructor with one parameter of type <code class="type">String</code>.
 </p>
 
 <h2 id="advice">
