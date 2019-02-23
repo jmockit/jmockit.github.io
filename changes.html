@@ -26,7 +26,15 @@
 
 <h3 id="1.46">Version <a href="#1.46">1.46</a> (Mar 31, 2019):</h3>
 <ul>
-   <li>Deprecated the <code class="type">Deencapsulation</code> class (which now only contains <code>getField</code> methods).</li>
+   <li>
+      <strong>Enhancement</strong>: added support for having a <code class="annotation">@Mock</code> method which matches all methods of
+      the same name in the faked class, regardless of their parameters. This "match-by-name-only" fake method must have only an
+      <code>Invocation</code> parameter.
+   </li>
+   <li>
+      <strong>Deprecated</strong> the <code class="type">Deencapsulation</code> class (which now only contains <code>getField</code>
+      methods).
+   </li>
    <li>Added support for JUnit 5.4.0.</li>
    <li>
       Issues closed:
