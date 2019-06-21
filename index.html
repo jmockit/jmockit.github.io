@@ -35,12 +35,12 @@
 </ul>
 
 <h2>Example</h2>
-<pre><code>public class ExampleTest {
+<pre><code>class ExampleTest {
    @Tested ServiceAbc <b>tested</b>;
    @Injectable DependencyXyz <b>mockXyz</b>;
 
    @Test
-   public void doOperationAbc(@Mocked AnotherDependency anyInstance) {
+   void doOperationAbc(@Mocked AnotherDependency anyInstance) {
       new Expectations() {{
          anyInstance.doSomething(<b>anyString</b>); <b>result</b> = 123;
          AnotherDependency.<em>someStaticMethod</em>(); <b>result</b> = new IOException();
