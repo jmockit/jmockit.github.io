@@ -86,17 +86,18 @@
       classes/components with which the unit under test interacts).
       Such tests range from end-to-end system tests which run through the application's UI (when the SUT has one), to tests that exercise a
       small set of inter-related units.
-      Here, we are particularly interested in integration tests which are <em>not</em> executed through the application UI, but otherwise
-      exercise all the program units involved in a meaningful business scenario.
+      Here, we are particularly interested in
+      <a target="_blank" href="https://martinfowler.com/bliki/SubcutaneousTest.html">subcutaneous</a> tests, which are not executed through
+      the application UI, but otherwise exercise all the program units involved in a meaningful business scenario.
    </li>
 </ol>
 <p>
-   Even though integration tests include the interaction between multiple units, particular tests may not be interested in exercising all
+   Even though subcutaneous tests include the interaction between multiple units, particular tests may not be interested in exercising all
    components, layers, or sub-systems involved.
    Such parts of the system may then be "mocked away" (or faked), so that the code under test runs in isolation from them.
    Therefore, the ability to isolate the code under test from certain parts of the system is generally useful in all kinds of tests.
    That said, in general it's best to make a test as "realistic" as we can.
-   So, the use of mocking and/or faking should, ideally, be kept at a minimum.
+   So, the use of mocking and/or faking should, ideally, be kept to a minimum.
 </p>
 
 <h2 id="mocks">
@@ -107,8 +108,6 @@
    Traditionally, a <em>mock object</em> is an instance of a class specifically implemented for a single test or set of related tests.
    This instance is passed to code under test to take the place of one of its dependencies.
    Each mock object behaves in the way expected by both the code under test and the tests that use it, so that all tests can pass.
-   That, however, is not the only role mock objects usually play.
-   As a complement to the assertions performed by each test, the mock itself can encode additional assertions.
 </p>
 <p>
    JMockit goes beyond conventional mock objects by allowing methods <em>and</em> constructors to be mocked directly on "real" (non-mock)
@@ -118,13 +117,6 @@
    usually for the duration of a single test.
    This mocking approach applies not only to <code>public</code> instance methods, but also to <code>final</code> and <code>static</code>
    methods, as well as constructors.
-</p>
-<p>
-   Mocks are most useful in isolated unit tests, but can also be used in integration tests.
-   For example, you may want to test a business operation which happens to, at some point, send an e-mail.
-   In order to verify the e-mail was correctly sent, the test could mock the e-mail sending API, while exercising the real code in every
-   other component (an alternative would be to set up some kind of fake e-mail server which could be consulted in an assertion at the end of
-   the test).
 </p>
 
 <h2 id="anExample">
@@ -140,9 +132,9 @@
 </ol>
 <p>
    The first two steps require access to the application database, which is done through a simplified API to the persistence subsystem
-   (which itself uses JPA).
+   (which itself uses <a target="_blank" href="https://docs.oracle.com/javaee/7/tutorial/persistence-intro.htm">JPA</a>).
    The third one can be achieved with a third-party API for sending e-mail, which in this example is Apache's
-   <a target="_blank" href="http://commons.apache.org/email">Commons Email</a> library.
+   <a target="_blank" href="http://commons.apache.org/proper/commons-email">Commons Email</a> library.
 </p>
 <p>
    Therefore, the service class has two separate dependencies, one for persistence and another for e-mail.
@@ -165,7 +157,7 @@ public final class MyBusinessService
 
    public void doBusinessOperationXyz() throws EmailException {
       List&lt;EntityX> items =
-(1)      <em>find</em>("select item from EntityX item where item.someProperty = ?1", data.getSomeProperty());
+(1)      <em>find</em>("<span class='keyword'>select</span> item <span class='keyword'>from</span> EntityX item <span class='keyword'>where</span> item.someProperty = ?<span class='number'>1</span>", data.getSomeProperty());
 
       // Compute or obtain from another service a total value for the new persistent entity:
       BigDecimal total = ...
