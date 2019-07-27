@@ -196,10 +196,6 @@
    Tutorial.)
 </p>
 <p>
-   When not using the JMockit mocking APIs, code coverage can still be activated without adding any jar to the classpath.
-   Instead, run with "<code>-javaagent:&lt;proper path>/jmockit-1.x.jar=coverage</code>" as a JVM initialization parameter.
-</p>
-<p>
    In most cases, the coverage tool does not require any additional configuration to be used.
    There are, however, several aspects of the tool's behavior which <em>can</em> optionally be configured for a given test run.
    This is done by setting one or more of several "<code>coverage-<em>xyz</em></code>" <em>system properties</em> for the JVM instance
@@ -422,39 +418,26 @@
 &lt;/dependency>
 </code></pre>
 <p>
-   With Maven, the <code>surefire</code> plugin is the one usually responsible for actually running tests.
+   With Maven, the <code>surefire</code> plugin is the one usually responsible for running tests.
    To activate and configure the coverage tool, specify values for the appropriate "<code>coverage-xyz</code>" system properties.
 </p>
 <pre><code>&lt;plugin>
    &lt;artifactId>maven-surefire-plugin&lt;/artifactId>
    &lt;configuration>
-      &lt;systemPropertyVariables>
+      &lt;argLine>
+         <strong>-javaagent:"${settings.localRepository}"/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar</strong>
+
+         &lt;!-- Coverage properties -->
          &lt;!-- At least one of the following needs to be set: -->
-         &lt;coverage-output>html&lt;/coverage-output>     &lt;!-- or: html-nocp, serial, serial-append -->
-         &lt;coverage-metrics>all&lt;/coverage-metrics>    &lt;!-- or: line, path, data -->
-         &lt;coverage-classes>loaded&lt;/coverage-classes> &lt;!-- or a "*" expression for class names -->
+         -Dcoverage-output=html             &lt;!-- or: html-nocp (default if coverage is activated), serial, serial-append -->
+         -Dcoverage-metrics=all             &lt;!-- or: line (the default), path, data -->
+         -Dcoverage-classes=loaded          &lt;!-- or a "*" expression for class names; if not set, measures all production code classes -->
 
          &lt;!-- Other properties, if needed: -->
-         &lt;coverage-outputDir>my-dir&lt;/coverage-outputDir>       &lt;!-- default: target/coverage-report -->
-         &lt;coverage-srcDirs>sources&lt;/coverage-srcDirs>          &lt;!-- default: all "src" directories -->
-         &lt;coverage-excludes>some.package.*&lt;/coverage-excludes> &lt;!-- default: empty -->
-         &lt;coverage-check>80&lt;/coverage-check>                   &lt;!-- default: no checks -->
-      &lt;/systemPropertyVariables>
-   &lt;/configuration>
-&lt;/plugin>
-</code></pre>
-<p>
-   Finally, if the tests don't actually use the JMockit mocking APIs, it's still possible to use the coverage tool even without the
-   "jmockit" dependency.
-   The only thing that is necessary is to configure the <code>surefire</code> plugin as follows:
-</p>
-<pre><code>&lt;plugin>
-   &lt;artifactId>maven-surefire-plugin&lt;/artifactId>
-   &lt;configuration>
-      &lt;argLine>
-<strong>-javaagent:"${settings.localRepository}"/org/jmockit/jmockit/${jmockit.version}/
-jmockit-${jmockit.version}.jar=coverage</strong>
-         &lt;!-- coverage properties -->
+         -Dcoverage-outputDir=my-dir        &lt;!-- default: target/coverage-report -->
+         -Dcoverage-srcDirs=sources         &lt;!-- default: all "src" directories -->
+         -Dcoverage-excludes=some.package.* &lt;!-- default: empty -->
+         -Dcoverage-check=80                &lt;!-- default: no checks -->
       &lt;/argLine>
    &lt;/configuration>
 &lt;/plugin>
