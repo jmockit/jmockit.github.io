@@ -20,6 +20,22 @@
 
 <h1>Development history</h1>
 
+<h2 id="next">
+   <a href="#next">Next release</a>
+</h2>
+
+<h3 id="1.48">Version <a href="#1.48">1.48</a> (Sep 29, 2019):</h3>
+<ul>
+   <li>
+      <strong>Dropped</strong> support for the <em>partial mocking of classes</em> through
+      <code>new Expectations(ToBeMocked.class) {...}</code>.
+      This constructor can still be used for the partial mocking of instances, though.
+      If a class needs to have only some constructors and/or <code>static</code> methods mocked, the use of a <code>MockUp</code> is the
+      recommended alternative.
+      See issue <a href="https://github.com/jmockit/jmockit1/issues/492">#492</a>.
+   </li>
+</ul>
+
 <h2 id="current">
    <a href="#current">Current release</a>
 </h2>
