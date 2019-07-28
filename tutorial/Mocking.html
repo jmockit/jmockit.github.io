@@ -109,13 +109,13 @@
    (including <code>abstract</code> and <code>final</code> ones), an annotation, or an <code>enum</code>.
 </p>
 <p>
-   The following example test skeleton (using Java 8 and JUnit 4) serves as a basic illustration for the declaration of mock fields and mock
+   The following example test skeleton (using Java 8 and JUnit 5) serves as a basic illustration for the declaration of mock fields and mock
    parameters, as well as the way in which they are typically used in test code.
 </p>
 <pre><code>@Mocked Dependency mockInstance; // holds a mocked instance automatically created for use in each test
 
 @Test
-public void doBusinessOperationXyz(@Mocked AnotherDependency anotherMock) {
+void doBusinessOperationXyz(@Mocked AnotherDependency anotherMock) {
    ...
    new Expectations() {{ // an "expectation block"
       ...
@@ -185,7 +185,7 @@ public void doBusinessOperationXyz(@Mocked AnotherDependency anotherMock) {
    It's only there so that the expectation can be specified.
 </p>
 <pre><code>@Test
-public void doBusinessOperationXyz(@Mocked Dependency mockInstance) {
+void doBusinessOperationXyz(@Mocked Dependency mockInstance) {
    ...
    new Expectations() {{
       ...
@@ -211,7 +211,7 @@ public void doBusinessOperationXyz(@Mocked Dependency mockInstance) {
    The phases execute sequentially, one at a time, as demonstrated below.
 </p>
 <pre><code>@Test
-public void someTestMethod() {
+void someTestMethod() {
    // 1. Preparation: whatever is required before the code under test can be exercised.
    ...
    // 2. The code under test is exercised, usually by calling a public method.
@@ -256,14 +256,14 @@ public void someTestMethod() {
 <pre><code>import mockit.*;
 ... other imports ...
 
-public class SomeTest {
+class SomeTest {
    // Zero or more "mock fields" common to all test methods in the class:
    @Mocked Collaborator mockCollaborator;
    @Mocked AnotherDependency anotherDependency;
    ...
 
    @Test
-   public void testWithRecordAndReplayOnly(mock parameters) {
+   void testWithRecordAndReplayOnly(mock parameters) {
       // Preparation code not specific to JMockit, if any.
 
       <strong>new Expectations()</strong> {{ // an "expectation block"
@@ -278,7 +278,7 @@ public class SomeTest {
    }
 
    @Test
-   public void testWithReplayAndVerifyOnly(mock parameters) {
+   void testWithReplayAndVerifyOnly(mock parameters) {
       // Preparation code not specific to JMockit, if any.
 
       // Code under test is exercised.
@@ -293,7 +293,7 @@ public class SomeTest {
    }
 
    @Test
-   public void testWithBothRecordAndVerify(mock parameters) {
+   void testWithBothRecordAndVerify(mock parameters) {
       // Preparation code not specific to JMockit, if any.
 
       <strong>new Expectations()</strong> {{
@@ -335,14 +335,14 @@ public class SomeTest {
    <em>array</em> types.
    The following example test class will demonstrate.
 </p>
-<pre><code>public class SomeTest {
+<pre><code>class SomeTest {
    @Tested CodeUnderTest tested;
    @Injectable Dependency dep1;
    @Injectable AnotherDependency dep2;
    @Injectable int someIntegralProperty = 123;
 
    @Test
-   public void someTestMethod(@Injectable("true") boolean flag, @Injectable("Mary") String name) {
+   void someTestMethod(@Injectable("true") boolean flag, @Injectable("Mary") String name) {
       // Record expectations on mocked types, if needed.
 
       tested.exerciseCodeUnderTest();
@@ -430,7 +430,7 @@ public class SomeTest {
 <pre><code>@Tested ClassUnderTest cut;
 
 @Test
-public void doSomethingHandlesSomeCheckedException(@Mocked DependencyAbc abc) throws Exception {
+void doSomethingHandlesSomeCheckedException(@Mocked DependencyAbc abc) throws Exception {
    new Expectations() {{
 (1)   abc.intReturningMethod(); <strong><var>result</var> = 3</strong>;
 
@@ -479,7 +479,7 @@ public void doSomethingHandlesSomeCheckedException(@Mocked DependencyAbc abc) th
 <pre><code>@Tested CodeUnderTest cut;
 
 @Test
-public void someTestMethod(@Mocked DependencyAbc abc) {
+void someTestMethod(@Mocked DependencyAbc abc) {
    DataItem item = new DataItem(...);
 
    new Expectations() {{
@@ -515,7 +515,7 @@ public void someTestMethod(@Mocked DependencyAbc abc) {
    An example test using some of the "with" methods is shown below.
 </p>
 <pre><code>@Test
-public void someTestMethod(@Mocked DependencyAbc abc) {
+void someTestMethod(@Mocked DependencyAbc abc) {
    DataItem item = new DataItem(...);
 
    new Expectations() {{
@@ -561,7 +561,7 @@ public void someTestMethod(@Mocked DependencyAbc abc) {
 <pre><code>@Tested CodeUnderTest cut;
 
 @Test
-public void someTestMethod(@Mocked DependencyAbc abc) {
+void someTestMethod(@Mocked DependencyAbc abc) {
    new Expectations() {{
       // By default, at least one invocation is expected, i.e. "minTimes = 1":
       new DependencyAbc();
@@ -577,7 +577,7 @@ public void someTestMethod(@Mocked DependencyAbc abc) {
 }
 
 @Test
-public void someOtherTestMethod(@Mocked DependencyAbc abc) {
+void someOtherTestMethod(@Mocked DependencyAbc abc) {
    <var>cut</var>.doSomething();
 
    new Verifications() {{
@@ -612,7 +612,7 @@ public void someOtherTestMethod(@Mocked DependencyAbc abc) {
    An example test follows.
 </p>
 <pre><code>@Test
-public void verifyInvocationsExplicitlyAtEndOfTest(@Mocked Dependency mock) {
+void verifyInvocationsExplicitlyAtEndOfTest(@Mocked Dependency mock) {
    // Nothing recorded here, though it could be.
 
    // Inside tested code:
@@ -642,7 +642,7 @@ public void verifyInvocationsExplicitlyAtEndOfTest(@Mocked Dependency mock) {
    Inside this block, simply write invocations to one or more mocked types in the order they are expected to have occurred.
 </p>
 <pre><code>@Test
-public void verifyingExpectationsInOrder(@Mocked DependencyAbc abc) {
+void verifyingExpectationsInOrder(@Mocked DependencyAbc abc) {
    // Somewhere inside the tested code:
    abc.aMethod();
    abc.doSomething("blah", 123);
@@ -670,7 +670,7 @@ public void verifyingExpectationsInOrder(@Mocked DependencyAbc abc) {
    In such cases, a "<code>new FullVerifications() {...}</code>" block will make sure that no invocations are left unverified.
 </p>
 <pre><code>@Test
-public void verifyAllInvocations(@Mocked Dependency mock) {
+void verifyAllInvocations(@Mocked Dependency mock) {
    // Code under test included here for easy reference:
    mock.setSomething(123);
    mock.setSomethingElse("anotherValue");
@@ -695,7 +695,7 @@ public void verifyAllInvocations(@Mocked Dependency mock) {
 <pre><code>@Tested CodeUnderTest cut;
 
 @Test
-public void delegatingInvocationsToACustomDelegate(@Mocked DependencyAbc anyAbc) {
+void delegatingInvocationsToACustomDelegate(@Mocked DependencyAbc anyAbc) {
    new Expectations() {{
       anyAbc.intReturningMethod(<var>anyInt</var>, <var>anyString</var>);
       <var>result</var> = <strong>new Delegate() {
@@ -726,7 +726,7 @@ public void delegatingInvocationsToACustomDelegate(@Mocked DependencyAbc anyAbc)
    The following example test shows a constructor invocation being delegated to a method which conditionally throws an exception.
 </p>
 <pre><code>@Test
-public void delegatingConstructorInvocations(@Mocked Collaborator anyCollaboratorInstance) {
+void delegatingConstructorInvocations(@Mocked Collaborator anyCollaboratorInstance) {
    new Expectations() {{
       new Collaborator(<var>anyInt</var>);
       <var>result</var> = <strong>new Delegate() {
@@ -760,7 +760,7 @@ public void delegatingConstructorInvocations(@Mocked Collaborator anyCollaborato
    as the following example test demonstrates.
 </p>
 <pre><code>@Test
-public void capturingArgumentsFromSingleInvocation(@Mocked Collaborator mock) {
+void capturingArgumentsFromSingleInvocation(@Mocked Collaborator mock) {
    // Inside tested code:
    ...
    new Collaborator().doSomething(0.5, new int[2], "test");
@@ -792,7 +792,7 @@ public void capturingArgumentsFromSingleInvocation(@Mocked Collaborator mock) {
    <code>withCapture(List)</code> method should be used instead, as in the example below.
 </p>
 <pre><code>@Test
-public void capturingArgumentsFromMultipleInvocations(@Mocked Collaborator mock) {
+void capturingArgumentsFromMultipleInvocations(@Mocked Collaborator mock) {
    // Inside tested code:
    mock.doSomething(dataObject1);
    mock.doSomething(dataObject2);
@@ -822,7 +822,7 @@ public void capturingArgumentsFromMultipleInvocations(@Mocked Collaborator mock)
    Finally, we can capture the new instances of a mocked class that got created during the test.
 </p>
 <pre><code>@Test
-public void capturingNewInstances(@Mocked Person mockedPerson) {
+void capturingNewInstances(@Mocked Person mockedPerson) {
    // From the code under test:
    dao.create(new Person("Paul", 10));
    dao.create(new Person("Mary", 15));
@@ -857,7 +857,7 @@ public void capturingNewInstances(@Mocked Person mockedPerson) {
    The following test shows a basic example, using the <code>java.net</code> and <code>java.nio</code> APIs.
 </p>
 <pre><code>@Test
-public void recordAndVerifyExpectationsOnCascadedMocks(
+void recordAndVerifyExpectationsOnCascadedMocks(
    @Mocked Socket anySocket, // will match any new Socket object created during the test
    @Mocked SocketChannel cascadedChannel // will match cascaded instances
 ) throws Exception {
@@ -917,7 +917,7 @@ public void recordAndVerifyExpectationsOnCascadedMocks(
    (Java EE).
 </p>
 <pre><code>@Test
-public void postErrorMessageToUIForInvalidInputFields(@Mocked FacesContext jsf) {
+void postErrorMessageToUIForInvalidInputFields(@Mocked FacesContext jsf) {
    // Set up invalid inputs, somehow.
 
    // Code under test which validates input fields from a JSF page, adding
@@ -953,7 +953,7 @@ public void postErrorMessageToUIForInvalidInputFields(@Mocked FacesContext jsf) 
    In the example test below we mock the <code class="type">java.lang.ProcessBuilder</code> class.
 </p>
 <pre><code>@Test
-public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exception {
+void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exception {
    // Code under test creates a new process to execute an OS-specific command.
    String cmdLine = "copy /Y *.txt D:\\TEMP";
    File wrkDir = new File("C:\\TEMP");
@@ -1041,7 +1041,7 @@ public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exc
    The following test will achieve this.
 </p>
 <pre><code>@Test
-public void concatenateInputStreams(@Injectable InputStream input1, @Injectable InputStream input2) throws Exception {
+void concatenateInputStreams(@Injectable InputStream input1, @Injectable InputStream input2) throws Exception {
    new Expectations() {{
       input1.read(); returns(1, 2, -1);
       input2.read(); returns(3, -1);
@@ -1072,7 +1072,7 @@ public void concatenateInputStreams(@Injectable InputStream input1, @Injectable 
    For that, we simply declare multiple mock fields or parameters of the same mocked type, as the next example shows.
 </p>
 <pre><code>@Test
-public void matchOnMockInstance(@Mocked Collaborator <strong>mock</strong>, @Mocked Collaborator <strong>otherInstance</strong>) {
+void matchOnMockInstance(@Mocked Collaborator <strong>mock</strong>, @Mocked Collaborator <strong>otherInstance</strong>) {
    new Expectations() {{ mock.getValue(); <var>result</var> = 12; }};
 
    // Exercise code under test with mocked instance passed from the test:
@@ -1108,7 +1108,7 @@ public void matchOnMockInstance(@Mocked Collaborator <strong>mock</strong>, @Moc
    Lets see an example.
 </p>
 <pre><code>@Test
-public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyCollaborator) {
+void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyCollaborator) {
    // Record different behaviors for each set of instances:
    new Expectations() {{
       // One set, for instances created with "a value":
@@ -1142,7 +1142,7 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyColla
    With this alternative mechanism, we can rewrite the test as follows.
 </p>
 <pre><code>@Test
-public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @Mocked Collaborator col2) {
+void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @Mocked Collaborator col2) {
    new Expectations() {{
       // Map separate sets of future instances to separate mock parameters:
       new Collaborator("a value"); <var>result</var> = col1;
@@ -1179,7 +1179,7 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @M
    gets called from the code under test, based on which expectations were recorded and which were not.
    The following example tests will demonstrate it.
 </p>
-<pre><code>public class PartialMockingTest {
+<pre><code>class PartialMockingTest {
    static class Collaborator {
       final int value;
 
@@ -1192,7 +1192,7 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @M
    }
 
    @Test
-   public void partiallyMockingAClassAndItsInstances() {
+   void partiallyMockingAClassAndItsInstances() {
       Collaborator anyInstance = new Collaborator();
 
       new Expectations(<strong>Collaborator.class</strong>) {{
@@ -1213,7 +1213,7 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @M
    }
 
    @Test
-   public void partiallyMockingASingleInstance() {
+   void partiallyMockingASingleInstance() {
       Collaborator collaborator = new Collaborator(2);
 
       new Expectations(<strong>collaborator</strong>) {{
@@ -1255,7 +1255,7 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @M
    For example, consider the following test.
 </p>
 <pre><code>@Test
-public void partiallyMockingAnObjectJustForVerifications() {
+void partiallyMockingAnObjectJustForVerifications() {
    Collaborator collaborator = new Collaborator(123);
 
    new Expectations(collaborator) {};
@@ -1309,11 +1309,11 @@ public final class TestedUnit {
    This ability is activated by the <code class="annotation">@Capturing</code> annotation, which can be applied to mock fields and mock
    parameters, as demonstrated below.
 </p>
-<pre><code>public final class UnitTest {
+<pre><code>final class UnitTest {
    <strong>@Capturing Service anyService</strong>;
 
    @Test
-   public void mockingImplementationClassesFromAGivenBaseType() {
+   void mockingImplementationClassesFromAGivenBaseType() {
       new Expectations() {{ anyService.doSomething(); returns(3, 4); }};
 
       int result = new TestedUnit().businessOperation();
