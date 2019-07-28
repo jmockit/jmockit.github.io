@@ -50,14 +50,11 @@
    In the JMockit toolkit, the <strong>Faking API</strong> provides support for the creation of <em>fake</em> implementations.
    Typically, a fake targets a few methods and/or constructors in the class to be faked, while leaving most other methods and constructors
    unmodified.
-   Also, usually the classes to be faked belong to <em>external</em> libraries, <em>not</em> to the codebase under test.
 </p>
 <p>
    Fake implementations can be particularly useful in tests which depend on external components or resources such as e-mail or web services
    servers, complex libraries, etc.
    Often, the fakes will be applied from reusable testing infrastructure components, not directly from a test class.
-   In particular, the use of <em>both</em> the Faking API and the Mocking API in the same test class should be viewed with suspicion, as it
-   strongly indicates misuse.
 </p>
 <p>
    The replacement of real implementations with fake ones is completely transparent to the code which uses those dependencies, and can be
