@@ -256,8 +256,7 @@ public void someTestMethod() {
 <pre><code>import mockit.*;
 ... other imports ...
 
-public class SomeTest
-{
+public class SomeTest {
    // Zero or more "mock fields" common to all test methods in the class:
    @Mocked Collaborator mockCollaborator;
    @Mocked AnotherDependency anotherDependency;
@@ -336,8 +335,7 @@ public class SomeTest
    <em>array</em> types.
    The following example test class will demonstrate.
 </p>
-<pre><code>public class SomeTest
-{
+<pre><code>public class SomeTest {
    @Tested CodeUnderTest tested;
    @Injectable Dependency dep1;
    @Injectable AnotherDependency dep2;
@@ -403,8 +401,7 @@ public class SomeTest
    be used when they are invoked from <code class="type">ClassUnderTest</code>.
    Lets say the implementation of the class under test goes like this:
 </p>
-<pre><code>public class ClassUnderTest
-{
+<pre><code>public class ClassUnderTest {
    private final DependencyAbc abc = <strong>new DependencyAbc()</strong>;
 
    public void doSomething() {
@@ -1014,8 +1011,7 @@ public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exc
 <p>
    For an example, lets say we have the following class to be tested.
 </p>
-<pre><code>public final class ConcatenatingInputStream extends InputStream
-{
+<pre><code>public final class ConcatenatingInputStream extends InputStream {
    private final Queue&lt;InputStream> sequentialInputs;
    private InputStream currentInput;
 
@@ -1045,9 +1041,7 @@ public void createOSProcessToCopyTempFiles(@Mocked ProcessBuilder pb) throws Exc
    The following test will achieve this.
 </p>
 <pre><code>@Test
-public void concatenateInputStreams(
-   @Injectable InputStream input1, @Injectable InputStream input2
-) throws Exception {
+public void concatenateInputStreams(@Injectable InputStream input1, @Injectable InputStream input2) throws Exception {
    new Expectations() {{
       input1.read(); returns(1, 2, -1);
       input2.read(); returns(3, -1);
@@ -1078,9 +1072,7 @@ public void concatenateInputStreams(
    For that, we simply declare multiple mock fields or parameters of the same mocked type, as the next example shows.
 </p>
 <pre><code>@Test
-public void matchOnMockInstance(
-   @Mocked Collaborator <strong>mock</strong>, @Mocked Collaborator <strong>otherInstance</strong>
-) {
+public void matchOnMockInstance(@Mocked Collaborator <strong>mock</strong>, @Mocked Collaborator <strong>otherInstance</strong>) {
    new Expectations() {{ mock.getValue(); <var>result</var> = 12; }};
 
    // Exercise code under test with mocked instance passed from the test:
@@ -1187,10 +1179,8 @@ public void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @M
    gets called from the code under test, based on which expectations were recorded and which were not.
    The following example tests will demonstrate it.
 </p>
-<pre><code>public class PartialMockingTest
-{
-   static class Collaborator
-   {
+<pre><code>public class PartialMockingTest {
+   static class Collaborator {
       final int value;
 
       Collaborator() { value = -1; }
@@ -1295,8 +1285,7 @@ public void partiallyMockingAnObjectJustForVerifications() {
 <pre><code>public interface Service { int doSomething(); }
 final class ServiceImpl implements Service { public int doSomething() { return 1; } }
 
-public final class TestedUnit
-{
+public final class TestedUnit {
    private final Service service1 = <strong>new ServiceImpl();</strong>
    private final Service service2 = <strong>new Service() { public int doSomething() { return 2; } };</strong>
 
@@ -1320,8 +1309,7 @@ public final class TestedUnit
    This ability is activated by the <code class="annotation">@Capturing</code> annotation, which can be applied to mock fields and mock
    parameters, as demonstrated below.
 </p>
-<pre><code>public final class UnitTest
-{
+<pre><code>public final class UnitTest {
    <strong>@Capturing Service anyService</strong>;
 
    @Test
