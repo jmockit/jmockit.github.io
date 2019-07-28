@@ -73,8 +73,7 @@
    <a target="_blank" href="http://docs.oracle.com/javase/8/docs/api/javax/security/auth/login/LoginContext.html">
       javax.security.auth.login.LoginContext</a>.
 </p>
-<pre><code>public final class FakeLoginContext extends MockUp&lt;LoginContext>
-{
+<pre><code>public final class FakeLoginContext extends MockUp&lt;LoginContext> {
    @Mock
    public void $init(String name, CallbackHandler callback) {
       assertEquals("test", name);
@@ -179,8 +178,7 @@ public void applyingAFakeClass() throws Exception {
 <pre><code>public interface Service { int doSomething(); }
 final class ServiceImpl implements Service { public int doSomething() { return 1; } }
 
-public final class TestedUnit
-{
+public final class TestedUnit {
    private final Service service1 = <strong>new ServiceImpl();</strong>
    private final Service service2 = <strong>new Service() { public int doSomething() { return 2; } };</strong>
 
@@ -342,8 +340,7 @@ public void proceedIntoRealImplementationsOfFakedMethods() throws Exception {
    assertFalse(fakeInstance.loggedIn);
 }
 
-static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
-{
+static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext> {
    boolean ignoreLogout;
    boolean loggedIn;
 
@@ -405,8 +402,7 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
    For example, if we wanted to fake the <code class="type">LoginContext</code> class with a fake class for a bunch of related tests, we
    would have the following methods in a JUnit test class:
 </p>
-<pre><code>public class MyTestClass
-{
+<pre><code>public class MyTestClass {
    @BeforeClass
    public static void applySharedFakes() {
       new MockUp&lt;LoginContext>() {
@@ -453,8 +449,7 @@ static final class ProceedingFakeLoginContext extends MockUp&lt;LoginContext>
    For demonstration, lets say we want to measure the execution times of all methods in a given class during test execution, while still
    executing the original code of each method.
 </p>
-<pre><code>public final class MethodTiming extends MockUp&lt;Object>
-{
+<pre><code>public final class MethodTiming extends MockUp&lt;Object> {
    private final Map&lt;Method, Long> methodTimes = new HashMap<>();
 
    public MethodTiming(Class&lt;?> targetClass) { super(targetClass); }
