@@ -1168,90 +1168,57 @@ void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @Mocked C
    <a href="#partial">13 Partial mocking</a>
 </h2>
 <p>
-   By default, <em>all</em> methods and constructors which can be called on a mocked type <em>and</em> its super-types (except for
-   <code class="annotation">java.lang.Object</code>) get mocked.
-   This is appropriate for most tests, but in some situations we might need to <em>select</em> only certain methods or constructors to be
-   mocked.
-   Methods/constructors not mocked in an otherwise mocked type will execute normally when called.
+   By default, <em>all</em> methods which can be called on a mocked instance get mocked.
+   This is appropriate for most tests, but in some situations we might need to <em>select</em> only certain methods to be mocked.
+   Methods not mocked in an otherwise mocked instance will execute normally when called.
 </p>
 <p>
-   When a class or object is partially mocked, JMockit decides whether to execute the real implementation of a method or constructor as it
-   gets called from the code under test, based on which expectations were recorded and which were not.
+   When an object is partially mocked, JMockit decides whether to execute the real implementation of a method as it gets called from the
+   code under test, based on which expectations were recorded and which were not.
    The following example tests will demonstrate it.
 </p>
 <pre><code>class PartialMockingTest {
    static class Collaborator {
       final int value;
 
-      Collaborator() { value = -1; }
       Collaborator(int value) { this.value = value; }
 
       int getValue() { return value; }
       final boolean simpleOperation(int a, String b, Date c) { return true; }
-      static void doSomething(boolean b, String s) { throw new IllegalStateException(); }
-   }
-
-   @Test
-   void partiallyMockingAClassAndItsInstances() {
-      Collaborator anyInstance = new Collaborator();
-
-      new Expectations(<strong>Collaborator.class</strong>) {{
-         anyInstance.getValue(); <var>result</var> = 123;
-      }};
-
-      // Not mocked, as no constructor expectations were recorded:
-      Collaborator c1 = new Collaborator();
-      Collaborator c2 = new Collaborator(150);
-
-      // Mocked, as a matching method expectation was recorded:
-      assertEquals(123, c1.getValue());
-      assertEquals(123, c2.getValue());
-
-      // Not mocked:
-      assertTrue(c1.simpleOperation(1, "b", null));
-      assertEquals(45, new Collaborator(45).value);
+      void doSomething() { ... }
    }
 
    @Test
    void partiallyMockingASingleInstance() {
       Collaborator collaborator = new Collaborator(2);
 
-      new Expectations(<strong>collaborator</strong>) {{
+      new Expectations(<strong>collaborator</strong>) {{ // one or more instances to be partially mocked
          collaborator.getValue(); <var>result</var> = 123;
          collaborator.simpleOperation(1, "", null); <var>result</var> = false;
-
-         // Static methods can be dynamically mocked too.
-         Collaborator.doSomething(<var>anyBoolean</var>, "test");
       }};
 
-      // Mocked:
+      // Mocked (instance methods recorded on one of the given instances):
       assertEquals(123, collaborator.getValue());
       assertFalse(collaborator.simpleOperation(1, "", null));
-      Collaborator.doSomething(true, "test");
 
-      // Not mocked:
-      assertEquals(2, collaborator.value);
+      // Not mocked (unrecorded instance methods, static methods, constructors, and different instances):
+      collaborator.doSomething();
       assertEquals(45, new Collaborator(45).getValue());
-      assertEquals(-1, new Collaborator().getValue());
    }
 }
 </code></pre>
 <p>
-   As shown above, the <code>Expectations(Object...)</code> constructor accepts one or more classes or objects to be partially mocked.
-   If a <code>Class</code> object is given, all methods <em>and</em> constructors defined in that class can be mocked, as well as the
-   methods and constructors of its super-classes; <em>all</em> instances of the specified class will be regarded as mocked instances.
-   If, on the other hand, a regular <em>instance</em> is given, then <em>only</em> methods, not constructors, in the class hierarchy can be
-   mocked; even more, only <em>that</em> particular instance will be mocked.
+   As shown above, the <code>Expectations(Object...)</code> constructor accepts one or more objects to be partially mocked.
+   In case a test wants to partially mock the constructors and/or <code>static</code> methods of a class, a <code>MockUp</code> (from the
+   Faking API) would have to be used.
 </p>
 <p>
-   Notice that in these two example tests there is no mock field or mock parameter.
-   The partial mocking constructor effectively provides yet another way to specify mocked types.
-   It also lets us turn objects stored in <em>local variables</em> into mocked instances.
-   Such objects can be created with any amount of state in internal instance fields; they will keep that state when mocked.
+   Notice that in this example test there is no mock field or mock parameter - so, the partial mocking constructor effectively provides yet
+   another way to apply mocking.
 </p>
 <p>
-   It should be noted that, when we request a class or instance to be partially mocked, it can also have invocations <em>verified</em> on
-   it, even if the verified methods/constructors were not recorded.
+   It should be noted that, when we request an instance to be partially mocked, it can also have invocations <em>verified</em> on it, even
+   if the verified methods were not recorded.
    For example, consider the following test.
 </p>
 <pre><code>@Test
