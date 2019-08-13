@@ -102,11 +102,6 @@
    the targeted real class.
    For a <em>method</em>, the signature consists of the method name and parameters; for a <em>constructor</em>, it's just the parameters,
    with the fake method having the special name "<code>$init</code>".
-   If a matching real method/constructor cannot be found for a given fake method, either in the specified real class or in its super-classes
-   (excluding <code class="type">java.lang.Object</code>), an <code class="type">IllegalArgumentException</code> is thrown when the test
-   attempts to apply the fake class.
-   Notice this exception can be caused by a refactoring in the real class (such as renaming the real method), so it's important to
-   understand why it happens.
 </p>
 <p>
    Finally, notice there is no need to have fake methods for <em>all</em> methods and constructors in a real class.
