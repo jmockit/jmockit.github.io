@@ -27,6 +27,15 @@
 <h3 id="1.48">Version <a href="#1.48">1.48</a> (Aug, 2019):</h3>
 <ul>
    <li>
+      <strong>New feature</strong> for <em>scenario-oriented</em> tests:
+      <code class="annotation">@Tested(global = true)</code> now allows a single global instance to be created and reused by many tests.
+   </li>
+   <li>
+      Several small fixes and enhancements in the <strong>coverage</strong> tool.
+      The <code>coverage-output</code> configuration property now accepts the "html", "html-cp", and "html-nocp" values, where the first one
+      is equivalent to "html-nocp" and also the default (since call points are too CPU and memory expensive for larger test suites).
+   </li>
+   <li>
       <strong>Dropped</strong> support for the <em>partial mocking of classes</em> through
       <code>new Expectations(ToBeMocked.class) {...}</code>.
       This constructor can still be used for the partial mocking of instances, though.
