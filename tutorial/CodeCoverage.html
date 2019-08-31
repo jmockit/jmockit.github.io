@@ -138,46 +138,36 @@
    <a href="#configuration">3 Configuring the coverage tool</a>
 </h2>
 <p>
-   To enable the JMockit Coverage tool in a JUnit/TestNG test run, add <code>jmockit-1.x.jar</code> to the runtime classpath, and specify at
-   least one of the "<code>coverage-output|classes</code>" system properties.
-   (For more details on <a href="Introduction.html#runningTests">running tests with JMockit</a>, see the corresponding section in the
-   Tutorial.)
-</p>
-<p>
-   In most cases, the coverage tool does not require any additional configuration to be used.
-   There are, however, several aspects of the tool's behavior which <em>can</em> optionally be configured for a given test run.
-   This is done by setting one or more of several "<code>coverage-<em>xyz</em></code>" <em>system properties</em> for the JVM instance
-   running the test suite.
-</p>
-<p>
-   Note that you should be able to easily specify these properties inside a Maven <code>surefire</code> plugin configuration, or a test run
-   configuration for your Java IDE of choice, using either JUnit or TestNG; no JMockit-specific plugin is needed.
-</p>
-<p>
-   The available configuration properties are:
+   To enable the JMockit Coverage tool in a JUnit/TestNG test run, add <code>jmockit-1.x.jar</code> to the runtime classpath, activate it
+   with the <code>-javaagent</code> JVM initialization parameter, and specify at least one of the "<code>coverage-output</code>" and
+   "<code>coverage-classes</code>" <em>system properties</em>.
+   (See <a href="Introduction.html#runningTests">Running tests with JMockit</a> for more details.)
+   All aspects of the tool's behavior can be configured by setting one or more of the following properties for the JVM instance running the
+   test suite.
 </p>
 <ol>
    <li>
       <code>coverage-<strong>output</strong></code>: one or more comma-separated values between <strong><code>html</code></strong>,
-      <strong><code>html-nocp</code></strong> ("nocp" stands for "no call points"), <strong><code>serial</code></strong>, and
-      <strong><code>serial-append</code></strong>, which select the kind of output to be generated at the end of the test run.
-      The default if none is specified is to generate the basic HTML report (<code>html-nocp</code>).
-      <br/>
-      The "html" and "html-nocp" values are mutually exclusive, just like "serial" and "serial-append".
+      <strong><code>html-cp</code></strong> ("cp" = "call points"), <strong><code>html-nocp</code></strong>,
+      <strong><code>serial</code></strong>, and <strong><code>serial-append</code></strong>, which select the kind of output to be generated
+      at the end of the test run.
+      The default is to generate the HTML report with no call points (<code>html</code> = <code>html-nocp</code>).
+      <br>
+      The "html", "html-cp" and "html-nocp" values are mutually exclusive, just like "serial" and "serial-append".
       However, it <em>is</em> valid to have one of each pair specified at the same time.
       In such a case, at the end of the test run both kinds of output will be written.
-      <br/>
+      <br>
       The presence of "<code>serial</code>" or "<code>serial-append</code>" causes a <em>serialized data file</em> of name
-      "<code>coverage.ser</code>" to be generated; in the case of "<code>serial-append</code>", coverage data gathered by the current test
-      run will be <em>appended</em> to the contents of a previously existing data file (if said file doesn't exist, it has the same effect
-      as "<code>serial</code>").
+      "<code>coverage.ser</code>" to be generated; with "<code>serial-append</code>", coverage data gathered by the current test run will be
+      <em>appended</em> to the contents of a previously existing data file (if said file doesn't exist, it has the same effect as
+      "<code>serial</code>").
    </li>
    <li>
       <code>coverage-<strong>outputDir</strong></code>: absolute or relative path to the output directory, to be used for writing any
       "<code>coverage.ser</code>" or "<code>index.html</code>" files (plus the remaining "<code>.html</code>" files of the HTML report, in
       automatically created sub-directories).
-      By default, the current working directory of the running JVM is used, with all "<code>.html</code>" files of the HTML report generated
-      inside a "<code>coverage-report</code>" sub-directory.
+      By default, the current working directory of the running JVM is used, with all HTML pages written into a
+      "<code>coverage-report</code>" sub-directory.
    </li>
    <li>
       <code>coverage-<strong>srcDirs</strong></code>: comma-separated list of Java source directories to be searched when generating an HTML
@@ -185,6 +175,8 @@
       (This is not relevant for the serialized data file.)
       Each directory is specified by an absolute or relative path.
       If no such directory is specified, all "<code>src</code>" directories under the current working directory are searched.
+      If, however, the property is set to the empty string, then no source files are searched, and only the <code>index.html</code> file is
+      generated.
    </li>
    <li>
       <code>coverage-<strong>classes</strong></code>:
@@ -194,9 +186,9 @@
       The given expression will be used to select the classes (by fully qualified name) from production code which should be considered for
       coverage.
       By default, all classes in production code loaded during the test run and which are not inside jar files are considered.
-      <br/>
+      <br>
       For example, "<code>some.package.*</code>" selects all classes under <code>some.package</code> or any sub-package.
-      <br/>
+      <br>
       As a special case, if the property is specified as "<code>loaded</code>", then all classes will be considered, but only those which
       get loaded by the JVM during the test run; classes that are part of the codebase but never get loaded are left out.
       This is very useful when the test run includes only a few tests, targeting only a subset of the codebase.
@@ -215,6 +207,10 @@
       For details, see the <a href="#checking">Checking minimum coverage</a> section.
    </li>
 </ol>
+<p>
+   Note that you should be able to easily specify these properties inside a Maven <code>surefire</code> plugin configuration, or a test run
+   configuration for your Java IDE of choice, using either JUnit or TestNG; no JMockit-specific plugin is needed.
+</p>
 
 <h2 id="merging">
    <a href="#merging">4 Aggregated reports for multiple test runs</a>
