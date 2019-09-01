@@ -138,12 +138,10 @@
    <a href="#configuration">3 Configuring the coverage tool</a>
 </h2>
 <p>
-   To enable the JMockit Coverage tool in a JUnit/TestNG test run, add <code>jmockit-1.x.jar</code> to the runtime classpath, activate it
-   with the <code>-javaagent</code> JVM initialization parameter, and specify at least one of the "<code>coverage-output</code>" and
-   "<code>coverage-classes</code>" <em>system properties</em>.
+   To activate the Coverage tool in a JUnit/TestNG test run, use the <code>-javaagent</code> JVM initialization parameter, and specify at
+   least one of the "<code>coverage-output</code>" and "<code>coverage-classes</code>" <em>system properties</em>.
    (See <a href="Introduction.html#runningTests">Running tests with JMockit</a> for more details.)
-   All aspects of the tool's behavior can be configured by setting one or more of the following properties for the JVM instance running the
-   test suite.
+   All aspects of the tool's behavior can be configured by setting one or more of the following properties.
 </p>
 <ol>
    <li>
