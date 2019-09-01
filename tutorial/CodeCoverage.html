@@ -342,16 +342,6 @@
    <a href="#maven">6 Activating coverage in a Maven project</a>
 </h2>
 <p>
-   If you run tests with Maven's "test" goal, you will need the "jmockit" dependency in the <code>pom.xml</code> file (assuming the
-   "<code>jmockit.version</code>" property has been properly defined):
-</p>
-<pre><code>&lt;dependency>
-   &lt;groupId><strong>org.jmockit</strong>&lt;/groupId> &lt;artifactId><strong>jmockit</strong>&lt;/artifactId>
-   &lt;version><strong>${jmockit.version}</strong>&lt;/version>
-   &lt;scope>test&lt;/scope>
-&lt;/dependency>
-</code></pre>
-<p>
    With Maven, the <code>surefire</code> plugin is the one usually responsible for running tests.
    To activate and configure the coverage tool, specify values for the appropriate "<code>coverage-xyz</code>" system properties.
 </p>
@@ -363,7 +353,7 @@
 
          &lt;!-- Coverage properties -->
          &lt;!-- At least one of the following needs to be set: -->
-         -Dcoverage-output=html             &lt;!-- or: html-nocp (default if coverage is activated), serial, serial-append -->
+         -Dcoverage-output=html             &lt;!-- or html-cp, serial, serial-append; if not set, defaults to "html" -->
          -Dcoverage-classes=loaded          &lt;!-- or a "*" expression for class names; if not set, measures all production code classes -->
 
          &lt;!-- Other properties, if needed: -->
