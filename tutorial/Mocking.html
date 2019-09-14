@@ -1150,7 +1150,7 @@ void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @Mocked C
 
       // Record different behaviors for each set of instances:
       col1.doSomething(<var>anyInt</var>); <var>result</var> = 123;
-      col2.doSomething(<var>anyInt</var>); <var>result</var> = new InvalidStateException();
+      col2.doSomething(<var>anyInt</var>); <var>result</var> = new IllegalStateException();
    }};
 
    // Code under test:
