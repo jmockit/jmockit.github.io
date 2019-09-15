@@ -1097,14 +1097,10 @@ void matchOnMockInstance(@Mocked Collaborator <strong>mock</strong>, @Mocked Col
    <a href="#futureInstancesByConstructor">12.3 Instances created with a given constructor</a>
 </h3>
 <p>
-   Specifically for <em>future</em> instances that will later get created by code under test, JMockit provides a couple mechanisms through
-   which we can match invocations on them.
-   Both mechanisms require the recording of an expectation on a specific <em>constructor invocation</em> (a "<code>new</code>" expression)
-   of the mocked class.
-</p>
-<p>
-   The first mechanism involves simply using the new instance obtained from the recorded constructor expectation, when recording
-   expectations on instance methods.
+   For <em>future</em> instances that will later get created by code under test, there is a way we can match invocations on them to separate
+   recorded expectations (assuming a test needs varying behavior from said instances).
+   This is done by recording expectations on specific <em>constructor invocations</em> of the mocked class, and then simply using the new
+   instances obtained from such "<code>new</code>" expressions when recording expectations on their instance methods.
    Lets see an example.
 </p>
 <pre><code>@Test
@@ -1128,40 +1124,12 @@ void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator anyCollaborator
 }
 </code></pre>
 <p>
-   In the above test, we declare a single mock field or mock parameter of the desired class, using <code class="annotation">@Mocked</code>.
+   In the above test, we declare a mock field or mock parameter of the desired class, using <code class="annotation">@Mocked</code>.
    This mock field/parameter, however, is <em>not</em> used when recording expectations; instead, we use the instances created on
    <em>instantiation recordings</em> to record further expectations on instance methods.
    The future instances created with matching constructor invocations will map to those recorded instances.
    Also, note that it's not necessarily a one-to-one mapping, but a many-to-one mapping, from potentially many future instances to a single
    instance used for recorded expectations.
-</p>
-<p>
-   The second mechanism lets us associate a given mock instance with a recorded constructor expectation, and then use this instance for
-   recording expectations on instance methods which will match invocations on future instances created with a matching constructor
-   invocation.
-   With this alternative mechanism, we can rewrite the test as follows.
-</p>
-<pre><code>@Test
-void newCollaboratorsWithDifferentBehaviors(@Mocked Collaborator col1, @Mocked Collaborator col2) {
-   new Expectations() {{
-      // Map separate sets of future instances to separate mock parameters:
-      new Collaborator("a value"); <var>result</var> = col1;
-      new Collaborator("another value"); <var>result</var> = col2;
-
-      // Record different behaviors for each set of instances:
-      col1.doSomething(<var>anyInt</var>); <var>result</var> = 123;
-      col2.doSomething(<var>anyInt</var>); <var>result</var> = new IllegalStateException();
-   }};
-
-   // Code under test:
-   new Collaborator("a value").doSomething(5); // will return 123
-   ...
-   new Collaborator("another value").doSomething(0); // will throw the exception
-   ...
-}
-</code></pre>
-<p>
-   Both versions of the test are equivalent.
 </p>
 
 <h2 id="partial">
